@@ -1,0 +1,31 @@
+
+*************************************************************
+Starting up at:      Sun Feb 18 13:03:50 2018
+Configuration file:  /home/stijn/Dropbox/school/3e_jaar/bachproef/peryite/stride_working/cmake-build-release/installed/bin/20180218_130350/20180218_130350.xml
+Using OpenMP threads:  4
+Project output tag:  20180218_130350
+
+Setting for track_index_case:  false
+Building the simulator. 
+Getting logger
+Setup
+Logger
+Check input
+Population file
+Customize
+Survey
+Building: immunity profile => None
+Done building: immunity profile 
+Building: vaccine profile => Random
+Done building: vaccine profile 
+ILLIGAL R0 VALUE
+MAX R0 VALUE: 61.09
+Done building the simulator. 
+Invalid configuration => terminate without output
+
+
+
+  run_time: 00:00:00:000:000  -- total time: 00:00:03:328:704
+
+Exiting at:         Sun Feb 18 13:03:54 2018
+
