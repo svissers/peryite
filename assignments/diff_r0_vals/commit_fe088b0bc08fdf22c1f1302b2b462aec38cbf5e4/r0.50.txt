@@ -1,0 +1,71 @@
+
+*************************************************************
+Starting up at:      Sun Feb 18 19:08:51 2018
+Configuration file:  /home/stijn/stride/cmake-build-release/installed/bin/20180218_190851/20180218_190851.xml
+Using OpenMP threads:  4
+Project output tag:  20180218_190851
+
+Setting for track_index_case:  false
+Building the simulator. 
+Applying natural immunity to population ...
+Applying vaccination strategy to population ...
+Applying random immunity profile
+Done building the simulator. 
+Done checking the simulator. 
+
+Simulating day:     0     Done, infected count:    1200     Adopters count:       0
+Simulating day:     1     Done, infected count:    1200     Adopters count:       0
+Simulating day:     2     Done, infected count:    1200     Adopters count:       0
+Simulating day:     3     Done, infected count:    1200     Adopters count:       0
+Simulating day:     4     Done, infected count:    4535     Adopters count:       0
+Simulating day:     5     Done, infected count:    9513     Adopters count:       0
+Simulating day:     6     Done, infected count:   10573     Adopters count:       0
+Simulating day:     7     Done, infected count:   11772     Adopters count:       0
+Simulating day:     8     Done, infected count:   12089     Adopters count:       0
+Simulating day:     9     Done, infected count:   20056     Adopters count:       0
+Simulating day:    10     Done, infected count:   43815     Adopters count:       0
+Simulating day:    11     Done, infected count:   83227     Adopters count:       0
+Simulating day:    12     Done, infected count:  120767     Adopters count:       0
+Simulating day:    13     Done, infected count:  125405     Adopters count:       0
+Simulating day:    14     Done, infected count:  127947     Adopters count:       0
+Simulating day:    15     Done, infected count:  192431     Adopters count:       0
+Simulating day:    16     Done, infected count:  314192     Adopters count:       0
+Simulating day:    17     Done, infected count:  436975     Adopters count:       0
+Simulating day:    18     Done, infected count:  507090     Adopters count:       0
+Simulating day:    19     Done, infected count:  537979     Adopters count:       0
+Simulating day:    20     Done, infected count:  542681     Adopters count:       0
+Simulating day:    21     Done, infected count:  546826     Adopters count:       0
+Simulating day:    22     Done, infected count:  587555     Adopters count:       0
+Simulating day:    23     Done, infected count:  597716     Adopters count:       0
+Simulating day:    24     Done, infected count:  599551     Adopters count:       0
+Simulating day:    25     Done, infected count:  599864     Adopters count:       0
+Simulating day:    26     Done, infected count:  599919     Adopters count:       0
+Simulating day:    27     Done, infected count:  599923     Adopters count:       0
+Simulating day:    28     Done, infected count:  599926     Adopters count:       0
+Simulating day:    29     Done, infected count:  599985     Adopters count:       0
+Simulating day:    30     Done, infected count:  599997     Adopters count:       0
+Simulating day:    31     Done, infected count:  599998     Adopters count:       0
+Simulating day:    32     Done, infected count:  599999     Adopters count:       0
+Simulating day:    33     Done, infected count:  600000     Adopters count:       0
+Simulating day:    34     Done, infected count:  600000     Adopters count:       0
+Simulating day:    35     Done, infected count:  600000     Adopters count:       0
+Simulating day:    36     Done, infected count:  600000     Adopters count:       0
+Simulating day:    37     Done, infected count:  600000     Adopters count:       0
+Simulating day:    38     Done, infected count:  600000     Adopters count:       0
+Simulating day:    39     Done, infected count:  600000     Adopters count:       0
+Simulating day:    40     Done, infected count:  600000     Adopters count:       0
+Simulating day:    41     Done, infected count:  600000     Adopters count:       0
+Simulating day:    42     Done, infected count:  600000     Adopters count:       0
+Simulating day:    43     Done, infected count:  600000     Adopters count:       0
+Simulating day:    44     Done, infected count:  600000     Adopters count:       0
+Simulating day:    45     Done, infected count:  600000     Adopters count:       0
+Simulating day:    46     Done, infected count:  600000     Adopters count:       0
+Simulating day:    47     Done, infected count:  600000     Adopters count:       0
+Simulating day:    48     Done, infected count:  600000     Adopters count:       0
+Simulating day:    49     Done, infected count:  600000     Adopters count:       0
+
+
+  run_time: 00:00:05:298:126  -- total time: 00:00:11:140:147
+
+Exiting at:         Sun Feb 18 19:09:02 2018
+
