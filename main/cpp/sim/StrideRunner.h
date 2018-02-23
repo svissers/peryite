@@ -20,7 +20,7 @@
  */
 
 #include "sim/Simulator.h"
-#include "sim/SimulatorObserver.h"
+#include "sim/python/SimulatorObserver.h"
 #include "util/Stopwatch.h"
 
 #include <boost/property_tree/ptree.hpp>
@@ -42,19 +42,22 @@ public:
         /// Destructor
         virtual ~StrideRunner() = default;
 
-        /// Register observer
-        void RegisterObserver(std::shared_ptr<SimulatorObserver>& observer);
+        /// Register observer (method used by the python environment).
+        void RegisterObserver(std::shared_ptr<python::SimulatorObserver>& observer);
 
-        ///
+        /// Actually setup de run of the simulator
+        /// \param track_index_case     whether only tracking index case or doing a full simulation.
+        /// \param config_file_name     name of the configuration file for this run
+        /// \param use_install_dirs     where to use the files in the install directory
         void Setup(bool track_index_case, const std::string& config_file_name, bool use_install_dirs = false);
 
         /// Run the simulator with config information provided.
         void Run();
 
-        ///
+        /// Stop the run.
         void Stop();
 
-        /// Get the simulator
+        /// Get the simulator (method used by the python environment).
         std::shared_ptr<Simulator> GetSimulator() { return m_sim; }
 
 private:
@@ -64,12 +67,12 @@ private:
                                  unsigned int run_time, unsigned int total_time);
 
 private:
-        bool m_is_running;
-        bool m_operational;
-        std::string m_output_prefix;
-        boost::property_tree::ptree m_pt_config;
-        util::Stopwatch<> m_clock;
-        std::shared_ptr<Simulator> m_sim;
+        bool                        m_is_running;    ///< Sim is running.
+        bool                        m_operational;   ///< Input config is OK to be run
+        std::string                 m_output_prefix; ///< Prefix for outpu data files.
+        boost::property_tree::ptree m_pt_config;     ///< Ptree with configuration.
+        util::Stopwatch<>           m_clock;         ///< Stopwatch for timing the computation.
+        std::shared_ptr<Simulator>  m_sim;           ///< Simulator object.
 };
 
 } // namespace stride
