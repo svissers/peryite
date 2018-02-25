@@ -66,7 +66,7 @@ before_install:
 
 install:
   # Download & unpack boost
-  - sudo wget -O boost_1_64_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.64.0/boost_1_64_0.tar.gz/download -q
+  - sudo wget -O boost_1_64_0.tar.gz https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.gz -q
   - sudo tar xf boost_1_64_0.tar.gz > /dev/null 2>&1
   # Move into boost directory
   - cd boost_1_64_0/
