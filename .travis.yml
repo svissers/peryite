@@ -9,6 +9,8 @@ dist: trusty
 #  directories:
 #    # Cache the boost install
 #    - $HOME/boost_1_64_0/
+python:
+  - "3.6"
 
 addons:
   apt:
