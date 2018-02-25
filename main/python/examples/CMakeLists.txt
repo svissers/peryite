@@ -24,6 +24,7 @@ SET(PYTHON_EXAMPLES
 	runCallbackTimestep.py
 	runExperiments.py
 	runExperimentsR0.py
+	runExperimentsRNG.py
 	runManualConfig.py
 	runRepeat.py
 	runSimple.py
