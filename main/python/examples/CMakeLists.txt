@@ -29,6 +29,10 @@ SET(PYTHON_EXAMPLES
 	runRepeat.py
 	runSimple.py
 	runStopOnCallback.py
+  runThreads_influenza.py
+  runThreads_measles.py
+  runRngType_influenza.py
+  runRngType_measles.py
 )
 
 #================================================================================================

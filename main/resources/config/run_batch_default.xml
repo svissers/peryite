@@ -26,4 +26,5 @@
     		<name>NoBelief</name>
     </belief_policy>
     <behaviour_policy>NoBehaviour</behaviour_policy>
+    <rng_type>mrg2</rng_type>
 </run>
