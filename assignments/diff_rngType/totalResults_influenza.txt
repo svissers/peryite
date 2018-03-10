@@ -1,0 +1,600 @@
+influenza_a: lcg64
+RNG = 1880410494: num_cases = 2218
+influenza_a: yarn2
+RNG = 1880410494: num_cases = 2100
+influenza_a: lcg64_shift
+RNG = 1880410494: num_cases = 2126
+influenza_a: mrg3
+RNG = 1880410494: num_cases = 2126
+influenza_a: yarn3
+RNG = 1880410494: num_cases = 2068
+influenza_b: lcg64
+RNG = 1880410494: num_cases = 0
+influenza_b: yarn2
+RNG = 1880410494: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 1880410494: num_cases = 0
+influenza_b: mrg3
+RNG = 1880410494: num_cases = 0
+influenza_b: yarn3
+RNG = 1880410494: num_cases = 0
+influenza_c: lcg64
+RNG = 1880410494: num_cases = 5
+influenza_c: yarn2
+RNG = 1880410494: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 1880410494: num_cases = 5
+influenza_c: mrg3
+RNG = 1880410494: num_cases = 5
+influenza_c: yarn3
+RNG = 1880410494: num_cases = 5
+influenza_a: lcg64
+RNG = 2950404412: num_cases = 2004
+influenza_a: yarn2
+RNG = 2950404412: num_cases = 2140
+influenza_a: lcg64_shift
+RNG = 2950404412: num_cases = 1975
+influenza_a: mrg3
+RNG = 2950404412: num_cases = 2061
+influenza_a: yarn3
+RNG = 2950404412: num_cases = 2033
+influenza_b: lcg64
+RNG = 2950404412: num_cases = 0
+influenza_b: yarn2
+RNG = 2950404412: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 2950404412: num_cases = 0
+influenza_b: mrg3
+RNG = 2950404412: num_cases = 0
+influenza_b: yarn3
+RNG = 2950404412: num_cases = 0
+influenza_c: lcg64
+RNG = 2950404412: num_cases = 5
+influenza_c: yarn2
+RNG = 2950404412: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 2950404412: num_cases = 5
+influenza_c: mrg3
+RNG = 2950404412: num_cases = 5
+influenza_c: yarn3
+RNG = 2950404412: num_cases = 5
+influenza_a: lcg64
+RNG = 1327786576: num_cases = 2061
+influenza_a: yarn2
+RNG = 1327786576: num_cases = 2270
+influenza_a: lcg64_shift
+RNG = 1327786576: num_cases = 2264
+influenza_a: mrg3
+RNG = 1327786576: num_cases = 2144
+influenza_a: yarn3
+RNG = 1327786576: num_cases = 2082
+influenza_b: lcg64
+RNG = 1327786576: num_cases = 0
+influenza_b: yarn2
+RNG = 1327786576: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 1327786576: num_cases = 0
+influenza_b: mrg3
+RNG = 1327786576: num_cases = 0
+influenza_b: yarn3
+RNG = 1327786576: num_cases = 0
+influenza_c: lcg64
+RNG = 1327786576: num_cases = 5
+influenza_c: yarn2
+RNG = 1327786576: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 1327786576: num_cases = 5
+influenza_c: mrg3
+RNG = 1327786576: num_cases = 5
+influenza_c: yarn3
+RNG = 1327786576: num_cases = 5
+influenza_a: lcg64
+RNG = 2647147633: num_cases = 2168
+influenza_a: yarn2
+RNG = 2647147633: num_cases = 2113
+influenza_a: lcg64_shift
+RNG = 2647147633: num_cases = 1918
+influenza_a: mrg3
+RNG = 2647147633: num_cases = 2070
+influenza_a: yarn3
+RNG = 2647147633: num_cases = 1958
+influenza_b: lcg64
+RNG = 2647147633: num_cases = 0
+influenza_b: yarn2
+RNG = 2647147633: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 2647147633: num_cases = 0
+influenza_b: mrg3
+RNG = 2647147633: num_cases = 0
+influenza_b: yarn3
+RNG = 2647147633: num_cases = 0
+influenza_c: lcg64
+RNG = 2647147633: num_cases = 5
+influenza_c: yarn2
+RNG = 2647147633: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 2647147633: num_cases = 5
+influenza_c: mrg3
+RNG = 2647147633: num_cases = 5
+influenza_c: yarn3
+RNG = 2647147633: num_cases = 5
+influenza_a: lcg64
+RNG = 3914080404: num_cases = 1996
+influenza_a: yarn2
+RNG = 3914080404: num_cases = 2182
+influenza_a: lcg64_shift
+RNG = 3914080404: num_cases = 2353
+influenza_a: mrg3
+RNG = 3914080404: num_cases = 2085
+influenza_a: yarn3
+RNG = 3914080404: num_cases = 2203
+influenza_b: lcg64
+RNG = 3914080404: num_cases = 0
+influenza_b: yarn2
+RNG = 3914080404: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 3914080404: num_cases = 0
+influenza_b: mrg3
+RNG = 3914080404: num_cases = 0
+influenza_b: yarn3
+RNG = 3914080404: num_cases = 0
+influenza_c: lcg64
+RNG = 3914080404: num_cases = 5
+influenza_c: yarn2
+RNG = 3914080404: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 3914080404: num_cases = 5
+influenza_c: mrg3
+RNG = 3914080404: num_cases = 5
+influenza_c: yarn3
+RNG = 3914080404: num_cases = 5
+influenza_a: lcg64
+RNG = 2472280583: num_cases = 2235
+influenza_a: yarn2
+RNG = 2472280583: num_cases = 2064
+influenza_a: lcg64_shift
+RNG = 2472280583: num_cases = 2187
+influenza_a: mrg3
+RNG = 2472280583: num_cases = 2058
+influenza_a: yarn3
+RNG = 2472280583: num_cases = 1864
+influenza_b: lcg64
+RNG = 2472280583: num_cases = 0
+influenza_b: yarn2
+RNG = 2472280583: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 2472280583: num_cases = 0
+influenza_b: mrg3
+RNG = 2472280583: num_cases = 0
+influenza_b: yarn3
+RNG = 2472280583: num_cases = 0
+influenza_c: lcg64
+RNG = 2472280583: num_cases = 5
+influenza_c: yarn2
+RNG = 2472280583: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 2472280583: num_cases = 5
+influenza_c: mrg3
+RNG = 2472280583: num_cases = 5
+influenza_c: yarn3
+RNG = 2472280583: num_cases = 5
+influenza_a: lcg64
+RNG = 2740953360: num_cases = 2162
+influenza_a: yarn2
+RNG = 2740953360: num_cases = 2116
+influenza_a: lcg64_shift
+RNG = 2740953360: num_cases = 2092
+influenza_a: mrg3
+RNG = 2740953360: num_cases = 2166
+influenza_a: yarn3
+RNG = 2740953360: num_cases = 2127
+influenza_b: lcg64
+RNG = 2740953360: num_cases = 0
+influenza_b: yarn2
+RNG = 2740953360: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 2740953360: num_cases = 0
+influenza_b: mrg3
+RNG = 2740953360: num_cases = 0
+influenza_b: yarn3
+RNG = 2740953360: num_cases = 0
+influenza_c: lcg64
+RNG = 2740953360: num_cases = 5
+influenza_c: yarn2
+RNG = 2740953360: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 2740953360: num_cases = 5
+influenza_c: mrg3
+RNG = 2740953360: num_cases = 5
+influenza_c: yarn3
+RNG = 2740953360: num_cases = 5
+influenza_a: lcg64
+RNG = 117336105: num_cases = 2103
+influenza_a: yarn2
+RNG = 117336105: num_cases = 2004
+influenza_a: lcg64_shift
+RNG = 117336105: num_cases = 2159
+influenza_a: mrg3
+RNG = 117336105: num_cases = 2037
+influenza_a: yarn3
+RNG = 117336105: num_cases = 2182
+influenza_b: lcg64
+RNG = 117336105: num_cases = 0
+influenza_b: yarn2
+RNG = 117336105: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 117336105: num_cases = 0
+influenza_b: mrg3
+RNG = 117336105: num_cases = 0
+influenza_b: yarn3
+RNG = 117336105: num_cases = 0
+influenza_c: lcg64
+RNG = 117336105: num_cases = 5
+influenza_c: yarn2
+RNG = 117336105: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 117336105: num_cases = 5
+influenza_c: mrg3
+RNG = 117336105: num_cases = 5
+influenza_c: yarn3
+RNG = 117336105: num_cases = 5
+influenza_a: lcg64
+RNG = 2172402336: num_cases = 2113
+influenza_a: yarn2
+RNG = 2172402336: num_cases = 2068
+influenza_a: lcg64_shift
+RNG = 2172402336: num_cases = 2178
+influenza_a: mrg3
+RNG = 2172402336: num_cases = 2045
+influenza_a: yarn3
+RNG = 2172402336: num_cases = 2049
+influenza_b: lcg64
+RNG = 2172402336: num_cases = 0
+influenza_b: yarn2
+RNG = 2172402336: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 2172402336: num_cases = 0
+influenza_b: mrg3
+RNG = 2172402336: num_cases = 0
+influenza_b: yarn3
+RNG = 2172402336: num_cases = 0
+influenza_c: lcg64
+RNG = 2172402336: num_cases = 5
+influenza_c: yarn2
+RNG = 2172402336: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 2172402336: num_cases = 5
+influenza_c: mrg3
+RNG = 2172402336: num_cases = 5
+influenza_c: yarn3
+RNG = 2172402336: num_cases = 5
+influenza_a: lcg64
+RNG = 2869720092: num_cases = 2069
+influenza_a: yarn2
+RNG = 2869720092: num_cases = 2210
+influenza_a: lcg64_shift
+RNG = 2869720092: num_cases = 2286
+influenza_a: mrg3
+RNG = 2869720092: num_cases = 1975
+influenza_a: yarn3
+RNG = 2869720092: num_cases = 1962
+influenza_b: lcg64
+RNG = 2869720092: num_cases = 0
+influenza_b: yarn2
+RNG = 2869720092: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 2869720092: num_cases = 0
+influenza_b: mrg3
+RNG = 2869720092: num_cases = 0
+influenza_b: yarn3
+RNG = 2869720092: num_cases = 0
+influenza_c: lcg64
+RNG = 2869720092: num_cases = 5
+influenza_c: yarn2
+RNG = 2869720092: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 2869720092: num_cases = 5
+influenza_c: mrg3
+RNG = 2869720092: num_cases = 5
+influenza_c: yarn3
+RNG = 2869720092: num_cases = 5
+influenza_a: lcg64
+RNG = 304142230: num_cases = 2040
+influenza_a: yarn2
+RNG = 304142230: num_cases = 2039
+influenza_a: lcg64_shift
+RNG = 304142230: num_cases = 2244
+influenza_a: mrg3
+RNG = 304142230: num_cases = 2080
+influenza_a: yarn3
+RNG = 304142230: num_cases = 2077
+influenza_b: lcg64
+RNG = 304142230: num_cases = 0
+influenza_b: yarn2
+RNG = 304142230: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 304142230: num_cases = 0
+influenza_b: mrg3
+RNG = 304142230: num_cases = 0
+influenza_b: yarn3
+RNG = 304142230: num_cases = 0
+influenza_c: lcg64
+RNG = 304142230: num_cases = 5
+influenza_c: yarn2
+RNG = 304142230: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 304142230: num_cases = 5
+influenza_c: mrg3
+RNG = 304142230: num_cases = 5
+influenza_c: yarn3
+RNG = 304142230: num_cases = 5
+influenza_a: lcg64
+RNG = 3173344244: num_cases = 2014
+influenza_a: yarn2
+RNG = 3173344244: num_cases = 2064
+influenza_a: lcg64_shift
+RNG = 3173344244: num_cases = 2167
+influenza_a: mrg3
+RNG = 3173344244: num_cases = 2165
+influenza_a: yarn3
+RNG = 3173344244: num_cases = 2063
+influenza_b: lcg64
+RNG = 3173344244: num_cases = 0
+influenza_b: yarn2
+RNG = 3173344244: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 3173344244: num_cases = 0
+influenza_b: mrg3
+RNG = 3173344244: num_cases = 0
+influenza_b: yarn3
+RNG = 3173344244: num_cases = 0
+influenza_c: lcg64
+RNG = 3173344244: num_cases = 5
+influenza_c: yarn2
+RNG = 3173344244: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 3173344244: num_cases = 5
+influenza_c: mrg3
+RNG = 3173344244: num_cases = 5
+influenza_c: yarn3
+RNG = 3173344244: num_cases = 5
+influenza_a: lcg64
+RNG = 910680676: num_cases = 2070
+influenza_a: yarn2
+RNG = 910680676: num_cases = 2049
+influenza_a: lcg64_shift
+RNG = 910680676: num_cases = 2239
+influenza_a: mrg3
+RNG = 910680676: num_cases = 1937
+influenza_a: yarn3
+RNG = 910680676: num_cases = 2121
+influenza_b: lcg64
+RNG = 910680676: num_cases = 0
+influenza_b: yarn2
+RNG = 910680676: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 910680676: num_cases = 0
+influenza_b: mrg3
+RNG = 910680676: num_cases = 0
+influenza_b: yarn3
+RNG = 910680676: num_cases = 0
+influenza_c: lcg64
+RNG = 910680676: num_cases = 5
+influenza_c: yarn2
+RNG = 910680676: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 910680676: num_cases = 5
+influenza_c: mrg3
+RNG = 910680676: num_cases = 5
+influenza_c: yarn3
+RNG = 910680676: num_cases = 5
+influenza_a: lcg64
+RNG = 2857463346: num_cases = 2241
+influenza_a: yarn2
+RNG = 2857463346: num_cases = 1949
+influenza_a: lcg64_shift
+RNG = 2857463346: num_cases = 2207
+influenza_a: mrg3
+RNG = 2857463346: num_cases = 1909
+influenza_a: yarn3
+RNG = 2857463346: num_cases = 1970
+influenza_b: lcg64
+RNG = 2857463346: num_cases = 0
+influenza_b: yarn2
+RNG = 2857463346: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 2857463346: num_cases = 0
+influenza_b: mrg3
+RNG = 2857463346: num_cases = 0
+influenza_b: yarn3
+RNG = 2857463346: num_cases = 0
+influenza_c: lcg64
+RNG = 2857463346: num_cases = 5
+influenza_c: yarn2
+RNG = 2857463346: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 2857463346: num_cases = 5
+influenza_c: mrg3
+RNG = 2857463346: num_cases = 5
+influenza_c: yarn3
+RNG = 2857463346: num_cases = 5
+influenza_a: lcg64
+RNG = 3149276143: num_cases = 2108
+influenza_a: yarn2
+RNG = 3149276143: num_cases = 2460
+influenza_a: lcg64_shift
+RNG = 3149276143: num_cases = 2063
+influenza_a: mrg3
+RNG = 3149276143: num_cases = 2256
+influenza_a: yarn3
+RNG = 3149276143: num_cases = 2488
+influenza_b: lcg64
+RNG = 3149276143: num_cases = 0
+influenza_b: yarn2
+RNG = 3149276143: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 3149276143: num_cases = 0
+influenza_b: mrg3
+RNG = 3149276143: num_cases = 0
+influenza_b: yarn3
+RNG = 3149276143: num_cases = 0
+influenza_c: lcg64
+RNG = 3149276143: num_cases = 5
+influenza_c: yarn2
+RNG = 3149276143: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 3149276143: num_cases = 5
+influenza_c: mrg3
+RNG = 3149276143: num_cases = 5
+influenza_c: yarn3
+RNG = 3149276143: num_cases = 5
+influenza_a: lcg64
+RNG = 1483679761: num_cases = 2001
+influenza_a: yarn2
+RNG = 1483679761: num_cases = 2310
+influenza_a: lcg64_shift
+RNG = 1483679761: num_cases = 2333
+influenza_a: mrg3
+RNG = 1483679761: num_cases = 2138
+influenza_a: yarn3
+RNG = 1483679761: num_cases = 2140
+influenza_b: lcg64
+RNG = 1483679761: num_cases = 0
+influenza_b: yarn2
+RNG = 1483679761: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 1483679761: num_cases = 0
+influenza_b: mrg3
+RNG = 1483679761: num_cases = 0
+influenza_b: yarn3
+RNG = 1483679761: num_cases = 0
+influenza_c: lcg64
+RNG = 1483679761: num_cases = 5
+influenza_c: yarn2
+RNG = 1483679761: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 1483679761: num_cases = 5
+influenza_c: mrg3
+RNG = 1483679761: num_cases = 5
+influenza_c: yarn3
+RNG = 1483679761: num_cases = 5
+influenza_a: lcg64
+RNG = 3375659388: num_cases = 2099
+influenza_a: yarn2
+RNG = 3375659388: num_cases = 1966
+influenza_a: lcg64_shift
+RNG = 3375659388: num_cases = 2079
+influenza_a: mrg3
+RNG = 3375659388: num_cases = 2050
+influenza_a: yarn3
+RNG = 3375659388: num_cases = 2167
+influenza_b: lcg64
+RNG = 3375659388: num_cases = 0
+influenza_b: yarn2
+RNG = 3375659388: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 3375659388: num_cases = 0
+influenza_b: mrg3
+RNG = 3375659388: num_cases = 0
+influenza_b: yarn3
+RNG = 3375659388: num_cases = 0
+influenza_c: lcg64
+RNG = 3375659388: num_cases = 5
+influenza_c: yarn2
+RNG = 3375659388: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 3375659388: num_cases = 5
+influenza_c: mrg3
+RNG = 3375659388: num_cases = 5
+influenza_c: yarn3
+RNG = 3375659388: num_cases = 5
+influenza_a: lcg64
+RNG = 3786344431: num_cases = 2111
+influenza_a: yarn2
+RNG = 3786344431: num_cases = 2249
+influenza_a: lcg64_shift
+RNG = 3786344431: num_cases = 2056
+influenza_a: mrg3
+RNG = 3786344431: num_cases = 2366
+influenza_a: yarn3
+RNG = 3786344431: num_cases = 2057
+influenza_b: lcg64
+RNG = 3786344431: num_cases = 0
+influenza_b: yarn2
+RNG = 3786344431: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 3786344431: num_cases = 0
+influenza_b: mrg3
+RNG = 3786344431: num_cases = 0
+influenza_b: yarn3
+RNG = 3786344431: num_cases = 0
+influenza_c: lcg64
+RNG = 3786344431: num_cases = 5
+influenza_c: yarn2
+RNG = 3786344431: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 3786344431: num_cases = 5
+influenza_c: mrg3
+RNG = 3786344431: num_cases = 5
+influenza_c: yarn3
+RNG = 3786344431: num_cases = 5
+influenza_a: lcg64
+RNG = 3349158446: num_cases = 2058
+influenza_a: yarn2
+RNG = 3349158446: num_cases = 2250
+influenza_a: lcg64_shift
+RNG = 3349158446: num_cases = 2043
+influenza_a: mrg3
+RNG = 3349158446: num_cases = 1920
+influenza_a: yarn3
+RNG = 3349158446: num_cases = 2129
+influenza_b: lcg64
+RNG = 3349158446: num_cases = 0
+influenza_b: yarn2
+RNG = 3349158446: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 3349158446: num_cases = 0
+influenza_b: mrg3
+RNG = 3349158446: num_cases = 0
+influenza_b: yarn3
+RNG = 3349158446: num_cases = 0
+influenza_c: lcg64
+RNG = 3349158446: num_cases = 5
+influenza_c: yarn2
+RNG = 3349158446: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 3349158446: num_cases = 5
+influenza_c: mrg3
+RNG = 3349158446: num_cases = 5
+influenza_c: yarn3
+RNG = 3349158446: num_cases = 5
+influenza_a: lcg64
+RNG = 3070832863: num_cases = 2154
+influenza_a: yarn2
+RNG = 3070832863: num_cases = 2040
+influenza_a: lcg64_shift
+RNG = 3070832863: num_cases = 2033
+influenza_a: mrg3
+RNG = 3070832863: num_cases = 1977
+influenza_a: yarn3
+RNG = 3070832863: num_cases = 2122
+influenza_b: lcg64
+RNG = 3070832863: num_cases = 0
+influenza_b: yarn2
+RNG = 3070832863: num_cases = 0
+influenza_b: lcg64_shift
+RNG = 3070832863: num_cases = 0
+influenza_b: mrg3
+RNG = 3070832863: num_cases = 0
+influenza_b: yarn3
+RNG = 3070832863: num_cases = 0
+influenza_c: lcg64
+RNG = 3070832863: num_cases = 5
+influenza_c: yarn2
+RNG = 3070832863: num_cases = 5
+influenza_c: lcg64_shift
+RNG = 3070832863: num_cases = 5
+influenza_c: mrg3
+RNG = 3070832863: num_cases = 5
+influenza_c: yarn3
+RNG = 3070832863: num_cases = 5
