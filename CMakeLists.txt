@@ -20,7 +20,7 @@
 #############################################################################
 cmake_minimum_required(VERSION 2.8)
 include(CMakeConfig.cmake)
-include(CMakeLocal.cmake OPTIONAL)
+include(CMakeLocal.cmake)
 	
 #============================================================================
 # Configuration for CMake, for build & install.

@@ -1,5 +1,5 @@
 #!/bin/bash
-export LD_LIBRARY_PATH=~/boost_1_66_0/stage/lib/
+export LD_LIBRARY_PATH=~/lorin/boost_1_66_0/stage/lib/
 make clean
 make configure
 make all

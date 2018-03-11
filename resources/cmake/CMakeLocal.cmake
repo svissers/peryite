@@ -23,10 +23,13 @@
 
 message(STATUS "\nReading configuration info from CMakeLocal.cmake! \n")
 
+
+
+
 #============================================================================
 # MACRO (WARNING: CLion overrides the setting of CMAKE_BUILD_TYPE)
 #============================================================================
-set(STRIDE_INCLUDE_DOC      FALSE)
+set(STRIDE_INCLUDE_DOC      TRUE)
 #set(STRIDE_VERBOSE_TESTING  TRUE)
 #set(STRIDE_COMPILER_ID      GNU)
 set(STRIDE_COMPILER_ID      Clang)
@@ -76,6 +79,10 @@ endif()
 
 #============================================================================
 # Boost.
+#============================================================================
+#============================================================================
+set(STRIDE_BOOST_ROOT "/home/lorin/boost_1_66_0")
+set(STRIDE_BOOST_NO_SYSTEM_PATHS ON)
 #============================================================================
 if(LINUX)
     set(STRIDE_BOOST_ROOT "/opt/boost/gcc/boost_1_66_0/")
