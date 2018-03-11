@@ -1,400 +1,400 @@
 measles_16: lcg64
-RNG = 2559829660: num_cases = 589139
+589139
 measles_16: yarn2
-RNG = 2559829660: num_cases = 590192
+590192
 measles_16: lcg64_shift
-RNG = 2559829660: num_cases = 589032
+589032
 measles_16: mrg3
-RNG = 2559829660: num_cases = 589490
+589490
 measles_16: yarn3
-RNG = 2559829660: num_cases = 589892
+589892
 measles_60: lcg64
-RNG = 2559829660: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 2559829660: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 2559829660: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 2559829660: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 2559829660: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 515686532: num_cases = 591138
+591138
 measles_16: yarn2
-RNG = 515686532: num_cases = 590371
+590371
 measles_16: lcg64_shift
-RNG = 515686532: num_cases = 590859
+590859
 measles_16: mrg3
-RNG = 515686532: num_cases = 589927
+589927
 measles_16: yarn3
-RNG = 515686532: num_cases = 590016
+590016
 measles_60: lcg64
-RNG = 515686532: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 515686532: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 515686532: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 515686532: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 515686532: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 889901486: num_cases = 590237
+590237
 measles_16: yarn2
-RNG = 889901486: num_cases = 590549
+590549
 measles_16: lcg64_shift
-RNG = 889901486: num_cases = 590928
+590928
 measles_16: mrg3
-RNG = 889901486: num_cases = 589637
+589637
 measles_16: yarn3
-RNG = 889901486: num_cases = 590441
+590441
 measles_60: lcg64
-RNG = 889901486: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 889901486: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 889901486: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 889901486: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 889901486: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 623427800: num_cases = 590315
+590315
 measles_16: yarn2
-RNG = 623427800: num_cases = 590891
+590891
 measles_16: lcg64_shift
-RNG = 623427800: num_cases = 590183
+590183
 measles_16: mrg3
-RNG = 623427800: num_cases = 590121
+590121
 measles_16: yarn3
-RNG = 623427800: num_cases = 589153
+589153
 measles_60: lcg64
-RNG = 623427800: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 623427800: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 623427800: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 623427800: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 623427800: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 3693680303: num_cases = 590368
+590368
 measles_16: yarn2
-RNG = 3693680303: num_cases = 589947
+589947
 measles_16: lcg64_shift
-RNG = 3693680303: num_cases = 590613
+590613
 measles_16: mrg3
-RNG = 3693680303: num_cases = 589301
+589301
 measles_16: yarn3
-RNG = 3693680303: num_cases = 589870
+589870
 measles_60: lcg64
-RNG = 3693680303: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 3693680303: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 3693680303: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 3693680303: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 3693680303: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 2581686597: num_cases = 590290
+590290
 measles_16: yarn2
-RNG = 2581686597: num_cases = 590076
+590076
 measles_16: lcg64_shift
-RNG = 2581686597: num_cases = 590789
+590789
 measles_16: mrg3
-RNG = 2581686597: num_cases = 590124
+590124
 measles_16: yarn3
-RNG = 2581686597: num_cases = 590216
+590216
 measles_60: lcg64
-RNG = 2581686597: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 2581686597: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 2581686597: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 2581686597: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 2581686597: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 1830142820: num_cases = 590670
+590670
 measles_16: yarn2
-RNG = 1830142820: num_cases = 589483
+589483
 measles_16: lcg64_shift
-RNG = 1830142820: num_cases = 590350
+590350
 measles_16: mrg3
-RNG = 1830142820: num_cases = 590247
+590247
 measles_16: yarn3
-RNG = 1830142820: num_cases = 589569
+589569
 measles_60: lcg64
-RNG = 1830142820: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 1830142820: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 1830142820: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 1830142820: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 1830142820: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 1952766806: num_cases = 590481
+590481
 measles_16: yarn2
-RNG = 1952766806: num_cases = 590797
+590797
 measles_16: lcg64_shift
-RNG = 1952766806: num_cases = 590863
+590863
 measles_16: mrg3
-RNG = 1952766806: num_cases = 589202
+589202
 measles_16: yarn3
-RNG = 1952766806: num_cases = 590786
+590786
 measles_60: lcg64
-RNG = 1952766806: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 1952766806: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 1952766806: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 1952766806: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 1952766806: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 2543956627: num_cases = 589272
+589272
 measles_16: yarn2
-RNG = 2543956627: num_cases = 588688
+588688
 measles_16: lcg64_shift
-RNG = 2543956627: num_cases = 590544
+590544
 measles_16: mrg3
-RNG = 2543956627: num_cases = 591133
+591133
 measles_16: yarn3
-RNG = 2543956627: num_cases = 590126
+590126
 measles_60: lcg64
-RNG = 2543956627: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 2543956627: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 2543956627: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 2543956627: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 2543956627: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 588425742: num_cases = 590416
+590416
 measles_16: yarn2
-RNG = 588425742: num_cases = 589577
+589577
 measles_16: lcg64_shift
-RNG = 588425742: num_cases = 590312
+590312
 measles_16: mrg3
-RNG = 588425742: num_cases = 590268
+590268
 measles_16: yarn3
-RNG = 588425742: num_cases = 590731
+590731
 measles_60: lcg64
-RNG = 588425742: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 588425742: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 588425742: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 588425742: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 588425742: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 4132984347: num_cases = 590368
+590368
 measles_16: yarn2
-RNG = 4132984347: num_cases = 590218
+590218
 measles_16: lcg64_shift
-RNG = 4132984347: num_cases = 589126
+589126
 measles_16: mrg3
-RNG = 4132984347: num_cases = 590545
+590545
 measles_16: yarn3
-RNG = 4132984347: num_cases = 589176
+589176
 measles_60: lcg64
-RNG = 4132984347: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 4132984347: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 4132984347: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 4132984347: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 4132984347: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 3418068144: num_cases = 589045
+589045
 measles_16: yarn2
-RNG = 3418068144: num_cases = 589149
+589149
 measles_16: lcg64_shift
-RNG = 3418068144: num_cases = 589880
+589880
 measles_16: mrg3
-RNG = 3418068144: num_cases = 589976
+589976
 measles_16: yarn3
-RNG = 3418068144: num_cases = 589151
+589151
 measles_60: lcg64
-RNG = 3418068144: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 3418068144: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 3418068144: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 3418068144: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 3418068144: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 3822888487: num_cases = 589280
+589280
 measles_16: yarn2
-RNG = 3822888487: num_cases = 589578
+589578
 measles_16: lcg64_shift
-RNG = 3822888487: num_cases = 589533
+589533
 measles_16: mrg3
-RNG = 3822888487: num_cases = 591103
+591103
 measles_16: yarn3
-RNG = 3822888487: num_cases = 589715
+589715
 measles_60: lcg64
-RNG = 3822888487: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 3822888487: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 3822888487: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 3822888487: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 3822888487: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 2168725426: num_cases = 590234
+590234
 measles_16: yarn2
-RNG = 2168725426: num_cases = 591162
+591162
 measles_16: lcg64_shift
-RNG = 2168725426: num_cases = 590672
+590672
 measles_16: mrg3
-RNG = 2168725426: num_cases = 589723
+589723
 measles_16: yarn3
-RNG = 2168725426: num_cases = 590447
+590447
 measles_60: lcg64
-RNG = 2168725426: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 2168725426: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 2168725426: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 2168725426: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 2168725426: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 4060297567: num_cases = 590614
+590614
 measles_16: yarn2
-RNG = 4060297567: num_cases = 590586
+590586
 measles_16: lcg64_shift
-RNG = 4060297567: num_cases = 590249
+590249
 measles_16: mrg3
-RNG = 4060297567: num_cases = 591371
+591371
 measles_16: yarn3
-RNG = 4060297567: num_cases = 588970
+588970
 measles_60: lcg64
-RNG = 4060297567: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 4060297567: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 4060297567: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 4060297567: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 4060297567: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 1555052698: num_cases = 590328
+590328
 measles_16: yarn2
-RNG = 1555052698: num_cases = 589605
+589605
 measles_16: lcg64_shift
-RNG = 1555052698: num_cases = 589154
+589154
 measles_16: mrg3
-RNG = 1555052698: num_cases = 590262
+590262
 measles_16: yarn3
-RNG = 1555052698: num_cases = 590543
+590543
 measles_60: lcg64
-RNG = 1555052698: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 1555052698: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 1555052698: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 1555052698: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 1555052698: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 1208459233: num_cases = 590165
+590165
 measles_16: yarn2
-RNG = 1208459233: num_cases = 591505
+591505
 measles_16: lcg64_shift
-RNG = 1208459233: num_cases = 589646
+589646
 measles_16: mrg3
-RNG = 1208459233: num_cases = 590263
+590263
 measles_16: yarn3
-RNG = 1208459233: num_cases = 589339
+589339
 measles_60: lcg64
-RNG = 1208459233: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 1208459233: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 1208459233: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 1208459233: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 1208459233: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 1550070597: num_cases = 590354
+590354
 measles_16: yarn2
-RNG = 1550070597: num_cases = 590688
+590688
 measles_16: lcg64_shift
-RNG = 1550070597: num_cases = 590162
+590162
 measles_16: mrg3
-RNG = 1550070597: num_cases = 590850
+590850
 measles_16: yarn3
-RNG = 1550070597: num_cases = 590041
+590041
 measles_60: lcg64
-RNG = 1550070597: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 1550070597: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 1550070597: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 1550070597: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 1550070597: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 3504469247: num_cases = 590505
+590505
 measles_16: yarn2
-RNG = 3504469247: num_cases = 589464
+589464
 measles_16: lcg64_shift
-RNG = 3504469247: num_cases = 590078
+590078
 measles_16: mrg3
-RNG = 3504469247: num_cases = 590477
+590477
 measles_16: yarn3
-RNG = 3504469247: num_cases = 590269
+590269
 measles_60: lcg64
-RNG = 3504469247: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 3504469247: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 3504469247: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 3504469247: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 3504469247: num_cases = 600000
+600000
 measles_16: lcg64
-RNG = 923645149: num_cases = 590302
+590302
 measles_16: yarn2
-RNG = 923645149: num_cases = 590210
+590210
 measles_16: lcg64_shift
-RNG = 923645149: num_cases = 589759
+589759
 measles_16: mrg3
-RNG = 923645149: num_cases = 591241
+591241
 measles_16: yarn3
-RNG = 923645149: num_cases = 589918
+589918
 measles_60: lcg64
-RNG = 923645149: num_cases = 600000
+600000
 measles_60: yarn2
-RNG = 923645149: num_cases = 600000
+600000
 measles_60: lcg64_shift
-RNG = 923645149: num_cases = 600000
+600000
 measles_60: mrg3
-RNG = 923645149: num_cases = 600000
+600000
 measles_60: yarn3
-RNG = 923645149: num_cases = 600000
+600000
