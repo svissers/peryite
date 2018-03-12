@@ -49,11 +49,11 @@ using uint = unsigned int;
  * Generate Populations
  */
 template <class U>
-class PopulationGenerator
+class GeogridGenerator
 {
 public:
         /// Constructor: Check if the xml is valid and set up the basic things like a random generator
-        PopulationGenerator(const string& filename, const int& seed, bool output = true);
+        GeogridGenerator(const string& filename, const int& seed, bool output = true);
 
         /// Generates a population, writes the result to the files found in the data directory
         /// Output files are respectively formatted according to the following template files: belgium_population.csv,
@@ -61,16 +61,13 @@ public:
         void generate(const string& prefix);
 
 private:
-        /// Writes the cities and villages to the file, see PopulationGenerator::generate
+        /// Writes the cities and villages to the file, see GeogridGenerator::generate
         void writeCities(const string& target_cities);
 
-        /// Writes the population to the file, see PopulationGenerator::generate
-        void writePop(const string& target_pop) const;
-
-        /// Writes the households to the file, see PopulationGenerator::generate
+        /// Writes the households to the file, see GeogridGenerator::generate
         void writeHouseholds(const string& target_households) const;
 
-        /// Writes the clusters to the file (type, ID and coordinates), see PopulationGenerator::generate
+        /// Writes the clusters to the file (type, ID and coordinates), see GeogridGenerator::generate
         void writeClusters(const string& target_clusters) const;
 
         /// Checks the xml on correctness, this includes only semantic errors, no syntax errors
@@ -217,7 +214,7 @@ private:
         }
 
         /// Get the clusters that are within the range of a certain coordinate and radius (both given as an argument)
-        /// The distances are precomputed by PopulationGenerator::makeDistanceMap and the result of that function has to
+        /// The distances are precomputed by GeogridGenerator::makeDistanceMap and the result of that function has to
         /// be passed as an argument to this function
         vector<uint> getClustersWithinRange(double                                                        radius,
                                             const vector<pair<GeoCoordinate, map<double, vector<uint>>>>& distance_map,

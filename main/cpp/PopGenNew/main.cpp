@@ -18,7 +18,7 @@
  * Main program: command line handling.
  */
 
-#include "PopulationGenerator.cpp"
+#include "GeogridGenerator.cpp"
 
 #include <tclap/CmdLine.h>
 #include <memory>
@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 {
         try {
                 // TCLAP commandline interface
-                CmdLine cmd("Commandline interface of the PopulationGenerator", ' ', "Beta");
+                CmdLine cmd("Commandline interface of the GeogridGenerator", ' ', "Beta");
 
                 ValueArg<string> sourceArg("i", "input", "Input xml file for the configuration of the generator", true,
                                            "data/happy_day.xml", "string", cmd);
@@ -58,34 +58,34 @@ int main(int argc, char** argv)
 
                 cerr << "Starting...\n";
                 if (rng == "default_random_engine") {
-                        PopulationGenerator<default_random_engine> generator{sourceXml, seed};
+                        GeogridGenerator<default_random_engine> generator{sourceXml, seed};
                         generator.generate(prefix);
                 } else if (rng == "mt19937") {
-                        PopulationGenerator<mt19937> generator{sourceXml, seed};
+                        GeogridGenerator<mt19937> generator{sourceXml, seed};
                         generator.generate(prefix);
                 } else if (rng == "mt19937_64") {
-                        PopulationGenerator<mt19937_64> generator{sourceXml, seed};
+                        GeogridGenerator<mt19937_64> generator{sourceXml, seed};
                         generator.generate(prefix);
                 } else if (rng == "minstd_rand0") {
-                        PopulationGenerator<minstd_rand0> generator{sourceXml, seed};
+                        GeogridGenerator<minstd_rand0> generator{sourceXml, seed};
                         generator.generate(prefix);
                 } else if (rng == "minstd_rand") {
-                        PopulationGenerator<minstd_rand> generator{sourceXml, seed};
+                        GeogridGenerator<minstd_rand> generator{sourceXml, seed};
                         generator.generate(prefix);
                 } else if (rng == "ranlux24_base") {
-                        PopulationGenerator<ranlux24_base> generator{sourceXml, seed};
+                        GeogridGenerator<ranlux24_base> generator{sourceXml, seed};
                         generator.generate(prefix);
                 } else if (rng == "ranlux48_base") {
-                        PopulationGenerator<ranlux48_base> generator{sourceXml, seed};
+                        GeogridGenerator<ranlux48_base> generator{sourceXml, seed};
                         generator.generate(prefix);
                 } else if (rng == "ranlux24") {
-                        PopulationGenerator<ranlux24> generator{sourceXml, seed};
+                        GeogridGenerator<ranlux24> generator{sourceXml, seed};
                         generator.generate(prefix);
                 } else if (rng == "ranlux48") {
-                        PopulationGenerator<ranlux48> generator{sourceXml, seed};
+                        GeogridGenerator<ranlux48> generator{sourceXml, seed};
                         generator.generate(prefix);
                 } else if (rng == "knuth_b") {
-                        PopulationGenerator<knuth_b> generator{sourceXml, seed};
+                        GeogridGenerator<knuth_b> generator{sourceXml, seed};
                         generator.generate(prefix);
                 }
                 cerr << "Done!\n";

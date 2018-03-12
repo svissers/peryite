@@ -18,7 +18,7 @@
  * Population genarator implementations.
  */
 
-#include "PopulationGenerator.h"
+#include "GeogridGenerator.h"
 #include "FamilyParser.h"
 #include "util/InstallDirs.h"
 #include "util/TimeStamp.h"
@@ -35,7 +35,7 @@ using namespace boost::property_tree;
 using namespace xml_parser;
 
 template <class U>
-PopulationGenerator<U>::PopulationGenerator(const string& filename, const int& seed, bool output)
+GeogridGenerator<U>::GeogridGenerator(const string& filename, const int& seed, bool output)
 {
         // check data environment.
         if (InstallDirs::GetDataDir().empty()) {
@@ -70,7 +70,7 @@ PopulationGenerator<U>::PopulationGenerator(const string& filename, const int& s
 }
 
 template <class U>
-void PopulationGenerator<U>::generate(const string& prefix)
+void GeogridGenerator<U>::generate(const string& prefix)
 {
         if (m_output) {
                 cerr << "Generating " << m_total << " people...\n";
@@ -128,7 +128,7 @@ void PopulationGenerator<U>::generate(const string& prefix)
 }
 
 template <class U>
-void PopulationGenerator<U>::writeCities(const string& target_cities)
+void GeogridGenerator<U>::writeCities(const string& target_cities)
 {
         ofstream my_file{(InstallDirs::GetDataDir() /= target_cities).string()};
         double   total_pop = 0.0;
@@ -178,35 +178,12 @@ void PopulationGenerator<U>::writeCities(const string& target_cities)
                 if (m_output)
                         cout << "Written " << target_cities << endl;
         } else {
-                throw invalid_argument("In PopulationGenerator: Invalid file.");
+                throw invalid_argument("In GeogridGenerator: Invalid file.");
         }
 }
 
 template <class U>
-void PopulationGenerator<U>::writePop(const string& target_pop) const
-{
-        ofstream my_file{(InstallDirs::GetDataDir() /= target_pop).string()};
-
-        if (my_file.is_open()) {
-                my_file << "\"age\",\"household_id\",\"school_id\",\"work_id\",\"primary_community\",\"secondary_"
-                           "community\"\n";
-
-                for (const SimplePerson& person : m_people) {
-                        my_file << person.m_age << "," << person.m_household_id << "," << person.m_school_id << ","
-                                << person.m_work_id << "," << person.m_primary_community << ","
-                                << person.m_secondary_community << endl;
-                }
-
-                my_file.close();
-                if (m_output)
-                        cout << "Written " << target_pop << endl;
-        } else {
-                throw invalid_argument("In PopulationGenerator: Invalid file.");
-        }
-}
-
-template <class U>
-void PopulationGenerator<U>::writeHouseholds(const string& target_households) const
+void GeogridGenerator<U>::writeHouseholds(const string& target_households) const
 {
         ofstream my_file{(InstallDirs::GetDataDir() /= target_households).string()};
         if (my_file.is_open()) {
@@ -222,12 +199,12 @@ void PopulationGenerator<U>::writeHouseholds(const string& target_households) co
                 if (m_output)
                         cout << "Written " << target_households << endl;
         } else {
-                throw invalid_argument("In PopulationGenerator: Invalid file.");
+                throw invalid_argument("In GeogridGenerator: Invalid file.");
         }
 }
 
 template <class U>
-void PopulationGenerator<U>::writeClusters(const string& target_clusters) const
+void GeogridGenerator<U>::writeClusters(const string& target_clusters) const
 {
         ofstream my_file{(InstallDirs::GetDataDir() /= target_clusters).string()};
         if (my_file.is_open()) {
@@ -251,12 +228,12 @@ void PopulationGenerator<U>::writeClusters(const string& target_clusters) const
                 if (m_output)
                         cout << "Written " << target_clusters << endl;
         } else {
-                throw invalid_argument("In PopulationGenerator: Invalid file.");
+                throw invalid_argument("In GeogridGenerator: Invalid file.");
         }
 }
 
 template <class U>
-void PopulationGenerator<U>::checkForValidXML() const
+void GeogridGenerator<U>::checkForValidXML() const
 {
         ptree pop_config = m_props.get_child("population");
 
@@ -267,7 +244,7 @@ void PopulationGenerator<U>::checkForValidXML() const
         int provinces = pop_config.get<int>("<xmlattr>.provinces");
 
         if (provinces <= 0) {
-                throw invalid_argument("In PopulationGenerator: Numerical error.");
+                throw invalid_argument("In GeogridGenerator: Numerical error.");
         }
 
         /// Valid commuting data: the start radius is a positive double, and the factor is a double greater than 1
@@ -275,7 +252,7 @@ void PopulationGenerator<U>::checkForValidXML() const
         double factor = pop_config.get<double>("commutingdata.<xmlattr>.factor");
 
         if (radius <= 0 || factor <= 1.0) {
-                throw invalid_argument("In PopulationGenerator: Numerical error.");
+                throw invalid_argument("In GeogridGenerator: Numerical error.");
         }
 
         /// Cities: unique location
@@ -294,26 +271,26 @@ void PopulationGenerator<U>::checkForValidXML() const
                         double longitude = it->second.get<double>("<xmlattr>.lon");
 
                         if (abs(latitude) > 90 || abs(longitude) > 180) {
-                                throw invalid_argument("In PopulationGenerator: Invalid geo-coordinate in XML.");
+                                throw invalid_argument("In GeogridGenerator: Invalid geo-coordinate in XML.");
                         }
 
                         if (it->second.get<int>("<xmlattr>.pop") <= 0) {
-                                throw invalid_argument("In PopulationGenerator: Numerical error.");
+                                throw invalid_argument("In GeogridGenerator: Numerical error.");
                         }
 
                         auto it2 = find(current_locations.begin(), current_locations.end(),
                                         GeoCoordinate(latitude, longitude));
                         if (it2 != current_locations.end())
-                                throw invalid_argument("In PopulationGenerator: Duplicate coordinates given in XML.");
+                                throw invalid_argument("In GeogridGenerator: Duplicate coordinates given in XML.");
 
                         current_locations.push_back(GeoCoordinate(latitude, longitude));
                 } else {
-                        throw invalid_argument("In PopulationGenerator: Missing/incorrect tags/attributes in XML.");
+                        throw invalid_argument("In GeogridGenerator: Missing/incorrect tags/attributes in XML.");
                 }
         }
 
         if (has_no_cities) {
-                throw invalid_argument("In PopulationGenerator: No cities found.");
+                throw invalid_argument("In GeogridGenerator: No cities found.");
         }
 
         /// Check for valid villages
@@ -333,24 +310,24 @@ void PopulationGenerator<U>::checkForValidXML() const
                         fraction += it->second.get<double>("<xmlattr>.fraction") / 100.0;
 
                         if (fraction < 0) {
-                                throw invalid_argument("In PopulationGenerator: Numerical error.");
+                                throw invalid_argument("In GeogridGenerator: Numerical error.");
                         }
 
                         if (minimum > max || minimum <= 0 || max < 0) {
-                                throw invalid_argument("In PopulationGenerator: Numerical error.");
+                                throw invalid_argument("In GeogridGenerator: Numerical error.");
                         }
                 } else if (it->first == "<xmlattr>") {
                 } else {
-                        throw invalid_argument("In PopulationGenerator: Missing/incorrect tags/attributes in XML.");
+                        throw invalid_argument("In GeogridGenerator: Missing/incorrect tags/attributes in XML.");
                 }
         }
 
         if (fraction != 1.0 || village_radius_factor <= 0.0) {
-                throw invalid_argument("In PopulationGenerator: Numerical error.");
+                throw invalid_argument("In GeogridGenerator: Numerical error.");
         }
 
         if (has_no_villages) {
-                throw invalid_argument("In PopulationGenerator: No villages found.");
+                throw invalid_argument("In GeogridGenerator: No villages found.");
         }
 
         /// Check for valid Education
@@ -365,11 +342,11 @@ void PopulationGenerator<U>::checkForValidXML() const
         int mandatory_max       = school_work_config.get<int>("mandatory.<xmlattr>.max");
 
         if (mandatory_min > mandatory_max || mandatory_min < 0 || mandatory_max < 0) {
-                throw invalid_argument("In PopulationGenerator: Numerical error in min/max pair.");
+                throw invalid_argument("In GeogridGenerator: Numerical error in min/max pair.");
         }
 
         if (total_size <= 0 || cluster_size <= 0) {
-                throw invalid_argument("In PopulationGenerator: Numerical error.");
+                throw invalid_argument("In GeogridGenerator: Numerical error.");
         }
 
         /// Optional education
@@ -383,21 +360,21 @@ void PopulationGenerator<U>::checkForValidXML() const
         total_size         = education_config.get<uint>("optional.<xmlattr>.total_size");
 
         if (minimum > max || minimum < 0 || max < 0) {
-                throw invalid_argument("In PopulationGenerator: Numerical error in min/max pair.");
+                throw invalid_argument("In GeogridGenerator: Numerical error in min/max pair.");
         }
 
         if (total_size <= 0 || cluster_size <= 0 || fraction < 0.0 || fraction > 1.0) {
-                throw invalid_argument("In PopulationGenerator: Numerical error.");
+                throw invalid_argument("In GeogridGenerator: Numerical error.");
         }
 
         if (minimum <= mandatory_max) {
-                throw invalid_argument("In PopulationGenerator: Overlapping min/max pairs.");
+                throw invalid_argument("In GeogridGenerator: Overlapping min/max pairs.");
         }
 
         fraction = education_config.get<double>("optional.far.<xmlattr>.fraction") / 100.0;
 
         if (fraction < 0.0 || fraction > 1.0) {
-                throw invalid_argument("In PopulationGenerator: Numerical error.");
+                throw invalid_argument("In GeogridGenerator: Numerical error.");
         }
 
         /// Check for valid work
@@ -412,11 +389,11 @@ void PopulationGenerator<U>::checkForValidXML() const
         fraction   = school_work_config.get<double>("<xmlattr>.fraction") / 100.0;
 
         if (minimum > max || minimum < 0 || max < 0) {
-                throw invalid_argument("In PopulationGenerator: Numerical error in min/max pair.");
+                throw invalid_argument("In GeogridGenerator: Numerical error in min/max pair.");
         }
 
         if (total_size <= 0 || cluster_size <= 0 || fraction < 0.0 || fraction > 1.0) {
-                throw invalid_argument("In PopulationGenerator: Numerical error.");
+                throw invalid_argument("In GeogridGenerator: Numerical error.");
         }
 
         int min2 = school_work_config.get<int>("young_employee.<xmlattr>.min");
@@ -424,15 +401,15 @@ void PopulationGenerator<U>::checkForValidXML() const
         fraction = work_config.get<double>("far.<xmlattr>.fraction") / 100.0;
 
         if (min2 > max2 || min2 < 0 || max2 < 0) {
-                throw invalid_argument("In PopulationGenerator: Numerical error in min/max pair.");
+                throw invalid_argument("In GeogridGenerator: Numerical error in min/max pair.");
         }
 
         if (max2 >= minimum) {
-                throw invalid_argument("In PopulationGenerator: Overlapping min/max pairs.");
+                throw invalid_argument("In GeogridGenerator: Overlapping min/max pairs.");
         }
 
         if (fraction < 0.0 || fraction > 1.0) {
-                throw invalid_argument("In PopulationGenerator: Numerical error.");
+                throw invalid_argument("In GeogridGenerator: Numerical error.");
         }
 
         /// Check for valid communities
@@ -441,14 +418,14 @@ void PopulationGenerator<U>::checkForValidXML() const
         total_size = pop_config.get<int>("community.<xmlattr>.size");
 
         if (total_size <= 0) {
-                throw invalid_argument("In PopulationGenerator: Numerical error.");
+                throw invalid_argument("In GeogridGenerator: Numerical error.");
         }
         if (m_output)
                 cerr << "\rChecking for valid XML [100%]\n";
 }
 
 template <class U>
-void PopulationGenerator<U>::makeHouseholds()
+void GeogridGenerator<U>::makeHouseholds()
 {
         m_next_id        = 1;
         string file_name = m_props.get<string>("population.family.<xmlattr>.file");
@@ -495,7 +472,7 @@ void PopulationGenerator<U>::makeHouseholds()
 }
 
 template <class U>
-void PopulationGenerator<U>::makeCities()
+void GeogridGenerator<U>::makeCities()
 {
         ptree cities_config = m_props.get_child("population.cities");
         m_next_id           = 1;
@@ -530,7 +507,7 @@ void PopulationGenerator<U>::makeCities()
 }
 
 template <class U>
-GeoCoordinate PopulationGenerator<U>::getCityMiddle() const
+GeoCoordinate GeogridGenerator<U>::getCityMiddle() const
 {
         double latitude_middle  = 0.0;
         double longitude_middle = 0.0;
@@ -548,7 +525,7 @@ GeoCoordinate PopulationGenerator<U>::getCityMiddle() const
 }
 
 template <class U>
-double PopulationGenerator<U>::getCityRadius(const GeoCoordinate& coord) const
+double GeogridGenerator<U>::getCityRadius(const GeoCoordinate& coord) const
 {
         double current_maximum = -1.0;
 
@@ -564,7 +541,7 @@ double PopulationGenerator<U>::getCityRadius(const GeoCoordinate& coord) const
 }
 
 template <class U>
-double PopulationGenerator<U>::getCityPopulation() const
+double GeogridGenerator<U>::getCityPopulation() const
 {
         uint result = 0;
 
@@ -576,7 +553,7 @@ double PopulationGenerator<U>::getCityPopulation() const
 }
 
 template <class U>
-double PopulationGenerator<U>::getVillagePopulation() const
+double GeogridGenerator<U>::getVillagePopulation() const
 {
         uint result = 0;
 
@@ -588,7 +565,7 @@ double PopulationGenerator<U>::getVillagePopulation() const
 }
 
 template <class U>
-void PopulationGenerator<U>::makeVillages()
+void GeogridGenerator<U>::makeVillages()
 {
         // Do NOT reset the id counter (cities and villages will be treated as one)
         ptree         village_config                 = m_props.get_child("population.villages");
@@ -656,7 +633,7 @@ void PopulationGenerator<U>::makeVillages()
 }
 
 template <class U>
-void PopulationGenerator<U>::placeHouseholds()
+void GeogridGenerator<U>::placeHouseholds()
 {
         uint city_pop    = getCityPopulation();
         uint village_pop = getVillagePopulation();
@@ -706,7 +683,7 @@ void PopulationGenerator<U>::placeHouseholds()
 }
 
 template <class U>
-void PopulationGenerator<U>::makeSchools()
+void GeogridGenerator<U>::makeSchools()
 {
         /// Note: schools are "assigned" to villages and cities
         m_next_id                = 1;
@@ -740,7 +717,7 @@ void PopulationGenerator<U>::makeSchools()
 }
 
 template <class U>
-void PopulationGenerator<U>::makeUniversities()
+void GeogridGenerator<U>::makeUniversities()
 {
         // Note: don't reset the next_id, the universities are also "schools", and the previously handled function was
         // "makeSchools"
@@ -803,7 +780,7 @@ void PopulationGenerator<U>::makeUniversities()
 }
 
 template <class U>
-void PopulationGenerator<U>::sortWorkplaces()
+void GeogridGenerator<U>::sortWorkplaces()
 {
         /// Sorts according to the cities (assumes they are sorted in a way that you might desire)
         vector<SimpleCluster> result;
@@ -828,7 +805,7 @@ void PopulationGenerator<U>::sortWorkplaces()
 }
 
 template <class U>
-void PopulationGenerator<U>::makeWork()
+void GeogridGenerator<U>::makeWork()
 {
         m_next_id                = 1;
         ptree school_work_config = m_props.get_child("population.school_work_profile.employable");
@@ -870,7 +847,7 @@ void PopulationGenerator<U>::makeWork()
 }
 
 template <class U>
-void PopulationGenerator<U>::makeCommunities()
+void GeogridGenerator<U>::makeCommunities()
 {
         /// TODO? Currently not doing the thing with the average communities per person, right now, everyone gets two
         /// communities
