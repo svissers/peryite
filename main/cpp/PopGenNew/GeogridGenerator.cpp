@@ -470,42 +470,7 @@ void GeogridGenerator<U>::makeHouseholds()
         if (m_output)
                 cerr << "\rGenerating households [100%]...\n";
 }
-
-template <class U>
-void GeogridGenerator<U>::makeCities()
-{
-        ptree cities_config = m_props.get_child("population.cities");
-        m_next_id           = 1;
-        uint size_check     = 0;
-
-        uint generated   = 0;
-        uint to_generate = distance(cities_config.begin(), cities_config.end());
-        for (auto it = cities_config.begin(); it != cities_config.end(); it++) {
-                if (m_output)
-                        cerr << "\rGenerating cities [" << min(uint(double(generated) / to_generate * 100), 100U)
-                             << "%]";
-                if (it->first == "city") {
-                        string name      = it->second.get<string>("<xmlattr>.name");
-                        int    size      = it->second.get<int>("<xmlattr>.pop");
-                        double latitude  = it->second.get<double>("<xmlattr>.lat");
-                        double longitude = it->second.get<double>("<xmlattr>.lon");
-                        size_check += size;
-
-                        SimpleCity new_city = SimpleCity(0, size, m_next_id, name, GeoCoordinate(latitude, longitude));
-                        ++m_next_id;
-
-                        m_cities.push_back(new_city);
-                }
-                generated++;
-        }
-        if (m_output)
-                cerr << "\rGenerating cities [100%]...\n";
-
-        /// Important, make sure the vector is sorted (biggest to smallest)!
-        auto compare_city_size = [](const SimpleCity& a, const SimpleCity b) { return a.m_max_size > b.m_max_size; };
-        sort(m_cities.begin(), m_cities.end(), compare_city_size);
-}
-
+/*
 template <class U>
 GeoCoordinate GeogridGenerator<U>::getCityMiddle() const
 {
@@ -551,7 +516,7 @@ double GeogridGenerator<U>::getCityPopulation() const
 
         return result;
 }
-
+*/
 template <class U>
 double GeogridGenerator<U>::getVillagePopulation() const
 {
@@ -568,6 +533,7 @@ template <class U>
 void GeogridGenerator<U>::makeVillages()
 {
         // Do NOT reset the id counter (cities and villages will be treated as one)
+        m_next_id = 1;
         ptree         village_config                 = m_props.get_child("population.villages");
         double        village_radius_factor          = village_config.get<double>("<xmlattr>.radius");
         GeoCoordinate middle                         = getCityMiddle();
