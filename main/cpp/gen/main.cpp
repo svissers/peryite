@@ -5,9 +5,13 @@
 #include "util/ConfigInfo.h"
 #include "util/InstallDirs.h"
 #include "util/TimeStamp.h"
+#include "gen/geogen/GeoGenerator.h"
 
 #include <tclap/CmdLine.h>
 #include <omp.h>
+
+namespace stride {
+namespace gen {
 
 using namespace std;
 using namespace stride::util;
@@ -27,11 +31,11 @@ int main(int argc, char* argv[])
                 // -----------------------------------------------------------------------------------------
                 // Parse command line.
                 // -----------------------------------------------------------------------------------------
-                CmdLine          cmd("generator", ' ', "1.0", false);
+                CmdLine cmd("generator", ' ', "1.0", false);
                 ValueArg<string> config_file_Arg("c", "config", "Config File", false, "run_generator_default.xml",
                                                  "CONFIGURATION FILE", cmd);
                 ValueArg<string> generator_type_Arg("g", "generator", "Generator type (geo or pop)", false, "geo",
-                                                "GENERATOR TYPE", cmd);
+                                                    "GENERATOR TYPE", cmd);
                 cmd.parse(argc, static_cast<const char* const*>(argv));
                 string config_file_name = config_file_Arg.getValue();
                 string generator_type = generator_type_Arg.getValue();
@@ -64,15 +68,14 @@ int main(int argc, char* argv[])
                 // -----------------------------------------------------------------------------------------
                 // Run Generator-Geo
                 // -----------------------------------------------------------------------------------------
-                if(generator_type == "geo") {
-                    GeoGenerator.generate(file_path);
+                if (generator_type == "geo") {
+                        GeoGenerator::generate(config_file_name);
                 }
 
                 // -----------------------------------------------------------------------------------------
                 // Run Generator-Pop
                 // -----------------------------------------------------------------------------------------
-                if(generator_type == "pop") {
-
+                if (generator_type == "pop") {
                 }
 
                 // -----------------------------------------------------------------------------------------
@@ -80,7 +83,6 @@ int main(int argc, char* argv[])
                 // -----------------------------------------------------------------------------------------
                 cout << "\nFinished at:      " << TimeStamp().ToString() << endl;
                 cout << "*************************************************************" << endl;
-
         } catch (std::exception& e) {
                 exit_status = EXIT_FAILURE;
                 cerr << "\nEXCEPTION THROWN: " << e.what() << endl;
@@ -91,3 +93,6 @@ int main(int argc, char* argv[])
         }
         return exit_status;
 }
+
+} // namespace gen
+} // namespace stride
