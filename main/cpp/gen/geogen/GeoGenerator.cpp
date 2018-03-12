@@ -21,7 +21,7 @@ void GeoGenerator::generate(const std::string config_path) {
     std::shared_ptr<std::vector<School>> Schools = SchoolsBuilder.build(Config, Geogrid);
 
     //building univiersities
-    std::shared_ptr<vector<University>> Universities = UniversitiesBuilder.build(Config, Geogrid);
+    std::shared_ptr<std::vector<University>> Universities = UniversitiesBuilder.build(Config, Geogrid);
 
     //building workplaces
     std::shared_ptr<std::vector<WorkPlace>> Workplaces = WorkplacesBuilder.build(Config, Geogrid);
