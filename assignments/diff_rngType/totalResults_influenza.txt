@@ -1,0 +1,600 @@
+influenza_a: lcg64
+2218
+influenza_a: yarn2
+2100
+influenza_a: lcg64_shift
+2126
+influenza_a: mrg3
+2126
+influenza_a: yarn3
+2068
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2004
+influenza_a: yarn2
+2140
+influenza_a: lcg64_shift
+1975
+influenza_a: mrg3
+2061
+influenza_a: yarn3
+2033
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2061
+influenza_a: yarn2
+2270
+influenza_a: lcg64_shift
+2264
+influenza_a: mrg3
+2144
+influenza_a: yarn3
+2082
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2168
+influenza_a: yarn2
+2113
+influenza_a: lcg64_shift
+1918
+influenza_a: mrg3
+2070
+influenza_a: yarn3
+1958
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+1996
+influenza_a: yarn2
+2182
+influenza_a: lcg64_shift
+2353
+influenza_a: mrg3
+2085
+influenza_a: yarn3
+2203
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2235
+influenza_a: yarn2
+2064
+influenza_a: lcg64_shift
+2187
+influenza_a: mrg3
+2058
+influenza_a: yarn3
+1864
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2162
+influenza_a: yarn2
+2116
+influenza_a: lcg64_shift
+2092
+influenza_a: mrg3
+2166
+influenza_a: yarn3
+2127
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2103
+influenza_a: yarn2
+2004
+influenza_a: lcg64_shift
+2159
+influenza_a: mrg3
+2037
+influenza_a: yarn3
+2182
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2113
+influenza_a: yarn2
+2068
+influenza_a: lcg64_shift
+2178
+influenza_a: mrg3
+2045
+influenza_a: yarn3
+2049
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2069
+influenza_a: yarn2
+2210
+influenza_a: lcg64_shift
+2286
+influenza_a: mrg3
+1975
+influenza_a: yarn3
+1962
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2040
+influenza_a: yarn2
+2039
+influenza_a: lcg64_shift
+2244
+influenza_a: mrg3
+2080
+influenza_a: yarn3
+2077
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2014
+influenza_a: yarn2
+2064
+influenza_a: lcg64_shift
+2167
+influenza_a: mrg3
+2165
+influenza_a: yarn3
+2063
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2070
+influenza_a: yarn2
+2049
+influenza_a: lcg64_shift
+2239
+influenza_a: mrg3
+1937
+influenza_a: yarn3
+2121
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2241
+influenza_a: yarn2
+1949
+influenza_a: lcg64_shift
+2207
+influenza_a: mrg3
+1909
+influenza_a: yarn3
+1970
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2108
+influenza_a: yarn2
+2460
+influenza_a: lcg64_shift
+2063
+influenza_a: mrg3
+2256
+influenza_a: yarn3
+2488
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2001
+influenza_a: yarn2
+2310
+influenza_a: lcg64_shift
+2333
+influenza_a: mrg3
+2138
+influenza_a: yarn3
+2140
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2099
+influenza_a: yarn2
+1966
+influenza_a: lcg64_shift
+2079
+influenza_a: mrg3
+2050
+influenza_a: yarn3
+2167
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2111
+influenza_a: yarn2
+2249
+influenza_a: lcg64_shift
+2056
+influenza_a: mrg3
+2366
+influenza_a: yarn3
+2057
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2058
+influenza_a: yarn2
+2250
+influenza_a: lcg64_shift
+2043
+influenza_a: mrg3
+1920
+influenza_a: yarn3
+2129
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5
+influenza_a: lcg64
+2154
+influenza_a: yarn2
+2040
+influenza_a: lcg64_shift
+2033
+influenza_a: mrg3
+1977
+influenza_a: yarn3
+2122
+influenza_b: lcg64
+0
+influenza_b: yarn2
+0
+influenza_b: lcg64_shift
+0
+influenza_b: mrg3
+0
+influenza_b: yarn3
+0
+influenza_c: lcg64
+5
+influenza_c: yarn2
+5
+influenza_c: lcg64_shift
+5
+influenza_c: mrg3
+5
+influenza_c: yarn3
+5

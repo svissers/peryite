@@ -1,0 +1,400 @@
+measles_16: lcg64
+589139
+measles_16: yarn2
+590192
+measles_16: lcg64_shift
+589032
+measles_16: mrg3
+589490
+measles_16: yarn3
+589892
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+591138
+measles_16: yarn2
+590371
+measles_16: lcg64_shift
+590859
+measles_16: mrg3
+589927
+measles_16: yarn3
+590016
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+590237
+measles_16: yarn2
+590549
+measles_16: lcg64_shift
+590928
+measles_16: mrg3
+589637
+measles_16: yarn3
+590441
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+590315
+measles_16: yarn2
+590891
+measles_16: lcg64_shift
+590183
+measles_16: mrg3
+590121
+measles_16: yarn3
+589153
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+590368
+measles_16: yarn2
+589947
+measles_16: lcg64_shift
+590613
+measles_16: mrg3
+589301
+measles_16: yarn3
+589870
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+590290
+measles_16: yarn2
+590076
+measles_16: lcg64_shift
+590789
+measles_16: mrg3
+590124
+measles_16: yarn3
+590216
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+590670
+measles_16: yarn2
+589483
+measles_16: lcg64_shift
+590350
+measles_16: mrg3
+590247
+measles_16: yarn3
+589569
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+590481
+measles_16: yarn2
+590797
+measles_16: lcg64_shift
+590863
+measles_16: mrg3
+589202
+measles_16: yarn3
+590786
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+589272
+measles_16: yarn2
+588688
+measles_16: lcg64_shift
+590544
+measles_16: mrg3
+591133
+measles_16: yarn3
+590126
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+590416
+measles_16: yarn2
+589577
+measles_16: lcg64_shift
+590312
+measles_16: mrg3
+590268
+measles_16: yarn3
+590731
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+590368
+measles_16: yarn2
+590218
+measles_16: lcg64_shift
+589126
+measles_16: mrg3
+590545
+measles_16: yarn3
+589176
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+589045
+measles_16: yarn2
+589149
+measles_16: lcg64_shift
+589880
+measles_16: mrg3
+589976
+measles_16: yarn3
+589151
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+589280
+measles_16: yarn2
+589578
+measles_16: lcg64_shift
+589533
+measles_16: mrg3
+591103
+measles_16: yarn3
+589715
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+590234
+measles_16: yarn2
+591162
+measles_16: lcg64_shift
+590672
+measles_16: mrg3
+589723
+measles_16: yarn3
+590447
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+590614
+measles_16: yarn2
+590586
+measles_16: lcg64_shift
+590249
+measles_16: mrg3
+591371
+measles_16: yarn3
+588970
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+590328
+measles_16: yarn2
+589605
+measles_16: lcg64_shift
+589154
+measles_16: mrg3
+590262
+measles_16: yarn3
+590543
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+590165
+measles_16: yarn2
+591505
+measles_16: lcg64_shift
+589646
+measles_16: mrg3
+590263
+measles_16: yarn3
+589339
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+590354
+measles_16: yarn2
+590688
+measles_16: lcg64_shift
+590162
+measles_16: mrg3
+590850
+measles_16: yarn3
+590041
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+590505
+measles_16: yarn2
+589464
+measles_16: lcg64_shift
+590078
+measles_16: mrg3
+590477
+measles_16: yarn3
+590269
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
+measles_16: lcg64
+590302
+measles_16: yarn2
+590210
+measles_16: lcg64_shift
+589759
+measles_16: mrg3
+591241
+measles_16: yarn3
+589918
+measles_60: lcg64
+600000
+measles_60: yarn2
+600000
+measles_60: lcg64_shift
+600000
+measles_60: mrg3
+600000
+measles_60: yarn3
+600000
