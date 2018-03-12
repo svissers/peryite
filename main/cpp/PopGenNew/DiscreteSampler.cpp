@@ -28,7 +28,7 @@ DiscreteSampler::DiscreteSampler(const vector<double>& probabilities) {
     const double factor = 1.0 / std::accumulate(probabilities.begin(), probabilities.end(), 0.0);
 
     const auto n = probabilities.size();
-    probs(n + 1);
+    probs.resize(n+1);
     double tracker = 0;
     probs[0] = 0;
     for (unsigned int i = 1; i < n; i++){
@@ -45,3 +45,4 @@ unsigned int DiscreteSampler::Draw(double drawnNr) {
     }
 
 }
+
