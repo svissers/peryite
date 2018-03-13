@@ -24,7 +24,8 @@ void GeoGenerator::generate(const std::string config_path) {
     GeoConfiguration Config = GeoConfiguration(config_path, thread_count);
 
     //building geogrid
-    std::shared_ptr<GeoGrid> Geogrid = GeoGridBuilder.build(Config);
+    GeoGridBuilder geoBuild;
+    std::shared_ptr<GeoGrid> Geogrid = geoBuild.build(Config);
 
     //building communities
     std::shared_ptr<std::vector<Community>> Communities = CommunitiesBuilder.build(Config, Geogrid);
@@ -38,7 +39,8 @@ void GeoGenerator::generate(const std::string config_path) {
     //building workplaces
     std::shared_ptr<std::vector<WorkPlace>> Workplaces = WorkplacesBuilder.build(Config, Geogrid);
 
-
+    //writing Geogrid
+    geoBuild.write("./output/Geogrid.csv");
 
 }
 

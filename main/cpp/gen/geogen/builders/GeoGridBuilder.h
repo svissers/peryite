@@ -15,6 +15,7 @@ private:
     double maxLong;
     double LongitudeBandWidth;
 public:
+        GeoGridBuilder();
         shared_ptr<GeoGrid> geo_grid;
         /// Builds the GeoGrid using city data.
         /// @param config       The configuration for a geogrid.
