@@ -2,9 +2,9 @@
  * @file
  * Main program for the generation of geogrids and a population.
  */
-#include "util/ConfigInfo.h"
-#include "util/InstallDirs.h"
-#include "util/TimeStamp.h"
+#include "../util/ConfigInfo.h"
+#include "../util/InstallDirs.h"
+#include "../util/TimeStamp.h"
 #include "gen/geogen/GeoGenerator.h"
 
 #include <tclap/CmdLine.h>

@@ -2,7 +2,6 @@
 #include "../structs/UrbanCenter.h"
 #include "util/CSV.h"
 #include "geo/GeoCoordinate.h"
-#define AMOUNTOFBANDS 50
 namespace stride {
 namespace gen {
 

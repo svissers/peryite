@@ -3,7 +3,7 @@
 #include <boost/filesystem/path.hpp>
 #include "util/CSV.h"
 #include "util/RNManager.h"
-
+#define AMOUNTOFBANDS 50
 namespace stride {
 namespace gen {
 

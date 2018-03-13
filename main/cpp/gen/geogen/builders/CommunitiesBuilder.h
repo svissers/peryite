@@ -13,11 +13,15 @@ namespace gen {
 class CommunitiesBuilder
 {
 public:
+        shared_ptr<vector<Community >> communities;
+        CommunitiesBuilder();
         /// Builds a list of communities using the Geogrid and some configuration
         /// values.
         /// @param config       TODO
         /// @param locations    TODO
         static std::shared_ptr<std::vector<Community>> build(GeoConfiguration& config, std::shared_ptr<GeoGrid> grid);
+        void write(std::string outputFile);
+
 };
 
 } // namespace gen
