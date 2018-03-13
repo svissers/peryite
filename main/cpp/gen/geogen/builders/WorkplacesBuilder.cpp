@@ -1,4 +1,4 @@
-#include "WprkplacesBuilder.h"
+#include "WorkplacesBuilder.h"
 #include "trng/fast_discrete_dist.hpp"
 #include "util/RNManager.h"
 #include "util/CSV.h"
@@ -10,7 +10,7 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
-static shared_ptr<vector<WorkPlace>> build(GeoConfiguration& config, shared_ptr<GeoGrid> grid)
+shared_ptr<vector<WorkPlace>> build(GeoConfiguration& config, shared_ptr<GeoGrid> grid)
 {
         auto workplaces = make_shared<vector<WorkPlace>>();
 

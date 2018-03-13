@@ -1,19 +1,12 @@
 #include "GeoGenerator.h"
 #include "GeoConfiguration.h"
+#include "builders/SchoolsBuilder.h"
+#include "builders/WorkplacesBuilder.h"
+
 namespace stride {
 namespace gen {
 
-
-void Geogenerator::writeToFile(std::string output_filename, Builder writable){
-    ofstream my_file{"./output/" + output_filename};
-
-    if(my_file.is_open()){
-        break;
-        //TODO write
-    }
-
-
-}
+using namespace util;
 
 void GeoGenerator::generate(const std::string config_path) {
 
@@ -29,17 +22,19 @@ void GeoGenerator::generate(const std::string config_path) {
 
     //building communities
     CommunitiesBuilder comBuild;
-    std::shared_ptr<std::vector<Community>> Communities = ComBuild.build(Config, Geogrid);
+    std::shared_ptr<std::vector<Community>> Communities = comBuild.build(Config, Geogrid);
 
-    //building schools
-    std::shared_ptr<std::vector<School>> Schools = SchoolsBuilder.build(Config, Geogrid);
+    //building schoolsui
+    SchoolsBuilder schoolsBuilder;
+    std::shared_ptr<std::vector<School>> Schools = schoolsBuilder.build(Config, Geogrid);
 
     //building univiersities
     UniversitiesBuilder uniBuild;
     std::shared_ptr<std::vector<University>> Universities = uniBuild.build(Config, Geogrid);
 
     //building workplaces
-    std::shared_ptr<std::vector<WorkPlace>> Workplaces = WorkplacesBuilder.build(Config, Geogrid);
+    WorkplacesBuilder workplacesBuilder;
+    std::shared_ptr<std::vector<WorkPlace>> Workplaces = workplacesBuilder.build(Config, Geogrid);
 
     //writing Geogrid
     geoBuild.write("./output/Geogrid.csv");

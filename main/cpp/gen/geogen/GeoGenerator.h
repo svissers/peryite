@@ -22,8 +22,6 @@ public:
         /// @param config_path     The path to the configuration xml file to use.
         static void generate(std::string config_path);
 
-        void writeToFile(std::string output_filename);
-
 };
 
 } // namespace gen

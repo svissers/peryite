@@ -34,16 +34,16 @@ shared_ptr<GeoGrid> GeoGridBuilder::build(const GeoConfiguration& config)
 
     void GeoGridBuilder::write(std::string GeogridFile) {
                std::vector<std::vector<UrbanCenter> > sortedCenters;
-        for(unsigned int it = geo_grid->begin(); it < geo_grid->end();it++){
+        for(auto it = geo_grid->begin(); it < geo_grid->end();it++){
                 for(unsigned int i=0; i < AMOUNTOFBANDS; i++){
                         if(it->coordinate.m_longitude<minLong+((i+1)*LongitudeBandWidth)){
                                 for(unsigned int j=0; j<sortedCenters[i].size(); j++){
                                         if(sortedCenters[i][j].coordinate.m_latitude> it->coordinate.m_latitude){
                                                 j--;
+                                                sortedCenters[i].insert(sortedCenters[j].begin()+j, *it);
                                                 break;
                                         }
                                 }
-                                sortedCenters[i].insert(sortedCenters.begin()+j, *it);
                                 break;
                         }
                 }

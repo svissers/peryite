@@ -1,4 +1,5 @@
 #include "UniversitiesBuilder.h"
+#include "../structs/UrbanCenter.h"
 #include <algorithm>
 
 namespace stride {
@@ -8,7 +9,7 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
-static std::shared_ptr<vector<University>> build(GeoConfiguration& config, shared_ptr<GeoGrid> grid)
+std::shared_ptr<vector<University>> UniversitiesBuilder::build(GeoConfiguration& config, shared_ptr<GeoGrid> grid)
 {
         universities = make_shared<vector<University>>();
         unsigned int mandatory_students_count = (unsigned int)(config.getUniversityFraction() * grid->getTotalPopulation());
@@ -21,10 +22,10 @@ static std::shared_ptr<vector<University>> build(GeoConfiguration& config, share
         sort(grid->begin(), grid->end(), compare_population);
 
         // Take the 10 biggest cities
-        int city_count = min(10, grid->size());
+        int city_count = min(10, (int)grid->size());
         auto biggest = grid->begin();
         auto smallest = grid->begin() + city_count;
-        auto big_cities(biggest, smallest);
+        vector<UrbanCenter> big_cities(biggest, smallest);
 
         unsigned int total_city_population = 0;
         for(UrbanCenter center : big_cities) {
@@ -36,7 +37,7 @@ static std::shared_ptr<vector<University>> build(GeoConfiguration& config, share
                 counter+=SchoolsToAdd;
                 if(counter==school_count){
                         for(unsigned int i = 0; i < SchoolsToAdd; i++)
-                                universities.push_back(University(center.coordinate));
+                                universities->push_back(University(i, center.coordinate));
                         break;
                 }
                 if(counter>school_count) {
@@ -45,7 +46,7 @@ static std::shared_ptr<vector<University>> build(GeoConfiguration& config, share
                                 counter--;
                         }
                         for(unsigned int i = 0; i < SchoolsToAdd; i++)
-                                universities.push_back(University(center.coordinate));
+                                universities->push_back(University(i, center.coordinate));
                         break;
                 }
         }
@@ -58,16 +59,16 @@ static std::shared_ptr<vector<University>> build(GeoConfiguration& config, share
 
     void UniversitiesBuilder::write(std::string UniversityFile){
             std::vector<std::vector<University> > sortedUniversities;
-            for(unsigned int it = universities->begin(); it < universities->end();it++){
+            for(auto it = universities->begin(); it < universities->end();it++){
                     for(unsigned int i=0; i < AMOUNTOFBANDS; i++){
                             if(it->coordinate.m_longitude<minLong+((i+1)*LongitudeBandWidth)){
                                     for(unsigned int j=0; j<sortedUniversities[i].size(); j++){
                                             if(sortedUniversities[i][j].coordinate.m_latitude> it->coordinate.m_latitude){
                                                     j--;
+                                                    sortedUniversities[i].insert(sortedUniversities[i].begin()+j, *it);
                                                     break;
                                             }
                                     }
-                                    sortedUniversities[i].insert(sortedUniversities.begin()+j, *it);
                                     break;
                             }
                     }
@@ -76,7 +77,7 @@ static std::shared_ptr<vector<University>> build(GeoConfiguration& config, share
             if(my_file.is_open()){
                     for(unsigned int i = 0; i < sortedUniversities.size(); i++){
                             for (unsigned int j = 0; j < sortedUniversities[i].size(); j++){
-                                    my_file<< "||university|| ID: " << sortedUniversities[i][j].id << " , "
+                                    my_file<< "||university|| ID: " << sortedUniversities[i][j].ID << " , "
                                            << sortedUniversities[i][j].coordinate << " " ;
 
                             }

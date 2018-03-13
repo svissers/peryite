@@ -31,9 +31,9 @@ public:
 
         unsigned int getPopulationSize() const;
 
-        unsigned int getUniversityFraction() const;
+        double getUniversityFraction() const;
 
-        unsigned int getWorkFraction() const;
+        double getWorkFraction() const;
 
 private:
         boost::property_tree::ptree m_config; /// > The content of the xml file

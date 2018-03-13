@@ -1,8 +1,8 @@
 #############################################################################
-#  This file is part of the Stride software. 
+#  This file is part of the Stride software.
 #  It is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by 
-#  the Free Software Foundation, either version 3 of the License, or any 
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or any
 #  later version.
 #  The software is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -37,7 +37,7 @@ set(LIB_SRC
 	output/CasesFile.cpp
 	output/PersonFile.cpp
 	output/SummaryFile.cpp
-#---	
+#---
     pop/Person.cpp
     pop/PopulationBuilder.cpp
 #---
@@ -61,6 +61,17 @@ set(LIB_SRC
 	#popgen2/geo/GeoGrid.cpp
 	#popgen2/geo/Geometry.cpp
 #---
+#    gen/Geo/output/GeoGridFile.cpp
+
+    gen/geogen/builders/CommunitiesBuilder.cpp
+    gen/geogen/GeoConfiguration.cpp
+    gen/geogen/GeoGenerator.cpp
+    gen/geogen/builders/GeoGridBuilder.cpp
+    gen/geogen/builders/SchoolsBuilder.cpp
+    gen/geogen/builders/UniversitiesBuilder.cpp
+    gen/geogen/builders/WorkplacesBuilder.cpp
+
+#---
 	sim/Simulator.cpp
 	sim/SimulatorBuilder.cpp
 	sim/StrideRunner.cpp
@@ -71,7 +82,7 @@ set(LIB_SRC
 	util/InstallDirs.cpp
     util/RNEngineType.cpp
     util/RNManager.cpp
-		)
+)
 
 #============================================================================
 # Build the Stride library.
@@ -84,9 +95,9 @@ set_target_properties(libstride PROPERTIES PREFIX "")
 #============================================================================
 # Build and install the stride executable.
 #============================================================================
-add_executable(stride sim/main.cpp)
-target_link_libraries(stride ${LIBS} libstride)
-install(TARGETS stride  DESTINATION   ${BIN_INSTALL_LOCATION})
+#add_executable(stride sim/main.cpp)
+#target_link_libraries(stride ${LIBS} libstride)
+#install(TARGETS stride  DESTINATION   ${BIN_INSTALL_LOCATION})
 
 #============================================================================
 # Build and install the stride executable.
@@ -103,8 +114,16 @@ install(TARGETS stride  DESTINATION   ${BIN_INSTALL_LOCATION})
 #install(TARGETS popgen2  DESTINATION   ${BIN_INSTALL_LOCATION})
 
 #============================================================================
+# Build and install the stride executable.
+#============================================================================
+add_executable(geogen gen/main.cpp)
+target_link_libraries(geogen ${LIBS} libstride)
+install(TARGETS geogen  DESTINATION   ${BIN_INSTALL_LOCATION})
+
+#============================================================================
 # Clean up.
 #============================================================================
 unset(MAIN_SRC)
 
 #############################################################################
+

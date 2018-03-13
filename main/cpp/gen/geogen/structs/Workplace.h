@@ -7,7 +7,7 @@ namespace gen {
 struct WorkPlace
 {
         WorkPlace(util::GeoCoordinate coord) : coordinate(coord) {}
-        GeoCoordinate coordinate = GeoCoordinate();
+        util::GeoCoordinate coordinate = util::GeoCoordinate();
 };
 
 } // namespace gen

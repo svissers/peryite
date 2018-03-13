@@ -9,7 +9,7 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
-static shared_ptr<vector<Community>> build(const GeoConfiguration& config, shared_ptr<GeoGrid> grid)
+shared_ptr<vector<Community>> CommunitiesBuilder::build(const GeoConfiguration& config, shared_ptr<GeoGrid> grid)
 {
         communities = make_shared<vector<Community>>();
         // Every community has an average of 2000 members.
@@ -36,16 +36,16 @@ static shared_ptr<vector<Community>> build(const GeoConfiguration& config, share
 
     void CommunitiesBuilder::write(std::string CommunitiesFile) {
             std::vector<std::vector<Community> > sortedCommunities;
-            for(unsigned int it = communities->begin(); it < communities->end();it++){
+            for(auto it = communities->begin(); it < communities->end();it++){
                     for(unsigned int i=0; i < AMOUNTOFBANDS; i++){
                             if(it->coordinate.m_longitude<minLong+((i+1)*LongitudeBandWidth)){
                                     for(unsigned int j=0; j<sortedCommunities[i].size(); j++){
                                             if(sortedCommunities[i][j].coordinate.m_latitude> it->coordinate.m_latitude){
                                                     j--;
+                                                    sortedCommunities[i].insert(sortedCommunities[i].begin()+j, *it);
                                                     break;
                                             }
                                     }
-                                    sortedCommunities[i].insert(sortedCommunities.begin()+j, *it);
                                     break;
                             }
                     }

@@ -16,11 +16,11 @@ private:
     double LongitudeBandWidth;
 public:
         GeoGridBuilder();
-        shared_ptr<GeoGrid> geo_grid;
+        std::shared_ptr<GeoGrid> geo_grid;
         /// Builds the GeoGrid using city data.
         /// @param config       The configuration for a geogrid.
         /// @return             A vector of urban centers representing a geogrid.
-        static std::shared_ptr<GeoGrid> build(const GeoConfiguration& config);
+        std::shared_ptr<GeoGrid> build(const GeoConfiguration& config);
 
         void write(std::string GeogridFile);
 };

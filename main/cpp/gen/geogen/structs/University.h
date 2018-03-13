@@ -7,7 +7,7 @@ namespace gen {
 struct University
 {
         University(unsigned int id, util::GeoCoordinate coord) {
-            coordinate(coord);
+            coordinate = coord;
             ID = id;
         }
         util::GeoCoordinate coordinate = util::GeoCoordinate();
