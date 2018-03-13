@@ -13,7 +13,7 @@ using namespace trng;
 static shared_ptr<vector<WorkPlace>> build(GeoConfiguration& config, shared_ptr<GeoGrid> grid)
 {
         auto workplaces = make_shared<vector<WorkPlace>>();
-        
+
         // Commuter data
         // currently we assume there are about as many commutors leaving as there are coming in, so it balances out
         // later we'll specify the commutors into a commuting.csv

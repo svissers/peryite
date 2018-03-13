@@ -10,11 +10,18 @@ namespace gen {
  */
 class GeoGridBuilder
 {
+private:
+    double minLong;
+    double maxLong;
+    double LongitudeBandWidth;
 public:
+        shared_ptr<GeoGrid> geo_grid;
         /// Builds the GeoGrid using city data.
         /// @param config       The configuration for a geogrid.
         /// @return             A vector of urban centers representing a geogrid.
         static std::shared_ptr<GeoGrid> build(const GeoConfiguration& config);
+
+        void write(std::string GeogridFile);
 };
 
 } // namespace gen
