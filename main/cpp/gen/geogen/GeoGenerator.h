@@ -5,6 +5,7 @@
 #include "./builders/SchoolsBuilder.h"
 #include "./builders/UniversitiesBuilder.h"
 #include "./builders/WorkplacesBuilder.h"
+#include "./output/GeoGridFile.h"
 
 namespace stride {
 namespace gen {
@@ -20,6 +21,8 @@ public:
         /// And then writes them to their corresponding files.
         /// @param config_path     The path to the configuration xml file to use.
         static void generate(std::string config_path);
+
+        void writeToFile(std::string output_filename);
 
 };
 

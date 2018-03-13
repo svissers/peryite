@@ -71,7 +71,7 @@ set(LIB_SRC
 	util/InstallDirs.cpp
     util/RNEngineType.cpp
     util/RNManager.cpp
-)
+		)
 
 #============================================================================
 # Build the Stride library.

@@ -3,6 +3,18 @@
 namespace stride {
 namespace gen {
 
+
+void Geogenerator::writeToFile(std::string output_filename, Builder writable){
+    ofstream my_file{"./output/" + output_filename};
+
+    if(my_file.is_open()){
+        break;
+        //TODO write
+    }
+
+
+}
+
 void GeoGenerator::generate(const std::string config_path) {
 
     //thread count, coded here, TODO make dynamic

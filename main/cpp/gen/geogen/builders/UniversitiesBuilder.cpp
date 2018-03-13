@@ -25,14 +25,33 @@ static std::shared_ptr<vector<University>> build(GeoConfiguration& config, share
         auto biggest = grid->begin();
         auto smallest = grid->begin() + city_count;
         auto big_cities(biggest, smallest);
-        /*
+
         unsigned int total_city_population = 0;
         for(UrbanCenter center : big_cities) {
                 total_city_population += center.population;
         }
-        */
+        unsigned int counter = 0;
+        for(UrbanCenter center : big_cities){
+                unsigned int SchoolsToAdd = int((school_count* (center.population / total_city_population))+0.5);
+                counter+=SchoolsToAdd;
+                if(counter==school_count){
+                        for(unsigned int i = 0; i < SchoolsToAdd; i++)
+                                universities.push_back(University(center.coordinate));
+                        break;
+                }
+                if(counter>school_count) {
+                        while (counter > school_count) {
+                                SchoolsToAdd--;
+                                counter--;
+                        }
+                        for(unsigned int i = 0; i < SchoolsToAdd; i++)
+                                universities.push_back(University(center.coordinate));
+                        break;
+                }
+        }
 
-        // TODO: Assignment is a bit vague here.
+
+
 
         return universities;
 }
