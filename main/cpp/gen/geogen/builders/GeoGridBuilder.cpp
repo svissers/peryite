@@ -31,6 +31,8 @@ shared_ptr<GeoGrid> GeoGridBuilder::build(const GeoConfiguration& config)
         LongitudeBandWidth = (maxLong - minLong)/AMOUNTOFBANDS;
         return geo_grid;
 }
+    GeoGridBuilder::GeoGridBuilder() = default;;
+
 
     void GeoGridBuilder::write(std::string GeogridFile) {
                std::vector<std::vector<UrbanCenter> > sortedCenters;

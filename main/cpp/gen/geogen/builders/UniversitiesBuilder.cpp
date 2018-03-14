@@ -9,6 +9,9 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
+
+    UniversitiesBuilder::UniversitiesBuilder(){};
+
 std::shared_ptr<vector<University>> UniversitiesBuilder::build(GeoConfiguration& config, shared_ptr<GeoGrid> grid)
 {
         universities = make_shared<vector<University>>();

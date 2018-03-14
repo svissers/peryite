@@ -10,14 +10,15 @@
 #include <tclap/CmdLine.h>
 #include <omp.h>
 
-namespace stride {
-namespace gen {
+//namespace stride {
+//namespace gen {
 
 using namespace std;
 using namespace stride::util;
 using namespace TCLAP;
 using boost::filesystem::path;
-
+//} // namespace gen
+//} // namespace stride
 int main(int argc, char* argv[])
 {
         int exit_status = EXIT_SUCCESS;
@@ -69,7 +70,7 @@ int main(int argc, char* argv[])
                 // Run Generator-Geo
                 // -----------------------------------------------------------------------------------------
                 if (generator_type == "geo") {
-                        GeoGenerator::generate(config_file_name);
+                        stride::gen::GeoGenerator::generate(config_file_name);
                 }
 
                 // -----------------------------------------------------------------------------------------
@@ -94,5 +95,4 @@ int main(int argc, char* argv[])
         return exit_status;
 }
 
-} // namespace gen
-} // namespace stride
+

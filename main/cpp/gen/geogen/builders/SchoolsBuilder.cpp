@@ -9,7 +9,7 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
-shared_ptr<vector<School>> build(const GeoConfiguration& config, shared_ptr<GeoGrid> grid)
+shared_ptr<vector<School>> SchoolsBuilder::build(const GeoConfiguration& config, shared_ptr<GeoGrid> grid)
 {
         auto schools = make_shared<vector<School>>();
         // We assume (overestimate) the fraction of mandatory students to be 25%.

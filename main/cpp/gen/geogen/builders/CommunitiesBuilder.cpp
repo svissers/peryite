@@ -9,6 +9,9 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
+    CommunitiesBuilder::CommunitiesBuilder(){};
+
+
 shared_ptr<vector<Community>> CommunitiesBuilder::build(const GeoConfiguration& config, shared_ptr<GeoGrid> grid)
 {
         communities = make_shared<vector<Community>>();

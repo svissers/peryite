@@ -10,7 +10,7 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
-shared_ptr<vector<WorkPlace>> build(GeoConfiguration& config, shared_ptr<GeoGrid> grid)
+shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GeoConfiguration& config, shared_ptr<GeoGrid> grid)
 {
         auto workplaces = make_shared<vector<WorkPlace>>();
 
