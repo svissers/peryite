@@ -76,7 +76,15 @@ double GeoConfiguration::getUniversityFraction() const
 
 double GeoConfiguration::getWorkFraction() const { return m_config.get<double>("work.fraction"); }
 
-void GeoConfiguration::checkValidConfig() const
+
+std::shared_ptr<util::RNManager> GeoConfiguration::getRNManager() const
+{
+
+        return make_shared<util::RNManager>(m_rn_manager);
+}
+
+
+    void GeoConfiguration::checkValidConfig() const
 {
         // TODO checking here.
 }
