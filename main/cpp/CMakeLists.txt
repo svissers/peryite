@@ -139,11 +139,11 @@ set_target_properties(libstride PROPERTIES PREFIX "")
 #============================================================================
 # Build and install the stride executable.
 #============================================================================
-add_executable(stride gen/main.cpp)
-target_include_directories(stride PUBLIC SYSTEM
+add_executable(geogen gen/main.cpp)
+target_include_directories(geogen PUBLIC SYSTEM
 	${CMAKE_HOME_DIRECTORY}/main/resources/lib/tclap/include)
-target_link_libraries(stride ${LIBS} libstride)
-install(TARGETS stride  DESTINATION   ${BIN_INSTALL_LOCATION})
+target_link_libraries(geogen ${LIBS} libstride)
+install(TARGETS geogen  DESTINATION   ${BIN_INSTALL_LOCATION})
 
 #============================================================================
 # Clean up.
