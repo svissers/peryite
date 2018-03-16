@@ -7,7 +7,7 @@
 	<household_profile>./data/households_flanders.xml</household_profile>
 	<population_size>100000</population_size>
 	<geoprofile>
-		<cities>data/flanders_cities.csv</cities>
+		<cities>data/flanders_cities2.csv</cities>
 		<commuting>data/flanders_commuting.csv</commuting>
 		<villages>data/geo_villages.csv</villages>
 		<use_xy>false</use_xy>

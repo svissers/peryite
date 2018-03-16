@@ -15,14 +15,15 @@ shared_ptr<GeoGrid> GeoGridBuilder::build(const GeoConfiguration& config)
         maxLong = 0;
         minLong = 90;
         for (util::CSVRow& row : cities_data) {
-                auto id         = row.getValue<unsigned int>("city_id");
+                auto id         = row.getValue<unsigned int>("id");
                 auto population = row.getValue<unsigned int>("population");
-                auto name       = row.getValue<string>("city_name");
+                auto name       = row.getValue<string>("name");
                 auto province   = row.getValue<unsigned int>("province");
                 auto longitude  = row.getValue<double>("longitude");
                 auto latitude   = row.getValue<double>("latitude");
                 UrbanCenter center = UrbanCenter(id, population, name, province, util::GeoCoordinate(longitude, latitude));
                 geo_grid->push_back(center);
+                geo_grid->addPopulation(population);
                 if(longitude > maxLong)
                         maxLong = longitude;
                 if(longitude < minLong)

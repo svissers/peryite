@@ -19,6 +19,7 @@ void GeoGenerator::generate(const std::string config_path) {
     //building geogrid
     GeoGridBuilder geoBuild;
     std::shared_ptr<GeoGrid> Geogrid = geoBuild.build(Config);
+    std::cout << Geogrid->getTotalPopulation()<< std::endl;
 
     //building communities
     CommunitiesBuilder comBuild;
@@ -35,7 +36,7 @@ void GeoGenerator::generate(const std::string config_path) {
     //building workplaces
     WorkplacesBuilder workplacesBuilder;
     std::shared_ptr<std::vector<WorkPlace>> Workplaces = workplacesBuilder.build(Config, Geogrid);
-
+    // std::cout << Schools->size() << std::endl;
     writefiles(Geogrid, Geogrid, "./output/Geogrid.csv");
     writefiles(Communities, Geogrid, "./output/Communities.csv");
     writefiles(Schools, Geogrid, "./output/Schools.csv");
