@@ -1,4 +1,5 @@
 #include "UniversitiesBuilder.h"
+#include "trng/fast_discrete_dist.hpp"
 #include "../structs/UrbanCenter.h"
 #include <algorithm>
 
@@ -18,7 +19,7 @@ std::shared_ptr<vector<University>> UniversitiesBuilder::build(GeoConfiguration&
         unsigned int mandatory_students_count = (unsigned int)(config.getUniversityFraction() * grid->getTotalPopulation());
 
         // Every university has an average of 3000 students
-        unsigned int school_count = mandatory_students_count / 3000;
+        unsigned int uni_count = mandatory_students_count / 3000;
 
         // Sort cities based on population size, biggest to smallest.
         auto compare_population = [](const UrbanCenter& a, const UrbanCenter b) { return a.population > b.population; };
@@ -35,28 +36,22 @@ std::shared_ptr<vector<University>> UniversitiesBuilder::build(GeoConfiguration&
                 total_city_population += center.population;
         }
         unsigned int counter = 0;
+
+        // Create the discrete distribution to sample from.
+        vector<double> fractions;
         for(UrbanCenter center : big_cities){
-                unsigned int SchoolsToAdd = int((school_count* (center.population / total_city_population))+0.5);
-                counter+=SchoolsToAdd;
-                if(counter==school_count){
-                        for(unsigned int i = 0; i < SchoolsToAdd; i++)
-                                universities->push_back(University(i, center.coordinate));
-                        break;
-                }
-                if(counter>school_count) {
-                        while (counter > school_count) {
-                                SchoolsToAdd--;
-                                counter--;
-                        }
-                        for(unsigned int i = 0; i < SchoolsToAdd; i++)
-                                universities->push_back(University(i, center.coordinate));
-                        break;
-                }
+                fractions.push_back(center.population/total_city_population);
         }
 
+        // The generator allows for parallelization.
+        auto rn_manager = config.getRNManager();
+        auto generator = rn_manager->GetGenerator(trng::fast_discrete_dist(fractions.begin(), fractions.end()));
 
-
-
+        // Create and map the schools to their samples.
+        for (unsigned int i = 0; i < uni_count; i++) {
+                universities->push_back(University(i, grid->at(generator()).coordinate));
+        }
+    
         return universities;
 }
 
