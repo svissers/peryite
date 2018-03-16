@@ -22,6 +22,7 @@ struct UrbanCenter
         std::string name = "";
         int province = -1;
         util::GeoCoordinate coordinate = util::GeoCoordinate();
+
 };
 
 } // namespace gen

@@ -80,7 +80,7 @@ std::shared_ptr<vector<University>> UniversitiesBuilder::build(GeoConfiguration&
             if(my_file.is_open()){
                     for(unsigned int i = 0; i < sortedUniversities.size(); i++){
                             for (unsigned int j = 0; j < sortedUniversities[i].size(); j++){
-                                    my_file<< "||university|| ID: " << sortedUniversities[i][j].ID << " , "
+                                    my_file<< "||university|| ID: " << sortedUniversities[i][j].id << " , "
                                            << sortedUniversities[i][j].coordinate << " " ;
 
                             }

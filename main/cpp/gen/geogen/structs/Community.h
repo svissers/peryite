@@ -13,5 +13,6 @@ struct Community
         util::GeoCoordinate coordinate = util::GeoCoordinate();
 };
 
+
 } // namespace gen
 } // namespace stride

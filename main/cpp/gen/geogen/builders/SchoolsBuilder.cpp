@@ -30,7 +30,7 @@ shared_ptr<vector<School>> SchoolsBuilder::build(const GeoConfiguration& config,
 
         // Create and map the schools to their samples.
         for (unsigned int i = 0; i < school_count; i++) {
-                schools->push_back(School(grid->at(generator()).coordinate));
+                schools->push_back(School(i, grid->at(generator()).coordinate));
         }
 
         return schools;

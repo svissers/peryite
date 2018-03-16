@@ -9,6 +9,9 @@ class GeoGrid : public std::vector<UrbanCenter>
 {
 public:
         unsigned int getTotalPopulation() { return m_total_population; }
+        double m_min_long;
+        double m_max_long;
+        double m_longitude_band_width;
 private:
         unsigned int m_total_population = 0;
 };

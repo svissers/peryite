@@ -17,6 +17,7 @@ shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GeoConfiguration& config,
         // Commuter data
         // currently we assume there are about as many commutors leaving as there are coming in, so it balances out
         // later we'll specify the commutors into a commuting.csv
+        //TODO hashtable implement and reading
 
         // Work fraction (Probably rename to commuteFraction?)
         unsigned int workforce = (unsigned int) config.getWorkFraction()*grid->getTotalPopulation();
@@ -35,7 +36,7 @@ shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GeoConfiguration& config,
 
         // Create and map the workplaces to their samples.
         for (unsigned int i = 0; i < work_count; i++) {
-                workplaces->push_back(WorkPlace(grid->at(generator()).coordinate));
+                workplaces->push_back(WorkPlace(i, grid->at(generator()).coordinate));
         }
 
         return workplaces;

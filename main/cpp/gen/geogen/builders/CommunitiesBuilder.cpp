@@ -9,7 +9,7 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
-    CommunitiesBuilder::CommunitiesBuilder(){};
+    CommunitiesBuilder::CommunitiesBuilder() = default;;
 
 
 shared_ptr<vector<Community>> CommunitiesBuilder::build(const GeoConfiguration& config, shared_ptr<GeoGrid> grid)
@@ -57,18 +57,15 @@ shared_ptr<vector<Community>> CommunitiesBuilder::build(const GeoConfiguration& 
             if(my_file.is_open()){
                     for(unsigned int i = 0; i < sortedCommunities.size(); i++){
                             for (unsigned int j = 0; j < sortedCommunities[i].size(); j++){
-                                    my_file<< "||community|| ID: " << sortedCommunities[i][j].id << " , "
-                                           << sortedCommunities[i][j].coordinate << " , Primary: ";
-                                    if( sortedCommunities[i][j].is_primary)
-                                        my_file<< "true ";
-                                    else
-                                            my_file<<"false ";
+                                    //my_file<< sortedCommunities[i][j];
                             }
                             my_file<< std::endl;
                     }
             }
 
     }
+
+
 
 
 } // namespace gen
