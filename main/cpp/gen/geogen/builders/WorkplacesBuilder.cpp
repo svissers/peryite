@@ -21,7 +21,7 @@ shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GeoConfiguration& config,
     util::CSV Commuting_data = util::CSV(config.getcommutingFileName());
     unsigned int column_count = Commuting_data.getColumnCount();
     for (util::CSVRow& row : Commuting_data) {
-        if(counter != -1)
+        if(counter != -1){
             for(unsigned int i = 0; i < column_count; i++) {
                 if(i==counter){
                     relativeCommute[i]+= stoi(row.getValue(i));
@@ -33,7 +33,7 @@ shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GeoConfiguration& config,
                 totalCommute[i]+= stoi(row.getValue(i));
 
             }
-        else{
+        }else{
             for(unsigned int i; i < column_count; i++){
                 relativeCommute.push_back(0);
                 totalCommute.push_back(0);

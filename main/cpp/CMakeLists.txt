@@ -62,8 +62,6 @@ set(LIB_SRC
 	#popgen2/geo/GeoGrid.cpp
 	#popgen2/geo/Geometry.cpp
 #---
-#    gen/Geo/output/GeoGridFile.cpp
-
     gen/geogen/builders/CommunitiesBuilder.cpp
     gen/geogen/GeoConfiguration.cpp
     gen/geogen/GeoGenerator.cpp

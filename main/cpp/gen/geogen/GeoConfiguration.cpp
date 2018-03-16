@@ -27,12 +27,12 @@ GeoConfiguration::GeoConfiguration(string config_file_name, unsigned int thread_
         }
         try {
                 ptree config;
-                read_xml((util::InstallDirs::GetDataDir() /= config_file_name).string(), config,
+                read_xml((util::InstallDirs::GetConfigDir() /= config_file_name).string(), config,
                          xml_parser::trim_whitespace | xml_parser::no_comments);
-                m_config = config.get_child("Config");
+                m_config = config.get_child("GeneratorConfiguration");
         } catch (xml_parser_error& e) {
                 throw invalid_argument(string("Invalid file: ") +
-                                            (util::InstallDirs::GetDataDir() /= config_file_name).string());
+                                            (util::InstallDirs::GetConfigDir() /= config_file_name).string());
         }
 
         // Check the structure of the configuration tree.
@@ -54,7 +54,7 @@ string GeoConfiguration::getCitiesFileName() const
 
 string GeoConfiguration::getcommutingFileName() const
 {
-        return m_config.get<string>("geoprofile.cities");
+        return m_config.get<string>("geoprofile.commuting");
 }
 
 string GeoConfiguration::getRngType() const
