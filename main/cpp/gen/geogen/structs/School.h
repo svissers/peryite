@@ -6,8 +6,12 @@ namespace gen {
 
 struct School
 {
-        School(util::GeoCoordinate coord) : coordinate(coord) {}
         util::GeoCoordinate coordinate = util::GeoCoordinate();
+        unsigned int id;
+        School(unsigned int sch_id, util::GeoCoordinate coord) : id(sch_id), coordinate(coord) {};
+
+
+
 };
 
 } // namespace gen

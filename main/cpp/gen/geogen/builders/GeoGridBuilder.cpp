@@ -29,6 +29,9 @@ shared_ptr<GeoGrid> GeoGridBuilder::build(const GeoConfiguration& config)
                         minLong = longitude;
         }
         LongitudeBandWidth = (maxLong - minLong)/AMOUNTOFBANDS;
+        geo_grid->m_longitude_band_width = LongitudeBandWidth;
+        geo_grid->m_max_long = maxLong;
+        geo_grid->m_min_long = minLong;
         return geo_grid;
 }
     GeoGridBuilder::GeoGridBuilder() = default;;
