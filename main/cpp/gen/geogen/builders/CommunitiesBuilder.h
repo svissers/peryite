@@ -23,7 +23,6 @@ public:
         /// @param config       TODO
         /// @param locations    TODO
         std::shared_ptr<std::vector<Community>> build(const GeoConfiguration& config, std::shared_ptr<GeoGrid> grid);
-        void write(std::string outputFile);
 };
 
 } // namespace gen

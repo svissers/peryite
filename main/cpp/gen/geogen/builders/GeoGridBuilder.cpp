@@ -34,38 +34,9 @@ shared_ptr<GeoGrid> GeoGridBuilder::build(const GeoConfiguration& config)
         geo_grid->m_min_long = minLong;
         return geo_grid;
 }
-    GeoGridBuilder::GeoGridBuilder() = default;;
+    GeoGridBuilder::GeoGridBuilder() = default;
 
 
-    void GeoGridBuilder::write(std::string GeogridFile) {
-               std::vector<std::vector<UrbanCenter> > sortedCenters;
-        for(auto it = geo_grid->begin(); it < geo_grid->end();it++){
-                for(unsigned int i=0; i < AMOUNTOFBANDS; i++){
-                        if(it->coordinate.m_longitude<minLong+((i+1)*LongitudeBandWidth)){
-                                for(unsigned int j=0; j<sortedCenters[i].size(); j++){
-                                        if(sortedCenters[i][j].coordinate.m_latitude> it->coordinate.m_latitude){
-                                                j--;
-                                                sortedCenters[i].insert(sortedCenters[j].begin()+j, *it);
-                                                break;
-                                        }
-                                }
-                                break;
-                        }
-                }
-        }
-            ofstream my_file{GeogridFile};
-            if(my_file.is_open()){
-                    for(unsigned int i = 0; i < sortedCenters.size(); i++){
-                            for (unsigned int j = 0; j < sortedCenters[i].size(); j++){
-                                    my_file<< "||center|| ID: " << sortedCenters[i][j].id << " , "
-                                           << sortedCenters[i][j].coordinate << " , Name: " << sortedCenters[i][j].name << " , Province: "
-                                           << sortedCenters[i][j].province << " , Pop: " << sortedCenters[i][j].population << " ";
-                            }
-                            my_file<< std::endl;
-                    }
-            }
-
-    }
 
 } // namespace gen
 } // namespace stride

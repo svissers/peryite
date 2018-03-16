@@ -21,8 +21,6 @@ public:
         /// @param config       The configuration for a geogrid.
         /// @return             A vector of urban centers representing a geogrid.
         std::shared_ptr<GeoGrid> build(const GeoConfiguration& config);
-
-        void write(std::string GeogridFile);
 };
 
 } // namespace gen

@@ -37,33 +37,6 @@ shared_ptr<vector<Community>> CommunitiesBuilder::build(const GeoConfiguration& 
         return communities;
 }
 
-    void CommunitiesBuilder::write(std::string CommunitiesFile) {
-            std::vector<std::vector<Community> > sortedCommunities;
-            for(auto it = communities->begin(); it < communities->end();it++){
-                    for(unsigned int i=0; i < AMOUNTOFBANDS; i++){
-                            if(it->coordinate.m_longitude<minLong+((i+1)*LongitudeBandWidth)){
-                                    for(unsigned int j=0; j<sortedCommunities[i].size(); j++){
-                                            if(sortedCommunities[i][j].coordinate.m_latitude> it->coordinate.m_latitude){
-                                                    j--;
-                                                    sortedCommunities[i].insert(sortedCommunities[i].begin()+j, *it);
-                                                    break;
-                                            }
-                                    }
-                                    break;
-                            }
-                    }
-            }
-            ofstream my_file{CommunitiesFile};
-            if(my_file.is_open()){
-                    for(unsigned int i = 0; i < sortedCommunities.size(); i++){
-                            for (unsigned int j = 0; j < sortedCommunities[i].size(); j++){
-                                    //my_file<< sortedCommunities[i][j];
-                            }
-                            my_file<< std::endl;
-                    }
-            }
-
-    }
 
 
 

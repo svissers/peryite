@@ -25,7 +25,6 @@ public:
         /// @param config       TODO
         /// @param grid         TODO
         std::shared_ptr<std::vector<University>> build(GeoConfiguration& config, std::shared_ptr<GeoGrid> grid);
-        void write(std::string UniversityFile);
 
 };
 

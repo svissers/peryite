@@ -60,37 +60,6 @@ std::shared_ptr<vector<University>> UniversitiesBuilder::build(GeoConfiguration&
         return universities;
 }
 
-    void UniversitiesBuilder::write(std::string UniversityFile){
-            std::vector<std::vector<University> > sortedUniversities;
-            for(auto it = universities->begin(); it < universities->end();it++){
-                    for(unsigned int i=0; i < AMOUNTOFBANDS; i++){
-                            if(it->coordinate.m_longitude<minLong+((i+1)*LongitudeBandWidth)){
-                                    for(unsigned int j=0; j<sortedUniversities[i].size(); j++){
-                                            if(sortedUniversities[i][j].coordinate.m_latitude> it->coordinate.m_latitude){
-                                                    j--;
-                                                    sortedUniversities[i].insert(sortedUniversities[i].begin()+j, *it);
-                                                    break;
-                                            }
-                                    }
-                                    break;
-                            }
-                    }
-            }
-            ofstream my_file{UniversityFile};
-            if(my_file.is_open()){
-                    for(unsigned int i = 0; i < sortedUniversities.size(); i++){
-                            for (unsigned int j = 0; j < sortedUniversities[i].size(); j++){
-                                    my_file<< "||university|| ID: " << sortedUniversities[i][j].id << " , "
-                                           << sortedUniversities[i][j].coordinate << " " ;
-
-                            }
-                            my_file<< std::endl;
-                    }
-            }
-
-
-
-    }
 
 } // namespace gen
 } // namespace stride
