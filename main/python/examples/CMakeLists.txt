@@ -24,15 +24,10 @@ SET(PYTHON_EXAMPLES
 	runCallbackTimestep.py
 	runExperiments.py
 	runExperimentsR0.py
-	runExperimentsRNG.py
 	runManualConfig.py
 	runRepeat.py
 	runSimple.py
 	runStopOnCallback.py
-  runThreads_influenza.py
-  runThreads_measles.py
-  runRngType_influenza.py
-  runRngType_measles.py
 )
 
 #================================================================================================
