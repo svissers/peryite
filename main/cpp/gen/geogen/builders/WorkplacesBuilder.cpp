@@ -34,7 +34,7 @@ shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GeoConfiguration& config,
 
             }
         }else{
-            for(unsigned int i; i < column_count; i++){
+            for(unsigned int i = 0; i < column_count; i++){
                 relativeCommute.push_back(0);
                 totalCommute.push_back(0);
             }

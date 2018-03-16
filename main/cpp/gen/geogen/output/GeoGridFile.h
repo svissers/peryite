@@ -43,6 +43,7 @@ void writefiles(std::shared_ptr<T> toWrite, std::shared_ptr<GeoGrid> geo, std::s
             }
             my_file<< std::endl;
         }
+        my_file.close();
     }
 
 }

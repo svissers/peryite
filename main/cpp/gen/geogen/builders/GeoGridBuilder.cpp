@@ -11,10 +11,7 @@ shared_ptr<GeoGrid> GeoGridBuilder::build(const GeoConfiguration& config)
 {
         geo_grid = make_shared<GeoGrid>();
         // Construct the urban centers from the city data
-        std::cout << "test before\n";
-        std::cout << config.getCitiesFileName() << std::endl;
         util::CSV cities_data = util::CSV(config.getCitiesFileName());
-        std::cout << "test after\n";
         maxLong = 0;
         minLong = 90;
         for (util::CSVRow& row : cities_data) {
