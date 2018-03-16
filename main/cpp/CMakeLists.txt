@@ -35,10 +35,11 @@ set(LIB_SRC
 #---
 	output/AdoptedFile.cpp
 	output/CasesFile.cpp
-	output/PersonFile.cpp
+    output/PersonsFile.cpp
 	output/SummaryFile.cpp
 #---
     pop/Person.cpp
+    pop/Population.cpp
     pop/PopulationBuilder.cpp
 #---
 	#popgen/AliasSampler.cpp
@@ -74,16 +75,29 @@ set(LIB_SRC
 	geo/GeoCoordinate.cpp
 	geo/GeoCoordCalculator.cpp
 #---
+    sim/CliController.cpp
+	sim/SimRunner.cpp
 	sim/Simulator.cpp
 	sim/SimulatorBuilder.cpp
-	sim/StrideRunner.cpp
+    sim/event/Id.cpp
+	sim/event/Subject.cpp
+	sim/python/StrideRunner.cpp
 #---
     util/CSV.cpp
 	util/CSVRow.cpp
     util/FileUtils.cpp
-	util/InstallDirs.cpp
+    util/FileSys.cpp
+    util/InstallDirs.cpp
+	util/LogUtils.cpp
+	util/PtreeUtils.cpp
     util/RNEngineType.cpp
     util/RNManager.cpp
+#---
+	viewers/AdoptedViewer.cpp
+	viewers/CasesViewer.cpp
+    viewers/CliViewer.cpp
+    viewers/PersonsViewer.cpp
+	viewers/SummaryViewer.cpp
 )
 
 #============================================================================
@@ -98,6 +112,9 @@ set_target_properties(libstride PROPERTIES PREFIX "")
 # Build and install the stride executable.
 #============================================================================
 #add_executable(stride sim/main.cpp)
+#include tclap
+#target_include_directories(stride PUBLIC SYSTEM
+#	${CMAKE_HOME_DIRECTORY}/main/resources/lib/tclap/include)
 #target_link_libraries(stride ${LIBS} libstride)
 #install(TARGETS stride  DESTINATION   ${BIN_INSTALL_LOCATION})
 
@@ -105,6 +122,8 @@ set_target_properties(libstride PROPERTIES PREFIX "")
 # Build and install the stride executable.
 #============================================================================
 #add_executable(popgen popgen/main.cpp)
+#target_include_directories(popgen PUBLIC SYSTEM
+#	${CMAKE_HOME_DIRECTORY}/main/resources/lib/tclap/include)
 #target_link_libraries(popgen ${LIBS} libstride)
 #install(TARGETS popgen  DESTINATION   ${BIN_INSTALL_LOCATION})
 
@@ -112,15 +131,19 @@ set_target_properties(libstride PROPERTIES PREFIX "")
 # Build and install the stride executable.
 #============================================================================
 #add_executable(popgen2 popgen2/main.cpp)
+#target_include_directories(popgen2 PUBLIC SYSTEM
+#	${CMAKE_HOME_DIRECTORY}/main/resources/lib/tclap/include)
 #target_link_libraries(popgen2 ${LIBS} libstride)
 #install(TARGETS popgen2  DESTINATION   ${BIN_INSTALL_LOCATION})
 
 #============================================================================
 # Build and install the stride executable.
 #============================================================================
-add_executable(geogen gen/main.cpp)
-target_link_libraries(geogen ${LIBS} libstride)
-install(TARGETS geogen  DESTINATION   ${BIN_INSTALL_LOCATION})
+add_executable(stride gen/main.cpp)
+target_include_directories(stride PUBLIC SYSTEM
+	${CMAKE_HOME_DIRECTORY}/main/resources/lib/tclap/include)
+target_link_libraries(stride ${LIBS} libstride)
+install(TARGETS stride  DESTINATION   ${BIN_INSTALL_LOCATION})
 
 #============================================================================
 # Clean up.
@@ -128,4 +151,3 @@ install(TARGETS geogen  DESTINATION   ${BIN_INSTALL_LOCATION})
 unset(MAIN_SRC)
 
 #############################################################################
-

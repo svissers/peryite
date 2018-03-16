@@ -68,6 +68,8 @@ public:
                         pt_config.put("run.global_information_policy", "NoGlobalInformation");
                         pt_config.put("run.belief_policy.name", "NoBelief");
                         pt_config.put("run.behaviour_policy", "NoBehaviour");
+                        pt_config.put("run.use_install_dirs", true);
+                        pt_config.put("run.track_index_case", false);
                 }
                 return pt_config;
         }
@@ -80,7 +82,7 @@ public:
                 double       margin = 0.1;
 
                 if (tag == "influenza_a") {
-                        target = 2000U;
+                        target = 1085U;
                 }
                 if (tag == "influenza_b") {
                         pt.put("run.seeding_rate", 0.0);
@@ -131,7 +133,7 @@ TEST_P(BatchRuns, Run)
         // Scenario configuration and target number.
         // -----------------------------------------------------------------------------------------
         const auto d         = ScenarioData(test_tag);
-        const auto pt_config = get<0>(d);
+        auto       pt_config = get<0>(d);
         const auto target    = get<1>(d);
         const auto margin    = get<2>(d);
 
@@ -148,7 +150,9 @@ TEST_P(BatchRuns, Run)
         // -----------------------------------------------------------------------------------------
         cout << "Building the simulator. " << endl;
         cout << " ----> test_tag: " << test_tag << endl << " ----> threadcount:  " << num_threads << endl;
-        auto sim = SimulatorBuilder::Build(pt_config, num_threads);
+        pt_config.put("run.num_threads", num_threads);
+        SimulatorBuilder builder(pt_config);
+        const auto       sim = builder.Build();
         cout << "Done building the simulator" << endl;
 
         // -----------------------------------------------------------------------------------------
@@ -164,7 +168,7 @@ TEST_P(BatchRuns, Run)
         // Check resuts against target number.
         // -----------------------------------------------------------------------------------------
         const unsigned int res = sim->GetPopulation()->GetInfectedCount();
-        EXPECT_NEAR(res, target, target * margin) << "!! CHANGES for " << test_tag << "with threads: " << num_threads;
+        EXPECT_NEAR(res, target, target * margin) << "!! CHANGES for " << test_tag << " with threads: " << num_threads;
 }
 
 namespace {
@@ -183,7 +187,5 @@ unsigned int threads[]{1U};
 INSTANTIATE_TEST_CASE_P(Run_influenza, BatchRuns, Combine(ValuesIn(tags_influenza), ValuesIn(threads)));
 
 INSTANTIATE_TEST_CASE_P(Run_measles, BatchRuns, Combine(ValuesIn(tags_measles), ValuesIn(threads)));
-
-INSTANTIATE_TEST_CASE_P(Run_test, BatchRuns, Combine(ValuesIn(tags_measles), ValuesIn(threads)));
 
 } // namespace Tests
