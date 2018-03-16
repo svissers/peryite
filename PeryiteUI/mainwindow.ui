@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>PeryiteUI</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <widget class="QGroupBox" name="GeoGenGroup">
+    <property name="geometry">
+     <rect>
+      <x>16</x>
+      <y>12</y>
+      <width>968</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>GeoGen</string>
+    </property>
+    <widget class="QLabel" name="geoGenFileLabel">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>64</y>
+       <width>640</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="text">
+      <string>No file selected</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="geoGenFileSelect">
+     <property name="geometry">
+      <rect>
+       <x>16</x>
+       <y>64</y>
+       <width>151</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Select GeoGen File</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="configFileSelect">
+     <property name="geometry">
+      <rect>
+       <x>16</x>
+       <y>32</y>
+       <width>151</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Select Config File</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="configFileLabel">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>32</y>
+       <width>640</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="text">
+      <string>No file selected</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="generateGeoGen">
+     <property name="geometry">
+      <rect>
+       <x>832</x>
+       <y>32</y>
+       <width>120</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Generate</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="visualizeGeoGen">
+     <property name="geometry">
+      <rect>
+       <x>832</x>
+       <y>64</y>
+       <width>120</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Visualize</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
