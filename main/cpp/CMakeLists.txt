@@ -71,6 +71,7 @@ set(LIB_SRC
     gen/geogen/builders/SchoolsBuilder.cpp
     gen/geogen/builders/UniversitiesBuilder.cpp
     gen/geogen/builders/WorkplacesBuilder.cpp
+	gen/geogen/output/GeoGridFile.cpp
 #---
 	geo/GeoCoordinate.cpp
 	geo/GeoCoordCalculator.cpp

@@ -6,8 +6,8 @@ namespace gen {
 
 struct WorkPlace
 {
+        unsigned int id;
         util::GeoCoordinate coordinate = util::GeoCoordinate();
-        unsigned int id = -1;
         WorkPlace(unsigned int wp_id, util::GeoCoordinate coord) : id(wp_id),coordinate(coord) {}
 
 

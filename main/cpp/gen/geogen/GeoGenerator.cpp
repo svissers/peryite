@@ -36,7 +36,9 @@ void GeoGenerator::generate(const std::string config_path) {
     WorkplacesBuilder workplacesBuilder;
     std::shared_ptr<std::vector<WorkPlace>> Workplaces = workplacesBuilder.build(Config, Geogrid);
 
-    //writing Geogrid
+    writefiles(Geogrid, Geogrid, "./output/Geogrid.csv");
+
+        //writing Geogrid
     geoBuild.write("./output/Geogrid.csv");
 
     //writing communities

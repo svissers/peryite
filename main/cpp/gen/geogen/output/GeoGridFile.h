@@ -3,8 +3,11 @@
 #include "../structs/University.h"
 #include "../structs/UrbanCenter.h"
 #include "../structs/Workplace.h"
+#include "../GeoGrid.h"
+#include "../GeoConfiguration.h"
 #include <iostream>
 #include <string>
+#include <memory>
 
 namespace stride{
 namespace gen{
@@ -16,11 +19,11 @@ std::ostream& operator<<(std::ostream& os, UrbanCenter& uc);
 std::ostream& operator<<(std::ostream& os, WorkPlace& wp);
 
 template  <class T>
-void writefiles(std::shared_ptr<std::vector<T>> toWrite, GeoGrid geo, std::string to_write_file){
-    std::vector<std::vector<Community> > sorted;
+void writefiles(std::shared_ptr<T> toWrite, std::shared_ptr<GeoGrid> geo, std::string to_write_file){
+    std::vector<T> sorted;
     for(auto it = toWrite->begin(); it < toWrite->end();it++){
         for(unsigned int i=0; i < AMOUNTOFBANDS; i++){
-            if(it->coordinate.m_longitude<geo.m_min_long+((i+1)*geo.m_longitude_band_width)){
+            if(it->coordinate.m_longitude<geo->m_min_long+((i+1)*geo->m_longitude_band_width)){
                 for(unsigned int j=0; j<sorted[i].size(); j++){
                     if(sorted[i][j].coordinate.m_latitude> it->coordinate.m_latitude){
                         j--;
