@@ -51,7 +51,7 @@ std::shared_ptr<vector<University>> UniversitiesBuilder::build(GeoConfiguration&
         for (unsigned int i = 0; i < uni_count; i++) {
                 universities->push_back(University(i, grid->at(generator()).coordinate));
         }
-    
+
         return universities;
 }
 
