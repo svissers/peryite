@@ -25,10 +25,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    peryiteuidata.cpp \
+    geogenvisualization.cpp \
+    visualizationcircle.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    peryiteuidata.h \
+    geogenvisualization.h \
+    visualizationcircle.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    geogenvisualization.ui
