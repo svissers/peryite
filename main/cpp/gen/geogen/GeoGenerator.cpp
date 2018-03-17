@@ -8,44 +8,27 @@ namespace gen {
 
 using namespace util;
 
-void GeoGenerator::generate(const std::string config_path) {
+void GeoGenerator::generate(const std::string config_path, unsigned int thread_count)
+{
+    GeoConfiguration config = GeoConfiguration(config_path, thread_count);
 
-    //thread count, coded here, TODO make dynamic
-    unsigned int thread_count = 1;
+    // Build
+    std::shared_ptr<GeoGrid> geogrid = GeoGridBuilder::build(config);
 
-    //getting the configuration
-    GeoConfiguration Config = GeoConfiguration(config_path, thread_count);
+    std::shared_ptr<std::vector<School>> schools = SchoolsBuilder::build(config, geogrid);
 
-    //building geogrid
-    GeoGridBuilder geoBuild;
-    std::shared_ptr<GeoGrid> Geogrid = geoBuild.build(Config);
-    std::cout << Geogrid->getTotalPopulation()<< std::endl;
+    std::shared_ptr<std::vector<Community>> communities = CommunitiesBuilder::build(config, geogrid);
 
-    //building communities
-    CommunitiesBuilder comBuild;
-    std::shared_ptr<std::vector<Community>> Communities = comBuild.build(Config, Geogrid);
+    std::shared_ptr<std::vector<University>> universities = UniversitiesBuilder::build(config, geogrid);
 
-    //building schoolsui
-    SchoolsBuilder schoolsBuilder;
-    std::shared_ptr<std::vector<School>> Schools = schoolsBuilder.build(Config, Geogrid);
+    std::shared_ptr<std::vector<WorkPlace>> workplaces = WorkplacesBuilder::build(config, geogrid);
 
-    //building univiersities
-    UniversitiesBuilder uniBuild;
-    std::shared_ptr<std::vector<University>> Universities = uniBuild.build(Config, Geogrid);
-
-    //building workplaces
-    WorkplacesBuilder workplacesBuilder;
-    std::shared_ptr<std::vector<WorkPlace>> Workplaces = workplacesBuilder.build(Config, Geogrid);
-    // std::cout << Schools->size() << std::endl;
-    writefiles(Geogrid, Geogrid, "./output/Geogrid.csv");
-    writefiles(Communities, Geogrid, "./output/Communities.csv");
-    writefiles(Schools, Geogrid, "./output/Schools.csv");
-    writefiles(Universities, Geogrid, "./output/Universities.csv");
-    writefiles(Workplaces, Geogrid, "./output/Workplaces.csv");
-
-
-
-
+    // Write
+    writefiles(geogrid, geogrid, "./output/Geogrid.csv");
+    writefiles(communities, geogrid, "./output/Communities.csv");
+    writefiles(schools, geogrid, "./output/Schools.csv");
+    writefiles(universities, geogrid, "./output/Universities.csv");
+    writefiles(workplaces, geogrid, "./output/Workplaces.csv");
 }
 
 

@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
                 // -----------------------------------------------------------------------------------------
                 unsigned int num_threads = 1;
                 if (ConfigInfo::HaveOpenMP()) {
-#pragma omp parallel
+                        #pragma omp parallel
                         {
                                 num_threads = static_cast<unsigned int>(omp_get_num_threads());
                         }
@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
                 // Run Generator-Geo
                 // -----------------------------------------------------------------------------------------
                 if (generator_type == "geo") {
-                        stride::gen::GeoGenerator::generate(config_file_name);
+                        stride::gen::GeoGenerator::generate(config_file_name, num_threads);
                 }
 
                 // -----------------------------------------------------------------------------------------

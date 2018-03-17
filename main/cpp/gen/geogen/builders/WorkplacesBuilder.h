@@ -17,7 +17,7 @@ public:
         /// values.
         /// @param config       TODO
         /// @param grid         TODO
-        std::shared_ptr<std::vector<WorkPlace>> build(GeoConfiguration& config, std::shared_ptr<GeoGrid> grid);
+        static std::shared_ptr<std::vector<WorkPlace>> build(GeoConfiguration& config, std::shared_ptr<GeoGrid> grid);
 };
 
 } // namespace gen

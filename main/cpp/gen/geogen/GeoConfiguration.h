@@ -3,9 +3,11 @@
 #include <boost/filesystem/path.hpp>
 #include "util/CSV.h"
 #include "util/RNManager.h"
-#define AMOUNTOFBANDS 50
+
 namespace stride {
 namespace gen {
+
+#define AMOUNTOFBANDS 50
 
 /**
  * The configuration for a geogrid.
@@ -19,25 +21,15 @@ public:
         /// @param thread_count    The amount of threads to be used for parallelization.
         GeoConfiguration(std::string config_file, unsigned int thread_count);
 
+        boost::property_tree::ptree getTree() const;
+
         std::shared_ptr<util::RNManager> getRNManager() const;
-
-        std::string getCitiesFileName() const;
-
-        std::string getcommutingFileName() const;
-
-        std::string getRngType() const;
-
-        unsigned long getSeed() const;
-
-        unsigned int getPopulationSize() const;
-
-        double getUniversityFraction() const;
-
-        double getWorkFraction() const;
-
 private:
-        boost::property_tree::ptree m_config; /// > The content of the xml file
+        /// The configuration in a tree structure
+        boost::property_tree::ptree m_config;
+        /// Manages the parallel generation of random numbers
         util::RNManager m_rn_manager;
+        /// The amount of threads that will be used.
         unsigned int m_thread_count;
 
         /// Checks if the configuration property tree is valid.

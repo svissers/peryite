@@ -1,73 +1,76 @@
 #include "WorkplacesBuilder.h"
+
 #include "trng/fast_discrete_dist.hpp"
 #include "util/RNManager.h"
 #include "util/CSV.h"
+#include "../structs/UrbanCenter.h"
+
 #include <vector>
+#include <map>
 
 namespace stride {
 namespace gen {
 
 using namespace std;
 using namespace util;
-using namespace trng;
 
 shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GeoConfiguration& config, shared_ptr<GeoGrid> grid)
 {
-        auto workplaces = make_shared<vector<WorkPlace>>();
-    std::vector<unsigned int> relativeCommute;
-    std::vector<unsigned int> totalCommute;
-        // Commuter data
-    int counter = -1;
-    util::CSV Commuting_data = util::CSV(config.getcommutingFileName());
-    unsigned int column_count = Commuting_data.getColumnCount();
-    for (util::CSVRow& row : Commuting_data) {
-        if(counter != -1){
-            for(unsigned int i = 0; i < column_count; i++) {
-                if(i==counter){
-                    relativeCommute[i]+= stoi(row.getValue(i));
-                }
-                else{
-                    relativeCommute[i] -= stoi(row.getValue(i));
-                    relativeCommute[counter] += stoi(row.getValue(i));
-                }
-                totalCommute[i]+= stoi(row.getValue(i));
+    auto workplaces = make_shared<vector<WorkPlace>>();
+    unsigned int total_population = config.getTree().get<unsigned int>("population_size");
 
-            }
-        }else{
-            for(unsigned int i = 0; i < column_count; i++){
-                relativeCommute.push_back(0);
-                totalCommute.push_back(0);
+    // Calculate the relative active population for each center in the grid
+    // Active population = population - commute_away + commute_towards
+    vector<unsigned int> relative_commute;
+
+    util::CSV commuting_data = util::CSV(config.getTree().get<string>("geoprofile.commuting"));
+    size_t column_count = commuting_data.getColumnCount();
+    vector<unsigned int> total_commute (column_count, 0);
+    if (commuting_data.size() > 1) {
+        // Access each element in the matrix
+        for (size_t row_index = 0; row_index < commuting_data.size(); row_index++) {
+            for (size_t col_index = 0; col_index < column_count; col_index++) {
+                util::CSVRow row = *(commuting_data.begin()+row_index);
+                // When indexes are the same, commute is to the same center
+                if (row_index == col_index) {
+                    // Commute towards
+                    relative_commute[row_index] += stoi(row.getValue(col_index));
+                }
+                else {
+                    // Commute away
+                    relative_commute[col_index] -= stoi(row.getValue(col_index));
+                    // Commute towards
+                    relative_commute[row_index] += stoi(row.getValue(col_index));
+                }
+                total_commute[col_index] += stoi(row.getValue(col_index));
             }
         }
-        counter++;
     }
 
+    // Calculate the amount of workplaces, every workplace has 20 workers
+    // TODO: change total_population to total_active_population
+    double commute_fraction = config.getTree().get<double>("commute.fraction");
+    unsigned int workforce = (unsigned int) commute_fraction * total_population;
+    unsigned int workplace_count =  workforce/20;
 
-        // Work fraction (Probably rename to commuteFraction?)
-        unsigned int workforce = (unsigned int) config.getWorkFraction()*grid->getTotalPopulation();
+    // Create the discrete distribution to sample from.
+    // TODO: change total_population to total_active_population
+    vector<double> fractions;
+    for(size_t i = 0; i < grid->size(); i++) {
+        int local_workforce = (relative_commute[i] / total_commute[i]) * (grid->at(i).population);
+        fractions.push_back(double(local_workforce) / double(total_population));
+    }
 
-        //every workplace has 20 workers
-        unsigned int work_count =  workforce/20;
-        // Create the discrete distribution to sample from.
-        vector<double> fractions;
+    // The generator allows for parallelization.
+    auto rn_manager = config.getRNManager();
+    auto generator = rn_manager->GetGenerator(trng::fast_discrete_dist(fractions.begin(), fractions.end()));
 
-        counter = 0;
+    // Create and map the workplaces to their samples.
+    for (unsigned int i = 0; i < workplace_count; i++) {
+            workplaces->push_back(WorkPlace(i, grid->at(generator()).coordinate));
+    }
 
-        for(UrbanCenter center : *grid) {
-            int local_workforce = (relativeCommute[counter]/totalCommute[counter])*center.population;
-                fractions.push_back(double(local_workforce) / double(grid->getTotalPopulation()));
-        }
-
-        // The generator allows for parallelization.
-        auto rn_manager = config.getRNManager();
-        auto generator = rn_manager->GetGenerator(trng::fast_discrete_dist(fractions.begin(), fractions.end()));
-
-        // Create and map the workplaces to their samples.
-        for (unsigned int i = 0; i < work_count; i++) {
-                workplaces->push_back(WorkPlace(i, grid->at(generator()).coordinate));
-        }
-
-        return workplaces;
+    return workplaces;
 }
 
 

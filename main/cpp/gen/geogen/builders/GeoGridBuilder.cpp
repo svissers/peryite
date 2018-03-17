@@ -9,35 +9,39 @@ using namespace std;
 
 shared_ptr<GeoGrid> GeoGridBuilder::build(const GeoConfiguration& config)
 {
-        geo_grid = make_shared<GeoGrid>();
+        shared_ptr<GeoGrid> geo_grid = make_shared<GeoGrid>();
+
         // Construct the urban centers from the city data
-        util::CSV cities_data = util::CSV(config.getCitiesFileName());
-        maxLong = 0;
-        minLong = 90;
-        for (util::CSVRow& row : cities_data) {
-                auto id         = row.getValue<unsigned int>("id");
-                auto population = row.getValue<unsigned int>("population");
-                auto name       = row.getValue<string>("name");
-                auto province   = row.getValue<unsigned int>("province");
+        util::CSV cities_data = util::CSV(config.getTree().get<string>("geoprofile.cities"));
+        double max_long = 0;
+        double min_long = 90;
+        for (util::CSVRow const & row : cities_data) {
                 auto longitude  = row.getValue<double>("longitude");
                 auto latitude   = row.getValue<double>("latitude");
-                UrbanCenter center = UrbanCenter(id, population, name, province, util::GeoCoordinate(longitude, latitude));
+                UrbanCenter center = UrbanCenter(
+                    row.getValue<unsigned int>("id"),
+                    row.getValue<unsigned int>("population"),
+                    row.getValue<string>("name"),
+                    row.getValue<unsigned int>("province"),
+                    util::GeoCoordinate(
+                        longitude,
+                        latitude)
+                    );
                 geo_grid->push_back(center);
-                geo_grid->addPopulation(population);
-                if(longitude > maxLong)
-                        maxLong = longitude;
-                if(longitude < minLong)
-                        minLong = longitude;
+                geo_grid->addPopulation(center.population);
+                if(longitude > max_long)
+                        max_long = longitude;
+                if(longitude < min_long)
+                        min_long = longitude;
         }
-        LongitudeBandWidth = (maxLong - minLong)/AMOUNTOFBANDS;
-        geo_grid->m_longitude_band_width = LongitudeBandWidth;
-        geo_grid->m_max_long = maxLong;
-        geo_grid->m_min_long = minLong;
+        // Initialize the bands which allow for efficient lookup.
+        // TODO discuss bands, add AMOUNTOFBANDS to config file
+        double longitude_bandwidth = (max_long - min_long)/AMOUNTOFBANDS;
+        geo_grid->m_longitude_band_width = longitude_bandwidth;
+        geo_grid->m_max_long = max_long;
+        geo_grid->m_min_long = min_long;
         return geo_grid;
 }
-
-GeoGridBuilder::GeoGridBuilder() = default;
-
 
 } // namespace gen
 } // namespace stride

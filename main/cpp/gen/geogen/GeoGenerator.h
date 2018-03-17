@@ -21,8 +21,8 @@ public:
         /// communities
         /// And then writes them to their corresponding files.
         /// @param config_path     The path to the configuration xml file to use.
-        static void generate(std::string config_path);
-
+        /// @param thread_count    The amount of threads that will be used.
+        static void generate(std::string config_path, unsigned int thread_count);
 };
 
 } // namespace gen

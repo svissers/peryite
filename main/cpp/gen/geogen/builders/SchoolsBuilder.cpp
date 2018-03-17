@@ -12,8 +12,10 @@ using namespace trng;
 shared_ptr<vector<School>> SchoolsBuilder::build(const GeoConfiguration& config, shared_ptr<GeoGrid> grid)
 {
         auto schools = make_shared<vector<School>>();
+        unsigned int total_population = config.getTree().get<unsigned int>("population_size");
+
         // We assume (overestimate) the fraction of mandatory students to be 25%.
-        unsigned int mandatory_students_count = (unsigned int)(0.25 * grid->getTotalPopulation());
+        unsigned int mandatory_students_count = (unsigned int)(0.25 * total_population);
 
         // Every school has an average of 500 students.
         unsigned int school_count = mandatory_students_count / 500;
@@ -21,7 +23,7 @@ shared_ptr<vector<School>> SchoolsBuilder::build(const GeoConfiguration& config,
         // Create the discrete distribution to sample from.
         vector<double> fractions;
         for(UrbanCenter center : *grid) {
-                fractions.push_back(double(center.population) / double(grid->getTotalPopulation()));
+                fractions.push_back(double(center.population) / double(total_population));
         }
 
         // The generator allows for parallelization.

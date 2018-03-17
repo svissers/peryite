@@ -14,17 +14,12 @@ namespace gen {
 class UniversitiesBuilder
 {
 public:
-        std::shared_ptr<std::vector<University>> universities;
-        double minLong;
-        double maxLong;
-        double LongitudeBandWidth;
-        UniversitiesBuilder();
         /// Builds a list of universities using the Geogrid and some configuration
         /// values.
         /// Note: The input grid will leave the method sorted on population size (big to small).
         /// @param config       TODO
         /// @param grid         TODO
-        std::shared_ptr<std::vector<University>> build(GeoConfiguration& config, std::shared_ptr<GeoGrid> grid);
+        static std::shared_ptr<std::vector<University>> build(GeoConfiguration& config, std::shared_ptr<GeoGrid> grid);
 
 };
 

@@ -18,75 +18,43 @@ using namespace boost::property_tree;
 GeoConfiguration::GeoConfiguration(string config_file_name, unsigned int thread_count)
         : m_thread_count(thread_count)
 {
-        // --------------------------------------
-        // Create the configuration property tree
-        // --------------------------------------
-        // Populate the configuration tree
-        if (util::InstallDirs::GetDataDir().empty()) {
-                throw runtime_error(std::string(__func__) + "> Data directory not present! Aborting.");
-        }
-        try {
-                ptree config;
-                read_xml((util::InstallDirs::GetConfigDir() /= config_file_name).string(), config,
-                         xml_parser::trim_whitespace | xml_parser::no_comments);
-                m_config = config.get_child("GeneratorConfiguration");
-        } catch (xml_parser_error& e) {
-                throw invalid_argument(string("Invalid file: ") +
-                                            (util::InstallDirs::GetConfigDir() /= config_file_name).string());
-        }
+    // Create the configuration property tree
+    if (util::InstallDirs::GetDataDir().empty()) {
+            throw runtime_error(std::string(__func__) + "> Data directory not present! Aborting.");
+    }
+    try {
+            ptree config;
+            // Populate the configuration tree
+            read_xml((util::InstallDirs::GetConfigDir() /= config_file_name).string(), config,
+                     xml_parser::trim_whitespace | xml_parser::no_comments);
+            m_config = config.get_child("GeneratorConfiguration");
+    } catch (xml_parser_error& e) {
+            throw invalid_argument(string("Invalid file: ") +
+                                        (util::InstallDirs::GetConfigDir() /= config_file_name).string());
+    }
 
-        // Check the structure of the configuration tree.
-        checkValidConfig();
+    checkValidConfig();
 
-        // ------------------------------------------------------------------------
-        // Initialize the random number generator associated with the configuration
-        // ------------------------------------------------------------------------
-        const auto            rng_type = getRngType();
-        const auto            rng_seed = getSeed();
-        const util::RNManager::Info info{rng_type, rng_seed, "", m_thread_count};
-        m_rn_manager.Initialize(info);
+    // Initialize the random number generator associated with the configuration
+    const auto            rng_type = m_config.get<string>("rng.engine");
+    const auto            rng_seed = m_config.get<unsigned long>("rng.seed");
+    const util::RNManager::Info info{rng_type, rng_seed, "", m_thread_count};
+    m_rn_manager.Initialize(info);
 }
 
-string GeoConfiguration::getCitiesFileName() const
+boost::property_tree::ptree GeoConfiguration::getTree() const
 {
-        return m_config.get<string>("geoprofile.cities");
+    return m_config;
 }
-
-string GeoConfiguration::getcommutingFileName() const
-{
-        return m_config.get<string>("geoprofile.commuting");
-}
-
-string GeoConfiguration::getRngType() const
-{
-        return m_config.get<string>("rng.engine");
-}
-
-unsigned long GeoConfiguration::getSeed() const
-{
-        return m_config.get<unsigned long>("rng.seed");
-}
-
-unsigned int GeoConfiguration::getPopulationSize() const { return m_config.get<unsigned int>("population_size"); }
-
-double GeoConfiguration::getUniversityFraction() const
-{
-        return m_config.get<double>("university.fraction");
-}
-
-double GeoConfiguration::getWorkFraction() const { return m_config.get<double>("work.fraction"); }
-
 
 std::shared_ptr<util::RNManager> GeoConfiguration::getRNManager() const
 {
-
-        return make_shared<util::RNManager>(m_rn_manager);
+    return make_shared<util::RNManager>(m_rn_manager);
 }
 
-
-    void GeoConfiguration::checkValidConfig() const
+void GeoConfiguration::checkValidConfig() const
 {
-        // TODO checking here.
+    // TODO checking here.
 }
 
 } // namespace gen
