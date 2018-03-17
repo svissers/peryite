@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>PeryiteUI</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <property name="enabled">
     <bool>true</bool>
@@ -28,6 +31,12 @@
     </property>
     <property name="title">
      <string>GeoGen</string>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
     </property>
     <widget class="QLabel" name="geoGenFileLabel">
      <property name="geometry">

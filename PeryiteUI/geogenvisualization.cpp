@@ -12,8 +12,11 @@ GeoGenVisualization::GeoGenVisualization(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Background color
+    setStyleSheet("QWidget { background-color: #626a77; }");
+
     // Load background image into image
-    QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("../vlaanderen.jpg");
+    QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("../vlaanderen.png");
     image = new QImage(filename);
 
     // Create list of circles
@@ -90,8 +93,8 @@ void GeoGenVisualization::drawCircle(QPixmap *pm, QPointF point, float radius, b
 
     // Gradient
     QLinearGradient gradient(QPointF(point.x(), point.y() - radius), QPointF(point.x(), point.y() + radius));
-    gradient.setColorAt(0.0, selected ? Qt::green: Qt::blue);
-    gradient.setColorAt(1.0, selected ? Qt::darkGreen : Qt::darkBlue);
+    gradient.setColorAt(0.0, selected ? QColor(130, 150, 220) : QColor(130, 140, 150));
+    gradient.setColorAt(1.0, selected ? QColor(90, 110, 180) : QColor(90, 100, 110));
     painter.setBrush(gradient);
     painter.setPen(QColor(0, 0, 0, 0));
 
