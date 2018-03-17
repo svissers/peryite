@@ -19,9 +19,9 @@ GeoGenVisualization::GeoGenVisualization(QWidget *parent) :
     // Create list of circles
     circles = new QList<VisualizationCircle *>();
     selected = NULL;
-    addCircle(new VisualizationCircle(QPointF(50, 50), 10));
-    addCircle(new VisualizationCircle(QPointF(150, 250), 15));
-    addCircle(new VisualizationCircle(QPointF(175, 150), 25));
+    addCircle(new VisualizationCircle(QPointF(50, 50), 10, "CIRCLE 1"));
+    addCircle(new VisualizationCircle(QPointF(150, 250), 15, "CIRCLE 2"));
+    addCircle(new VisualizationCircle(QPointF(175, 150), 25, "AND YET ANOTHER CIRCLE"));
 
     // Set timer interval for draw update
     timer = new QTimer(this);
@@ -50,20 +50,20 @@ void GeoGenVisualization::update() {
 void GeoGenVisualization::updateSelection(QPointF mousePos) {
     for (int i = 0; i < circles->size(); i++) {
         if (circles->at(i)->containsPoint(mousePos)) {
-            selected = circles->at(i);
+            hoverCircle(circles->at(i));
             return;
         }
     }
 
     // Nothing selected
-    selected = NULL;
+    noHover();
 }
 
 void GeoGenVisualization::draw() {
     // Load pixmap into image
     QPixmap pixmap = QPixmap::fromImage(*image);
 
-    // Draw circles on the pixmap
+    // Draw circles oselected = circles->at(i);n the pixmap
     for (int i = 0; i < circles->size(); i++) {
         VisualizationCircle *c = circles->at(i);
         drawCircle(&pixmap, c->position, c->radius, (c == selected));
@@ -90,8 +90,8 @@ void GeoGenVisualization::drawCircle(QPixmap *pm, QPointF point, float radius, b
 
     // Gradient
     QLinearGradient gradient(QPointF(point.x(), point.y() - radius), QPointF(point.x(), point.y() + radius));
-    gradient.setColorAt(0.0, selected ? Qt::green : Qt::blue);
-    gradient.setColorAt(0.0, selected ? Qt::darkGreen : Qt::darkBlue);
+    gradient.setColorAt(0.0, selected ? Qt::green: Qt::blue);
+    gradient.setColorAt(1.0, selected ? Qt::darkGreen : Qt::darkBlue);
     painter.setBrush(gradient);
     painter.setPen(QColor(0, 0, 0, 0));
 
@@ -102,4 +102,14 @@ void GeoGenVisualization::drawCircle(QPixmap *pm, QPointF point, float radius, b
 void GeoGenVisualization::closeEvent(QCloseEvent *event) {
     timer->stop();
     event->accept();
+}
+
+void GeoGenVisualization::hoverCircle(VisualizationCircle *c) {
+    selected = c;
+    ui->CircleInfoPlaceholder->setText(c->info);
+}
+
+void GeoGenVisualization::noHover() {
+    selected = NULL;
+    ui->CircleInfoPlaceholder->setText("");
 }

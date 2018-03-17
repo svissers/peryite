@@ -13,6 +13,14 @@ VisualizationCircle::VisualizationCircle(QPointF pos, qreal r) :
 
 }
 
+VisualizationCircle::VisualizationCircle(QPointF pos, qreal r, QString i) :
+    position(pos),
+    radius(r),
+    info(i)
+{
+
+}
+
 bool VisualizationCircle::containsPoint(QPointF point) {
     float sqrDistance = std::pow(position.x() - point.x(), 2) + std::pow(position.y() - point.y(), 2);
 

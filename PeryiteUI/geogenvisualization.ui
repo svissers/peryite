@@ -35,6 +35,22 @@
     <enum>Qt::ScrollBarAlwaysOff</enum>
    </property>
   </widget>
+  <widget class="QLabel" name="CircleInfoPlaceholder">
+   <property name="geometry">
+    <rect>
+     <x>750</x>
+     <y>10</y>
+     <width>241</width>
+     <height>321</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

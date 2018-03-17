@@ -34,6 +34,8 @@ private:
     void draw();
     void drawCircle(QPixmap *pm, QPointF point, float radius, bool selected);
     void addCircle(VisualizationCircle *c);
+    void hoverCircle(VisualizationCircle *c);
+    void noHover();
     QPointF GCSToQPointF(float lattitude, float longitude);
 };
 
