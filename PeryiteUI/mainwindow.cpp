@@ -64,7 +64,7 @@ void MainWindow::on_configFileSelect_clicked()
     QString filename = QFileDialog::getOpenFileName(
                 this,
                 tr("Select the config file."),
-                ".",
+                "../../cmake-build-release/installed/config",
                 "XML Files (*.xml)");
 
     if (filename == "") {
