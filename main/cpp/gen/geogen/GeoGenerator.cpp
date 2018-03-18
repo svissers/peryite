@@ -33,7 +33,6 @@ void GeoGenerator::generate(const std::string config_path, unsigned int thread_c
             std::cout << "CliController::Go> Exception while creating output directory:  {}", e.what();
             throw;
     }
-    std::cout << out_dir << std::endl;
     writefiles(geogrid, geogrid, out_dir.string()+"/Geogrid.csv");
     writefiles(communities, geogrid, out_dir.string()+"/Communities.csv");
     writefiles(schools, geogrid, out_dir.string()+"/Schools.csv");
