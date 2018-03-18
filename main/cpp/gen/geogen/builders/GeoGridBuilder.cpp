@@ -25,8 +25,7 @@ shared_ptr<GeoGrid> GeoGridBuilder::build(const GeoConfiguration& config)
                 row.getValue<string>("name"),
                 row.getValue<unsigned int>("province"),
                 util::GeoCoordinate(
-                    longitude,
-                    latitude)
+                    latitude, longitude)
                 );
             geo_grid->push_back(center);
             geo_grid->addPopulation(center.population);

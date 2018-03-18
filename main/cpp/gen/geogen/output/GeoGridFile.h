@@ -10,6 +10,7 @@
 #include <memory>
 #include <boost/algorithm/string/join.hpp>
 #include <string>
+#include <algorithm>    // std::sort
 
 namespace stride{
 namespace gen{
@@ -26,19 +27,22 @@ std::string getHeader(School& school);
 std::string getHeader(University& uni);
 std::string getHeader(WorkPlace& wp);
 
-template  <class T>
+template <class T>
 void writefiles(std::shared_ptr<T> toWrite, std::shared_ptr<GeoGrid> geo, std::string to_write_file){
     //toWrite: shared ptr of vector of <schools/...>
-    std::vector<T> sorted; // vector of vectors  of <schools/...>
-    sorted.push_back(*toWrite);
+    std::vector<T> sorted(AMOUNTOFBANDS); // vector of vectors  of <schools/...>
     for(auto it = toWrite->begin(); it < toWrite->end();it++){
         for(unsigned int i=0; i < AMOUNTOFBANDS; i++) {
             if(it->coordinate.m_longitude < geo->m_min_long+((i+1)*geo->m_longitude_band_width)){
-                for(unsigned int j=0; j<sorted[i].size(); j++){
-                    if(sorted[i][j].coordinate.m_latitude> it->coordinate.m_latitude){
-                        j--;
-                        sorted[i].insert(sorted[i].begin()+j, *it);
-                        break;
+                if (sorted.at(i).size() == 0){
+                    sorted.at(i).push_back(*it);
+                }else{
+                    for(unsigned int j=0; j < sorted.at(i).size(); j++){
+                        if(sorted.at(i).at(j).coordinate.m_latitude > it->coordinate.m_latitude){
+                            //geen j--, want j begint op 0
+                            sorted.at(i).insert(sorted.at(i).begin()+j, *it);
+                            break;
+                        }
                     }
                 }
                 break;
@@ -55,7 +59,6 @@ void writefiles(std::shared_ptr<T> toWrite, std::shared_ptr<GeoGrid> geo, std::s
             for (unsigned int j = 0; j < sorted[i].size(); j++){
                 my_file<< sorted[i][j];
             }
-            my_file<< std::endl;
         }
         my_file.close();
     }
