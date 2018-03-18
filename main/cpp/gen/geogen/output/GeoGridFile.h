@@ -22,7 +22,7 @@ template  <class T>
 void writefiles(std::shared_ptr<T> toWrite, std::shared_ptr<GeoGrid> geo, std::string to_write_file){
     std::vector<T> sorted;
     for(auto it = toWrite->begin(); it < toWrite->end();it++){
-        for(unsigned int i=0; i < AMOUNTOFBANDS; i++){
+        for(unsigned int i=0; i < AMOUNTOFBANDS; i++) {
             if(it->coordinate.m_longitude<geo->m_min_long+((i+1)*geo->m_longitude_band_width)){
                 for(unsigned int j=0; j<sorted[i].size(); j++){
                     if(sorted[i][j].coordinate.m_latitude> it->coordinate.m_latitude){
@@ -33,6 +33,14 @@ void writefiles(std::shared_ptr<T> toWrite, std::shared_ptr<GeoGrid> geo, std::s
                 }
                 break;
             }
+        }
+    }
+
+    std::cout << sorted.size() << std::endl;
+    for (auto i : sorted) {
+        std::cout << "" << std::endl;
+        for (auto j : i) {
+            std::cout << j << std::endl;
         }
     }
     std::ofstream my_file{to_write_file};

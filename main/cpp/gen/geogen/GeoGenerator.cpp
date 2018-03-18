@@ -12,16 +12,22 @@ void GeoGenerator::generate(const std::string config_path, unsigned int thread_c
 {
     GeoConfiguration config = GeoConfiguration(config_path, thread_count);
 
+    cout << "Building" << endl;
     // Build
     std::shared_ptr<GeoGrid> geogrid = GeoGridBuilder::build(config);
+    cout << "GeoGrid done" << endl;
 
     std::shared_ptr<std::vector<School>> schools = SchoolsBuilder::build(config, geogrid);
+    cout << "Schools done" << endl;
 
     std::shared_ptr<std::vector<Community>> communities = CommunitiesBuilder::build(config, geogrid);
+    cout << "Communities done" << endl;
 
     std::shared_ptr<std::vector<University>> universities = UniversitiesBuilder::build(config, geogrid);
+    cout << "Universities done" << endl;
 
     std::shared_ptr<std::vector<WorkPlace>> workplaces = WorkplacesBuilder::build(config, geogrid);
+    cout << "Done Building" << endl;
 
     // Write
     writefiles(geogrid, geogrid, "./output/Geogrid.csv");

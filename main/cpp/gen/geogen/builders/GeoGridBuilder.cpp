@@ -2,6 +2,7 @@
 #include "../structs/UrbanCenter.h"
 #include "util/CSV.h"
 #include "geo/GeoCoordinate.h"
+
 namespace stride {
 namespace gen {
 
@@ -16,23 +17,23 @@ shared_ptr<GeoGrid> GeoGridBuilder::build(const GeoConfiguration& config)
         double max_long = 0;
         double min_long = 90;
         for (util::CSVRow const & row : cities_data) {
-                auto longitude  = row.getValue<double>("longitude");
-                auto latitude   = row.getValue<double>("latitude");
-                UrbanCenter center = UrbanCenter(
-                    row.getValue<unsigned int>("id"),
-                    row.getValue<unsigned int>("population"),
-                    row.getValue<string>("name"),
-                    row.getValue<unsigned int>("province"),
-                    util::GeoCoordinate(
-                        longitude,
-                        latitude)
-                    );
-                geo_grid->push_back(center);
-                geo_grid->addPopulation(center.population);
-                if(longitude > max_long)
-                        max_long = longitude;
-                if(longitude < min_long)
-                        min_long = longitude;
+            auto longitude  = row.getValue<double>("longitude");
+            auto latitude   = row.getValue<double>("latitude");
+            UrbanCenter center = UrbanCenter(
+                row.getValue<unsigned int>("id"),
+                row.getValue<unsigned int>("population"),
+                row.getValue<string>("name"),
+                row.getValue<unsigned int>("province"),
+                util::GeoCoordinate(
+                    longitude,
+                    latitude)
+                );
+            geo_grid->push_back(center);
+            geo_grid->addPopulation(center.population);
+            if(longitude > max_long)
+                    max_long = longitude;
+            if(longitude < min_long)
+                    min_long = longitude;
         }
         // Initialize the bands which allow for efficient lookup.
         // TODO discuss bands, add AMOUNTOFBANDS to config file
