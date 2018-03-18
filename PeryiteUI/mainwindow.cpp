@@ -94,9 +94,6 @@ void MainWindow::on_generateGeoGen_clicked()
     process->start("/bin/bash", arguments);
     process->waitForFinished(); // Default waits max 30s, TODO: see if that's enough.
 
-    // Message when done
-    QMessageBox::information(this, tr("Done"), "GeoGen completed!");
-
     // Construct the path of the output folder
     QString installedFolder = "";
 
@@ -109,6 +106,9 @@ void MainWindow::on_generateGeoGen_clicked()
     }
 
     setGeoGenFile(installedFolder + "/output/" + configFile.split(QRegularExpression("\\.")).first() + "/");
+
+    // Message when done
+    QMessageBox::information(this, tr("Done"), "GeoGen completed!");
 }
 
 void MainWindow::on_visualizeGeoGen_clicked()
