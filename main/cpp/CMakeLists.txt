@@ -110,12 +110,12 @@ set_target_properties(libstride PROPERTIES PREFIX "")
 #============================================================================
 # Build and install the stride executable.
 #============================================================================
-#add_executable(stride sim/main.cpp)
+add_executable(stride sim/main.cpp)
 #include tclap
-#target_include_directories(stride PUBLIC SYSTEM
-#	${CMAKE_HOME_DIRECTORY}/main/resources/lib/tclap/include)
-#target_link_libraries(stride ${LIBS} libstride)
-#install(TARGETS stride  DESTINATION   ${BIN_INSTALL_LOCATION})
+target_include_directories(stride PUBLIC SYSTEM
+	${CMAKE_HOME_DIRECTORY}/main/resources/lib/tclap/include)
+target_link_libraries(stride ${LIBS} libstride)
+install(TARGETS stride  DESTINATION   ${BIN_INSTALL_LOCATION})
 
 #============================================================================
 # Build and install the stride executable.
@@ -136,7 +136,7 @@ set_target_properties(libstride PROPERTIES PREFIX "")
 #install(TARGETS popgen2  DESTINATION   ${BIN_INSTALL_LOCATION})
 
 #============================================================================
-# Build and install the stride executable.
+# Build and install the geogen executable.
 #============================================================================
 add_executable(geogen gen/main.cpp)
 target_include_directories(geogen PUBLIC SYSTEM

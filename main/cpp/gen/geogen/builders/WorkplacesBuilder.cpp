@@ -21,10 +21,10 @@ shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GeoConfiguration& config,
 
     // Calculate the relative active population for each center in the grid
     // Active population = population - commute_away + commute_towards
-    vector<unsigned int> relative_commute;
 
     util::CSV commuting_data = util::CSV(config.getTree().get<string>("geoprofile.commuting"));
     size_t column_count = commuting_data.getColumnCount();
+    vector<unsigned int> relative_commute(column_count, 0);
     vector<unsigned int> total_commute (column_count, 0);
     if (commuting_data.size() > 1) {
         // Access each element in the matrix
@@ -46,7 +46,7 @@ shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GeoConfiguration& config,
             }
         }
     }
-
+    std::cout << "test\n";
     // Calculate the amount of workplaces, every workplace has 20 workers
     // TODO: change total_population to total_active_population
     double commute_fraction = config.getTree().get<double>("commute.fraction");
