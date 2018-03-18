@@ -48,7 +48,7 @@ shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GeoConfiguration& config,
     // Calculate the amount of workplaces, every workplace has 20 workers
     // TODO: change total_population to total_active_population
     double commute_fraction = config.getTree().get<double>("work.commute_fraction");
-    unsigned int workforce = (unsigned int) commute_fraction * total_population;
+    unsigned int workforce = (unsigned int) (commute_fraction * total_population);
     unsigned int workplace_count =  workforce/20;
 
     // Create the discrete distribution to sample from.

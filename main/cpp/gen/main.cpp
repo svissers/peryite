@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
                 // Parse command line.
                 // -----------------------------------------------------------------------------------------
                 CmdLine cmd("generator", ' ', "1.0", false);
-                ValueArg<string> config_file_Arg("c", "config", "Config File", false, "run_generator_default.xml",
+                ValueArg<string> config_file_Arg("c", "config", "Config File", false, "peryite_generator.xml",
                                                  "CONFIGURATION FILE", cmd);
                 ValueArg<string> generator_type_Arg("g", "generator", "Generator type (geo or pop)", false, "geo",
                                                     "GENERATOR TYPE", cmd);
@@ -93,5 +93,3 @@ int main(int argc, char* argv[])
         }
         return exit_status;
 }
-
-
