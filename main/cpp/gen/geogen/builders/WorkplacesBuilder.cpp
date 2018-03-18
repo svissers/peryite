@@ -21,10 +21,9 @@ shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GeoConfiguration& config,
 
     // Calculate the relative active population for each center in the grid
     // Active population = population - commute_away + commute_towards
-
-    util::CSV commuting_data = util::CSV(config.getTree().get<string>("geoprofile.commuting"));
+    util::CSV commuting_data = util::CSV(config.getTree().get<string>("geoprofile.commuters"));
     size_t column_count = commuting_data.getColumnCount();
-    vector<unsigned int> relative_commute(column_count, 0);
+    vector<unsigned int> relative_commute (column_count, 0);
     vector<unsigned int> total_commute (column_count, 0);
     if (commuting_data.size() > 1) {
         // Access each element in the matrix
@@ -48,7 +47,7 @@ shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GeoConfiguration& config,
     }
     // Calculate the amount of workplaces, every workplace has 20 workers
     // TODO: change total_population to total_active_population
-    double commute_fraction = config.getTree().get<double>("commute.fraction");
+    double commute_fraction = config.getTree().get<double>("work.commute_fraction");
     unsigned int workforce = (unsigned int) commute_fraction * total_population;
     unsigned int workplace_count =  workforce/20;
 
@@ -58,6 +57,9 @@ shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GeoConfiguration& config,
     for(size_t i = 0; i < grid->size(); i++) {
         int local_workforce = (relative_commute[i] / total_commute[i]) * (grid->at(i).population);
         fractions.push_back(double(local_workforce) / double(total_population));
+    }
+    if (fractions.empty()) {
+        return workplaces;
     }
 
     // The generator allows for parallelization.

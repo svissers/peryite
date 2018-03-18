@@ -51,7 +51,6 @@ int main(int argc, char* argv[])
                         throw runtime_error(string(__func__) + ">Config file " + file_path.string() +
                                             " not present. Aborting.");
                 }
-
                 // -----------------------------------------------------------------------------------------
                 // Parallellization
                 // -----------------------------------------------------------------------------------------

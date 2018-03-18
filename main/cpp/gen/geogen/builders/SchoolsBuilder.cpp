@@ -25,14 +25,18 @@ shared_ptr<vector<School>> SchoolsBuilder::build(const GeoConfiguration& config,
         for(UrbanCenter center : *grid) {
                 fractions.push_back(double(center.population) / double(total_population));
         }
+        if (fractions.empty()) {
+            return schools;
+        }
 
         // The generator allows for parallelization.
         auto rn_manager = config.getRNManager();
-        auto generator = rn_manager->GetGenerator(trng::fast_discrete_dist(fractions.begin(), fractions.end()));
+        std::function<int()> generator = rn_manager->GetGenerator(trng::fast_discrete_dist(fractions.begin(), fractions.end()));
 
         // Create and map the schools to their samples.
         for (unsigned int i = 0; i < school_count; i++) {
-                schools->push_back(School(i, grid->at(generator()).coordinate));
+                int index = generator();
+                schools->push_back(School(i, grid->at(index).coordinate));
         }
 
         return schools;
