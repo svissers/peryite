@@ -2,7 +2,9 @@
 #include "GeoConfiguration.h"
 #include "builders/SchoolsBuilder.h"
 #include "builders/WorkplacesBuilder.h"
+#include <boost/filesystem.hpp>
 
+using namespace boost::filesystem;
 namespace stride {
 namespace gen {
 
@@ -24,11 +26,19 @@ void GeoGenerator::generate(const std::string config_path, unsigned int thread_c
     std::shared_ptr<std::vector<WorkPlace>> workplaces = WorkplacesBuilder::build(config, geogrid);
 
     // Write
-    writefiles(geogrid, geogrid, "./output/Geogrid.csv");
-    writefiles(communities, geogrid, "./output/Communities.csv");
-    writefiles(schools, geogrid, "./output/Schools.csv");
-    writefiles(universities, geogrid, "./output/Universities.csv");
-    writefiles(workplaces, geogrid, "./output/Workplaces.csv");
+    boost::filesystem::path out_dir = "output/"+config_path.substr(0, config_path.find_last_of("."));
+    try {
+            create_directories(out_dir);
+    } catch (std::exception& e) {
+            std::cout << "CliController::Go> Exception while creating output directory:  {}", e.what();
+            throw;
+    }
+    std::cout << out_dir << std::endl;
+    writefiles(geogrid, geogrid, out_dir.string()+"/Geogrid.csv");
+    writefiles(communities, geogrid, out_dir.string()+"/Communities.csv");
+    writefiles(schools, geogrid, out_dir.string()+"/Schools.csv");
+    writefiles(universities, geogrid, out_dir.string()+"/Universities.csv");
+    writefiles(workplaces, geogrid, out_dir.string()+"/Workplaces.csv");
 }
 
 
