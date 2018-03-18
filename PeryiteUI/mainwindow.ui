@@ -41,9 +41,9 @@
     <widget class="QLabel" name="geoGenFileLabel">
      <property name="geometry">
       <rect>
-       <x>180</x>
+       <x>190</x>
        <y>64</y>
-       <width>640</width>
+       <width>630</width>
        <height>25</height>
       </rect>
      </property>
@@ -62,12 +62,12 @@
       <rect>
        <x>16</x>
        <y>64</y>
-       <width>151</width>
+       <width>160</width>
        <height>25</height>
       </rect>
      </property>
      <property name="text">
-      <string>Select GeoGen File</string>
+      <string>Select GeoGen Folder</string>
      </property>
     </widget>
     <widget class="QPushButton" name="configFileSelect">
@@ -75,7 +75,7 @@
       <rect>
        <x>16</x>
        <y>32</y>
-       <width>151</width>
+       <width>160</width>
        <height>25</height>
       </rect>
      </property>
@@ -86,9 +86,9 @@
     <widget class="QLabel" name="configFileLabel">
      <property name="geometry">
       <rect>
-       <x>180</x>
+       <x>190</x>
        <y>32</y>
-       <width>640</width>
+       <width>630</width>
        <height>25</height>
       </rect>
      </property>
