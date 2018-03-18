@@ -46,7 +46,6 @@ shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GeoConfiguration& config,
             }
         }
     }
-    std::cout << "test\n";
     // Calculate the amount of workplaces, every workplace has 20 workers
     // TODO: change total_population to total_active_population
     double commute_fraction = config.getTree().get<double>("commute.fraction");
