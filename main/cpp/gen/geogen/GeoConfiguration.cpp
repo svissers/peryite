@@ -19,11 +19,9 @@ GeoConfiguration::GeoConfiguration(string config_file_name, unsigned int thread_
         : m_thread_count(thread_count)
 {
     // Create the configuration property tree
-    cout << "Checking " << endl;
     if (util::InstallDirs::GetDataDir().empty()) {
             throw runtime_error(std::string(__func__) + "> Data directory not present! Aborting.");
     }
-    cout << "Reading file " << endl;
     try {
             ptree config;
             // Populate the configuration tree
@@ -34,7 +32,6 @@ GeoConfiguration::GeoConfiguration(string config_file_name, unsigned int thread_
             throw invalid_argument(string("Invalid file: ") +
                                         (util::InstallDirs::GetConfigDir() /= config_file_name).string());
     }
-    cout << "Done xml_parser " << endl;
 
     checkValidConfig();
 
@@ -42,7 +39,6 @@ GeoConfiguration::GeoConfiguration(string config_file_name, unsigned int thread_
     const auto            rng_type = m_config.get<string>("rng.engine");
     const auto            rng_seed = m_config.get<unsigned long>("rng.seed");
     const util::RNManager::Info info{rng_type, rng_seed, "", m_thread_count};
-    cout << "Initializing" << endl;
     m_rn_manager.Initialize(info);
 }
 
