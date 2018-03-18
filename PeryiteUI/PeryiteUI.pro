@@ -28,13 +28,15 @@ SOURCES += \
         mainwindow.cpp \
     peryiteuidata.cpp \
     geogenvisualization.cpp \
-    visualizationcircle.cpp
+    visualizationcircle.cpp \
+    geogendata.cpp
 
 HEADERS += \
         mainwindow.h \
     peryiteuidata.h \
     geogenvisualization.h \
-    visualizationcircle.h
+    visualizationcircle.h \
+    geogendata.h
 
 FORMS += \
         mainwindow.ui \

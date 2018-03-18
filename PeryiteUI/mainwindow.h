@@ -30,7 +30,7 @@ private:
     Ui::MainWindow *ui;
     PeryiteUIData *data;
 
-    void setGeoGenFile(QString filename);
+    void setGeoGenFolder(QString filename);
     void setConfigFile(QString filename);
 };
 

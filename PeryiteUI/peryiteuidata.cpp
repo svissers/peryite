@@ -3,5 +3,10 @@
 PeryiteUIData::PeryiteUIData()
 {
     configFile = "";
-    geoGenFile = "";
+    geoGenFolder = "";
+    geogenData = new GeoGenData();
+}
+
+void PeryiteUIData::setGeoGenData(QString folder) {
+    geogenData->setFilenames(folder);
 }

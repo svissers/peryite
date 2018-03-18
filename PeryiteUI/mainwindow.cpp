@@ -28,10 +28,16 @@ MainWindow::~MainWindow()
  * Main functions (non-slots)
  */
 
-void MainWindow::setGeoGenFile(QString filename)
+void MainWindow::setGeoGenFolder(QString filename)
 {
     ui->geoGenFileLabel->setText(filename);
-    data->geoGenFile = filename;
+    data->geoGenFolder = filename;
+    data->geogenData->setFilenames(data->geoGenFolder);
+
+    /*
+     * We can check if the geogen folder actually contains the required files, by letting setFilenames return a bool.
+     * We could then give a MessageBox::warning here
+     */
 }
 
 void MainWindow::setConfigFile(QString filename)
@@ -57,7 +63,7 @@ void MainWindow::on_geoGenFileSelect_clicked()
         return;
     }
 
-    setGeoGenFile(filename);
+    setGeoGenFolder(filename);
 }
 
 void MainWindow::on_configFileSelect_clicked()
@@ -105,7 +111,8 @@ void MainWindow::on_generateGeoGen_clicked()
         path.pop_front();
     }
 
-    setGeoGenFile(installedFolder + "/output/" + configFile.split(QRegularExpression("\\.")).first() + "/");
+    // Set folder data and update geogendata
+    setGeoGenFolder(installedFolder + "/output/" + configFile.split(QRegularExpression("\\.")).first() + "/");
 
     // Message when done
     QMessageBox::information(this, tr("Done"), "GeoGen completed!");

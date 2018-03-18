@@ -1,14 +1,19 @@
 #ifndef PERYITEUIDATA_H
 #define PERYITEUIDATA_H
 
-#include<QString>
+#include <QString>
+#include "geogendata.h"
 
 class PeryiteUIData
 {
 public:
     PeryiteUIData();
+
+    void setGeoGenData(QString folder);
+
     QString configFile;
-    QString geoGenFile;
+    QString geoGenFolder;
+    GeoGenData *geogenData;
 };
 
 #endif // PERYITEUIDATA_H
