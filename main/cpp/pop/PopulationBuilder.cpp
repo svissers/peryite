@@ -27,6 +27,7 @@
 #include <trng/uniform_int_dist.hpp>
 #include <cassert>
 #include <spdlog/spdlog.h>
+#include <boost/filesystem/fstream.hpp>
 
 namespace stride {
 

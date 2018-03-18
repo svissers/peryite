@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GeneratorConfiguration>
 	<rng>
-		<engine>trng/mrg2</engine>
+		<engine>mrg2</engine><!--engine>trng</engine-->
 		<seed>1</seed>
 	</rng>
 	<household_profile>./data/households_flanders.xml</household_profile>
 	<population_size>100000</population_size>
 	<geoprofile>
-		<cities>./data/belgium_population.csv</cities>
-		<villages>./data/geo_villages.csv</villages>
+		<cities>data/flanders_cities2.csv</cities>
+		<commuting>data/flanders_commuting.csv</commuting>
+		<villages>data/geo_villages.csv</villages>
 		<use_xy>false</use_xy>
 		<in_villages>0.5</in_villages>
 		<scale>1.05</scale>
