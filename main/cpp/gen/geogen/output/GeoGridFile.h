@@ -36,7 +36,6 @@ void writefiles(std::shared_ptr<T> toWrite, std::shared_ptr<GeoGrid> geo, std::s
         }
     }
 
-    std::cout << sorted.size() << std::endl;
     for (auto i : sorted) {
         std::cout << "" << std::endl;
         for (auto j : i) {
