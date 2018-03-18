@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Config>
+	<rng>
+		<engine>mrg2</engine>
+		<seed>1</seed>
+	</rng>
+	<household_profile>./data/households_flanders.xml</household_profile>
+	<population_size>100000</population_size>
+	<geoprofile>
+		<cities>data/flanders_cities2.csv</cities>
+		<commuters>data/flanders_commuting.csv</commuters>
+	</geoprofile>
+	<university>
+		<fraction>0.25</fraction>
+	</university>
+	<work>
+		<fraction>0.70</fraction>
+		<commute_fraction>0.70</commute_fraction>
+	</work>
+</Config>

@@ -26,7 +26,7 @@ Thumbs.db
 /MakeLocalConfig
 /.settings/
 target*/
-build*/
+build/
 /CMakeLocal.cmake
 
 #-----------------------------
