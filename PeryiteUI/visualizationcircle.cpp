@@ -19,8 +19,6 @@ VisualizationCircle::VisualizationCircle(GeoGridLocation *gloc) :
 {
     radius = std::sqrt((float)(geoGridLocation->population) / 750);
     position = GCSToQPointF(geoGridLocation->longitude, geoGridLocation->latitude);
-    qDebug() << QPointF(geoGridLocation->longitude, geoGridLocation->latitude);
-    qDebug() << position;
 }
 
 bool VisualizationCircle::containsPoint(QPointF point) {

@@ -141,6 +141,10 @@ void GeoGenVisualization::parseData(GeoGenData *data) {
 
     while (!geogridFile.atEnd()) {
         QString line = geogridFile.readLine();
+
+        // Ignore header lines
+        if (line.startsWith("id")) { continue; }
+
         addCircle(new VisualizationCircle(new GeoGridLocation(line)));
     }
 
