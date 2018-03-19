@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QImage>
 #include <QList>
+#include <QGraphicsPixmapItem>
 #include "geogendata.h"
 #include "visualizationcircle.h"
 
@@ -28,6 +29,8 @@ private:
     QTimer *timer;
     QList<VisualizationCircle *> *circles;
     VisualizationCircle *selected;
+    QGraphicsScene *gfxScene;
+    QGraphicsPixmapItem *gfxItem;
 
     void closeEvent(QCloseEvent *event);
 

@@ -26,9 +26,9 @@ bool VisualizationCircle::containsPoint(QPointF point) {
     return (sqrDistance <= radius * radius);
 }
 
-static QPointF VisualizationCircle::GCSToQPointF(float latitude, float longitude) {
-    float x = latitude;
-    float y = longitude;
+QPointF VisualizationCircle::GCSToQPointF(float longitude, float latitude) {
+    float x = longitude;
+    float y = latitude;
 
     return QPointF(x, y);
 }

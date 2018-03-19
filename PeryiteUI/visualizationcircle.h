@@ -18,7 +18,7 @@ public:
 
     bool containsPoint(QPointF point);
 
-    static QPointF GCSToQPointF(float latitude, float longitude);
+    static QPointF GCSToQPointF(float longitude, float latitude);
 };
 
 #endif // VISUALIZATIONCIRCLE_H

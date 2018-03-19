@@ -21,6 +21,11 @@ GeoGenVisualization::GeoGenVisualization(QWidget *parent) :
     QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("../vlaanderen.png");
     image = new QImage(filename);
 
+    // Setup GraphicsScene
+    gfxScene = new QGraphicsScene();
+    gfxItem = new QGraphicsPixmapItem();
+    gfxScene->addItem(gfxItem);
+
     // Set timer interval for draw update
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &GeoGenVisualization::update);
@@ -37,6 +42,8 @@ GeoGenVisualization::~GeoGenVisualization()
 void GeoGenVisualization::update() {
     // Get cursor position
     QPoint mousePos = mapFromGlobal(QCursor::pos());
+
+    qDebug() << mousePos;
 
     // Check hover selection for circles
     updateSelection(mousePos);
@@ -67,14 +74,13 @@ void GeoGenVisualization::draw() {
         drawCircle(&pixmap, c->position, c->radius, (c == selected));
     }
 
-    // Create scene and add pixmap
-    QGraphicsScene *scene = new QGraphicsScene();
-    QGraphicsPixmapItem *item = new QGraphicsPixmapItem(pixmap);
+    // Set pixmap pixmap
+    gfxItem->setPixmap(pixmap);
 
     // Display the scene
-    ui->FlandersMap->setScene(scene);
-    ui->FlandersMap->fitInView( scene->itemsBoundingRect(), Qt::IgnoreAspectRatio);
-    scene->addItem(item);
+    ui->FlandersMap->setScene(gfxScene);
+    ui->FlandersMap->fitInView( gfxScene->itemsBoundingRect(), Qt::IgnoreAspectRatio);
+    // gfxScene->addItem(gfxItem);
 }
 
 void GeoGenVisualization::addCircle(VisualizationCircle *c) {
@@ -131,4 +137,6 @@ void GeoGenVisualization::parseData(GeoGenData *data) {
         QString line = geogridFile.readLine();
         addCircle(new VisualizationCircle(new GeoGridLocation(line)));
     }
+
+    geogridFile.close();
 }
