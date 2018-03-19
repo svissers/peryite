@@ -1,5 +1,6 @@
 #include "visualizationcircle.h"
 #include <cmath>
+#include <QDebug>
 
 VisualizationCircle::VisualizationCircle()
 {
@@ -16,8 +17,10 @@ VisualizationCircle::VisualizationCircle(QPointF pos, qreal r) :
 VisualizationCircle::VisualizationCircle(GeoGridLocation *gloc) :
     geoGridLocation(gloc)
 {
-    radius = (float)(geoGridLocation->population) / 3000;
-    position = GCSToQPointF(geoGridLocation->latitude, geoGridLocation->longitude);
+    radius = std::sqrt((float)(geoGridLocation->population) / 750);
+    position = GCSToQPointF(geoGridLocation->longitude, geoGridLocation->latitude);
+    qDebug() << QPointF(geoGridLocation->longitude, geoGridLocation->latitude);
+    qDebug() << position;
 }
 
 bool VisualizationCircle::containsPoint(QPointF point) {
@@ -27,8 +30,10 @@ bool VisualizationCircle::containsPoint(QPointF point) {
 }
 
 QPointF VisualizationCircle::GCSToQPointF(float longitude, float latitude) {
-    float x = longitude;
-    float y = latitude;
+    // These conversions are specific to our png image, calculated by hand.
+    // Not sure if there is a better way to go about this.
+    float x = 263 * longitude - 606.7;
+    float y = -475 * latitude + 24465;
 
     return QPointF(x, y);
 }

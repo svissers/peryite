@@ -43,8 +43,6 @@ void GeoGenVisualization::update() {
     // Get cursor position
     QPoint mousePos = mapFromGlobal(QCursor::pos());
 
-    qDebug() << mousePos;
-
     // Check hover selection for circles
     updateSelection(mousePos);
 
@@ -110,12 +108,20 @@ void GeoGenVisualization::closeEvent(QCloseEvent *event) {
 
 void GeoGenVisualization::hoverCircle(VisualizationCircle *c) {
     selected = c;
-    // ui->CircleInfoPlaceholder->setText(c->info);
+
+    // Title
+    QString title = c->geoGridLocation->name;
+    ui->CircleInfoTitle->setText(title);
+
+    // Info text
+    QString text = "Population: " + formatInt(c->geoGridLocation->population);
+    ui->CircleInfoText->setText(text);
 }
 
 void GeoGenVisualization::noHover() {
     selected = NULL;
-    ui->CircleInfoPlaceholder->setText("");
+    ui->CircleInfoTitle->setText("");
+    ui->CircleInfoText->setText("");
 }
 
 void GeoGenVisualization::parseData(GeoGenData *data) {
@@ -139,4 +145,8 @@ void GeoGenVisualization::parseData(GeoGenData *data) {
     }
 
     geogridFile.close();
+}
+
+QString GeoGenVisualization::formatInt(int n) {
+    return QLocale(QLocale::English).toString(n);
 }

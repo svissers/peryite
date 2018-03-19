@@ -41,6 +41,8 @@ private:
     void addCircle(VisualizationCircle *c);
     void hoverCircle(VisualizationCircle *c);
     void noHover();
+
+    static QString formatInt(int number);
 };
 
 #endif // GEOGENVISUALIZATION_H

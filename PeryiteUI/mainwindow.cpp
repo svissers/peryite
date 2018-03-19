@@ -120,6 +120,11 @@ void MainWindow::on_generateGeoGen_clicked()
 
 void MainWindow::on_visualizeGeoGen_clicked()
 {
+    if (data->geoGenFolder == "") {
+        QMessageBox::warning(this, tr("No folder selected"), "You have not selected a GeoGen output folder to visualize.");
+        return;
+    }
+
     GeoGenVisualization *wdg = new GeoGenVisualization;
     wdg->parseData(data->geogenData);
     wdg->show();
