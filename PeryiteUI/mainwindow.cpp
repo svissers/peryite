@@ -112,7 +112,7 @@ void MainWindow::on_generateGeoGen_clicked()
     }
 
     // Set folder data and update geogendata
-    setGeoGenFolder(installedFolder + "/output/" + configFile.split(QRegularExpression("\\.")).first() + "/");
+    setGeoGenFolder(installedFolder + "/output/" + configFile.split(QRegularExpression("\\.")).first());
 
     // Message when done
     QMessageBox::information(this, tr("Done"), "GeoGen completed!");
@@ -121,5 +121,6 @@ void MainWindow::on_generateGeoGen_clicked()
 void MainWindow::on_visualizeGeoGen_clicked()
 {
     GeoGenVisualization *wdg = new GeoGenVisualization;
+    wdg->parseData(data->geogenData);
     wdg->show();
 }

@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QImage>
 #include <QList>
+#include "geogendata.h"
 #include "visualizationcircle.h"
 
 namespace Ui {
@@ -12,11 +13,12 @@ class GeoGenVisualization;
 
 class GeoGenVisualization : public QWidget
 {
-    Q_OBJECT
 
 public:
     explicit GeoGenVisualization(QWidget *parent = 0);
     ~GeoGenVisualization();
+
+    void parseData(GeoGenData *data);
 
 private slots:
 
@@ -36,7 +38,6 @@ private:
     void addCircle(VisualizationCircle *c);
     void hoverCircle(VisualizationCircle *c);
     void noHover();
-    QPointF GCSToQPointF(float lattitude, float longitude);
 };
 
 #endif // GEOGENVISUALIZATION_H

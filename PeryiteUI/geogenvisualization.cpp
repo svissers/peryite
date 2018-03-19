@@ -1,10 +1,12 @@
 #include "geogenvisualization.h"
 #include "ui_geogenvisualization.h"
-#include<QtDebug>
-#include<QDir>
-#include<QGraphicsPixmapItem>
-#include<QTimer>
-#include<QCloseEvent>
+#include "geogridlocation.h"
+#include <QtDebug>
+#include <QDir>
+#include <QGraphicsPixmapItem>
+#include <QTimer>
+#include <QCloseEvent>
+#include <QFile>
 
 GeoGenVisualization::GeoGenVisualization(QWidget *parent) :
     QWidget(parent),
@@ -18,13 +20,6 @@ GeoGenVisualization::GeoGenVisualization(QWidget *parent) :
     // Load background image into image
     QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("../vlaanderen.png");
     image = new QImage(filename);
-
-    // Create list of circles
-    circles = new QList<VisualizationCircle *>();
-    selected = NULL;
-    addCircle(new VisualizationCircle(QPointF(50, 50), 10, "CIRCLE 1"));
-    addCircle(new VisualizationCircle(QPointF(150, 250), 15, "CIRCLE 2"));
-    addCircle(new VisualizationCircle(QPointF(175, 150), 25, "AND YET ANOTHER CIRCLE"));
 
     // Set timer interval for draw update
     timer = new QTimer(this);
@@ -109,10 +104,31 @@ void GeoGenVisualization::closeEvent(QCloseEvent *event) {
 
 void GeoGenVisualization::hoverCircle(VisualizationCircle *c) {
     selected = c;
-    ui->CircleInfoPlaceholder->setText(c->info);
+    // ui->CircleInfoPlaceholder->setText(c->info);
 }
 
 void GeoGenVisualization::noHover() {
     selected = NULL;
     ui->CircleInfoPlaceholder->setText("");
+}
+
+void GeoGenVisualization::parseData(GeoGenData *data) {
+    // Create list of circles
+    circles = new QList<VisualizationCircle *>();
+    selected = NULL;
+
+    // Start with geogrid
+    QFile geogridFile(data->geogridFile);
+
+    qDebug() << data->geogridFile;
+
+    if (!geogridFile.open(QIODevice::ReadOnly)) {
+        qDebug() << geogridFile.errorString();
+        return;
+    }
+
+    while (!geogridFile.atEnd()) {
+        QString line = geogridFile.readLine();
+        addCircle(new VisualizationCircle(new GeoGridLocation(line)));
+    }
 }
