@@ -68,12 +68,15 @@ void UniversityFIle::sortUniversities(vector<shared_ptr<University>> universitie
                 }
                 else {
                     // The band is not empty, sort using latitude.
+                    bool inserted = false;                    
                     for(unsigned int j = 0; j < sorted.at(i).size(); j++){
                         if(sorted.at(i).at(j).coordinate.m_latitude > it->coordinate.m_latitude){
                             sorted.at(i).insert(sorted.at(i).begin()+j, *it);
                             break;
                         }
                     }
+                    if (!inserted) 
+                        sorted.at(i).push_back(school);
                 }
                 break;
             }

@@ -1,5 +1,4 @@
 #include "SchoolFile.h"
-#include "GenFile.h"
 #include "util/CSV.h"
 #include "geo/GeoCoordinate.h"
 
@@ -19,7 +18,7 @@ void SchoolFile::write()
 {
     if (m_sorted_schools.size() == 0)
         return;
-    string file_path = out_dir.string()+"/"+m_file_name;
+    string file_path = m_out_dir.string()+"/"+m_file_name;
     ofstream my_file{file_path};
     if(my_file.is_open()) {
         my_file << "id, latitude, longitude, band" << "\n";
@@ -41,7 +40,7 @@ std::vector<std::vector<std::shared_ptr<School>>> SchoolFile::read()
         return m_sorted_schools;
     }
     sorted = vector<vector<shared_ptr<School>>>(AMOUNTOFBANDS);
-    string file_path = out_dir.string()+"/"+m_file_name;    
+    string file_path = m_out_dir.string()+"/"+m_file_name;    
     CSV schools_data = CSV(file_path);
     for (CSVRow const & row : schools_data) {
         auto latitude   = row.getValue<double>("latitude");
@@ -69,12 +68,15 @@ void SchoolFIle::sortSchools(vector<shared_ptr<School>> schools, shared_ptr<GeoG
                 }
                 else {
                     // The band is not empty, sort using latitude.
+                    bool inserted = false;
                     for(unsigned int j = 0; j < sorted.at(i).size(); j++){
                         if(sorted.at(i).at(j).coordinate.m_latitude > it->coordinate.m_latitude){
-                            sorted.at(i).insert(sorted.at(i).begin()+j, *it);
+                            sorted.at(i).insert(sorted.at(i).begin()+j, school);
                             break;
                         }
                     }
+                    if (!inserted) 
+                        sorted.at(i).push_back(school);
                 }
                 break;
             }
