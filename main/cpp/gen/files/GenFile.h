@@ -1,6 +1,6 @@
 #pragma once
 #include "../structs/GenStruct.h"
-#include "../GeoConfiguration.h"
+#include "../GenConfiguration.h"
 #include "../GeoGrid.h"
 #include "util/CSV.h"
 
@@ -13,16 +13,21 @@ namespace gen {
 class GenFile
 {
 public:
-    GenFile(GeoConfiguration& config);
-    GenFile(GeoConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, std::shared_ptr<GeoGrid> geo);
+    GenFile(GenConfiguration& config);
+    GenFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, std::shared_ptr<GeoGrid> geo);
+
+    void write();
+    std::vector<std::vector<std::shared_ptr<GenStruct>>> read();
 
 private:
     boost::filesystem::path m_out_dir;
     const std::string m_file_name;
-    const std::initializer_list<std::string> labels;
+    const std::initializer_list<std::string> m_labels;
     std::vector<std::vector<std::shared_ptr<GenStruct>>> m_sorted_structs;
 
-    std::shared_ptr<GenStruct> getStruct(CSVRow const & row);
+    std::shared_ptr<GenStruct> getStruct(util::CSVRow const & row);
+    std::vector<std::string> getValues(std::shared_ptr<GenStruct>);
+
     void insertStructs(std::vector<std::shared_ptr<GenStruct>> structs, std::shared_ptr<GeoGrid> geo);
 };
 

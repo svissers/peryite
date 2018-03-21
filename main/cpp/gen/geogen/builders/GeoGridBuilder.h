@@ -1,6 +1,6 @@
 #pragma once
-#include "../GeoGrid.h"
-#include "../GeoConfiguration.h"
+#include "../../GeoGrid.h"
+#include "../../GenConfiguration.h"
 
 namespace stride {
 namespace gen {
@@ -14,7 +14,7 @@ public:
         /// Builds the GeoGrid using city data.
         /// @param config       The configuration for a geogrid.
         /// @return             A vector of urban centers representing a geogrid.
-        static std::shared_ptr<GeoGrid> build(const GeoConfiguration& config);
+        static std::shared_ptr<GeoGrid> build(const GenConfiguration& config);
 };
 
 } // namespace gen

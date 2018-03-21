@@ -1,10 +1,12 @@
 #pragma once
+#include "geo/GeoCoordinate.h"
 
 namespace stride {
 namespace gen {
 
-struct School
+struct GenStruct
 {
+    util::GeoCoordinate coordinate = util::GeoCoordinate();
 };
 
 } // namespace gen

@@ -9,7 +9,7 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
-shared_ptr<vector<Community>> CommunitiesBuilder::build(const GeoConfiguration& config, shared_ptr<GeoGrid> grid)
+shared_ptr<vector<Community>> CommunitiesBuilder::build(const GenConfiguration& config, shared_ptr<GeoGrid> grid)
 {
         shared_ptr<vector<Community>> communities = make_shared<vector<Community>>();
         unsigned int total_population = config.getTree().get<unsigned int>("population_size");

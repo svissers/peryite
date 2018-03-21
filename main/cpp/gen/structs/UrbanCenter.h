@@ -7,7 +7,7 @@
 namespace stride {
 namespace gen {
 
-struct UrbanCenter : public GenStruct
+struct UrbanCenter : GenStruct
 {
         UrbanCenter(unsigned int uc_id, unsigned int pop, std::string uc_name, int prov, util::GeoCoordinate coord)
         {

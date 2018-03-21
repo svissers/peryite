@@ -1,7 +1,7 @@
 #pragma once
-#include "../structs/University.h"
-#include "../GeoConfiguration.h"
-#include "../GeoGrid.h"
+#include "../../structs/University.h"
+#include "../../GenConfiguration.h"
+#include "../../GeoGrid.h"
 #include <vector>
 
 namespace stride {
@@ -19,7 +19,7 @@ public:
         /// Note: The input grid will leave the method sorted on population size (big to small).
         /// @param config       TODO
         /// @param grid         TODO
-        static std::shared_ptr<std::vector<University>> build(GeoConfiguration& config, std::shared_ptr<GeoGrid> grid);
+        static std::shared_ptr<std::vector<University>> build(GenConfiguration& config, std::shared_ptr<GeoGrid> grid);
 
 };
 

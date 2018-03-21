@@ -16,7 +16,7 @@ using namespace std;
 using namespace boost::property_tree;
 
 GenConfiguration::GenConfiguration(string config_file_name, unsigned int thread_count)
-        : m_thread_count(thread_count)
+        : m_thread_count(thread_count), m_path(config_file_name)
 {
     // Create the configuration property tree
     if (util::InstallDirs::GetDataDir().empty()) {
@@ -45,6 +45,11 @@ GenConfiguration::GenConfiguration(string config_file_name, unsigned int thread_
 boost::property_tree::ptree GenConfiguration::getTree() const
 {
     return m_config;
+}
+
+std::string GenConfiguration::getPath() const
+{
+    return m_path;
 }
 
 std::shared_ptr<util::RNManager> GenConfiguration::getRNManager() const

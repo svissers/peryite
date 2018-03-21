@@ -1,6 +1,6 @@
 #include "UniversitiesBuilder.h"
 #include "trng/fast_discrete_dist.hpp"
-#include "../structs/UrbanCenter.h"
+#include "../../structs/UrbanCenter.h"
 #include <algorithm>
 
 namespace stride {
@@ -8,7 +8,7 @@ namespace gen {
 
 using namespace std;
 
-std::shared_ptr<vector<University>> UniversitiesBuilder::build(GeoConfiguration& config, shared_ptr<GeoGrid> grid)
+std::shared_ptr<vector<University>> UniversitiesBuilder::build(GenConfiguration& config, shared_ptr<GeoGrid> grid)
 {
         auto universities = make_shared<vector<University>>();
         unsigned int total_population = config.getTree().get<unsigned int>("population_size");

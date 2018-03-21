@@ -12,12 +12,12 @@ class SchoolFile : public GenFile
 {
 private:
     const std::string m_file_name = "Schools.csv";
-    const std::initializer_list<std::string> m_labels = {"id","latitude","longitude","band"}; 
+    const std::initializer_list<std::string> m_labels = {"id","latitude","longitude","band"};
 
-    shared_ptr<GenStruct> getStruct(CSVRow const & row) 
+    std::shared_ptr<GenStruct> getStruct(util::CSVRow const & row)
     {
-        auto school = make_shared(School(
-            row.getValue<unsigned int>("id"),  
+        auto school = std::make_shared(School(
+            row.getValue<unsigned int>("id"),
             util::GeoCoordinate(
                 row.getValue<double>("latitude"),
                 row.getValue<double>("longitude")
@@ -27,7 +27,7 @@ private:
         return school;
     }
 
-    std::vector<std::string> getValues(shared_ptr<School> school) 
+    std::vector<std::string> getValues(std::shared_ptr<School> school)
     {
         std::vector<std::string> values;
         values.push_back(to_string(school->id));

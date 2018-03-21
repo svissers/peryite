@@ -3,7 +3,7 @@
 #include "trng/fast_discrete_dist.hpp"
 #include "util/RNManager.h"
 #include "util/CSV.h"
-#include "../structs/UrbanCenter.h"
+#include "../../structs/UrbanCenter.h"
 
 #include <vector>
 #include <map>
@@ -14,7 +14,7 @@ namespace gen {
 using namespace std;
 using namespace util;
 
-shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GeoConfiguration& config, shared_ptr<GeoGrid> grid)
+shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GenConfiguration& config, shared_ptr<GeoGrid> grid)
 {
     auto workplaces = make_shared<vector<WorkPlace>>();
     unsigned int total_population = config.getTree().get<unsigned int>("population_size");

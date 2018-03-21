@@ -1,5 +1,5 @@
 #include "GeoGridBuilder.h"
-#include "../structs/UrbanCenter.h"
+#include "../../structs/UrbanCenter.h"
 #include "util/CSV.h"
 #include "geo/GeoCoordinate.h"
 
@@ -8,7 +8,7 @@ namespace gen {
 
 using namespace std;
 
-shared_ptr<GeoGrid> GeoGridBuilder::build(const GeoConfiguration& config)
+shared_ptr<GeoGrid> GeoGridBuilder::build(const GenConfiguration& config)
 {
         shared_ptr<GeoGrid> geo_grid = make_shared<GeoGrid>();
 

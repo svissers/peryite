@@ -5,7 +5,6 @@
 #include "./builders/SchoolsBuilder.h"
 #include "./builders/UniversitiesBuilder.h"
 #include "./builders/WorkplacesBuilder.h"
-#include "./output/GeoGridFile.h"
 #include <memory>
 
 namespace stride {

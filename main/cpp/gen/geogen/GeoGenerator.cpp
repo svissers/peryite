@@ -1,8 +1,12 @@
 #include "GeoGenerator.h"
-#include "GeoConfiguration.h"
+#include "../GenConfiguration.h"
 #include "builders/SchoolsBuilder.h"
 #include "builders/WorkplacesBuilder.h"
-#include <boost/filesystem.hpp>
+#include "../files/GeoGridFile.h"
+#include "../files/SchoolFile.h"
+#include "../files/UniversityFile.h"
+#include "../files/WorkplaceFile.h"
+#include "../files/CommunityFile.h"
 
 using namespace boost::filesystem;
 namespace stride {
@@ -12,7 +16,7 @@ using namespace util;
 
 void GeoGenerator::generate(const std::string config_path, unsigned int thread_count)
 {
-    GeoConfiguration config = GeoConfiguration(config_path, thread_count);
+    GenConfiguration config(config_path, thread_count);
 
     // Build
     std::shared_ptr<GeoGrid> geogrid = GeoGridBuilder::build(config);
@@ -26,18 +30,18 @@ void GeoGenerator::generate(const std::string config_path, unsigned int thread_c
     std::shared_ptr<std::vector<WorkPlace>> workplaces = WorkplacesBuilder::build(config, geogrid);
 
     // Write
-    boost::filesystem::path out_dir = "output/"+config_path.substr(0, config_path.find_last_of("."));
-    try {
-            create_directories(out_dir);
-    } catch (std::exception& e) {
-            std::cout << "GeoGenerator::generate> Exception while creating output directory:  {}", e.what();
-            throw;
-    }
+    SchoolFile school_file(config, schools, geogrid);
+    SchoolFile university_file(config, universities, geogrid);
+    WorkplaceFile workplace_file(config, workplaces, geogrid);
+    SchoolFile community_file(config, communities, geogrid);
+
+    /*
     writefiles(geogrid, geogrid, out_dir.string()+"/Geogrid.csv");
     writefiles(communities, geogrid, out_dir.string()+"/Communities.csv");
     writefiles(schools, geogrid, out_dir.string()+"/Schools.csv");
     writefiles(universities, geogrid, out_dir.string()+"/Universities.csv");
     writefiles(workplaces, geogrid, out_dir.string()+"/Workplaces.csv");
+    */
 }
 
 

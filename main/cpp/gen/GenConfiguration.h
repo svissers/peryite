@@ -24,10 +24,14 @@ public:
 
         boost::property_tree::ptree getTree() const;
 
+        std::string getPath() const;
+
         std::shared_ptr<util::RNManager> getRNManager() const;
 private:
         /// The configuration in a tree structure
         boost::property_tree::ptree m_config;
+        /// The path leading to the configuration file
+        std::string m_path;
         /// Manages the parallel generation of random numbers
         util::RNManager m_rn_manager;
         /// The amount of threads that will be used.
