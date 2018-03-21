@@ -15,6 +15,13 @@ namespace gen {
 using namespace std;
 using namespace boost::property_tree;
 
+GeoConfiguration::GeoConfiguration(const boost::property_tree::ptree& config_pt, unsigned int thread_count)
+        : m_config(config_pt.get_child("Config")), m_thread_count(thread_count)
+{
+    checkValidConfig();
+    initRNG();
+}
+
 GeoConfiguration::GeoConfiguration(string config_file_name, unsigned int thread_count)
         : m_thread_count(thread_count)
 {
@@ -34,7 +41,10 @@ GeoConfiguration::GeoConfiguration(string config_file_name, unsigned int thread_
     }
 
     checkValidConfig();
+    initRNG();
+}
 
+void GeoConfiguration::initRNG(){
     // Initialize the random number generator associated with the configuration
     const auto            rng_type = m_config.get<string>("rng.engine");
     const auto            rng_seed = m_config.get<unsigned long>("rng.seed");
