@@ -12,7 +12,7 @@ VisualizationCircle::VisualizationCircle(QPointF pos, qreal r) :
     position(pos),
     radius(r)
 {
-
+    geoGridLocation = new GeoGridLocation();
 }
 
 VisualizationCircle::VisualizationCircle(GeoGridLocation *gloc) :

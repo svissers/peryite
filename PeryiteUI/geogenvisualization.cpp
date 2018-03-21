@@ -44,6 +44,8 @@ void GeoGenVisualization::update() {
     // Get cursor position
     QPoint mousePos = mapFromGlobal(QCursor::pos());
 
+    qDebug() << mousePos;
+
     // Check hover selection for circles
     updateSelection(mousePos);
 
@@ -78,8 +80,6 @@ void GeoGenVisualization::draw() {
 
     // Display the scene
     ui->FlandersMap->setScene(gfxScene);
-    ui->FlandersMap->fitInView( gfxScene->itemsBoundingRect(), Qt::IgnoreAspectRatio);
-    // gfxScene->addItem(gfxItem);
 }
 
 void GeoGenVisualization::addCircle(VisualizationCircle *c) {
@@ -100,6 +100,11 @@ void GeoGenVisualization::drawCircle(QPixmap *pm, QPointF point, float radius, b
 
     // Draw
     painter.drawEllipse(point, radius, radius);
+
+    painter.setBrush(Qt::red);
+    painter.drawEllipse(point, 2, 2);
+    painter.drawEllipse(QPoint(200, 100), 1, 1);
+    painter.drawEllipse(QPoint(100, 200), 1, 1);
 }
 
 void GeoGenVisualization::closeEvent(QCloseEvent *event) {
