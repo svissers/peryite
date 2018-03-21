@@ -1,10 +1,11 @@
 #pragma once
+#include "GenStruct.h"
 #include "geo/GeoCoordinate.h"
 
 namespace stride {
 namespace gen {
 
-struct University
+struct University : public GenStruct
 {
         University(unsigned int uni_id, util::GeoCoordinate coord) {
             coordinate = coord;

@@ -1,29 +1,40 @@
 #pragma once
 #include "GenFile.h"
 #include "../structs/School.h"
-#include "../GeoConfiguration.h"
-#include "../GeoGrid.h"
 
 namespace stride {
 namespace gen {
 
 /**
- * Builds a list of communities using the Geogrid and some configured values.
+ *
  */
 class SchoolFile : public GenFile
 {
-public:
-    SchoolFile(GeoConfiguration& config, std::vector<std::shared_ptr<School>> schools, std::shared_ptr<GeoGrid> geo);
-    
-    void write();
-    std::vector<std::shared_ptr<School>> read();
-
 private:
     const std::string m_file_name = "Schools.csv";
-    std::shared_ptr<GeoGrid> m_grid;
-    std::vector<std::vector<std::shared_ptr<School>>> m_sorted_schools;
+    const std::initializer_list<std::string> m_labels = {"id","latitude","longitude","band"}; 
 
-    void sortSchools(std::vector<std::shared_ptr<School>> schools, std::shared_ptr<GeoGrid> geo);
+    shared_ptr<GenStruct> getStruct(CSVRow const & row) 
+    {
+        auto school = make_shared(School(
+            row.getValue<unsigned int>("id"),  
+            util::GeoCoordinate(
+                row.getValue<double>("latitude"),
+                row.getValue<double>("longitude")
+                )
+            )
+        );
+        return school;
+    }
+
+    std::vector<std::string> getValues(shared_ptr<School> school) 
+    {
+        std::vector<std::string> values;
+        values.push_back(to_string(school->id));
+        values.push_back(to_string(school->coordinate.m_latitude));
+        values.push_back(to_string(school->coordinate.m_longitude));
+        return values;
+    }
 };
 
 } // namespace gen

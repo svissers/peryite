@@ -1,4 +1,5 @@
 #pragma once
+#include "GenStruct.h"
 #include "UrbanCenter.h"
 #include "geo/GeoCoordinate.h"
 #include <vector>
@@ -6,7 +7,7 @@
 namespace stride {
 namespace gen {
 
-struct UrbanCenter
+struct UrbanCenter : public GenStruct
 {
         UrbanCenter(unsigned int uc_id, unsigned int pop, std::string uc_name, int prov, util::GeoCoordinate coord)
         {
