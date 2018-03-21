@@ -1,6 +1,7 @@
 #include "geogenvisualization.h"
 #include "ui_geogenvisualization.h"
 #include "geogridlocation.h"
+#include "util.h"
 #include <QtDebug>
 #include <QDir>
 #include <QGraphicsPixmapItem>
@@ -114,7 +115,11 @@ void GeoGenVisualization::hoverCircle(VisualizationCircle *c) {
     ui->CircleInfoTitle->setText(title);
 
     // Info text
-    QString text = "Population: " + formatInt(c->geoGridLocation->population);
+    QString text = "Population: " + Util::formatInt(c->geoGridLocation->population);
+    text += "\nCommunities: " + Util::formatInt(c->geoGridLocation->communities);
+    text += "\nSchools: " + Util::formatInt(c->geoGridLocation->schools);
+    text += "\nUniversities: " + Util::formatInt(c->geoGridLocation->universities);
+    text += "\nWorkplaces: " + Util::formatInt(c->geoGridLocation->workplaces);
     ui->CircleInfoText->setText(text);
 }
 
@@ -129,10 +134,100 @@ void GeoGenVisualization::parseData(GeoGenData *data) {
     circles = new QList<VisualizationCircle *>();
     selected = NULL;
 
-    // Start with geogrid
-    QFile geogridFile(data->geogridFile);
+    // Parse data
+    parseGeoGrid(data);
+    parseCommunities(data);
+    parseSchools(data);
+    parseUniversities(data);
+    parseWorkplaces(data);
+}
 
-    qDebug() << data->geogridFile;
+VisualizationCircle* GeoGenVisualization::findCircle(float longitude, float latitude) {
+    for (int i = 0; i < circles->length(); i++) {
+        float lng = circles->at(i)->geoGridLocation->longitude;
+        float lat = circles->at(i)->geoGridLocation->latitude;
+
+        if (lng == longitude && lat == latitude) {
+            return circles->at(i);
+        }
+    }
+
+    qDebug() << "Could not findCircle() with longitude: " << longitude << ", latitude: " << latitude;
+    return NULL;
+}
+
+void GeoGenVisualization::addCommunity(QString csvLine) {
+    QStringList list = Util::parseCSVLine(csvLine);
+
+    // Read data from CSV and find corresponding circle
+    float latitude = list[1].toFloat();
+    float longitude = list[2].toFloat();
+    VisualizationCircle* circle = findCircle(longitude, latitude);
+
+    // Nullcheck
+    if (circle == NULL) {
+        qDebug() << "addCommunity did not find circle. Did not add community.";
+        return;
+    }
+
+    circle->geoGridLocation->communities++;
+}
+
+void GeoGenVisualization::addSchool(QString csvLine) {
+    QStringList list = Util::parseCSVLine(csvLine);
+
+    // Read data from CSV and find corresponding circle
+    float latitude = list[1].toFloat();
+    float longitude = list[2].toFloat();
+    VisualizationCircle* circle = findCircle(longitude, latitude);
+
+    // Nullcheck
+    if (circle == NULL) {
+        qDebug() << "addSchool did not find circle. Did not add school.";
+        return;
+    }
+
+    circle->geoGridLocation->schools++;
+}
+
+void GeoGenVisualization::addUniversity(QString csvLine) {
+    // Remove the newline character and split into strings
+    csvLine.truncate(csvLine.lastIndexOf(QChar('\n')));
+    QStringList list = csvLine.split(QRegularExpression(", "));
+
+    // Read data from CSV and find corresponding circle
+    float latitude = list[1].toFloat();
+    float longitude = list[2].toFloat();
+    VisualizationCircle* circle = findCircle(longitude, latitude);
+
+    // Nullcheck
+    if (circle == NULL) {
+        qDebug() << "addUniversity did not find circle. Did not add university.";
+        return;
+    }
+
+    circle->geoGridLocation->universities++;
+}
+
+void GeoGenVisualization::addWorkplace(QString csvLine) {
+    QStringList list = Util::parseCSVLine(csvLine);
+
+    // Read data from CSV and find corresponding circle
+    float latitude = list[1].toFloat();
+    float longitude = list[2].toFloat();
+    VisualizationCircle* circle = findCircle(longitude, latitude);
+
+    // Nullcheck
+    if (circle == NULL) {
+        qDebug() << "addWorkplace did not find circle. Did not add workplace.";
+        return;
+    }
+
+    circle->geoGridLocation->workplaces++;
+}
+
+void GeoGenVisualization::parseGeoGrid(GeoGenData *data) {
+    QFile geogridFile(data->geogridFile);
 
     if (!geogridFile.open(QIODevice::ReadOnly)) {
         qDebug() << geogridFile.errorString();
@@ -151,6 +246,82 @@ void GeoGenVisualization::parseData(GeoGenData *data) {
     geogridFile.close();
 }
 
-QString GeoGenVisualization::formatInt(int n) {
-    return QLocale(QLocale::English).toString(n);
+void GeoGenVisualization::parseCommunities(GeoGenData *data) {
+    QFile communitiesFile(data->communitiesFile);
+
+    if (!communitiesFile.open(QIODevice::ReadOnly)) {
+        qDebug() << communitiesFile.errorString();
+        return;
+    }
+
+    while (!communitiesFile.atEnd()) {
+        QString line = communitiesFile.readLine();
+
+        // Ignore header lines
+        if (line.startsWith("id")) { continue; }
+
+        addCommunity(line);
+    }
+
+    communitiesFile.close();
+}
+
+void GeoGenVisualization::parseSchools(GeoGenData *data) {
+    QFile schoolsFile(data->schoolsFile);
+
+    if (!schoolsFile.open(QIODevice::ReadOnly)) {
+        qDebug() << schoolsFile.errorString();
+        return;
+    }
+
+    while (!schoolsFile.atEnd()) {
+        QString line = schoolsFile.readLine();
+
+        // Ignore header lines
+        if (line.startsWith("id")) { continue; }
+
+        addSchool(line);
+    }
+
+    schoolsFile.close();
+}
+
+void GeoGenVisualization::parseUniversities(GeoGenData *data) {
+    QFile universitiesFile(data->universitiesFile);
+
+    if (!universitiesFile.open(QIODevice::ReadOnly)) {
+        qDebug() << universitiesFile.errorString();
+        return;
+    }
+
+    while (!universitiesFile.atEnd()) {
+        QString line = universitiesFile.readLine();
+
+        // Ignore header lines
+        if (line.startsWith("id")) { continue; }
+
+        addUniversity(line);
+    }
+
+    universitiesFile.close();
+}
+
+void GeoGenVisualization::parseWorkplaces(GeoGenData *data) {
+    QFile workplacesFile(data->workplacesFile);
+
+    if (!workplacesFile.open(QIODevice::ReadOnly)) {
+        qDebug() << workplacesFile.errorString();
+        return;
+    }
+
+    while (!workplacesFile.atEnd()) {
+        QString line = workplacesFile.readLine();
+
+        // Ignore header lines
+        if (line.startsWith("id")) { continue; }
+
+        addWorkplace(line);
+    }
+
+    workplacesFile.close();
 }

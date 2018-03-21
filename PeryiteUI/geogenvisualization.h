@@ -34,15 +34,26 @@ private:
 
     void closeEvent(QCloseEvent *event);
 
+    // Update and drawing
     void update();
     void updateSelection(QPointF mousePos);
     void draw();
-    void drawCircle(QPixmap *pm, QPointF point, float radius, bool selected);
-    void addCircle(VisualizationCircle *c);
+    void drawCircle(QPixmap *pm, QPointF point, float radius, bool selected);    
     void hoverCircle(VisualizationCircle *c);
     void noHover();
 
-    static QString formatInt(int number);
+    // Parsing
+    void parseGeoGrid(GeoGenData *data);
+    void parseCommunities(GeoGenData *data);
+    void parseSchools(GeoGenData *data);
+    void parseUniversities(GeoGenData *data);
+    void parseWorkplaces(GeoGenData *data);
+    void addCircle(VisualizationCircle *c);
+    VisualizationCircle* findCircle(float longitude, float latitude);
+    void addCommunity(QString csvLine);
+    void addSchool(QString csvLine);
+    void addUniversity(QString csvLine);
+    void addWorkplace(QString csvLine);
 };
 
 #endif // GEOGENVISUALIZATION_H

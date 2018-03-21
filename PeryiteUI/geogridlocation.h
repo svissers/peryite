@@ -15,6 +15,10 @@ public:
     QString name;
     int province;
     int population;
+    int communities;
+    int schools;
+    int universities;
+    int workplaces;
 };
 
 #endif // GEOGRIDLOCATION_H

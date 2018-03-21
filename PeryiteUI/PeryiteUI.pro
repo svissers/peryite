@@ -30,7 +30,8 @@ SOURCES += \
     geogenvisualization.cpp \
     visualizationcircle.cpp \
     geogendata.cpp \
-    geogridlocation.cpp
+    geogridlocation.cpp \
+    util.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -38,7 +39,8 @@ HEADERS += \
     geogenvisualization.h \
     visualizationcircle.h \
     geogendata.h \
-    geogridlocation.h
+    geogridlocation.h \
+    util.h
 
 FORMS += \
         mainwindow.ui \
