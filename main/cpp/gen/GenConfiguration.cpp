@@ -1,4 +1,4 @@
-#include "GeoConfiguration.h"
+#include "GenConfiguration.h"
 #include "util/InstallDirs.h"
 
 #include <boost/property_tree/ptree.hpp>
@@ -6,7 +6,7 @@
 
 /**
  * @file
- * Implementation for the GeoConfiguration class.
+ * Implementation for the GenConfiguration class.
  */
 
 namespace stride {
@@ -15,7 +15,7 @@ namespace gen {
 using namespace std;
 using namespace boost::property_tree;
 
-GeoConfiguration::GeoConfiguration(string config_file_name, unsigned int thread_count)
+GenConfiguration::GenConfiguration(string config_file_name, unsigned int thread_count)
         : m_thread_count(thread_count)
 {
     // Create the configuration property tree
@@ -42,17 +42,17 @@ GeoConfiguration::GeoConfiguration(string config_file_name, unsigned int thread_
     m_rn_manager.Initialize(info);
 }
 
-boost::property_tree::ptree GeoConfiguration::getTree() const
+boost::property_tree::ptree GenConfiguration::getTree() const
 {
     return m_config;
 }
 
-std::shared_ptr<util::RNManager> GeoConfiguration::getRNManager() const
+std::shared_ptr<util::RNManager> GenConfiguration::getRNManager() const
 {
     return make_shared<util::RNManager>(m_rn_manager);
 }
 
-void GeoConfiguration::checkValidConfig() const
+void GenConfiguration::checkValidConfig() const
 {
     // TODO checking here.
 }

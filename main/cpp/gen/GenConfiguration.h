@@ -10,16 +10,17 @@ namespace gen {
 #define AMOUNTOFBANDS 50
 
 /**
- * The configuration for a geogrid.
- */
-class GeoConfiguration
+ * The configuration for the generator component.
+ *
+ **/
+class GenConfiguration
 {
 public:
-        /// Constructor. Initializes the GeoConfiguration object using the config
+        /// Constructor. Initializes the GenConfiguration object using the config
         /// file.
         /// @param config_file     The configuration xml file to use.
         /// @param thread_count    The amount of threads to be used for parallelization.
-        GeoConfiguration(std::string config_file, unsigned int thread_count);
+        GenConfiguration(std::string config_file, unsigned int thread_count);
 
         boost::property_tree::ptree getTree() const;
 
