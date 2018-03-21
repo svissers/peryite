@@ -18,7 +18,7 @@ VisualizationCircle::VisualizationCircle(QPointF pos, qreal r) :
 VisualizationCircle::VisualizationCircle(GeoGridLocation *gloc) :
     geoGridLocation(gloc)
 {
-    radius = std::sqrt((float)(geoGridLocation->population) / 750);
+    radius = std::max(std::sqrt((float)(geoGridLocation->population) / 650), 3.0f);
     position = Util::GCSToQPointF(geoGridLocation->longitude, geoGridLocation->latitude);
 }
 
