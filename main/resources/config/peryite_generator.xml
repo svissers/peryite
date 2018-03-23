@@ -10,11 +10,16 @@
 		<cities>data/flanders_cities2.csv</cities>
 		<commuters>data/flanders_commuting.csv</commuters>
 	</geoprofile>
-	<university>
+	<students>
+		<compulsory>0.20</compulsory>
+		<higher>0.05</higher>
+	</students>
+	<!-- <university>
 		<fraction>0.25</fraction>
-	</university>
+	</university> -->
 	<work>
-		<fraction>0.70</fraction>
+		<fraction>0.60</fraction>
 		<commute_fraction>0.70</commute_fraction>
 	</work>
+<!-- nog 0.15 van de populatie over -> gepensioneerden-->
 </Config>

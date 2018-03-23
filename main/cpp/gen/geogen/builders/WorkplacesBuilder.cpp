@@ -21,6 +21,7 @@ shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GeoConfiguration& config,
 
     // Calculate the relative active population for each center in the grid
     // Active population = population - commute_away + commute_towards
+    double commute_fraction = config.getTree().get<double>("work.commute_fraction");
     util::CSV commuting_data = util::CSV(config.getTree().get<string>("geoprofile.commuters"));
     size_t column_count = commuting_data.getColumnCount();
     vector<unsigned int> relative_commute (column_count, 0);
@@ -46,9 +47,10 @@ shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GeoConfiguration& config,
         }
     }
     // Calculate the amount of workplaces, every workplace has 20 workers
-    // TODO: change total_population to total_active_population
-    double commute_fraction = config.getTree().get<double>("work.commute_fraction");
-    unsigned int workforce = (unsigned int) (commute_fraction * total_population);
+    // total_active_population = total_population * active fraction
+
+    double active_fraction = config.getTree().get<double>("work.fraction");
+    unsigned int workforce = (unsigned int) (active_fraction * total_population);
     unsigned int workplace_count =  workforce/20;
 
     // Create the discrete distribution to sample from.

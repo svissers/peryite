@@ -61,8 +61,9 @@ public:
                         pt_config.put("Config.population_size", 100000);
                         pt_config.put("Config.geoprofile.cities", "../data/flanders_cities2.csv");
                         pt_config.put("Config.geoprofile.commuters", "../data/flanders_commuting.csv");
-                        pt_config.put("Config.university.fraction", 0.25);
-                        pt_config.put("Config.work.fraction", 0.70);
+                        pt_config.put("Config.students.compulsory", 0.20);
+                        pt_config.put("Config.students.higher", 0.05);
+                        pt_config.put("Config.work.fraction", 0.60);
                         pt_config.put("Config.work.commute_fraction", 0.70);
                 }
                 return pt_config;
@@ -83,13 +84,14 @@ public:
                     target = pt.get<int>("Config.population_size")/2000;
                 }
                 if (tag == "schools") {
-                    target = pt.get<int>("Config.population_size")/2000;
+                    target = (unsigned int) pt.get<int>("Config.population_size") * pt.get<double>("Config.students.compulsory")/500;
                 }
                 if (tag == "universities") {
-                    target = 8;
+                    target = pt.get<int>("Config.population_size") * pt.get<double>("Config.students.higher")/3000;
+                    target = (unsigned int) 1;
                 }
                 if (tag == "workplaces") {
-                    target = 3500;
+                    target = (unsigned int) pt.get<int>("Config.population_size") * pt.get<double>("Config.work.fraction")/20;
                 }
 
                 return make_tuple(pt, target, margin);

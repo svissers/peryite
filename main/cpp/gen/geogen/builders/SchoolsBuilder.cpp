@@ -15,7 +15,8 @@ shared_ptr<vector<School>> SchoolsBuilder::build(const GeoConfiguration& config,
         unsigned int total_population = config.getTree().get<unsigned int>("population_size");
 
         // We assume (overestimate) the fraction of mandatory students to be 25%.
-        unsigned int mandatory_students_count = (unsigned int)(0.25 * total_population);
+        double percentage = config.getTree().get<double>("students.compulsory");
+        unsigned int mandatory_students_count = (unsigned int)(percentage * total_population);
 
         // Every school has an average of 500 students.
         unsigned int school_count = mandatory_students_count / 500;

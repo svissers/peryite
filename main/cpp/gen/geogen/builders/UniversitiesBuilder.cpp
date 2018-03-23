@@ -14,7 +14,7 @@ std::shared_ptr<vector<University>> UniversitiesBuilder::build(GeoConfiguration&
         unsigned int total_population = config.getTree().get<unsigned int>("population_size");
 
         // The total amount of university students is given.
-        double universityFraction = config.getTree().get<double>("university.fraction");
+        double universityFraction = config.getTree().get<double>("students.higher");
         unsigned int student_count = (unsigned int)(universityFraction * total_population);
 
         // Every university has an average of 3000 students
