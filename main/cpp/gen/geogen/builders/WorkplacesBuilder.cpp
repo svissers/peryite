@@ -14,9 +14,9 @@ namespace gen {
 using namespace std;
 using namespace util;
 
-shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GenConfiguration& config, shared_ptr<GeoGrid> grid)
+vector<shared_ptr<WorkPlace>> WorkplacesBuilder::build(GenConfiguration& config, shared_ptr<GeoGrid> grid)
 {
-    auto workplaces = make_shared<vector<WorkPlace>>();
+    auto workplaces = vector<shared_ptr<WorkPlace>>();
     unsigned int total_population = config.getTree().get<unsigned int>("population_size");
 
     // Calculate the relative active population for each center in the grid
@@ -68,7 +68,8 @@ shared_ptr<vector<WorkPlace>> WorkplacesBuilder::build(GenConfiguration& config,
 
     // Create and map the workplaces to their samples.
     for (unsigned int i = 0; i < workplace_count; i++) {
-            workplaces->push_back(WorkPlace(i, grid->at(generator()).coordinate));
+        auto workplace = make_shared<WorkPlace>(WorkPlace(i, grid->at(generator()).coordinate));
+        workplaces.push_back(workplace);
     }
 
     return workplaces;

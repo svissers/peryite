@@ -21,7 +21,7 @@ GenFile::GenFile(GenConfiguration& config)
     }
 }
 
-GenFile::GenFile(GenConfiguration& config, vector<shared_ptr<GenStruct>> structs, shared_ptr<GeoGrid> geo)
+GenFile::GenFile(GenConfiguration& config, vector<shared_ptr<GenStruct>>& structs, shared_ptr<GeoGrid> geo)
 : GenFile(config)
 {
     insertStructs(structs, geo);
@@ -29,17 +29,27 @@ GenFile::GenFile(GenConfiguration& config, vector<shared_ptr<GenStruct>> structs
 
 void GenFile::write()
 {
-    if (m_sorted_structs.size() == 0)
+    if (m_sorted_structs.size() == 0) {
         return;
+    }
+    std::cout << "init size: " << m_labels.size() << std::endl;
     CSV structs_data(m_labels);
+    std::cout << "We have the structs data" << std::endl;
+    std::cout << structs_data.getColumnCount() << std::endl;
     for (unsigned int band = 0; band < m_sorted_structs.size(); band++) {
+        std::cout << "band: " << band << std::endl;
         for (auto g_struct : m_sorted_structs.at(band)) {
+            std::cout << "Getting values of struct" << std::endl;
             vector<string> values = getValues(g_struct);
+            std::cout << "Pushing back" << std::endl;
             values.push_back(to_string(band));
+            std::cout << "Adding row" << values[0] << std::endl;
             structs_data.addRow(values);
         }
     }
+    std::cout << "Getting dir + filename" << std::endl;
     string file_path = m_out_dir.string()+"/"+m_file_name;
+    std::cout << "Writing file" << std::endl;
     structs_data.write(file_path);
 }
 

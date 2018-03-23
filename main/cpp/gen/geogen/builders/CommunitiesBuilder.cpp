@@ -9,9 +9,9 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
-shared_ptr<vector<Community>> CommunitiesBuilder::build(const GenConfiguration& config, shared_ptr<GeoGrid> grid)
+vector<shared_ptr<Community>> CommunitiesBuilder::build(const GenConfiguration& config, shared_ptr<GeoGrid> grid)
 {
-        shared_ptr<vector<Community>> communities = make_shared<vector<Community>>();
+        vector<shared_ptr<Community>> communities = vector<shared_ptr<Community>>();
         unsigned int total_population = config.getTree().get<unsigned int>("population_size");
         // Every community has an average of 2000 members.
         unsigned int community_count = total_population / 2000;
@@ -29,7 +29,8 @@ shared_ptr<vector<Community>> CommunitiesBuilder::build(const GenConfiguration& 
         // Create and map the communities to their samples.
         for (unsigned int i = 0; i < community_count; i++) {
                 // TODO: Currently only primary communities.
-                communities->push_back(Community(i, true, grid->at(generator()).coordinate));
+                auto community = make_shared<Community>(Community(i, true, grid->at(generator()).coordinate));
+                communities.push_back(community);
         }
 
         return communities;

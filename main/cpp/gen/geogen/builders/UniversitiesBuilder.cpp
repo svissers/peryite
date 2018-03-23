@@ -8,9 +8,9 @@ namespace gen {
 
 using namespace std;
 
-std::shared_ptr<vector<University>> UniversitiesBuilder::build(GenConfiguration& config, shared_ptr<GeoGrid> grid)
+vector<shared_ptr<University>> UniversitiesBuilder::build(GenConfiguration& config, shared_ptr<GeoGrid> grid)
 {
-        auto universities = make_shared<vector<University>>();
+        auto universities = vector<shared_ptr<University>>();
         unsigned int total_population = config.getTree().get<unsigned int>("population_size");
 
         // The total amount of university students is given.
@@ -48,7 +48,8 @@ std::shared_ptr<vector<University>> UniversitiesBuilder::build(GenConfiguration&
 
         // Create and map the universities to their samples.
         for (unsigned int i = 0; i < uni_count; i++) {
-                universities->push_back(University(i, grid->at(generator()).coordinate));
+                auto university = make_shared<University>(University(i, grid->at(generator()).coordinate));
+                universities.push_back(university);
         }
 
         return universities;

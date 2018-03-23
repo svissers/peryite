@@ -14,20 +14,19 @@ class GenFile
 {
 public:
     GenFile(GenConfiguration& config);
-    GenFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, std::shared_ptr<GeoGrid> geo);
+    GenFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>>& structs, std::shared_ptr<GeoGrid> geo);
 
     void write();
     std::vector<std::vector<std::shared_ptr<GenStruct>>> read();
 
-private:
+protected:
+    std::initializer_list<std::string> m_labels;
     boost::filesystem::path m_out_dir;
-    const std::string m_file_name;
-    const std::initializer_list<std::string> m_labels;
+    std::string m_file_name;
     std::vector<std::vector<std::shared_ptr<GenStruct>>> m_sorted_structs;
 
-    std::shared_ptr<GenStruct> getStruct(util::CSVRow const & row);
-    std::vector<std::string> getValues(std::shared_ptr<GenStruct>);
-
+    virtual std::shared_ptr<GenStruct> getStruct(util::CSVRow const & row) =0;
+    virtual std::vector<std::string> getValues(std::shared_ptr<GenStruct>) =0;
     void insertStructs(std::vector<std::shared_ptr<GenStruct>> structs, std::shared_ptr<GeoGrid> geo);
 };
 

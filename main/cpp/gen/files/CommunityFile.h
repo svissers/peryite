@@ -12,29 +12,28 @@ class CommunityFIle : public GenFile
 {
 private:
     const std::string m_file_name = "Communities.csv";
-    const std::initializer_list<std::string> m_labels = {"id","latitude","longitude","primary", "band"}; 
+    const std::initializer_list<std::string> m_labels = {"id","latitude","longitude","primary", "band"};
 
-    shared_ptr<GenStruct> getStruct(CSVRow const & row) 
+    std::shared_ptr<GenStruct> getStruct(util::CSVRow const & row)
     {
-        auto community = make_shared(Community(
-            row.getValue<unsigned int>("id"),  
+        auto community = std::make_shared<Community>(Community(
+            row.getValue<unsigned int>("id"),
+            row.getValue<bool>("primary"),
             util::GeoCoordinate(
                 row.getValue<double>("latitude"),
                 row.getValue<double>("longitude")
-                )
-            ),
-            row.getValue<bool>("primary"),  
-        );
+            )
+        ));
         return community;
     }
 
-    std::vector<std::string> getValues(shared_ptr<Community> community) 
+    std::vector<std::string> getValues(std::shared_ptr<Community> community)
     {
         std::vector<std::string> values;
-        values.push_back(to_string(community->id));
-        values.push_back(to_string(community->coordinate.m_latitude));
-        values.push_back(to_string(community->coordinate.m_longitude));
-        values.push_back(to_string(community->is_primary));
+        values.push_back(std::to_string(community->id));
+        values.push_back(std::to_string(community->coordinate.m_latitude));
+        values.push_back(std::to_string(community->coordinate.m_longitude));
+        values.push_back(std::to_string(community->is_primary));
         return values;
     }
 };

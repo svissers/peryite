@@ -9,9 +9,9 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
-shared_ptr<vector<School>> SchoolsBuilder::build(const GenConfiguration& config, shared_ptr<GeoGrid> grid)
+vector<shared_ptr<School>> SchoolsBuilder::build(const GenConfiguration& config, shared_ptr<GeoGrid> grid)
 {
-        auto schools = make_shared<vector<School>>();
+        auto schools = vector<shared_ptr<School>>();
         unsigned int total_population = config.getTree().get<unsigned int>("population_size");
 
         // We assume (overestimate) the fraction of mandatory students to be 25%.
@@ -36,7 +36,8 @@ shared_ptr<vector<School>> SchoolsBuilder::build(const GenConfiguration& config,
         // Create and map the schools to their samples.
         for (unsigned int i = 0; i < school_count; i++) {
                 int index = generator();
-                schools->push_back(School(i, grid->at(index).coordinate));
+                auto school = make_shared<School>(School(i, grid->at(index).coordinate));
+                schools.push_back(school);
         }
 
         return schools;
