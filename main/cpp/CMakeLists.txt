@@ -63,13 +63,13 @@ set(LIB_SRC
 	#popgen2/geo/Geometry.cpp
 #---
     gen/geogen/builders/CommunitiesBuilder.cpp
-    gen/geogen/GeoConfiguration.cpp
+    gen/GenConfiguration.cpp
     gen/geogen/GeoGenerator.cpp
     gen/geogen/builders/GeoGridBuilder.cpp
     gen/geogen/builders/SchoolsBuilder.cpp
     gen/geogen/builders/UniversitiesBuilder.cpp
     gen/geogen/builders/WorkplacesBuilder.cpp
-	gen/geogen/output/GeoGridFile.cpp
+	gen/files/GenFile.cpp
 #---
 	geo/GeoCoordinate.cpp
 	geo/GeoCoordCalculator.cpp
