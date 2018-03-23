@@ -76,19 +76,20 @@ public:
                 double       margin = 0.0;
 
                 if (tag == "geogrid") {
-                        target = 327;
+                    util::CSV data = util::CSV(pt.get<std::string>("Config.geoprofile.cities"));
+                    target = data.size();
                 }
                 if (tag == "communities") {
-                        target = 50;
+                    target = pt.get<int>("Config.population_size")/2000;
                 }
                 if (tag == "schools") {
-                        target = 50;
+                    target = pt.get<int>("Config.population_size")/2000;
                 }
                 if (tag == "universities") {
-                        target = 8;
+                    target = 8;
                 }
                 if (tag == "workplaces") {
-                        target = 3500;
+                    target = 3500;
                 }
 
                 return make_tuple(pt, target, margin);
