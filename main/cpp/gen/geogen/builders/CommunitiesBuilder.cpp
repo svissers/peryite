@@ -1,5 +1,5 @@
 #include "CommunitiesBuilder.h"
-#include "trng/discrete_dist.hpp"
+#include "trng/fast_discrete_dist.hpp"
 #include "util/RNManager.h"
 
 namespace stride {
@@ -24,7 +24,7 @@ shared_ptr<vector<Community>> CommunitiesBuilder::build(const GeoConfiguration& 
 
         // The generator allows for parallelization.
         auto rn_manager = config.getRNManager();
-        auto generator = rn_manager->GetGenerator(trng::discrete_dist(fractions.begin(), fractions.end()));
+        auto generator = rn_manager->GetGenerator(trng::fast_discrete_dist(fractions.begin(), fractions.end()));
 
         // Create and map the communities to their samples.
         for (unsigned int i = 0; i < community_count; i++) {
