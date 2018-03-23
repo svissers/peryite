@@ -21,6 +21,11 @@ public:
         /// @param thread_count    The amount of threads to be used for parallelization.
         GeoConfiguration(std::string config_file, unsigned int thread_count);
 
+        /// Constructor. Initializes the GeoConfiguration object using a premade ptree (for testing purposes).
+        /// @param config_pt     The configuration tree.
+        /// @param thread_count    The amount of threads to be used for parallelization.
+        GeoConfiguration(const boost::property_tree::ptree& config_pt, unsigned int thread_count);
+
         boost::property_tree::ptree getTree() const;
 
         std::shared_ptr<util::RNManager> getRNManager() const;
@@ -34,6 +39,9 @@ private:
 
         /// Checks if the configuration property tree is valid.
         void checkValidConfig() const;
+
+        // Initialize the random number generator associated with the configuration
+        void initRNG();
 };
 
 } // namespace gen
