@@ -1,5 +1,4 @@
 #include "GeoGenerator.h"
-#include "../GenConfiguration.h"
 #include "builders/SchoolsBuilder.h"
 #include "builders/WorkplacesBuilder.h"
 #include "../files/GeoGridFile.h"
@@ -13,31 +12,58 @@ namespace stride {
 namespace gen {
 
 using namespace std;
+using namespace files;
 using namespace util;
 
-void GeoGenerator::generate(const string config_path, unsigned int thread_count)
+void GeoGenerator::generate(GenDirectory& dir, unsigned int thread_count)
 {
-    GenConfiguration config(config_path, thread_count);
+    auto config = dir.getConfig();
 
     // Build
-    shared_ptr<GeoGrid> geogrid = GeoGridBuilder::build(config);
-
+    GeoGrid geogrid = GeoGridBuilder::build(config);
     vector<shared_ptr<School>> schools = SchoolsBuilder::build(config, geogrid);
-
+    vector<shared_ptr<University>> universities = UniversitiesBuilder::build(config, geogrid);
+    vector<shared_ptr<WorkPlace>> workplaces = WorkplacesBuilder::build(config, geogrid);
     vector<shared_ptr<Community>> communities = CommunitiesBuilder::build(config, geogrid);
 
-    vector<shared_ptr<University>> universities = UniversitiesBuilder::build(config, geogrid);
-
-    vector<shared_ptr<WorkPlace>> workplaces = WorkplacesBuilder::build(config, geogrid);
-
-    vector<shared_ptr<GenStruct>> nschools (schools.begin(), schools.end());
-
     // Write
-    std::cout << "Reached" << std::endl;
-    SchoolFile school_file(config, nschools, geogrid);
-    std::cout << "Reached1" << std::endl;
-    school_file.write();
-    std::cout << "Reached2" << std::endl;
+    auto geo_grid_file = make_shared<GeoGridFile>(
+        config,
+        vector<GenStruct::ptr>(geogrid.begin(), geogrid.end()),
+        geogrid
+    );
+    geo_grid_file->write();
+
+    auto school_file = make_shared<SchoolFile>(
+        config,
+        vector<GenStruct::ptr>(schools.begin(), schools.end()),
+        geogrid
+    );
+    school_file->write();
+
+    auto university_file = make_shared<UniversityFile>(
+        config,
+        vector<GenStruct::ptr>(universities.begin(), universities.end()),
+        geogrid
+    );
+    university_file->write();
+
+    auto workplace_file = make_shared<WorkplaceFile>(
+        config,
+        vector<GenStruct::ptr>(workplaces.begin(), workplaces.end()),
+        geogrid
+    );
+    workplace_file->write();
+
+    auto community_file = make_shared<CommunityFile>(
+        config,
+        vector<GenStruct::ptr>(communities.begin(), communities.end()),
+        geogrid
+    );
+    community_file->write();
+
+    // Initialize
+    dir.initialize(geo_grid_file, school_file, university_file, workplace_file, community_file);
 }
 
 

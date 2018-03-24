@@ -8,7 +8,7 @@ namespace gen {
 
 using namespace std;
 
-vector<shared_ptr<University>> UniversitiesBuilder::build(GenConfiguration& config, shared_ptr<GeoGrid> grid)
+vector<shared_ptr<University>> UniversitiesBuilder::build(GenConfiguration& config, GeoGrid& grid)
 {
         auto universities = vector<shared_ptr<University>>();
         unsigned int total_population = config.getTree().get<unsigned int>("population_size");
@@ -21,25 +21,25 @@ vector<shared_ptr<University>> UniversitiesBuilder::build(GenConfiguration& conf
         unsigned int uni_count = student_count / 3000;
 
         // Sort cities based on population size, biggest to smallest.
-        auto compare_population = [](const UrbanCenter& a, const UrbanCenter b) { return a.population > b.population; };
-        sort(grid->begin(), grid->end(), compare_population);
+        auto compare_population = [](const shared_ptr<UrbanCenter> a, const shared_ptr<UrbanCenter> b) { return a->population > b->population; };
+        sort(grid.begin(), grid.end(), compare_population);
 
         // Take the 10 biggest cities
-        int city_count = min(10, (int)grid->size());
-        auto biggest = grid->begin();
-        auto smallest = grid->begin() + city_count;
-        vector<UrbanCenter> big_cities(biggest, smallest);
+        int city_count = min(10, (int)grid.size());
+        auto biggest = grid.begin();
+        auto smallest = grid.begin() + city_count;
+        vector<shared_ptr<UrbanCenter>> big_cities(biggest, smallest);
 
         // The distribution will be relative to the top ten city population (not total).
         unsigned int total_city_population = 0;
-        for(UrbanCenter center : big_cities) {
-                total_city_population += center.population;
+        for(auto center : big_cities) {
+                total_city_population += center->population;
         }
 
         // Create the discrete distribution to sample from.
         vector<double> fractions;
-        for(UrbanCenter center : big_cities){
-                fractions.push_back(center.population/total_city_population);
+        for(auto center : big_cities){
+                fractions.push_back(center->population/total_city_population);
         }
 
         // The generator allows for parallelization.
@@ -48,7 +48,7 @@ vector<shared_ptr<University>> UniversitiesBuilder::build(GenConfiguration& conf
 
         // Create and map the universities to their samples.
         for (unsigned int i = 0; i < uni_count; i++) {
-                auto university = make_shared<University>(University(i, grid->at(generator()).coordinate));
+                auto university = make_shared<University>(University(i, grid.at(generator())->coordinate));
                 universities.push_back(university);
         }
 

@@ -16,7 +16,7 @@ public:
         /// Builds a list of schools using the Geogrid and some configuration values.
         /// @param config       TODO
         /// @param locations    TODO
-        static std::vector<std::shared_ptr<School>> build(const GenConfiguration& config, std::shared_ptr<GeoGrid> locations);
+        static std::vector<std::shared_ptr<School>> build(const GenConfiguration& config, GeoGrid& locations);
 };
 
 } // namespace gen

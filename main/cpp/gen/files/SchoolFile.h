@@ -4,6 +4,7 @@
 
 namespace stride {
 namespace gen {
+namespace files {
 
 /**
  *
@@ -11,7 +12,9 @@ namespace gen {
 class SchoolFile : public GenFile
 {
 public:
-    SchoolFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>>& structs, std::shared_ptr<GeoGrid> geo)
+    SchoolFile(GenConfiguration& config) : GenFile(config) {}
+
+    SchoolFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, GeoGrid& geo)
     : GenFile(config, structs, geo)
     {
         m_file_name = "Schools.csv";
@@ -35,14 +38,17 @@ private:
     std::vector<std::string> getValues(std::shared_ptr<GenStruct> g_struct)
     {
         std::shared_ptr<School> school = std::static_pointer_cast<School>(g_struct);
-        std::vector<std::string> values;
-
-        values.push_back(std::to_string(school->id));
-        values.push_back(std::to_string(school->coordinate.m_latitude));
-        values.push_back(std::to_string(school->coordinate.m_longitude));
+        std::vector<std::string> values = {
+            std::to_string(school->id),
+            std::to_string(school->coordinate.m_latitude),
+            std::to_string(school->coordinate.m_longitude)
+        };
         return values;
     }
 };
 
+typedef std::shared_ptr<SchoolFile> SchoolFilePtr;
+
+} // namespace files
 } // namespace gen
 } // namespace stride

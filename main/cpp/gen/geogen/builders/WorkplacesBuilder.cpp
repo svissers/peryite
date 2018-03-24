@@ -14,7 +14,7 @@ namespace gen {
 using namespace std;
 using namespace util;
 
-vector<shared_ptr<WorkPlace>> WorkplacesBuilder::build(GenConfiguration& config, shared_ptr<GeoGrid> grid)
+vector<shared_ptr<WorkPlace>> WorkplacesBuilder::build(GenConfiguration& config, GeoGrid& grid)
 {
     auto workplaces = vector<shared_ptr<WorkPlace>>();
     unsigned int total_population = config.getTree().get<unsigned int>("population_size");
@@ -54,8 +54,8 @@ vector<shared_ptr<WorkPlace>> WorkplacesBuilder::build(GenConfiguration& config,
     // Create the discrete distribution to sample from.
     // TODO: change total_population to total_active_population
     vector<double> fractions;
-    for(size_t i = 0; i < grid->size(); i++) {
-        int local_workforce = (relative_commute[i] / total_commute[i]) * (grid->at(i).population);
+    for(size_t i = 0; i < grid.size(); i++) {
+        int local_workforce = (relative_commute[i] / total_commute[i]) * (grid.at(i)->population);
         fractions.push_back(double(local_workforce) / double(total_population));
     }
     if (fractions.empty()) {
@@ -68,7 +68,7 @@ vector<shared_ptr<WorkPlace>> WorkplacesBuilder::build(GenConfiguration& config,
 
     // Create and map the workplaces to their samples.
     for (unsigned int i = 0; i < workplace_count; i++) {
-        auto workplace = make_shared<WorkPlace>(WorkPlace(i, grid->at(generator()).coordinate));
+        auto workplace = make_shared<WorkPlace>(WorkPlace(i, grid.at(generator())->coordinate));
         workplaces.push_back(workplace);
     }
 

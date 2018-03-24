@@ -9,7 +9,7 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
-vector<shared_ptr<School>> SchoolsBuilder::build(const GenConfiguration& config, shared_ptr<GeoGrid> grid)
+vector<shared_ptr<School>> SchoolsBuilder::build(const GenConfiguration& config, GeoGrid& grid)
 {
         auto schools = vector<shared_ptr<School>>();
         unsigned int total_population = config.getTree().get<unsigned int>("population_size");
@@ -22,8 +22,8 @@ vector<shared_ptr<School>> SchoolsBuilder::build(const GenConfiguration& config,
 
         // Create the discrete distribution to sample from.
         vector<double> fractions;
-        for(UrbanCenter center : *grid) {
-                fractions.push_back(double(center.population) / double(total_population));
+        for(auto center : grid) {
+                fractions.push_back(double(center->population) / double(total_population));
         }
         if (fractions.empty()) {
             return schools;
@@ -36,7 +36,7 @@ vector<shared_ptr<School>> SchoolsBuilder::build(const GenConfiguration& config,
         // Create and map the schools to their samples.
         for (unsigned int i = 0; i < school_count; i++) {
                 int index = generator();
-                auto school = make_shared<School>(School(i, grid->at(index).coordinate));
+                auto school = make_shared<School>(School(i, grid.at(index)->coordinate));
                 schools.push_back(school);
         }
 

@@ -70,6 +70,7 @@ set(LIB_SRC
     gen/geogen/builders/UniversitiesBuilder.cpp
     gen/geogen/builders/WorkplacesBuilder.cpp
 	gen/files/GenFile.cpp
+	gen/files/GenDirectory.cpp
 #---
 	geo/GeoCoordinate.cpp
 	geo/GeoCoordCalculator.cpp

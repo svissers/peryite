@@ -4,16 +4,24 @@
 
 namespace stride {
 namespace gen {
+namespace files {
 
 /**
  *
  */
-class CommunityFIle : public GenFile
+class CommunityFile : public GenFile
 {
-private:
-    const std::string m_file_name = "Communities.csv";
-    const std::initializer_list<std::string> m_labels = {"id","latitude","longitude","primary", "band"};
+public:
+    CommunityFile(GenConfiguration& config) : GenFile(config) {}
 
+    CommunityFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, GeoGrid& geo)
+    : GenFile(config, structs, geo)
+    {
+        m_file_name = "Communities.csv";
+        m_labels = {"id","latitude","longitude","primary", "band"};
+    }
+
+private:
     std::shared_ptr<GenStruct> getStruct(util::CSVRow const & row)
     {
         auto community = std::make_shared<Community>(Community(
@@ -27,16 +35,21 @@ private:
         return community;
     }
 
-    std::vector<std::string> getValues(std::shared_ptr<Community> community)
+    std::vector<std::string> getValues(std::shared_ptr<GenStruct> g_struct)
     {
-        std::vector<std::string> values;
-        values.push_back(std::to_string(community->id));
-        values.push_back(std::to_string(community->coordinate.m_latitude));
-        values.push_back(std::to_string(community->coordinate.m_longitude));
-        values.push_back(std::to_string(community->is_primary));
+        std::shared_ptr<Community> community = std::static_pointer_cast<Community>(g_struct);
+        std::vector<std::string> values = {
+            std::to_string(community->id),
+            std::to_string(community->coordinate.m_latitude),
+            std::to_string(community->coordinate.m_longitude),
+            std::to_string(community->is_primary)
+        };
         return values;
     }
 };
 
+typedef std::shared_ptr<CommunityFile> CommunityFilePtr;
+
+} // namespace files
 } // namespace gen
 } // namespace stride

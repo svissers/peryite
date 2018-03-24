@@ -19,7 +19,7 @@ public:
         /// Note: The input grid will leave the method sorted on population size (big to small).
         /// @param config       TODO
         /// @param grid         TODO
-        static std::vector<std::shared_ptr<University>> build(GenConfiguration& config, std::shared_ptr<GeoGrid> grid);
+        static std::vector<std::shared_ptr<University>> build(GenConfiguration& config, GeoGrid& grid);
 
 };
 

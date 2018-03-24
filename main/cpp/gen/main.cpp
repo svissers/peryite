@@ -6,19 +6,19 @@
 #include "../util/InstallDirs.h"
 #include "../util/TimeStamp.h"
 #include "gen/geogen/GeoGenerator.h"
+#include "GenConfiguration.h"
+#include "files/GenDirectory.h"
 
 #include <tclap/CmdLine.h>
 #include <omp.h>
 
-//namespace stride {
-//namespace gen {
-
 using namespace std;
+using namespace stride::gen;
+using namespace stride::gen::files;
 using namespace stride::util;
 using namespace TCLAP;
 using boost::filesystem::path;
-//} // namespace gen
-//} // namespace stride
+
 int main(int argc, char* argv[])
 {
         int exit_status = EXIT_SUCCESS;
@@ -66,10 +66,15 @@ int main(int argc, char* argv[])
                 }
 
                 // -----------------------------------------------------------------------------------------
+                // Initialize the directory for the given configuration
+                // -----------------------------------------------------------------------------------------
+                GenDirectory dir = GenDirectory(config_file_name, num_threads);
+
+                // -----------------------------------------------------------------------------------------
                 // Run Generator-Geo
                 // -----------------------------------------------------------------------------------------
                 if (generator_type == "geo") {
-                        stride::gen::GeoGenerator::generate(config_file_name, num_threads);
+                        stride::gen::GeoGenerator::generate(dir, num_threads);
                 }
 
                 // -----------------------------------------------------------------------------------------

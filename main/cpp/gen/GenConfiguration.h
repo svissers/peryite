@@ -7,6 +7,7 @@
 namespace stride {
 namespace gen {
 
+// TODO move to configuration
 #define AMOUNTOFBANDS 50
 
 /**
@@ -16,29 +17,29 @@ namespace gen {
 class GenConfiguration
 {
 public:
-        /// Constructor. Initializes the GenConfiguration object using the config
-        /// file.
-        /// @param config_file     The configuration xml file to use.
-        /// @param thread_count    The amount of threads to be used for parallelization.
-        GenConfiguration(std::string config_file, unsigned int thread_count);
+    /// Constructor. Initializes the GenConfiguration object using the config
+    /// file.
+    /// @param config_file     The configuration xml file to use.
+    /// @param thread_count    The amount of threads to be used for parallelization.
+    GenConfiguration(std::string config_file, unsigned int thread_count);
 
-        boost::property_tree::ptree getTree() const;
+    boost::property_tree::ptree getTree() const;
 
-        std::string getPath() const;
+    std::string getPath() const;
 
-        std::shared_ptr<util::RNManager> getRNManager() const;
+    std::shared_ptr<util::RNManager> getRNManager() const;
 private:
-        /// The configuration in a tree structure
-        boost::property_tree::ptree m_config;
-        /// The path leading to the configuration file
-        std::string m_path;
-        /// Manages the parallel generation of random numbers
-        util::RNManager m_rn_manager;
-        /// The amount of threads that will be used.
-        unsigned int m_thread_count;
+    /// The configuration in a tree structure
+    boost::property_tree::ptree m_config;
+    /// The path leading to the configuration file
+    std::string m_path;
+    /// Manages the parallel generation of random numbers
+    util::RNManager m_rn_manager;
+    /// The amount of threads that will be used.
+    unsigned int m_thread_count;
 
-        /// Checks if the configuration property tree is valid.
-        void checkValidConfig() const;
+    /// Checks if the configuration property tree is valid.
+    void checkValidConfig() const;
 };
 
 } // namespace gen

@@ -8,9 +8,9 @@ namespace gen {
 
 using namespace std;
 
-shared_ptr<GeoGrid> GeoGridBuilder::build(const GenConfiguration& config)
+GeoGrid GeoGridBuilder::build(const GenConfiguration& config)
 {
-        shared_ptr<GeoGrid> geo_grid = make_shared<GeoGrid>();
+        GeoGrid geo_grid;
 
         // Construct the urban centers from the city data
         util::CSV cities_data = util::CSV(config.getTree().get<string>("geoprofile.cities"));
@@ -19,16 +19,16 @@ shared_ptr<GeoGrid> GeoGridBuilder::build(const GenConfiguration& config)
         for (util::CSVRow const & row : cities_data) {
             auto longitude  = row.getValue<double>("longitude");
             auto latitude   = row.getValue<double>("latitude");
-            UrbanCenter center = UrbanCenter(
+            auto center = make_shared<UrbanCenter>(UrbanCenter(
                 row.getValue<unsigned int>("id"),
                 row.getValue<unsigned int>("population"),
                 row.getValue<string>("name"),
                 row.getValue<unsigned int>("province"),
                 util::GeoCoordinate(
                     latitude, longitude)
-                );
-            geo_grid->push_back(center);
-            geo_grid->addPopulation(center.population);
+            ));
+            geo_grid.push_back(center);
+            geo_grid.addPopulation(center->population);
             if(longitude > max_long)
                     max_long = longitude;
             if(longitude < min_long)
@@ -37,9 +37,9 @@ shared_ptr<GeoGrid> GeoGridBuilder::build(const GenConfiguration& config)
         // Initialize the bands which allow for efficient lookup.
         // TODO discuss bands, add AMOUNTOFBANDS to config file
         double longitude_bandwidth = (max_long - min_long)/AMOUNTOFBANDS;
-        geo_grid->m_longitude_band_width = longitude_bandwidth;
-        geo_grid->m_max_long = max_long;
-        geo_grid->m_min_long = min_long;
+        geo_grid.m_longitude_band_width = longitude_bandwidth;
+        geo_grid.m_max_long = max_long;
+        geo_grid.m_min_long = min_long;
         return geo_grid;
 }
 

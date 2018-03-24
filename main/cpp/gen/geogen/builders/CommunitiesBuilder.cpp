@@ -9,7 +9,7 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
-vector<shared_ptr<Community>> CommunitiesBuilder::build(const GenConfiguration& config, shared_ptr<GeoGrid> grid)
+vector<shared_ptr<Community>> CommunitiesBuilder::build(const GenConfiguration& config, GeoGrid& grid)
 {
         vector<shared_ptr<Community>> communities = vector<shared_ptr<Community>>();
         unsigned int total_population = config.getTree().get<unsigned int>("population_size");
@@ -18,8 +18,8 @@ vector<shared_ptr<Community>> CommunitiesBuilder::build(const GenConfiguration& 
 
         // Create the discrete distribution to sample from.
         vector<double> fractions;
-        for(UrbanCenter center : *grid) {
-                fractions.push_back(double(center.population) / double(total_population));
+        for(auto center : grid) {
+                fractions.push_back(double(center->population) / double(total_population));
         }
 
         // The generator allows for parallelization.
@@ -29,7 +29,7 @@ vector<shared_ptr<Community>> CommunitiesBuilder::build(const GenConfiguration& 
         // Create and map the communities to their samples.
         for (unsigned int i = 0; i < community_count; i++) {
                 // TODO: Currently only primary communities.
-                auto community = make_shared<Community>(Community(i, true, grid->at(generator()).coordinate));
+                auto community = make_shared<Community>(Community(i, true, grid.at(generator())->coordinate));
                 communities.push_back(community);
         }
 
