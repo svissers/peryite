@@ -31,7 +31,8 @@ SOURCES += \
     visualizationcircle.cpp \
     geogendata.cpp \
     geogridlocation.cpp \
-    util.cpp
+    util.cpp \
+    popgenvisualization.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,8 +41,12 @@ HEADERS += \
     visualizationcircle.h \
     geogendata.h \
     geogridlocation.h \
-    util.h
+    util.h \
+    popgenvisualization.h
 
 FORMS += \
         mainwindow.ui \
-    geogenvisualization.ui
+    geogenvisualization.ui \
+    popgenvisualization.ui
+
+DISTFILES +=

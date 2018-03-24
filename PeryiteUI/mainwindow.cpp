@@ -1,12 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "geogenvisualization.h"
+#include "popgenvisualization.h"
 #include "util.h"
-#include<QFileDialog>
-#include<QMessageBox>
-#include<QProcess>
-#include<iostream>
-#include<QDebug>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QProcess>
+#include <iostream>
+#include <QDebug>
+#include <QProgressDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -171,4 +173,16 @@ void MainWindow::on_Pop_popGenFileSelect_clicked()
     }
 
     setPopGenFile(filename);
+}
+
+void MainWindow::on_Pop_visualizePopGen_clicked()
+{
+    if (data->popGenFile == "") {
+        QMessageBox::warning(this, tr("No file selected"), "You have not selected a PopGen output file to visualize.");
+        return;
+    }
+
+    PopGenVisualization *wdg = new PopGenVisualization;
+    wdg->parseData(data->popGenFile);
+    wdg->show();
 }

@@ -30,6 +30,8 @@ private slots:
 
     void on_Pop_popGenFileSelect_clicked();
 
+    void on_Pop_visualizePopGen_clicked();
+
 private:
     Ui::MainWindow *ui;
     PeryiteUIData *data;

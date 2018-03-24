@@ -24,8 +24,9 @@ QPointF Util::GCSToQPointF(float longitude, float latitude) {
 }
 
 QStringList Util::parseCSVLine(QString csvLine) {
-    csvLine.truncate(csvLine.lastIndexOf(QChar('\n')));
-    return csvLine.split(QRegularExpression(", "));
+    csvLine.truncate(csvLine.lastIndexOf(QChar('\n'))); // Remove endline
+    csvLine.replace(" ", ""); // Remove spaces
+    return csvLine.split(QRegularExpression(","));
 }
 
 bool Util::fileExists(QString path) {
