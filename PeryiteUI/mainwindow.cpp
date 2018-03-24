@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "geogenvisualization.h"
+#include "util.h"
 #include<QFileDialog>
 #include<QMessageBox>
 #include<QProcess>
@@ -31,15 +32,28 @@ MainWindow::~MainWindow()
 
 void MainWindow::setGeoGenFolder(QString filename)
 {
+    // Check if folder contains required files
+    QStringList requiredFiles;
+    requiredFiles << "Communities.csv" << "Geogrid.csv" << "Schools.csv" << "Universities.csv" << "Workplaces.csv";
+    QStringList missingFiles;
+
+    for(int i = 0; i < requiredFiles.size(); i++) {
+        if (!Util::fileExists(filename + "/" + requiredFiles[i])) {
+            missingFiles.append(requiredFiles[i]);
+        }
+    }
+
+    if (!missingFiles.isEmpty()) {
+        QString s = missingFiles.join("\n");
+        QMessageBox::warning(this, tr("File(s) not found."), "The following files are missing from the selected folder:\n\n" + s);
+        return;
+    }
+
+    // Now that we're sure the files exist, we can set them.
     ui->Geo_geoGenFileLabel->setText(filename);
     ui->Pop_configFileLabel->setText(filename);
     data->geoGenFolder = filename;
     data->geogenData->setFilenames(data->geoGenFolder);
-
-    /*
-     * We can check if the geogen folder actually contains the required files, by letting setFilenames return a bool.
-     * We could then give a MessageBox::warning here
-     */
 }
 
 void MainWindow::setConfigFile(QString filename)

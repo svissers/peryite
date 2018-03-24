@@ -2,6 +2,8 @@
 #include <QLocale>
 #include <QStringList>
 #include <QRegularExpression>
+#include <QFileInfo>
+
 
 Util::Util()
 {
@@ -24,4 +26,11 @@ QPointF Util::GCSToQPointF(float longitude, float latitude) {
 QStringList Util::parseCSVLine(QString csvLine) {
     csvLine.truncate(csvLine.lastIndexOf(QChar('\n')));
     return csvLine.split(QRegularExpression(", "));
+}
+
+bool Util::fileExists(QString path) {
+    QFileInfo check_file(path);
+
+    // File exists AND is not a directory
+    return check_file.exists() && check_file.isFile();
 }
