@@ -13,6 +13,7 @@ public:
 
     QString configFile;
     QString geoGenFolder;
+    QString popGenFile;
     GeoGenData *geogenData;
 };
 

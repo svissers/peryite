@@ -18,13 +18,17 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_geoGenFileSelect_clicked();
+    void on_Geo_geoGenFileSelect_clicked();
 
-    void on_configFileSelect_clicked();
+    void on_Geo_configFileSelect_clicked();
 
-    void on_generateGeoGen_clicked();
+    void on_Geo_generateGeoGen_clicked();
 
-    void on_visualizeGeoGen_clicked();
+    void on_Geo_visualizeGeoGen_clicked();
+
+    void on_Pop_configFileSelect_clicked();
+
+    void on_Pop_popGenFileSelect_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -32,6 +36,7 @@ private:
 
     void setGeoGenFolder(QString filename);
     void setConfigFile(QString filename);
+    void setPopGenFile(QString filename);
 };
 
 #endif // MAINWINDOW_H

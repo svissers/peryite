@@ -4,6 +4,7 @@ PeryiteUIData::PeryiteUIData()
 {
     configFile = "";
     geoGenFolder = "";
+    popGenFile = "";
     geogenData = new GeoGenData();
 }
 

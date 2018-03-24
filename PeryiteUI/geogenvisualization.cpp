@@ -91,7 +91,7 @@ void GeoGenVisualization::drawCircle(QPixmap *pm, QPointF point, float radius, b
     QPainter painter(pm);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    // Gradient
+    // Gradient Gradient
     QLinearGradient gradient(QPointF(point.x(), point.y() - radius), QPointF(point.x(), point.y() + radius));
     gradient.setColorAt(0.0, selected ? QColor(130, 150, 220) : QColor(130, 140, 150));
     gradient.setColorAt(1.0, selected ? QColor(90, 110, 180) : QColor(90, 100, 110));

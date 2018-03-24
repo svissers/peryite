@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Background color
     setStyleSheet("QMainWindow { background-color: #f7f7f7; }");
     ui->GeoGenGroup->setStyleSheet("QLabel { background-color: #626a77; color: #ffffff; border-radius: 2px; border: 1px solid black; }");
+    ui->PopGenGroup->setStyleSheet("QLabel { background-color: #626a77; color: #ffffff; border-radius: 2px; border: 1px solid black; }");
 }
 
 MainWindow::~MainWindow()
@@ -30,7 +31,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::setGeoGenFolder(QString filename)
 {
-    ui->geoGenFileLabel->setText(filename);
+    ui->Geo_geoGenFileLabel->setText(filename);
+    ui->Pop_configFileLabel->setText(filename);
     data->geoGenFolder = filename;
     data->geogenData->setFilenames(data->geoGenFolder);
 
@@ -42,15 +44,21 @@ void MainWindow::setGeoGenFolder(QString filename)
 
 void MainWindow::setConfigFile(QString filename)
 {
-    ui->configFileLabel->setText(filename);
+    ui->Geo_configFileLabel->setText(filename);
     data->configFile = filename;
+}
+
+void MainWindow::setPopGenFile(QString filename)
+{
+    ui->Pop_popGenFileLabel->setText(filename);
+    data->popGenFile = filename;
 }
 
 /*
  * Slot functions
  */
 
-void MainWindow::on_geoGenFileSelect_clicked()
+void MainWindow::on_Geo_geoGenFileSelect_clicked()
 {
     QString filename = QFileDialog::getExistingDirectory(
                 this,
@@ -66,7 +74,7 @@ void MainWindow::on_geoGenFileSelect_clicked()
     setGeoGenFolder(filename);
 }
 
-void MainWindow::on_configFileSelect_clicked()
+void MainWindow::on_Geo_configFileSelect_clicked()
 {
     QString filename = QFileDialog::getOpenFileName(
                 this,
@@ -82,7 +90,7 @@ void MainWindow::on_configFileSelect_clicked()
     setConfigFile(filename);
 }
 
-void MainWindow::on_generateGeoGen_clicked()
+void MainWindow::on_Geo_generateGeoGen_clicked()
 {
     if (data->configFile == "") {
         QMessageBox::warning(this, tr("No file selected"), "You have not selected a config file.");
@@ -118,7 +126,7 @@ void MainWindow::on_generateGeoGen_clicked()
     QMessageBox::information(this, tr("Done"), "GeoGen completed!");
 }
 
-void MainWindow::on_visualizeGeoGen_clicked()
+void MainWindow::on_Geo_visualizeGeoGen_clicked()
 {
     if (data->geoGenFolder == "") {
         QMessageBox::warning(this, tr("No folder selected"), "You have not selected a GeoGen output folder to visualize.");
@@ -128,4 +136,25 @@ void MainWindow::on_visualizeGeoGen_clicked()
     GeoGenVisualization *wdg = new GeoGenVisualization;
     wdg->parseData(data->geogenData);
     wdg->show();
+}
+
+void MainWindow::on_Pop_configFileSelect_clicked()
+{
+    on_Geo_geoGenFileSelect_clicked();
+}
+
+void MainWindow::on_Pop_popGenFileSelect_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(
+                this,
+                tr("Select the PopGen output file."),
+                "../../cmake-build-release/installed/data",
+                "CSV Files (*.csv)");
+
+    if (filename == "") {
+        QMessageBox::warning(this, tr("No file selected"), "You have not selected a PopGen output file.");
+        return;
+    }
+
+    setPopGenFile(filename);
 }
