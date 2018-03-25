@@ -32,7 +32,8 @@ SOURCES += \
     geogendata.cpp \
     geogridlocation.cpp \
     util.cpp \
-    popgenvisualization.cpp
+    popgenvisualization.cpp \
+    visualizationgraphbar.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,7 +43,8 @@ HEADERS += \
     geogendata.h \
     geogridlocation.h \
     util.h \
-    popgenvisualization.h
+    popgenvisualization.h \
+    visualizationgraphbar.h
 
 FORMS += \
         mainwindow.ui \

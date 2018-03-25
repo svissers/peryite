@@ -9,6 +9,7 @@
 #include <iostream>
 #include <QDebug>
 #include <QProgressDialog>
+#include <QThread>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -182,7 +183,16 @@ void MainWindow::on_Pop_visualizePopGen_clicked()
         return;
     }
 
+    // Set button text to show user that we're parsing
+    ui->Pop_visualizePopGen->setText("Parsing...");
+    // Force repaint because otherwise it would happen after this function, rendering the "parsing..." message useless.
+    ui->Pop_visualizePopGen->repaint();
+
+    // Create new window and parse pop file
     PopGenVisualization *wdg = new PopGenVisualization;
     wdg->parseData(data->popGenFile);
     wdg->show();
+
+    // Reset the button text when we're done
+    ui->Pop_visualizePopGen->setText("Visualize");
 }

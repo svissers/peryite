@@ -38,13 +38,13 @@ GeoGenVisualization::~GeoGenVisualization()
     delete ui;
     delete timer;
     delete image;
+    delete gfxScene;
+    delete gfxItem;
 }
 
 void GeoGenVisualization::update() {
     // Get cursor position
     QPoint mousePos = mapFromGlobal(QCursor::pos());
-
-    qDebug() << mousePos;
 
     // Check hover selection for circles
     updateSelection(mousePos);
@@ -69,7 +69,7 @@ void GeoGenVisualization::draw() {
     // Load pixmap into image
     QPixmap pixmap = QPixmap::fromImage(*image);
 
-    // Draw circles oselected = circles->at(i);n the pixmap
+    // Draw circles on the pixmap
     for (int i = 0; i < circles->size(); i++) {
         VisualizationCircle *c = circles->at(i);
         drawCircle(&pixmap, c->position, c->radius, (c == selected));
