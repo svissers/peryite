@@ -1,14 +1,15 @@
 #ifndef GEOGENDATA_H
 #define GEOGENDATA_H
 
-#include <QString>
+#include <QStringList>
 
 class GeoGenData
 {
 public:
     GeoGenData();
 
-    void setFilenames(QString folder);
+    bool setFilenames(QString path, QStringList &missingFiles);
+    QStringList getMissingFiles(QString path, QStringList requiredFiles);
 
     QString communitiesFile;
     QString geogridFile;

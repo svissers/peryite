@@ -3,11 +3,10 @@
 PeryiteUIData::PeryiteUIData()
 {
     configFile = "";
-    geoGenFolder = "";
-    popGenFile = "";
+    outputFolder = "";
     geogenData = new GeoGenData();
 }
 
-void PeryiteUIData::setGeoGenData(QString folder) {
-    geogenData->setFilenames(folder);
+bool PeryiteUIData::setGeoGenData(QString folder, QStringList &missingFiles) {
+    return geogenData->setFilenames(folder, missingFiles);
 }

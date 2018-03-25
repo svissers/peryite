@@ -33,65 +33,40 @@ MainWindow::~MainWindow()
  * Main functions (non-slots)
  */
 
-void MainWindow::setGeoGenFolder(QString filename)
-{
-    // Check if folder contains required files
-    QStringList requiredFiles;
-    requiredFiles << "Communities.csv" << "Geogrid.csv" << "Schools.csv" << "Universities.csv" << "Workplaces.csv";
-    QStringList missingFiles;
-
-    for(int i = 0; i < requiredFiles.size(); i++) {
-        if (!Util::fileExists(filename + "/" + requiredFiles[i])) {
-            missingFiles.append(requiredFiles[i]);
-        }
-    }
-
-    if (!missingFiles.isEmpty()) {
-        QString s = missingFiles.join("\n");
-        QMessageBox::warning(this, tr("File(s) not found."), "The following files are missing from the selected folder:\n\n" + s);
-        return;
-    }
-
+void MainWindow::setOutputFolder(QString path)
+{   
     // Now that we're sure the files exist, we can set them.
-    ui->Geo_geoGenFileLabel->setText(filename);
-    ui->Pop_configFileLabel->setText(filename);
-    data->geoGenFolder = filename;
-    data->geogenData->setFilenames(data->geoGenFolder);
+    ui->General_outputFolderLabel->setText(path);
+    data->outputFolder = path;
 }
 
-void MainWindow::setConfigFile(QString filename)
+void MainWindow::setConfigFile(QString path)
 {
-    ui->Geo_configFileLabel->setText(filename);
-    data->configFile = filename;
-}
-
-void MainWindow::setPopGenFile(QString filename)
-{
-    ui->Pop_popGenFileLabel->setText(filename);
-    data->popGenFile = filename;
+    ui->General_configFileLabel->setText(path);
+    data->configFile = path;
 }
 
 /*
  * Slot functions
  */
 
-void MainWindow::on_Geo_geoGenFileSelect_clicked()
+void MainWindow::on_General_outputFolderSelect_clicked()
 {
     QString filename = QFileDialog::getExistingDirectory(
                 this,
-                tr("Select the GeoGen output folder."),
+                tr("Select the output folder."),
                 "../../cmake-build-release/installed/output",
                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
     if (filename == "") {
-        QMessageBox::warning(this, tr("No folder selected"), "You have not selected a GeoGen output folder.");
+        QMessageBox::warning(this, tr("No folder selected"), "You have not selected an output folder.");
         return;
     }
 
-    setGeoGenFolder(filename);
+    setOutputFolder(filename);
 }
 
-void MainWindow::on_Geo_configFileSelect_clicked()
+void MainWindow::on_General_configFileSelect_clicked()
 {
     QString filename = QFileDialog::getOpenFileName(
                 this,
@@ -137,7 +112,7 @@ void MainWindow::on_Geo_generateGeoGen_clicked()
     }
 
     // Set folder data and update geogendata
-    setGeoGenFolder(installedFolder + "/output/" + configFile.split(QRegularExpression("\\.")).first());
+    setOutputFolder(installedFolder + "/output/" + configFile.split(QRegularExpression("\\.")).first());
 
     // Message when done
     QMessageBox::information(this, tr("Done"), "GeoGen completed!");
@@ -145,8 +120,19 @@ void MainWindow::on_Geo_generateGeoGen_clicked()
 
 void MainWindow::on_Geo_visualizeGeoGen_clicked()
 {
-    if (data->geoGenFolder == "") {
-        QMessageBox::warning(this, tr("No folder selected"), "You have not selected a GeoGen output folder to visualize.");
+    // Check if we selected a folder
+    if (data->outputFolder == "") {
+        QMessageBox::warning(this, tr("No folder selected"), "You have not selected an output folder to visualize.");
+        return;
+    }
+
+    // Try setting the files in geogendata.
+    // This will return false if unsuccesful (if required files are missing), and missing files will be in missingFiles.
+    QStringList missingFiles;
+
+    if (!data->setGeoGenData(data->outputFolder, missingFiles)) {
+        QString s = missingFiles.join("\n");
+        QMessageBox::warning(this, QObject::tr("File(s) not found."), "The following files are missing from the output folder:\n\n" + s);
         return;
     }
 
@@ -155,31 +141,18 @@ void MainWindow::on_Geo_visualizeGeoGen_clicked()
     wdg->show();
 }
 
-void MainWindow::on_Pop_configFileSelect_clicked()
+
+void MainWindow::on_Pop_generatePopGen_clicked()
 {
-    on_Geo_geoGenFileSelect_clicked();
+    // TODO INSERT POPGEN EXECUTION HERE
+    // JUST LIKE on_Geo_generateGeoGen_clicked()
 }
 
-void MainWindow::on_Pop_popGenFileSelect_clicked()
-{
-    QString filename = QFileDialog::getOpenFileName(
-                this,
-                tr("Select the PopGen output file."),
-                "../../cmake-build-release/installed/data",
-                "CSV Files (*.csv)");
-
-    if (filename == "") {
-        QMessageBox::warning(this, tr("No file selected"), "You have not selected a PopGen output file.");
-        return;
-    }
-
-    setPopGenFile(filename);
-}
 
 void MainWindow::on_Pop_visualizePopGen_clicked()
 {
-    if (data->popGenFile == "") {
-        QMessageBox::warning(this, tr("No file selected"), "You have not selected a PopGen output file to visualize.");
+    if (data->outputFolder == "") {
+        QMessageBox::warning(this, tr("No folder selected"), "You have not selected an output folder to visualize.");
         return;
     }
 
@@ -190,7 +163,7 @@ void MainWindow::on_Pop_visualizePopGen_clicked()
 
     // Create new window and parse pop file
     PopGenVisualization *wdg = new PopGenVisualization;
-    wdg->parseData(data->popGenFile);
+    wdg->parseData(data->outputFolder); // TODO PUT POPGENDATA POINTER HERE
     wdg->show();
 
     // Reset the button text when we're done

@@ -1,7 +1,7 @@
 #ifndef PERYITEUIDATA_H
 #define PERYITEUIDATA_H
 
-#include <QString>
+#include <QStringList>
 #include "geogendata.h"
 
 class PeryiteUIData
@@ -9,11 +9,10 @@ class PeryiteUIData
 public:
     PeryiteUIData();
 
-    void setGeoGenData(QString folder);
+    bool setGeoGenData(QString folder, QStringList &missingFiles);
 
     QString configFile;
-    QString geoGenFolder;
-    QString popGenFile;
+    QString outputFolder;
     GeoGenData *geogenData;
 };
 

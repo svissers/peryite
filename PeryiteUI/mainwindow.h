@@ -18,17 +18,15 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_Geo_geoGenFileSelect_clicked();
+    void on_General_outputFolderSelect_clicked();
 
-    void on_Geo_configFileSelect_clicked();
+    void on_General_configFileSelect_clicked();
 
     void on_Geo_generateGeoGen_clicked();
 
     void on_Geo_visualizeGeoGen_clicked();
 
-    void on_Pop_configFileSelect_clicked();
-
-    void on_Pop_popGenFileSelect_clicked();
+    void on_Pop_generatePopGen_clicked();
 
     void on_Pop_visualizePopGen_clicked();
 
@@ -36,9 +34,8 @@ private:
     Ui::MainWindow *ui;
     PeryiteUIData *data;
 
-    void setGeoGenFolder(QString filename);
-    void setConfigFile(QString filename);
-    void setPopGenFile(QString filename);
+    void setOutputFolder(QString path);
+    void setConfigFile(QString path);
 };
 
 #endif // MAINWINDOW_H

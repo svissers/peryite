@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>600</height>
+    <height>267</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,8 +24,8 @@
     <property name="geometry">
      <rect>
       <x>16</x>
-      <y>12</y>
-      <width>968</width>
+      <y>128</y>
+      <width>317</width>
       <height>101</height>
      </rect>
     </property>
@@ -38,12 +38,57 @@
     <property name="checkable">
      <bool>false</bool>
     </property>
-    <widget class="QLabel" name="Geo_geoGenFileLabel">
+    <widget class="QPushButton" name="Geo_generateGeoGen">
+     <property name="geometry">
+      <rect>
+       <x>16</x>
+       <y>32</y>
+       <width>285</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Generate</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Geo_visualizeGeoGen">
+     <property name="geometry">
+      <rect>
+       <x>16</x>
+       <y>64</y>
+       <width>285</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Visualize</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="GeneralGroup">
+    <property name="geometry">
+     <rect>
+      <x>16</x>
+      <y>12</y>
+      <width>968</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>General</string>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <widget class="QLabel" name="General_outputFolderLabel">
      <property name="geometry">
       <rect>
        <x>190</x>
        <y>64</y>
-       <width>630</width>
+       <width>761</width>
        <height>25</height>
       </rect>
      </property>
@@ -57,7 +102,7 @@
       <string>No file selected</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="Geo_geoGenFileSelect">
+    <widget class="QPushButton" name="General_outputFolderSelect">
      <property name="geometry">
       <rect>
        <x>16</x>
@@ -67,10 +112,10 @@
       </rect>
      </property>
      <property name="text">
-      <string>Select GeoGen Folder</string>
+      <string>Select Output Folder</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="Geo_configFileSelect">
+    <widget class="QPushButton" name="General_configFileSelect">
      <property name="geometry">
       <rect>
        <x>16</x>
@@ -83,12 +128,12 @@
       <string>Select Config File</string>
      </property>
     </widget>
-    <widget class="QLabel" name="Geo_configFileLabel">
+    <widget class="QLabel" name="General_configFileLabel">
      <property name="geometry">
       <rect>
        <x>190</x>
        <y>32</y>
-       <width>630</width>
+       <width>761</width>
        <height>25</height>
       </rect>
      </property>
@@ -102,39 +147,13 @@
       <string>No file selected</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="Geo_generateGeoGen">
-     <property name="geometry">
-      <rect>
-       <x>832</x>
-       <y>32</y>
-       <width>120</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Generate</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Geo_visualizeGeoGen">
-     <property name="geometry">
-      <rect>
-       <x>832</x>
-       <y>64</y>
-       <width>120</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Visualize</string>
-     </property>
-    </widget>
    </widget>
    <widget class="QGroupBox" name="PopGenGroup">
     <property name="geometry">
      <rect>
-      <x>16</x>
+      <x>349</x>
       <y>128</y>
-      <width>968</width>
+      <width>317</width>
       <height>101</height>
      </rect>
     </property>
@@ -147,76 +166,12 @@
     <property name="checkable">
      <bool>false</bool>
     </property>
-    <widget class="QLabel" name="Pop_popGenFileLabel">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>64</y>
-       <width>630</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Box</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
-     </property>
-     <property name="text">
-      <string>No file selected</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Pop_popGenFileSelect">
-     <property name="geometry">
-      <rect>
-       <x>16</x>
-       <y>64</y>
-       <width>160</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Select PopGen File</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Pop_configFileSelect">
-     <property name="geometry">
-      <rect>
-       <x>16</x>
-       <y>32</y>
-       <width>160</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Select GeoGen Folder</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Pop_configFileLabel">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>32</y>
-       <width>630</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Box</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
-     </property>
-     <property name="text">
-      <string>No file selected</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="Pop_generatePopGen">
      <property name="geometry">
       <rect>
-       <x>832</x>
+       <x>16</x>
        <y>32</y>
-       <width>120</width>
+       <width>285</width>
        <height>25</height>
       </rect>
      </property>
@@ -227,9 +182,9 @@
     <widget class="QPushButton" name="Pop_visualizePopGen">
      <property name="geometry">
       <rect>
-       <x>832</x>
+       <x>16</x>
        <y>64</y>
-       <width>120</width>
+       <width>285</width>
        <height>25</height>
       </rect>
      </property>
