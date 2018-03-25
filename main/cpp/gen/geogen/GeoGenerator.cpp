@@ -29,7 +29,6 @@ void GeoGenerator::generate(GenDirectory& dir, unsigned int thread_count)
     // Write
     auto geo_grid_file = make_shared<GeoGridFile>(
         config,
-        vector<GenStruct::ptr>(geogrid.begin(), geogrid.end()),
         geogrid
     );
     geo_grid_file->write();

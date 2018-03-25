@@ -1,16 +1,18 @@
 #pragma once
 #include "GenStruct.h"
 #include "geo/GeoCoordinate.h"
+#include "core/ContactPool.h"
 
 namespace stride {
 namespace gen {
- 
+
 struct School : public GenStruct
 {
-        unsigned int id;
-        util::GeoCoordinate coordinate = util::GeoCoordinate();
+        School(unsigned int id, util::GeoCoordinate coord)
+        : GenStruct(id, coord)
+        {};
 
-        School(unsigned int sch_id, util::GeoCoordinate coord) : id(sch_id), coordinate(coord) {};
+        std::vector<std::shared_ptr<ContactPool>> pools;
 };
 
 } // namespace gen

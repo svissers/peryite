@@ -89,6 +89,16 @@ public:
         /// Does this person participates in the social contact study?
         bool IsParticipatingInSurvey() const { return m_is_participant; }
 
+        void setHouseholdId(unsigned int id) { m_household_id = id;}
+
+        void setSchoolId(unsigned int id) { m_school_id = id;}
+
+        void setWorkId(unsigned int id) { m_work_id = id;}
+
+        void setPrimaryCommunityId(unsigned int id) { m_primary_community_id = id;}
+
+        void setSecondaryCommunityId(unsigned int id) { m_secondary_community_id = id;}
+
         /// Participate in social contact study and log person details
         void ParticipateInSurvey() { m_is_participant = true; }
 

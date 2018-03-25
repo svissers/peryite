@@ -18,7 +18,7 @@ public:
     GenFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, GeoGrid& geo);
 
     virtual void write();
-    std::vector<std::vector<std::shared_ptr<GenStruct>>> read();
+    virtual std::vector<std::vector<std::shared_ptr<GenStruct>>> read();
 
 protected:
     std::vector<std::string> m_labels;

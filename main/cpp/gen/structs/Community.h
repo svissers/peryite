@@ -8,10 +8,8 @@ namespace gen {
 struct Community : public GenStruct
 {
         Community(unsigned int id, bool primary, util::GeoCoordinate coord)
-                : is_primary(primary), id(id), coordinate(coord) {}
+                : GenStruct(id, coord), is_primary(primary) {}
         bool is_primary = true;
-        unsigned int id;
-        util::GeoCoordinate coordinate = util::GeoCoordinate();
 };
 
 

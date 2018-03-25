@@ -10,20 +10,16 @@ namespace gen {
 struct UrbanCenter : GenStruct
 {
         UrbanCenter(unsigned int uc_id, unsigned int pop, std::string uc_name, int prov, util::GeoCoordinate coord)
+        : GenStruct(uc_id, coord)
         {
-                id = uc_id;
                 population = pop;
                 name = uc_name;
                 province = prov;
-                coordinate = coord;
         }
 
-        unsigned int id = -1;
         unsigned int population = 0;
         std::string name = "";
         int province = -1;
-        util::GeoCoordinate coordinate = util::GeoCoordinate();
-
 };
 
 } // namespace gen

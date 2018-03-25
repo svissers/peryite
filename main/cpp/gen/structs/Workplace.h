@@ -7,9 +7,9 @@ namespace gen {
 
 struct WorkPlace : public GenStruct
 {
-        unsigned int id;
-        util::GeoCoordinate coordinate = util::GeoCoordinate();
-        WorkPlace(unsigned int wp_id, util::GeoCoordinate coord) : id(wp_id),coordinate(coord) {}
+        WorkPlace(unsigned int wp_id, util::GeoCoordinate coord)
+        : GenStruct(wp_id, coord)
+        {}
 };
 
 } // namespace gen

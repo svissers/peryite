@@ -62,7 +62,7 @@ vector<shared_ptr<WorkPlace>> WorkplacesBuilder::build(GenConfiguration& config,
         return workplaces;
     }
 
-    // The generator allows for parallelization.
+    // The RNManager allows for parallelization.
     auto rn_manager = config.getRNManager();
     auto generator = rn_manager->GetGenerator(trng::fast_discrete_dist(fractions.begin(), fractions.end()));
 
