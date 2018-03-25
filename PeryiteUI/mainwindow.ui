@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>267</height>
+    <height>241</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,9 +16,46 @@
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <property name="enabled">
     <bool>true</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QWidget {
+	font: 10pt &quot;FreeSans&quot;;
+ 	background-color: #f7f7f7;
+}
+
+QLabel {
+ 	background-color: #f7f7f7;
+ 	color: black;
+  	border: 1px solid #dddddd;
+}
+
+QPushButton {
+	background-color: #78e08f;
+	color: white;
+	border: none;
+}
+
+QPushButton:hover {
+	background-color: #3c6382;
+}
+
+QGroupBox {
+	border: none;
+	background-color: #eaeaea;
+	font-size: 16px;
+	text-align: center;
+}
+
+QGroupBox:title {
+	left: 16;
+	top: 8;
+}</string>
    </property>
    <widget class="QGroupBox" name="GeoGenGroup">
     <property name="geometry">

@@ -17,11 +17,6 @@ MainWindow::MainWindow(QWidget *parent) :
     data(new PeryiteUIData())
 {
     ui->setupUi(this);
-
-    // Background color
-    setStyleSheet("QMainWindow { background-color: #f7f7f7; }");
-    ui->GeoGenGroup->setStyleSheet("QLabel { background-color: #626a77; color: #ffffff; border-radius: 2px; border: 1px solid black; }");
-    ui->PopGenGroup->setStyleSheet("QLabel { background-color: #626a77; color: #ffffff; border-radius: 2px; border: 1px solid black; }");
 }
 
 MainWindow::~MainWindow()

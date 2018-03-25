@@ -16,7 +16,7 @@ GeoGenVisualization::GeoGenVisualization(QWidget *parent) :
     ui->setupUi(this);
 
     // Background color
-    setStyleSheet("QWidget { background-color: #626a77; }");
+    setStyleSheet("QWidget { background-color: #eaeaea; }");
 
     // Load background image into image
     QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("../vlaanderen.png");
@@ -90,12 +90,7 @@ void GeoGenVisualization::drawCircle(QPixmap *pm, QPointF point, float radius, b
     // QPainter
     QPainter painter(pm);
     painter.setRenderHint(QPainter::Antialiasing);
-
-    // Gradient Gradient
-    QLinearGradient gradient(QPointF(point.x(), point.y() - radius), QPointF(point.x(), point.y() + radius));
-    gradient.setColorAt(0.0, selected ? QColor(130, 150, 220) : QColor(130, 140, 150));
-    gradient.setColorAt(1.0, selected ? QColor(90, 110, 180) : QColor(90, 100, 110));
-    painter.setBrush(gradient);
+    painter.setBrush(selected ? QColor("#3c6382") : QColor("#78e08f"));
     painter.setPen(QColor(0, 0, 0, 0));
 
     // Draw

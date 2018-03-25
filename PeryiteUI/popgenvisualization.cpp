@@ -15,7 +15,7 @@ PopGenVisualization::PopGenVisualization(QWidget *parent) :
     ui->setupUi(this);
 
     // Background color
-    setStyleSheet("QWidget { background-color: #626a77; }");
+    setStyleSheet("QWidget { background-color: #eaeaea; } Q");
 
     // Load background image into image
     // QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("../vlaanderen.png");
@@ -125,16 +125,13 @@ void PopGenVisualization::draw() {
 }
 
 void PopGenVisualization::drawBar(QPixmap *pm, QPointF point, float width, float height, bool selected) {
+    image->fill(QColor(247, 247, 247));
+
     // QPainter
     QPainter painter(pm);
     painter.setRenderHint(QPainter::Antialiasing);
-
-    // Gradient Gradient
-    QLinearGradient gradient(QPointF(point.x(), 50), QPointF(point.x(), point.y()));
-    gradient.setColorAt(0.0, selected ? QColor(130, 150, 220) : QColor(130, 140, 150));
-    gradient.setColorAt(1.0, selected ? QColor(90, 110, 180) : QColor(90, 100, 110));
-    painter.setBrush(gradient);
-    painter.setPen(QColor(0, 0, 0, 0));
+    painter.setBrush(selected ? QColor("#3c6382") : QColor("#78e08f"));
+    painter.setPen(QColor(0, 0, 0, 15));
 
     // Draw
     painter.drawRect(point.x(), point.y() - height, width, height);
