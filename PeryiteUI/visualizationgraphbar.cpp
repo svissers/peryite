@@ -5,10 +5,12 @@ VisualizationGraphBar::VisualizationGraphBar()
 
 }
 
-VisualizationGraphBar::VisualizationGraphBar(QPointF pos, qreal w, qreal h) :
+VisualizationGraphBar::VisualizationGraphBar(QPointF pos, qreal w, qreal h, int dist_age, int dist_amount) :
     position(pos),
     width(w),
-    height(h)
+    height(h),
+    age(dist_age),
+    amount(dist_amount)
 {
 
 }

@@ -130,7 +130,7 @@ void PopGenVisualization::drawBar(QPixmap *pm, QPointF point, float width, float
     painter.setRenderHint(QPainter::Antialiasing);
 
     // Gradient Gradient
-    QLinearGradient gradient(QPointF(point.x(), point.y() - height), QPointF(point.x(), point.y()));
+    QLinearGradient gradient(QPointF(point.x(), 50), QPointF(point.x(), point.y()));
     gradient.setColorAt(0.0, selected ? QColor(130, 150, 220) : QColor(130, 140, 150));
     gradient.setColorAt(1.0, selected ? QColor(90, 110, 180) : QColor(90, 100, 110));
     painter.setBrush(gradient);
@@ -159,23 +159,19 @@ void PopGenVisualization::updateSelection(QPointF mousePos) {
 void PopGenVisualization::hoverBar(VisualizationGraphBar *b) {
     selected = b;
 
-//    // Title
-//    QString title = c->geoGridLocation->name;
-//    ui->CircleInfoTitle->setText(title);
+    // Title
+    QString title = "Age: " + Util::formatInt(b->age);
+    ui->BarInfoTitle->setText(title);
 
-//    // Info text
-//    QString text = "Population: " + Util::formatInt(c->geoGridLocation->population);
-//    text += "\nCommunities: " + Util::formatInt(c->geoGridLocation->communities);
-//    text += "\nSchools: " + Util::formatInt(c->geoGridLocation->schools);
-//    text += "\nUniversities: " + Util::formatInt(c->geoGridLocation->universities);
-//    text += "\nWorkplaces: " + Util::formatInt(c->geoGridLocation->workplaces);
-//    ui->CircleInfoText->setText(text);
+    // Info text
+    QString text = "Population: " + Util::formatInt(b->amount);
+    ui->BarInfoText->setText(text);
 }
 
 void PopGenVisualization::noHover() {
     selected = NULL;
-//    ui->CircleInfoTitle->setText("");
-//    ui->CircleInfoText->setText("");
+    ui->BarInfoTitle->setText("");
+    ui->BarInfoText->setText("");
 }
 
 int PopGenVisualization::getLargestAgeCategorySize() {
@@ -201,6 +197,6 @@ void PopGenVisualization::createAgeDistributionGraph() {
         QPointF pos = QPointF(width * i, 401);
         qreal height = maxHeight * ageDistribution[i] / maxAgeCategorySize;
 
-        addBar(new VisualizationGraphBar(pos, width, height));
+        addBar(new VisualizationGraphBar(pos, width, height, i, ageDistribution[i]));
     }
 }
