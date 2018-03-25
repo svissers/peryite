@@ -151,8 +151,19 @@ void MainWindow::on_Pop_generatePopGen_clicked()
 
 void MainWindow::on_Pop_visualizePopGen_clicked()
 {
+    // Check if we selected a folder
     if (data->outputFolder == "") {
         QMessageBox::warning(this, tr("No folder selected"), "You have not selected an output folder to visualize.");
+        return;
+    }
+
+    // Try setting the files in geogendata.
+    // This will return false if unsuccesful (if required files are missing), and missing files will be in missingFiles.
+    QStringList missingFiles;
+
+    if (!data->setPopGenData(data->outputFolder, missingFiles)) {
+        QString s = missingFiles.join("\n");
+        QMessageBox::warning(this, QObject::tr("File(s) not found."), "The following files are missing from the output folder:\n\n" + s);
         return;
     }
 
@@ -163,7 +174,7 @@ void MainWindow::on_Pop_visualizePopGen_clicked()
 
     // Create new window and parse pop file
     PopGenVisualization *wdg = new PopGenVisualization;
-    wdg->parseData(data->outputFolder); // TODO PUT POPGENDATA POINTER HERE
+    wdg->parseData(data->popgenData); // TODO PUT POPGENDATA POINTER HERE
     wdg->show();
 
     // Reset the button text when we're done

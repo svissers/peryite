@@ -47,7 +47,7 @@ void PopGenVisualization::closeEvent(QCloseEvent *event) {
     event->accept();
 }
 
-void PopGenVisualization::parseData(QString popgenFilePath) {
+void PopGenVisualization::parseData(PopGenData *data) {
     // Make sure all distribution data is set to 0 first
     for (int i = 0; i <= maxAge; i++) {
         ageDistribution[i] = 0;
@@ -58,7 +58,7 @@ void PopGenVisualization::parseData(QString popgenFilePath) {
     selected = NULL;
 
     // Parse the popgen file
-    QFile popgenFile(popgenFilePath);
+    QFile popgenFile(data->popFile);
 
     if (!popgenFile.open(QIODevice::ReadOnly)) {
         qDebug() << popgenFile.errorString();
@@ -79,14 +79,7 @@ void PopGenVisualization::parseData(QString popgenFilePath) {
 
     popgenFile.close();
 
-    // Create bars from ageDistribution
-    for (int i = 0; i <= maxAge; i++) {
-        qreal width = 10;
-        QPointF pos = QPointF(width * i, 401);
-        qreal height = ageDistribution[i] / 50.0f;
-
-        addBar(new VisualizationGraphBar(pos, width, height));
-    }
+    createAgeDistributionGraph();
 }
 
 void PopGenVisualization::addAge(int age) {
@@ -183,4 +176,31 @@ void PopGenVisualization::noHover() {
     selected = NULL;
 //    ui->CircleInfoTitle->setText("");
 //    ui->CircleInfoText->setText("");
+}
+
+int PopGenVisualization::getLargestAgeCategorySize() {
+    int max = 0;
+
+    // Find largest value
+    for (int i = 0; i <= maxAge; i++) {
+        if (ageDistribution[i] > max) {
+            max = ageDistribution[i];
+        }
+    }
+
+    return max;
+}
+
+void PopGenVisualization::createAgeDistributionGraph() {
+    const float maxHeight = 320;
+    int maxAgeCategorySize = getLargestAgeCategorySize();
+
+    // Create bars from ageDistribution
+    for (int i = 0; i <= maxAge; i++) {
+        qreal width = 10;
+        QPointF pos = QPointF(width * i, 401);
+        qreal height = maxHeight * ageDistribution[i] / maxAgeCategorySize;
+
+        addBar(new VisualizationGraphBar(pos, width, height));
+    }
 }

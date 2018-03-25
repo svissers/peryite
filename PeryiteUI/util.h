@@ -14,6 +14,7 @@ public:
     static QPointF GCSToQPointF(float longitude, float latitude);
     static QStringList parseCSVLine(QString csvLine);
     static bool fileExists(QString path);
+    static QStringList getMissingFiles(QString path, QStringList requiredFiles);
 };
 
 #endif // UTIL_H

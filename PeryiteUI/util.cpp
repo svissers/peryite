@@ -35,3 +35,16 @@ bool Util::fileExists(QString path) {
     // File exists AND is not a directory
     return check_file.exists() && check_file.isFile();
 }
+
+QStringList Util::getMissingFiles(QString path, QStringList requiredFiles) {
+    // Check if required files exist
+    QStringList missingFiles;
+
+    for(int i = 0; i < requiredFiles.size(); i++) {
+        if (!fileExists(path + "/" + requiredFiles[i])) {
+            missingFiles.append(requiredFiles[i]);
+        }
+    }
+
+    return missingFiles;
+}
