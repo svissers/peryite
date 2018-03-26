@@ -6,7 +6,7 @@ namespace stride {
 namespace gen {
 namespace popgen {
 
-void generate(const files::GenDirectory& dir, unsigned int thread_count);
+void generate(files::GenDirectory& dir, unsigned int thread_count);
 
 std::vector<std::shared_ptr<Household>>  buildHouseholds(const GenConfiguration& config);
 
