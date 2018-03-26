@@ -19,7 +19,6 @@ void generate(files::GenDirectory& dir, unsigned int thread_count)
     auto config = dir.getConfig();
     // Build households
     auto households = buildHouseholds(config);
-
     // Assign persons
     auto geogrid_file   = dir.getGeoGridFile();
     auto grid           = geogrid_file->readGrid();
@@ -40,9 +39,8 @@ void generate(files::GenDirectory& dir, unsigned int thread_count)
     auto community_file = dir.getCommunityFile();
     auto communities    = community_file->read();
     assignCommunities(communities, households, config);
-
     // Write persons
-    void writePopulation(vector<shared_ptr<Household>> households);
+    writePopulation(households, config);
 }
 
 vector<shared_ptr<Household>> buildHouseholds(const GenConfiguration& config)
@@ -74,6 +72,7 @@ vector<shared_ptr<Household>> buildHouseholds(const GenConfiguration& config)
                 hh_persons.push_back(person);
                 current_p_id++;
             }
+            household->persons = hh_persons;
             result.push_back(household);
             current_hh_id++;
     }
@@ -121,7 +120,6 @@ void assignSchools(vector<vector<shared_ptr<GenStruct>>>& schools, const vector<
             }
         }
     }
-
     // Assign young students to schools
     for (auto household : households) {
         for (auto person : household->persons) {
@@ -133,6 +131,8 @@ void assignSchools(vector<vector<shared_ptr<GenStruct>>>& schools, const vector<
                 // Keep doubling until found
 
                 std::vector<shared_ptr<School>> closest_schools;
+                if (closest_schools.size() == 0)
+                    continue;
                 // Create a uniform distribution to select a school
                 auto rn_manager = config.getRNManager();
                 std::function<int()> school_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_schools.size()));
@@ -193,7 +193,7 @@ unsigned int assignUniversities(vector<vector<shared_ptr<GenStruct>>>& universit
     // Commuting distributions
     util::CSV commuting_data(config.getTree().get<string>("geoprofile.commuters"));
     map<unsigned int, std::function<int()>> city_generators;
-    vector<unsigned int>                    commute_towards(cities.size(), 0);
+    vector<unsigned int>                    commute_towards;
     unsigned int                            commute_towards_total = 0;
     if (commuting_data.size() > 1) {
         for (auto const& city : cities) {
@@ -221,7 +221,7 @@ unsigned int assignUniversities(vector<vector<shared_ptr<GenStruct>>>& universit
     vector<double> city_fractions;
     for (auto const& commute_towards_city : commute_towards)
         city_fractions.push_back(commute_towards_city / commute_towards_total);
-    std::function<int()> city_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(city_fractions.begin(), city_fractions.end()));
+    auto city_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(city_fractions.begin(), city_fractions.end()));
 
     // --------------------------------
     // Assign students to universities.
@@ -236,21 +236,25 @@ unsigned int assignUniversities(vector<vector<shared_ptr<GenStruct>>>& universit
                     /// Commuting student
                     total_commuting_students++;
                     unsigned int city_index = city_gen();
-                    auto city       = *std::next(cities.begin(), city_index);
+                    auto it = cities.begin();
+                    std::advance(it, city_index);
+                    auto city       = *it;
                     auto university = city.second[city_generators[city.first]()];
-                    pool       = university->pools[cp_gen()];
+                    pool            = university->pools[cp_gen()];
                 } else {
                     /// Non-commuting student
                     auto home_coord = household->coordinate;
                     // TODO : Find the bands within 10 km of home
                     // Keep doubling until found
                     std::vector<shared_ptr<University>> closest_universities;
+                    if (closest_universities.size() == 0)
+                        continue;
                     // Create a uniform distribution to select a university
                     auto rn_manager = config.getRNManager();
-                    std::function<int()> uni_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_universities.size()));
-                    auto university = closest_universities.at(uni_gen());
+                    auto uni_gen    = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_universities.size()));
+                    auto university = closest_universities[uni_gen()];
                     // Create a uniform distribution to select a contactpool in the selected university
-                    std::function<int()> cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(university->pools.size()));
+                    auto cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(university->pools.size()));
                     pool = university->pools.at(cp_generator());
                 }
                 person->setSchoolId(pool->GetId());
@@ -360,8 +364,11 @@ void assignWorkplaces
                             }
                         }
                     }
+                    // TODO: ask
+                    if (dest_workplaces.size() == 0)
+                        continue;
                     // Create a uniform distribution to select a workplace
-                    std::function<int()> wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(dest_workplaces.size()));
+                    auto wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(dest_workplaces.size()));
                     auto workplace = dest_workplaces[wp_generator()];
                     pool = workplace->pool;
                 } else {
@@ -370,6 +377,8 @@ void assignWorkplaces
                     // TODO : Find the bands within 10 km of home
                     // Keep doubling until found
                     std::vector<shared_ptr<WorkPlace>> closest_workplaces;
+                    if (closest_workplaces.size() == 0)
+                        continue;
                     // Create a uniform distribution to select a workplace
                     std::function<int()> wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_workplaces.size()));
                     auto workplace = closest_workplaces.at(wp_generator());
@@ -411,6 +420,8 @@ void assignCommunities
             // Keep doubling until found
 
             std::vector<shared_ptr<Community>> closest_communities;
+            if (closest_communities.size() == 0)
+                continue;
             // Create a uniform distribution to select a community
             auto rn_manager             = config.getRNManager();
             auto community_generator    = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_communities.size()));
@@ -431,7 +442,6 @@ void assignCommunities
                     communities.erase(communities.begin() + community_index);
                 }
             }
-
         }
     }
 }
