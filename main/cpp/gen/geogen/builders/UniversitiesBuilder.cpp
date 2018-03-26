@@ -14,7 +14,7 @@ vector<shared_ptr<University>> UniversitiesBuilder::build(GenConfiguration& conf
     unsigned int total_population = config.getTree().get<unsigned int>("population_size");
 
     // The total amount of university students is given.
-    double universityFraction = config.getTree().get<double>("university.fraction");
+    double universityFraction = config.getTree().get<double>("university.student_fraction");
     unsigned int student_count = (unsigned int)(universityFraction * total_population);
 
     // Every university has an average of 3000 students
@@ -48,7 +48,9 @@ vector<shared_ptr<University>> UniversitiesBuilder::build(GenConfiguration& conf
 
     // Create and map the universities to their samples.
     for (unsigned int i = 0; i < uni_count; i++) {
-            auto university = make_shared<University>(University(i, grid.at(generator())->coordinate));
+            auto index      = generator();
+            auto center     = grid.at(index);
+            auto university = make_shared<University>(University(i, index, center->coordinate));
             universities.push_back(university);
     }
 

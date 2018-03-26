@@ -33,13 +33,13 @@ vector<shared_ptr<WorkPlace>> WorkplacesBuilder::build(GenConfiguration& config,
                 // When indexes are the same, commute is to the same center
                 if (row_index == col_index) {
                     // Commute towards
-                    relative_commute[row_index] += stoi(row.getValue(col_index));
+                    relative_commute[row_index] += row.getValue<unsigned int>(col_index);
                 }
                 else {
                     // Commute away
-                    relative_commute[col_index] -= stoi(row.getValue(col_index));
+                    relative_commute[col_index] -= row.getValue<unsigned int>(col_index);
                     // Commute towards
-                    relative_commute[row_index] += stoi(row.getValue(col_index));
+                    relative_commute[row_index] += row.getValue<unsigned int>(col_index);
                 }
                 total_commute[col_index] += stoi(row.getValue(col_index));
             }

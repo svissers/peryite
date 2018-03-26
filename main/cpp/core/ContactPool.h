@@ -60,6 +60,9 @@ public:
         /// Get member at index
         const std::vector<std::pair<Person*, bool>>& GetPool() const;
 
+        // Get identifier
+        std::size_t GetId() const { return m_pool_id;}
+
         /// Get size
         std::size_t GetSize() const;
 

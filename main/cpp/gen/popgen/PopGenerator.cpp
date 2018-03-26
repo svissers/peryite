@@ -1,9 +1,11 @@
 #include "PopGenerator.h"
 #include "../files/HouseholdFile.h"
+#include "../structs/School.h"
 #include "trng/fast_discrete_dist.hpp"
 #include "util/RNManager.h"
 #include "pop/Person.h"
-#include "../structs/School.h"
+#include <map>
+#include <math.h>
 
 namespace stride {
 namespace gen {
@@ -36,7 +38,7 @@ vector<shared_ptr<Household>> buildHouseholds(const GenConfiguration& config)
 
     // Create a uniform distribution for the household reference set.
     auto rn_manager = config.getRNManager();
-    std::function<int()> generator = rn_manager->GetGenerator(trng::fast_discrete_dist(hh_reference.size()));
+    auto generator  = rn_manager->GetGenerator(trng::fast_discrete_dist(hh_reference.size()));
 
     // Build the households
     vector<shared_ptr<Household>> result;
@@ -107,7 +109,7 @@ void assignSchools(vector<vector<shared_ptr<GenStruct>>>& schools, const vector<
     for (auto household : households) {
         for (auto person : household->persons) {
             auto age = person->GetAge();
-            if (age > 3 && age < 18) {
+            if (age >= 3 && age < 18) {
                 auto home_coord = household->coordinate;
                 // TODO
                 // Find the bands within 10 km of home
@@ -118,17 +120,236 @@ void assignSchools(vector<vector<shared_ptr<GenStruct>>>& schools, const vector<
                 auto rn_manager = config.getRNManager();
                 std::function<int()> school_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_schools.size()));
                 auto school = closest_schools.at(school_generator());
-                // Create a uniform distribution to select a contactpool in the school
+                // Create a uniform distribution to select a contactpool in the selected school
                 std::function<int()> cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(school->pools.size()));
                 auto pool = school->pools.at(cp_generator());
+                person.setSchoolId(pool.GetId());
                 pool->AddMember(person.get());
             }
         }
     }
-
-
 }
 
+unsigned int assignUniversity(vector<vector<shared_ptr<GenStruct>>>& universities, const vector<shared_ptr<Household>>& households, const GenConfiguration& config)
+{
+    // -------------
+    // Contactpools
+    // -------------
+    const unsigned int university_size      = 3000;
+    const unsigned int university_cp_size   = 20;
+    unsigned int cp_id                      = 0;
+    map<unsigned int, vector<shared_ptr<University>>> cities;
+    for (auto& band : universities) {
+        for (auto& g_struct : band) {
+            auto university = std::static_pointer_cast<University>(g_struct);
+            // Create the contactpools for every university
+            for(unsigned int size = 0; size < university_size; size += university_cp_size) {
+                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::School, ContactProfiles());
+                university->pools.push_back(pool);
+            }
+            // Get the different university locations (urban_id = row_index in commuting data).
+            if (cities.find(university->urban_id) == cities.end() ) {
+                cities[university->urban_id] = vector<shared_ptr<University>>({university});
+            } else {
+                cities[university->urban_id].push_back(university);
+            }
+        }
+    }
+
+    // -------------
+    // Distributions
+    // -------------
+    auto rn_manager = config.getRNManager();
+
+    // Create two distributions, one to select if the person is a student and one to select if the student commutes.
+    double student_fraction     = config.getTree().get<double>("university.student_fraction");
+    double commute_fraction     = config.getTree().get<double>("university.commute_fraction");
+    auto student_fractions      = vector<double>{student_fraction, 1.0 - student_fraction};
+    auto commute_fractions      = vector<double>{commute_fraction, 1.0 - commute_fraction};
+    auto student_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(student_fractions.begin(), student_fractions.end()));
+    auto commute_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(commute_fractions.begin(), commute_fractions.end()));
+
+    // create a uniform distribution to select a contactpool from a university
+    auto cp_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(floor(university_size / university_cp_size)));
+
+    // Commuting distributions
+    util::CSV commuting_data(config.getTree().get<string>("geoprofile.commuters"));
+    map<unsigned int, std::function<int()>> city_generators;
+    vector<unsigned int>                    commute_towards(cities.size(), 0);
+    unsigned int                            commute_towards_total = 0;
+    if (commuting_data.size() > 1) {
+        for (auto const& city : cities) {
+            // For every university city, calculate the fraction commuting towards it.
+            auto row = *(commuting_data.begin() + city.first);
+            unsigned int city_total = 0;
+            for (unsigned int col_index = 0; col_index < commuting_data.getColumnCount(); col_index++) {
+                // Ignore commuting towards itself
+                if (city.first == col_index)
+                    continue;
+                auto commuting_towards      = row.getValue<unsigned int>(col_index);
+                // Count the total number of people commuting towards this university city
+                city_total                  += commuting_towards;
+                // Count the total number of people commuting towards all university cities
+                commute_towards_total       += commuting_towards;
+            }
+            commute_towards.push_back(city_total);
+            // For every university city, create a uniform distribution to select a university
+            auto uni_gen                    = rn_manager->GetGenerator(trng::fast_discrete_dist(city.second.size()));
+            city_generators[city.first]     = uni_gen;
+        }
+    }
+
+    // Create a distribution to select a university city when the student commutes.
+    vector<double> city_fractions;
+    for (auto const& commute_towards_city : commute_towards)
+        city_fractions.push_back(commute_towards_city / commute_towards_total);
+    std::function<int()> city_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(city_fractions.begin(), city_fractions.end()));
+
+    // --------------------------------
+    // Assign students to universities.
+    // --------------------------------
+    unsigned int total_commuting_students = 0;
+    for (auto household : households) {
+        for (auto person : household->persons) {
+            auto age = person->GetAge();
+            if (age >= 18 && age < 26 && student_gen() == 0) {
+                shared_ptr<ContactPool> pool;
+                if (commute_gen() == 0) {
+                    /// Commuting student
+                    total_commuting_students++;
+                    unsigned int city_index = city_gen();
+                    auto city       = *std::next(cities.begin(), city_index);
+                    auto university = city.second[city_generators[city.first]()];
+                    pool       = university->pools[cp_gen()];
+                } else {
+                    /// Non-commuting student
+                    auto home_coord = household->coordinate;
+                    // TODO : Find the bands within 10 km of home
+                    // Keep doubling until found
+                    std::vector<shared_ptr<University>> closest_universities;
+                    // Create a uniform distribution to select a university
+                    auto rn_manager = config.getRNManager();
+                    std::function<int()> uni_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_universities.size()));
+                    auto university = closest_universities.at(uni_gen());
+                    // Create a uniform distribution to select a contactpool in the selected university
+                    std::function<int()> cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(university->pools.size()));
+                    pool = university->pools.at(cp_generator());
+                }
+                person.setSchoolId(pool.GetId());
+                pool->AddMember(person.get());
+            }
+        }
+    }
+    return total_commuting_students;
+}
+
+void assignWorkplace
+(vector<vector<shared_ptr<GenStruct>>>& workplaces, const vector<shared_ptr<Household>>& households,
+ const GenConfiguration& config, unsigned int total_commuting_students)
+{
+    // -------------
+    // Contactpools
+    // -------------
+    for (auto& band : universities) {
+        for (auto& g_struct : band) {
+            auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
+            auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Work, ContactProfiles());
+            workplace->pool = pool;
+        }
+    }
+    // -------------
+    // Distributions
+    // -------------
+    auto rn_manager = config.getRNManager();
+
+    unsigned int total_population = config.getTree().get<unsigned int>("population_size");
+    double student_fraction = config.getTree().get<double>("university.student_fraction");
+    double work_fraction    = config.getTree().get<double>("work.work_fraction");
+    double commute_fraction = config.getTree().get<double>("work.commute_fraction");
+    auto student_fractions  = vector<double>{student_fraction, 1.0 - student_fraction};
+    auto work_fractions     = vector<double>{work_fraction, 1.0 - work_fraction};
+    auto commute_fractions  = vector<double>{commute_fraction, 1.0 - commute_fraction};
+    auto student_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(student_fractions.begin(), student_fractions.end()));
+    auto work_gen    = rn_manager->GetGenerator(trng::fast_discrete_dist(work_fractions.begin(), work_fractions.end()));
+    auto commute_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(commute_fractions.begin(), commute_fractions.end()));
+
+    // Commuting distributions
+    unsigned int total_commuting_actives    = 100000; // TODO
+    double commuting_student_active_ratio   = total_commuting_students / total_commuting_actives;
+
+    util::CSV commuting_data = util::CSV(config.getTree().get<string>("geoprofile.commuters"));
+    size_t column_count = commuting_data.getColumnCount();
+    vector<int> relative_commute (column_count, 0);
+    vector<unsigned int> total_commute (column_count, 0);
+    if (commuting_data.size() > 1) {
+        // Access each element in the matrix
+        for (size_t row_index = 0; row_index < commuting_data.size(); row_index++) {
+            for (size_t col_index = 0; col_index < column_count; col_index++) {
+                // Ignore commuting towards itself
+                if (row_index == col_index) {
+                    continue;
+                util::CSVRow row = *(commuting_data.begin()+row_index);
+                auto commute_count = row.getValue<unsigned int>(col_index)
+                // Remove commuting students
+                commute_count -= (commuting_student_active_ratio * commute_count);
+                // TODO: ask
+                relative_commute[col_index] -= commute_count;
+                relative_commute[row_index] += commute_count;
+                total_commute[col_index] += commute_count;
+            }
+        }
+    }
+
+    // Create a distribution to select a workplace city.
+    vector<double> wpc_fractions;
+    for(size_t i = 0; i < relative_commute.size(); i++) {
+        wpc_fractions.push_back(double(relative_commute[i]) / double(total_commute[i]));
+    }
+    auto city_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(wpc_fractions.begin(), wpc_fractions.end()));
+
+    //if (fractions.empty()) {}
+
+    // --------------------------------
+    // Assign employables to workplaces.
+    // --------------------------------
+    for (auto household : households) {
+        for (auto person : household->persons) {
+            auto age = person->GetAge();
+            if (age >= 18 && age < 26 && student_gen() == 0) {
+                // Students are not employable
+                continue;
+            }
+            if (age >= 18 && age < 65) {
+                if (work_gen() == 1) {
+                    // The person is non active
+                    person->setWorkId(0);
+                    continue;
+                }
+                // The person is active
+                shared_ptr<ContactPool> pool;
+                if (commute_gen() == 0) {
+                    // Commuting
+                    auto center = grid->at(city_gen());
+
+
+                } else {
+                    // Non-commuting
+                    auto home_coord = household->coordinate;
+                    // TODO : Find the bands within 10 km of home
+                    // Keep doubling until found
+                    std::vector<shared_ptr<WorkPlace>> closest_workplaces;
+                    // Create a uniform distribution to select a workplace
+                    auto rn_manager = config.getRNManager();
+                    std::function<int()> wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_workplaces.size()));
+                    auto workplace = closest_workplaces.at(wp_generator());
+                    pool = workplace->pool;
+                }
+                person.setWorkId(pool.GetId());
+                pool->AddMember(person.get());
+            }
+        }
+    }
+}
 
 } // namespace gen
 } // namespace stride

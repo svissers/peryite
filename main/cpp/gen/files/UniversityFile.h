@@ -18,7 +18,7 @@ public:
     : GenFile(config, structs, geo)
     {
         m_file_name = "Universities.csv";
-        m_labels = {"id","latitude","longitude","band"};
+        m_labels = {"id", "urban_id", "latitude","longitude","band"};
     }
 
 private:
@@ -26,6 +26,7 @@ private:
     {
         auto university = std::make_shared<University>(University(
             row.getValue<unsigned int>("id"),
+            row.getValue<unsigned int>("urban_id"),
             util::GeoCoordinate(
                 row.getValue<double>("latitude"),
                 row.getValue<double>("longitude")
@@ -40,6 +41,7 @@ private:
         std::shared_ptr<University> university = std::static_pointer_cast<University>(g_struct);
         std::vector<std::string> values = {
             std::to_string(university->id),
+            std::to_string(university->urban_id),
             std::to_string(university->coordinate.m_latitude),
             std::to_string(university->coordinate.m_longitude)
         };
