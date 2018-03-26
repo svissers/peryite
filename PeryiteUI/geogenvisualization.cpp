@@ -186,9 +186,7 @@ void GeoGenVisualization::addSchool(QString csvLine) {
 }
 
 void GeoGenVisualization::addUniversity(QString csvLine) {
-    // Remove the newline character and split into strings
-    csvLine.truncate(csvLine.lastIndexOf(QChar('\n')));
-    QStringList list = csvLine.split(QRegularExpression(", "));
+    QStringList list = Util::parseCSVLine(csvLine);
 
     // Read data from CSV and find corresponding circle
     float latitude = list[1].toFloat();
