@@ -37,12 +37,17 @@ void writefiles(std::shared_ptr<T> toWrite, std::shared_ptr<GeoGrid> geo, std::s
                 if (sorted.at(i).size() == 0){
                     sorted.at(i).push_back(*it);
                 }else{
+                    bool inserted = false;
                     for(unsigned int j=0; j < sorted.at(i).size(); j++){
                         if(sorted.at(i).at(j).coordinate.m_latitude > it->coordinate.m_latitude){
                             //geen j--, want j begint op 0
+                            inserted = true;
                             sorted.at(i).insert(sorted.at(i).begin()+j, *it);
                             break;
                         }
+                    }
+                    if (!inserted){
+                        sorted.at(i).push_back(*it);
                     }
                 }
                 break;
