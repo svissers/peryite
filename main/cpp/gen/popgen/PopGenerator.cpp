@@ -12,6 +12,7 @@ namespace gen {
 namespace popgen {
 
 using namespace std;
+using namespace gen;
 
 void generate(files::GenDirectory& dir, unsigned int thread_count)
 {

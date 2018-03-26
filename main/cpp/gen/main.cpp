@@ -16,7 +16,6 @@
 using namespace std;
 using namespace stride::gen;
 using namespace stride::gen::files;
-using namespace stride::gen::popgen;
 using namespace stride::util;
 using namespace TCLAP;
 using boost::filesystem::path;
@@ -37,14 +36,12 @@ int main(int argc, char* argv[])
                 CmdLine cmd("generator", ' ', "1.0", false);
                 ValueArg<string> config_file_Arg("c", "config", "Config File", false, "peryite_generator.xml",
                                                  "CONFIGURATION FILE", cmd);
-                ValueArg<bool> generate_geo_Arg("g", "geo", "Generate the geogrid", false, false,
-                                                    "GENERATE GEOGRID", cmd);
-                ValueArg<bool> generate_pop_Arg("g", "pop", "Generate the population", false, false,
-                                                    "GENERATE POPULATION", cmd);
+                SwitchArg geo_switch("g","geo","Generate the geogrid", cmd, false);
+                SwitchArg pop_switch("p","pop","Generate the population", cmd, false);
                 cmd.parse(argc, static_cast<const char* const*>(argv));
                 string config_file_name = config_file_Arg.getValue();
-                bool generate_geo = generate_geo_Arg.getValue();
-                bool generate_pop = generate_pop_Arg.getValue();
+                bool generate_geo = geo_switch.getValue();
+                bool generate_pop = pop_switch.getValue();
                 // -----------------------------------------------------------------------------------------
                 // Check exec environment and configuration file
                 // -----------------------------------------------------------------------------------------
