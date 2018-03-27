@@ -1,22 +1,22 @@
 // Copyright (c) 2000-2014, Heiko Bauke
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions
 // are met:
-// 
+//
 //   * Redistributions of source code must retain the above copyright
-//     notice, this list of conditions and the following disclaimer.  
-// 
+//     notice, this list of conditions and the following disclaimer.
+//
 //   * Redistributions in binary form must reproduce the above
 //     copyright notice, this list of conditions and the following
 //     disclaimer in the documentation and/or other materials provided
-//     with the distribution.  
-// 
+//     with the distribution.
+//
 //   * Neither the name of the copyright holder nor the names of its
 //     contributors may be used to endorse or promote products derived
 //     from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
@@ -39,7 +39,7 @@
 // Richard A. Kronmal; Arthur V. Peterson, Jr.
 // On the Alias Method for Generating Random Variables from a Discrete Distribution
 // The American Statistician, Vol. 33, No. 4. (Nov., 1979), pp. 214-218.
-// 
+//
 // http://links.jstor.org/sici?sici=0003-1305%28197911%2933%3A4%3C214%3AOTAMFG%3E2.0.CO%3B2-1
 
 #include <trng/utility.hpp>
@@ -58,15 +58,16 @@ namespace trng {
   public:
     typedef int result_type;
     class param_type;
-    
+
     class param_type {
     private:
       typedef std::vector<double>::size_type size_type;
       std::vector<double> P, F;
       std::vector<int> L;
       size_type N;
-      
+
     public:
+      param_type();
       template<typename iter>
       param_type(iter first, iter last) :
 	P(first, last), F(P.size()), L(P.size()), N(P.size()) {
@@ -80,7 +81,7 @@ namespace trng {
       void update() {
 	double s=std::accumulate(P.begin(), P.end(), 0.0);
 	if (s>0.0) {
-	  for (int i=0; i<P.size(); ++i) 
+	  for (int i=0; i<P.size(); ++i)
 	    P[i]/=s;
 	  std::vector<int> G, S;
 	  G.reserve(N);
@@ -116,10 +117,10 @@ namespace trng {
       operator>>(std::basic_istream<char_t, traits_t> &,
 		 fast_discrete_dist::param_type &);
     };
-    
+
   private:
     param_type P;
-    
+
   public:
     // constructor
     template<typename iter>
@@ -148,11 +149,11 @@ namespace trng {
     int max() const { return P.N-1; }
     param_type param() const { return P; }
     void param(const param_type &P_new) { P=P_new; }
-    // probability density function  
+    // probability density function
     double pdf(int x) const {
       return (x<0 or x>=static_cast<int>(P.N)) ? 0.0 : P.P[x];
     }
-    // cumulative density function 
+    // cumulative density function
     double cdf(int x) const {
       if (x<0)
 	return 0.0;
@@ -161,19 +162,19 @@ namespace trng {
       return 1.0;
     }
   };
-  
+
   // -------------------------------------------------------------------
 
   // EqualityComparable concept
-  inline bool operator==(const fast_discrete_dist::param_type &p1, 
+  inline bool operator==(const fast_discrete_dist::param_type &p1,
 			 const fast_discrete_dist::param_type &p2) {
     return p1.P==p2.P;
   }
-  inline bool operator!=(const fast_discrete_dist::param_type &p1, 
+  inline bool operator!=(const fast_discrete_dist::param_type &p1,
 			 const fast_discrete_dist::param_type &p2) {
     return !(p1==p2);
   }
-  
+
   // Streamable concept
   template<typename char_t, typename traits_t>
   std::basic_ostream<char_t, traits_t> &
@@ -192,7 +193,7 @@ namespace trng {
     out.flags(flags);
     return out;
   }
-  
+
   template<typename char_t, typename traits_t>
   std::basic_istream<char_t, traits_t> &
   operator>>(std::basic_istream<char_t, traits_t> &in,
@@ -217,19 +218,19 @@ namespace trng {
     in.flags(flags);
     return in;
   }
-  
+
   // -------------------------------------------------------------------
 
   // EqualityComparable concept
-  inline bool operator==(const fast_discrete_dist &g1, 
+  inline bool operator==(const fast_discrete_dist &g1,
 			 const fast_discrete_dist &g2) {
     return g1.param()==g2.param();
   }
-  inline bool operator!=(const fast_discrete_dist &g1, 
+  inline bool operator!=(const fast_discrete_dist &g1,
 			 const fast_discrete_dist &g2) {
     return g1.param()!=g2.param();
   }
-  
+
   // Streamable concept
   template<typename char_t, typename traits_t>
   std::basic_ostream<char_t, traits_t> &
@@ -242,7 +243,7 @@ namespace trng {
     out.flags(flags);
     return out;
   }
-  
+
   template<typename char_t, typename traits_t>
   std::basic_istream<char_t, traits_t> &
   operator>>(std::basic_istream<char_t, traits_t> &in,
@@ -258,7 +259,7 @@ namespace trng {
     in.flags(flags);
     return in;
   }
-  
+
 }
 
 #endif

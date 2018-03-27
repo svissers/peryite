@@ -7,7 +7,7 @@
 	<!-- The amount of persons to generate -->
 	<population_size>100000</population_size>
 	<!-- The household reference set to sample from -->
-	<household_profile>households_flanders.csv</household_profile>
+	<household_profile>households_flanders2.csv</household_profile>
 	<geoprofile>
 		<cities>data/flanders_cities2.csv</cities>
 		<commuters>data/flanders_commuting.csv</commuters>
