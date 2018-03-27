@@ -83,6 +83,16 @@ public:
         /// Get the id.
         unsigned int GetId() const { return m_id; }
 
+        unsigned int GetHouseholdId() const { return m_household_id;}
+
+        unsigned int GetSchoolId() const { return m_school_id;}
+
+        unsigned int GetWorkId() const { return m_work_id;}
+
+        unsigned int GetPrimaryCommunityId() const { return m_primary_community_id;}
+
+        unsigned int GetSecondaryCommunityId() const { return m_secondary_community_id;}
+
         /// Check if a person is present today in a given contactpool
         bool IsInContactPool(const ContactPoolType::Id& c) const;
 

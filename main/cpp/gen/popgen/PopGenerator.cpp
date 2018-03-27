@@ -9,24 +9,38 @@
 
 namespace stride {
 namespace gen {
+namespace popgen {
 
 using namespace std;
+using namespace gen;
 
 void generate(files::GenDirectory& dir, unsigned int thread_count)
 {
     auto config = dir.getConfig();
-
+    // Build households
     auto households = buildHouseholds(config);
-
-    auto geoGridFile    = dir.getGeoGridFile();
-    auto grid           = geoGridFile->readGrid();
-
+    // Assign persons
+    auto geogrid_file   = dir.getGeoGridFile();
+    auto grid           = geogrid_file->readGrid();
     assignHouseholds(households, grid, config);
 
-    auto schoolsFile    = dir.getSchoolFile();
-    auto schools     = schoolsFile->read();
-
+    auto school_file    = dir.getSchoolFile();
+    auto schools        = school_file->read();
     assignSchools(schools, households, config);
+
+    auto university_file = dir.getUniversityFile();
+    auto universities    = university_file->read();
+    unsigned int total_commuting_students = assignUniversities(universities, households, config);
+
+    auto workplace_file = dir.getWorkplaceFile();
+    auto workplaces     = workplace_file->read();
+    assignWorkplaces(workplaces, households, config, grid, total_commuting_students);
+
+    auto community_file = dir.getCommunityFile();
+    auto communities    = community_file->read();
+    assignCommunities(communities, households, config);
+    // Write persons
+    writePopulation(households, config);
 }
 
 vector<shared_ptr<Household>> buildHouseholds(const GenConfiguration& config)
@@ -101,6 +115,7 @@ void assignSchools(vector<vector<shared_ptr<GenStruct>>>& schools, const vector<
             for(unsigned int size = 0; size < school_size; size += school_cp_size) {
                 auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Household, ContactProfiles());
                 school->pools.push_back(pool);
+                cp_id++;
             }
         }
     }
@@ -186,7 +201,7 @@ void assignSchools(vector<vector<shared_ptr<GenStruct>>>& schools, const vector<
     }
 }
 
-unsigned int assignUniversity(vector<vector<shared_ptr<GenStruct>>>& universities, const vector<shared_ptr<Household>>& households, const GenConfiguration& config)
+unsigned int assignUniversities(vector<vector<shared_ptr<GenStruct>>>& universities, const vector<shared_ptr<Household>>& households, const GenConfiguration& config)
 {
     // -------------
     // Contactpools
@@ -202,6 +217,7 @@ unsigned int assignUniversity(vector<vector<shared_ptr<GenStruct>>>& universitie
             for(unsigned int size = 0; size < university_size; size += university_cp_size) {
                 auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::School, ContactProfiles());
                 university->pools.push_back(pool);
+                cp_id++;
             }
             // Get the different university locations (urban_id = row_index in commuting data).
             if (cities.find(university->urban_id) == cities.end() ) {
@@ -231,7 +247,7 @@ unsigned int assignUniversity(vector<vector<shared_ptr<GenStruct>>>& universitie
     // Commuting distributions
     util::CSV commuting_data(config.getTree().get<string>("geoprofile.commuters"));
     map<unsigned int, std::function<int()>> city_generators;
-    vector<unsigned int>                    commute_towards(cities.size(), 0);
+    vector<unsigned int>                    commute_towards;
     unsigned int                            commute_towards_total = 0;
     if (commuting_data.size() > 1) {
         for (auto const& city : cities) {
@@ -259,7 +275,7 @@ unsigned int assignUniversity(vector<vector<shared_ptr<GenStruct>>>& universitie
     vector<double> city_fractions;
     for (auto const& commute_towards_city : commute_towards)
         city_fractions.push_back(commute_towards_city / commute_towards_total);
-    std::function<int()> city_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(city_fractions.begin(), city_fractions.end()));
+    auto city_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(city_fractions.begin(), city_fractions.end()));
 
     // --------------------------------
     // Assign students to universities.
@@ -274,21 +290,25 @@ unsigned int assignUniversity(vector<vector<shared_ptr<GenStruct>>>& universitie
                     /// Commuting student
                     total_commuting_students++;
                     unsigned int city_index = city_gen();
-                    auto city       = *std::next(cities.begin(), city_index);
+                    auto it = cities.begin();
+                    std::advance(it, city_index);
+                    auto city       = *it;
                     auto university = city.second[city_generators[city.first]()];
-                    pool       = university->pools[cp_gen()];
+                    pool            = university->pools[cp_gen()];
                 } else {
                     /// Non-commuting student
                     auto home_coord = household->coordinate;
                     // TODO : Find the bands within 10 km of home
                     // Keep doubling until found
                     std::vector<shared_ptr<University>> closest_universities;
+                    if (closest_universities.size() == 0)
+                        continue;
                     // Create a uniform distribution to select a university
                     auto rn_manager = config.getRNManager();
-                    std::function<int()> uni_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_universities.size()));
-                    auto university = closest_universities.at(uni_gen());
+                    auto uni_gen    = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_universities.size()));
+                    auto university = closest_universities[uni_gen()];
                     // Create a uniform distribution to select a contactpool in the selected university
-                    std::function<int()> cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(university->pools.size()));
+                    auto cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(university->pools.size()));
                     pool = university->pools.at(cp_generator());
                 }
                 person->setSchoolId(pool->GetId());
@@ -299,19 +319,20 @@ unsigned int assignUniversity(vector<vector<shared_ptr<GenStruct>>>& universitie
     return total_commuting_students;
 }
 
-void assignWorkplace
+void assignWorkplaces
 (vector<vector<shared_ptr<GenStruct>>>& workplaces, const vector<shared_ptr<Household>>& households,
- const GenConfiguration& config, unsigned int total_commuting_students)
+ const GenConfiguration& config, const GeoGrid& grid, unsigned int total_commuting_students)
 {
     // -------------
     // Contactpools
     // -------------
-    unsigned int cp_id                      = 0;
+    unsigned int cp_id = 0;
     for (auto& band : workplaces) {
         for (auto& g_struct : band) {
             auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
             auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Work, ContactProfiles());
             workplace->pool = pool;
+            cp_id++;
         }
     }
     // -------------
@@ -336,24 +357,23 @@ void assignWorkplace
 
     util::CSV commuting_data = util::CSV(config.getTree().get<string>("geoprofile.commuters"));
     size_t column_count = commuting_data.getColumnCount();
-    vector<int> relative_commute (column_count, 0);
-    vector<unsigned int> total_commute (column_count, 0);
+    vector<int> relative_commute(column_count, 0);
+    vector<unsigned int> total_commute(column_count, 0);
     if (commuting_data.size() > 1) {
         // Access each element in the matrix
         for (size_t row_index = 0; row_index < commuting_data.size(); row_index++) {
             for (size_t col_index = 0; col_index < column_count; col_index++) {
                 // Ignore commuting towards itself
-                if (row_index == col_index) {
+                if (row_index == col_index)
                     continue;
-                    util::CSVRow row = *(commuting_data.begin() + row_index);
-                    auto commute_count = row.getValue<unsigned int>(col_index);
-                    // Remove commuting students
-                    commute_count -= (commuting_student_active_ratio * commute_count);
-                    // TODO: ask
-                    relative_commute[col_index] -= commute_count;
-                    relative_commute[row_index] += commute_count;
-                    total_commute[col_index] += commute_count;
-                }
+                util::CSVRow row = *(commuting_data.begin()+row_index);
+                auto commute_count = row.getValue<unsigned int>(col_index);
+                // Remove commuting students
+                commute_count -= (commuting_student_active_ratio * commute_count);
+                // TODO: ask
+                relative_commute[col_index] -= commute_count;
+                relative_commute[row_index] += commute_count;
+                total_commute[col_index] += commute_count;
             }
         }
     }
@@ -387,17 +407,33 @@ void assignWorkplace
                 shared_ptr<ContactPool> pool;
                 if (commute_gen() == 0) {
                     // Commuting
-                   // auto center = grid->at(city_gen());
-
-
+                    auto destination = grid[city_gen()];
+                    auto dest_coord = destination->coordinate;
+                    vector<shared_ptr<WorkPlace>> dest_workplaces;
+                    for (auto& band : workplaces) {
+                        for (auto& g_struct : band) {
+                            auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
+                            if (workplace->coordinate == dest_coord) {
+                                dest_workplaces.push_back(workplace);
+                            }
+                        }
+                    }
+                    // TODO: ask
+                    if (dest_workplaces.size() == 0)
+                        continue;
+                    // Create a uniform distribution to select a workplace
+                    auto wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(dest_workplaces.size()));
+                    auto workplace = dest_workplaces[wp_generator()];
+                    pool = workplace->pool;
                 } else {
                     // Non-commuting
                     auto home_coord = household->coordinate;
                     // TODO : Find the bands within 10 km of home
                     // Keep doubling until found
                     std::vector<shared_ptr<WorkPlace>> closest_workplaces;
+                    if (closest_workplaces.size() == 0)
+                        continue;
                     // Create a uniform distribution to select a workplace
-                    auto rn_manager = config.getRNManager();
                     std::function<int()> wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_workplaces.size()));
                     auto workplace = closest_workplaces.at(wp_generator());
                     pool = workplace->pool;
@@ -409,5 +445,88 @@ void assignWorkplace
     }
 }
 
+void assignCommunities
+(vector<vector<shared_ptr<GenStruct>>> communities, const vector<shared_ptr<Household>>& households, const GenConfiguration& config)
+{
+    // -------------
+    // Contactpools
+    // -------------
+    const unsigned int community_size      = 500;
+    const unsigned int community_cp_size   = 20;
+    // Create the contactpools for every community
+    unsigned int cp_id = 0;
+    for (auto& band : communities) {
+        for (auto& g_struct : band) {
+            auto community  = std::static_pointer_cast<Community>(g_struct);
+            for(unsigned int size = 0; size < community_size; size += community_cp_size) {
+                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::PrimaryCommunity, ContactProfiles());
+                community->pools.push_back(pool);
+            }
+        }
+    }
+    // ------------------------------
+    // Assign persons to communities
+    // ------------------------------
+    for (auto household : households) {
+        for (auto person : household->persons) {
+            auto home_coord = household->coordinate;
+            // TODO: Find the bands within 10 km of home
+            // Keep doubling until found
+
+            std::vector<shared_ptr<Community>> closest_communities;
+            if (closest_communities.size() == 0)
+                continue;
+            // Create a uniform distribution to select a community
+            auto rn_manager             = config.getRNManager();
+            auto community_generator    = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_communities.size()));
+            auto community_index        = community_generator();
+            auto community              = closest_communities.at(community_index);
+            // Create a uniform distribution to select a contactpool in the selected community
+            auto cp_generator           = rn_manager->GetGenerator(trng::fast_discrete_dist(community->pools.size()));
+            auto cp_index               = cp_generator();
+            auto pool                   = community->pools[cp_index];
+            person->setPrimaryCommunityId(pool->GetId());
+            pool->AddMember(person.get());
+            // Remove the pool from the list once it's full
+            if (pool->GetSize() >= community_cp_size) {
+                auto pools = community->pools;
+                pools.erase(pools.begin() + cp_index);
+                community->full_pools.push_back(pool);
+                if (community->pools.size() == 0) {
+                    communities.erase(communities.begin() + community_index);
+                }
+            }
+        }
+    }
+}
+
+void writePopulation(vector<shared_ptr<Household>> households, const GenConfiguration& config)
+{
+    string config_path = config.getPath();
+    boost::filesystem::path out_dir = "output/"+config_path.substr(0, config_path.find_last_of("."));
+    string file_path = out_dir.string()+"/pop.csv";
+    std::ofstream my_file{file_path};
+    if(my_file.is_open()) {
+        vector<string> labels = {"age", "household_id", "school_id", "work_id", "primary_community", "secondary_community", "risk_averseness"};
+        my_file << boost::algorithm::join(labels,",") << "\n";
+        for (auto household : households) {
+            for (auto person : household->persons) {
+                vector<string> values = {
+                    to_string(person->GetAge()),
+                    to_string(person->GetHouseholdId()),
+                    to_string(person->GetSchoolId()),
+                    to_string(person->GetWorkId()),
+                    to_string(person->GetPrimaryCommunityId()),
+                    to_string(person->GetSecondaryCommunityId()),
+                    to_string(0),
+                };
+                my_file << boost::algorithm::join(values,",") << "\n";
+            }
+        }
+        my_file.close();
+    }
+}
+
+} // namespace popgen
 } // namespace gen
 } // namespace stride

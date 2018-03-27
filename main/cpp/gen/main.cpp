@@ -5,7 +5,8 @@
 #include "../util/ConfigInfo.h"
 #include "../util/InstallDirs.h"
 #include "../util/TimeStamp.h"
-#include "gen/geogen/GeoGenerator.h"
+#include "geogen/GeoGenerator.h"
+#include "popgen/PopGenerator.h"
 #include "GenConfiguration.h"
 #include "files/GenDirectory.h"
 
@@ -35,12 +36,12 @@ int main(int argc, char* argv[])
                 CmdLine cmd("generator", ' ', "1.0", false);
                 ValueArg<string> config_file_Arg("c", "config", "Config File", false, "peryite_generator.xml",
                                                  "CONFIGURATION FILE", cmd);
-                ValueArg<string> generator_type_Arg("g", "generator", "Generator type (geo or pop)", false, "geo",
-                                                    "GENERATOR TYPE", cmd);
+                SwitchArg geo_switch("g","geo","Generate the geogrid", cmd, false);
+                SwitchArg pop_switch("p","pop","Generate the population", cmd, false);
                 cmd.parse(argc, static_cast<const char* const*>(argv));
                 string config_file_name = config_file_Arg.getValue();
-                string generator_type = generator_type_Arg.getValue();
-
+                bool generate_geo = geo_switch.getValue();
+                bool generate_pop = pop_switch.getValue();
                 // -----------------------------------------------------------------------------------------
                 // Check exec environment and configuration file
                 // -----------------------------------------------------------------------------------------
@@ -73,16 +74,15 @@ int main(int argc, char* argv[])
                 // -----------------------------------------------------------------------------------------
                 // Run Generator-Geo
                 // -----------------------------------------------------------------------------------------
-                if (generator_type == "geo") {
-                        stride::gen::GeoGenerator::generate(dir, num_threads);
+                if (generate_geo) {
+                    GeoGenerator::generate(dir, num_threads);
                 }
-
                 // -----------------------------------------------------------------------------------------
                 // Run Generator-Pop
                 // -----------------------------------------------------------------------------------------
-                if (generator_type == "pop") {
+                if (generate_pop) {
+                    popgen::generate(dir, num_threads);
                 }
-
                 // -----------------------------------------------------------------------------------------
                 // Finished
                 // -----------------------------------------------------------------------------------------
