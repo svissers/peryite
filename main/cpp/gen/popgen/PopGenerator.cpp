@@ -105,17 +105,73 @@ void assignSchools(vector<vector<shared_ptr<GenStruct>>>& schools, const vector<
         }
     }
 
+    //TODO fix hardcoded boundaries
+    double min_long = 2;
+    double max_long = 6;
+    double long_range = max_long - min_long;
+    double long_width = long_range/AMOUNTOFBANDS;
+
     // Assign young students to schools
     for (auto household : households) {
         for (auto person : household->persons) {
             auto age = person->GetAge();
             if (age >= 3 && age < 18) {
                 auto home_coord = household->coordinate;
-                // TODO
+                std::vector<shared_ptr<School>> closest_schools;
+
                 // Find the bands within 10 km of home
+                unsigned int band_range = 2;
+                unsigned int search_range = 10;
+
                 // Keep doubling until found
 
-                std::vector<shared_ptr<School>> closest_schools;
+                while(closest_schools.size() < 1){
+                    unsigned int band_of_interest;
+                    unsigned int last_non_empty_band;
+                    bool last_was_empty = false;
+                    for (unsigned int index = 0; index < schools.size(); index++) {
+                        if (schools[index].size() > 0) {
+                            if (schools[index][0]->coordinate.m_longitude > home_coord.m_longitude - (long_width / 2)) {
+                                if (!last_was_empty) {
+                                    band_of_interest = index;
+                                } else {
+                                    band_of_interest = index;
+                                    if (schools[index][0]->coordinate.m_longitude > home_coord.m_longitude + long_width) {
+                                        band_of_interest = last_non_empty_band;
+                                    }
+                                }
+                            }
+                            last_non_empty_band = index;
+                        } else {
+                            last_was_empty = true;
+                        }
+
+                    }
+                    unsigned int firstband = 0;
+                    unsigned int lastband = band_of_interest + band_range;
+                    if (band_of_interest > band_range) {
+                        firstband = band_of_interest - band_range;
+                    }
+                    if (lastband >= AMOUNTOFBANDS) {
+                        lastband = AMOUNTOFBANDS - 1;
+                    }
+
+                    //checking the latitude to find the schools in the radius
+                    for (unsigned int index = firstband; index <= lastband; index++) {
+                        for (auto school : schools[index]) {
+                            if (abs(school->coordinate.m_latitude - home_coord.m_latitude) * 111 <= search_range) {
+
+                                School school_to_push = School(school->id, school->coordinate);
+                                /*school_to_push.coordinate = school->coordinate;
+                                school_to_push.id = school->id;*/
+                                closest_schools.push_back(std::make_shared<School>(school_to_push));
+                            }
+                        }
+                    }
+                    search_range = search_range*2;
+                    band_range = band_range*2;
+                }
+
                 // Create a uniform distribution to select a school
                 auto rn_manager = config.getRNManager();
                 std::function<int()> school_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_schools.size()));
@@ -123,7 +179,7 @@ void assignSchools(vector<vector<shared_ptr<GenStruct>>>& schools, const vector<
                 // Create a uniform distribution to select a contactpool in the selected school
                 std::function<int()> cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(school->pools.size()));
                 auto pool = school->pools.at(cp_generator());
-                person.setSchoolId(pool.GetId());
+                person->setSchoolId(pool->GetId());
                 pool->AddMember(person.get());
             }
         }
@@ -235,7 +291,7 @@ unsigned int assignUniversity(vector<vector<shared_ptr<GenStruct>>>& universitie
                     std::function<int()> cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(university->pools.size()));
                     pool = university->pools.at(cp_generator());
                 }
-                person.setSchoolId(pool.GetId());
+                person->setSchoolId(pool->GetId());
                 pool->AddMember(person.get());
             }
         }
@@ -250,7 +306,8 @@ void assignWorkplace
     // -------------
     // Contactpools
     // -------------
-    for (auto& band : universities) {
+    unsigned int cp_id                      = 0;
+    for (auto& band : workplaces) {
         for (auto& g_struct : band) {
             auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
             auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Work, ContactProfiles());
@@ -288,14 +345,15 @@ void assignWorkplace
                 // Ignore commuting towards itself
                 if (row_index == col_index) {
                     continue;
-                util::CSVRow row = *(commuting_data.begin()+row_index);
-                auto commute_count = row.getValue<unsigned int>(col_index)
-                // Remove commuting students
-                commute_count -= (commuting_student_active_ratio * commute_count);
-                // TODO: ask
-                relative_commute[col_index] -= commute_count;
-                relative_commute[row_index] += commute_count;
-                total_commute[col_index] += commute_count;
+                    util::CSVRow row = *(commuting_data.begin() + row_index);
+                    auto commute_count = row.getValue<unsigned int>(col_index);
+                    // Remove commuting students
+                    commute_count -= (commuting_student_active_ratio * commute_count);
+                    // TODO: ask
+                    relative_commute[col_index] -= commute_count;
+                    relative_commute[row_index] += commute_count;
+                    total_commute[col_index] += commute_count;
+                }
             }
         }
     }
@@ -329,7 +387,7 @@ void assignWorkplace
                 shared_ptr<ContactPool> pool;
                 if (commute_gen() == 0) {
                     // Commuting
-                    auto center = grid->at(city_gen());
+                   // auto center = grid->at(city_gen());
 
 
                 } else {
@@ -344,7 +402,7 @@ void assignWorkplace
                     auto workplace = closest_workplaces.at(wp_generator());
                     pool = workplace->pool;
                 }
-                person.setWorkId(pool.GetId());
+                person->setWorkId(pool->GetId());
                 pool->AddMember(person.get());
             }
         }
