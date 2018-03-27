@@ -181,6 +181,9 @@ void assignSchools(vector<vector<shared_ptr<GenStruct>>>& schools, const vector<
                                 school_to_push.id = school->id;*/
                                 closest_schools.push_back(std::make_shared<School>(school_to_push));
                             }
+                            if ((school->coordinate.m_latitude - home_coord.m_latitude) * 111 > search_range) {
+                                continue;
+                            }
                         }
                     }
                     search_range = search_range*2;
