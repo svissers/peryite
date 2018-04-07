@@ -430,19 +430,95 @@ void assignWorkplaces
                     pool = workplace->pool;
                 } else {
                     // Non-commuting
-                    auto home_coord = household->coordinate;
-                    // TODO : Find the bands within 10 km of home
-                    // Keep doubling until found
-                    std::vector<shared_ptr<WorkPlace>> closest_workplaces;
-                    if (closest_workplaces.size() == 0)
-                        continue;
-                    // Create a uniform distribution to select a workplace
-                    std::function<int()> wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_workplaces.size()));
-                    auto workplace = closest_workplaces.at(wp_generator());
-                    pool = workplace->pool;
-                }
-                person->setWorkId(pool->GetId());
-                pool->AddMember(person.get());
+
+                    //TODO fix hardcoded boundaries
+                    double min_long = 2;
+                    double max_long = 6;
+                    double long_range = max_long - min_long;
+                    double long_width = long_range/AMOUNTOFBANDS;
+
+                    // Assign young students to schools
+                    for (auto household : households) {
+                        for (auto person : household->persons) {
+                            auto age = person->GetAge();
+                            if (age >= 3 && age < 18) {
+                                auto home_coord = household->coordinate;
+                                std::vector<shared_ptr<WorkPlace>> closest_workplaces;
+
+                                // Find the bands within 10 km of home
+                                unsigned int band_range = 2;
+                                unsigned int search_range = 10;
+
+                                // Keep doubling until found
+
+                                while (closest_workplaces.size() < 1) {
+                                    unsigned int band_of_interest;
+                                    unsigned int last_non_empty_band;
+                                    bool last_was_empty = false;
+                                    for (unsigned int index = 0; index < workplaces.size(); index++) {
+                                        if (workplaces[index].size() > 0) {
+                                            if (workplaces[index][0]->coordinate.m_longitude >
+                                                home_coord.m_longitude - (long_width / 2)) {
+                                                if (!last_was_empty) {
+                                                    band_of_interest = index;
+                                                } else {
+                                                    band_of_interest = index;
+                                                    if (workplaces[index][0]->coordinate.m_longitude >
+                                                        home_coord.m_longitude + long_width) {
+                                                        band_of_interest = last_non_empty_band;
+                                                    }
+                                                }
+                                            }
+                                            last_non_empty_band = index;
+                                        } else {
+                                            last_was_empty = true;
+                                        }
+
+                                    }
+                                    unsigned int firstband = 0;
+                                    unsigned int lastband = band_of_interest + band_range;
+                                    if (band_of_interest > band_range) {
+                                        firstband = band_of_interest - band_range;
+                                    }
+                                    if (lastband >= AMOUNTOFBANDS) {
+                                        lastband = AMOUNTOFBANDS - 1;
+                                    }
+
+                                    //checking the latitude to find the schools in the radius
+                                    for (unsigned int index = firstband; index <= lastband; index++) {
+                                        for (auto workPlace : workplaces[index]) {
+                                            if (abs(workPlace->coordinate.m_latitude - home_coord.m_latitude) * 111 <=
+                                                search_range) {
+
+                                                WorkPlace workplace_to_push = WorkPlace(workPlace->id, workPlace->coordinate);
+                                                /*school_to_push.coordinate = school->coordinate;
+                                                school_to_push.id = school->id;*/
+                                                closest_workplaces.push_back(
+                                                        std::make_shared<WorkPlace>(workplace_to_push));
+                                            }
+                                            if ((workPlace->coordinate.m_latitude - home_coord.m_latitude) * 111 >
+                                                search_range) {
+                                                continue;
+                                            }
+                                        }
+                                    }
+                                    search_range = search_range * 2;
+                                    band_range = band_range * 2;
+                                }
+                                if (closest_workplaces.size() == 0)
+                                    continue;
+                                // Create a uniform distribution to select a workplace
+                                std::function<int()> wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_workplaces.size()));
+                                auto workplace = closest_workplaces.at(wp_generator());
+                                pool = workplace->pool;
+                            }
+                            person->setWorkId(pool->GetId());
+                            pool->AddMember(person.get());
+                            }
+                        }
+                    }
+
+
             }
         }
     }
