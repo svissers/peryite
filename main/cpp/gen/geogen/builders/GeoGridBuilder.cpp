@@ -16,6 +16,7 @@ GeoGrid GeoGridBuilder::build(const GenConfiguration& config)
         util::CSV cities_data = util::CSV(config.getTree().get<string>("geoprofile.cities"));
         double max_long = 0;
         double min_long = 90;
+        // TODO: Loop to get total, then relative
         for (util::CSVRow const & row : cities_data) {
             auto longitude  = row.getValue<double>("longitude");
             auto latitude   = row.getValue<double>("latitude");
