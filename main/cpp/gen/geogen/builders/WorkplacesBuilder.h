@@ -1,7 +1,7 @@
 #pragma once
-#include "../structs/Workplace.h"
-#include "../GeoGrid.h"
-#include "../GeoConfiguration.h"
+#include "../../structs/Workplace.h"
+#include "../../GeoGrid.h"
+#include "../../GenConfiguration.h"
 #include <vector>
 
 namespace stride {
@@ -17,7 +17,7 @@ public:
         /// values.
         /// @param config       TODO
         /// @param grid         TODO
-        static std::shared_ptr<std::vector<WorkPlace>> build(GeoConfiguration& config, std::shared_ptr<GeoGrid> grid);
+        static std::vector<std::shared_ptr<WorkPlace>> build(GenConfiguration& config, GeoGrid& grid);
 };
 
 } // namespace gen

@@ -1,8 +1,8 @@
 #############################################################################
-#  This file is part of the Stride software. 
+#  This file is part of the Stride software.
 #  It is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by 
-#  the Free Software Foundation, either version 3 of the License, or any 
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or any
 #  later version.
 #  The software is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -49,22 +49,19 @@ endif()
 #============================================================================
 # Stride specific variables:
 #============================================================================
-set(STRIDE_INCLUDE_DOC	FALSE 
+set(STRIDE_INCLUDE_DOC	FALSE
 	CACHE BOOL "Exclude doc directory from build and install.")
-set(STRIDE_FORCE_NO_OPENMP	FALSE 
+set(STRIDE_FORCE_NO_OPENMP	FALSE
 	CACHE BOOL "Do NOT use OpenMP even if available.")
-set(STRIDE_FORCE_NO_HDF5	FALSE  
+set(STRIDE_FORCE_NO_PYHTHON FALSE
+	CACHE BOOL "Force CMake to act as if Python or SWIG had not been found.")
+set(STRIDE_FORCE_NO_HDF5	FALSE
 	CACHE BOOL "Force CMake to act as if HDF5 had not been found.")
-set(STRIDE_VERBOSE_TESTING  TRUE
-	CACHE BOOL "Run tests in verbose mode.")
 
 #============================================================================
 # Additional CMake modules:
 #============================================================================
 list( APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/resources/cmake/" )
-if (CMAKE_VERSION VERSION_GREATER 3.5.0 AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-	list( APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/resources/cmake_extra/" )
-endif()
 
 #============================================================================
 # Distinguish Linux from Aplle in UNIX family.
