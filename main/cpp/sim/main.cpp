@@ -20,10 +20,12 @@
 
 #include "sim/CliController.h"
 #include "util/StringUtils.h"
+#include "ui/mainwindow.h"
 
 #include <tclap/CmdLine.h>
 #include <string>
 #include <vector>
+#include <QApplication>
 
 using namespace std;
 using namespace stride;
@@ -49,6 +51,7 @@ int main(int argc, char** argv)
                 SwitchArg working_dir_Arg("w", "working_dir", "Use working dir to find files i.o install dirs.", cmd,
                                           false);
                 SwitchArg silent_mode_Arg("s", "silent", "silent mode", cmd, false);
+                SwitchArg interface_mode_Arg("i", "interface", "Interface Mode", cmd, false);
 
                 cmd.parse(argc, static_cast<const char* const*>(argv));
 
@@ -65,12 +68,22 @@ int main(int argc, char** argv)
                 // -----------------------------------------------------------------------------------------
                 // Run the Stride simulator.
                 // -----------------------------------------------------------------------------------------
-                // We have been using use_installdirs for a while, so ..
-                const bool    use_install_dirs = !working_dir_Arg.getValue();
-                CliController cntrl(index_case_Arg.getValue(), config_file_Arg.getValue(), p_overrides,
-                                    silent_mode_Arg.getValue(), use_install_dirs);
-                cntrl.Setup();
-                cntrl.Go();
+                if (interface_mode_Arg.getValue()) {
+                    cerr << "Interface mode!" << endl;
+                    
+                    QApplication a(argc, argv);
+                    MainWindow w;
+                    w.show();
+
+                    return a.exec();
+                } else {
+                    // We have been using use_installdirs for a while, so ..
+                    const bool    use_install_dirs = !working_dir_Arg.getValue();
+                    CliController cntrl(index_case_Arg.getValue(), config_file_Arg.getValue(), p_overrides,
+                                        silent_mode_Arg.getValue(), use_install_dirs);
+                    cntrl.Setup();
+                    cntrl.Go();
+                }
         } catch (exception& e) {
                 exit_status = EXIT_FAILURE;
                 cerr << "\nEXCEPION THROWN: " << e.what() << endl;

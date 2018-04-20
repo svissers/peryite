@@ -28,6 +28,15 @@ include(CMakeLocal.cmake OPTIONAL)
 project(STRIDE)
 
 #============================================================================
+# Settings for Qt
+#============================================================================
+# Find includes in corresponding build directories
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+# Instruct CMake to run moc automatically when needed.
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_PREFIX_PATH "/opt/Qt/5.10.1/gcc_64")
+
+#============================================================================
 # INSTALL LOCATION for bin, doc etc.
 #============================================================================
 set(BIN_INSTALL_LOCATION     bin)
@@ -48,6 +57,12 @@ include(CMakeCPP.cmake)
 find_package(SWIG)
 find_package(PythonInterp 3)
 find_package(PythonLibs 3)
+
+#============================================================================
+# Configuration for Qt.
+#============================================================================
+find_package(Qt5 COMPONENTS Core Widgets Gui REQUIRED)
+include_directories(${Qt5Widgets_INCLUDE_DIRS})
 
 #============================================================================
 # Configuration for Git.

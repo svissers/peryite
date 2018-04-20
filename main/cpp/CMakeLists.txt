@@ -18,6 +18,7 @@
 #============================================================================
 # Sources.
 #============================================================================
+
 set(LIB_SRC
 #---
     calendar/Calendar.cpp
@@ -92,12 +93,29 @@ set(LIB_SRC
     util/RNEngineType.cpp
     util/RNManager.cpp
 #---
+    ui/geogendata.cpp
+    ui/geogenvisualization.cpp
+    ui/geogridlocation.cpp
+    ui/mainwindow.cpp
+    ui/peryiteuidata.cpp
+    ui/popgendata.cpp
+    ui/popgenvisualization.cpp
+    ui/testingwindow.cpp
+    ui/util.cpp
+    ui/visualizationcircle.cpp
+    ui/visualizationgraphbar.cpp
+#---
 	viewers/AdoptedViewer.cpp
 	viewers/CasesViewer.cpp
     viewers/CliViewer.cpp
     viewers/PersonsViewer.cpp
 	viewers/SummaryViewer.cpp
 )
+
+#============================================================================
+# Automatically generate ui header files for Qt
+#============================================================================
+SET(CMAKE_AUTOUIC ON)
 
 #============================================================================
 # Build the Stride library.
@@ -110,10 +128,11 @@ set_target_properties(libstride PROPERTIES PREFIX "")
 #============================================================================
 # Build and install the stride executable.
 #============================================================================
-add_executable(stride sim/main.cpp)
+add_executable(stride sim/main.cpp ${UIS_HDRS})
 target_include_directories(stride PUBLIC SYSTEM
-	${CMAKE_HOME_DIRECTORY}/main/resources/lib/tclap/include)
-target_link_libraries(stride ${LIBS} libstride)
+	${CMAKE_HOME_DIRECTORY}/main/resources/lib/tclap/include
+    /opt/Qt/5.10.1/gcc_64/include) # needed?
+target_link_libraries(stride ${LIBS} libstride Qt5::Core Qt5::Widgets) # needed?
 install(TARGETS stride  DESTINATION   ${BIN_INSTALL_LOCATION})
 
 #============================================================================
