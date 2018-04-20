@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "geogenvisualization.h"
 #include "popgenvisualization.h"
+#include "testingwindow.h"
 #include "util.h"
 #include <QFileDialog>
 #include <QMessageBox>
@@ -174,4 +175,10 @@ void MainWindow::on_Pop_visualizePopGen_clicked()
 
     // Reset the button text when we're done
     ui->Pop_visualizePopGen->setText("Visualize");
+}
+
+void MainWindow::on_openTestingWindow_clicked()
+{
+    TestingWindow *wdg = new TestingWindow;
+    wdg->show();
 }

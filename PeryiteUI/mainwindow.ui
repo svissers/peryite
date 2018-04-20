@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>241</height>
+    <width>1013</width>
+    <height>242</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -107,7 +107,7 @@ QGroupBox:title {
      <rect>
       <x>16</x>
       <y>12</y>
-      <width>968</width>
+      <width>981</width>
       <height>101</height>
      </rect>
     </property>
@@ -125,7 +125,7 @@ QGroupBox:title {
       <rect>
        <x>190</x>
        <y>64</y>
-       <width>761</width>
+       <width>771</width>
        <height>25</height>
       </rect>
      </property>
@@ -170,7 +170,7 @@ QGroupBox:title {
       <rect>
        <x>190</x>
        <y>32</y>
-       <width>761</width>
+       <width>771</width>
        <height>25</height>
       </rect>
      </property>
@@ -227,6 +227,38 @@ QGroupBox:title {
      </property>
      <property name="text">
       <string>Visualize</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="TestingGroup">
+    <property name="geometry">
+     <rect>
+      <x>682</x>
+      <y>128</y>
+      <width>316</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Testing</string>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <widget class="QPushButton" name="openTestingWindow">
+     <property name="geometry">
+      <rect>
+       <x>16</x>
+       <y>48</y>
+       <width>285</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Open Testing Window</string>
      </property>
     </widget>
    </widget>

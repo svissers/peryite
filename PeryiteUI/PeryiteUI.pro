@@ -34,7 +34,8 @@ SOURCES += \
     util.cpp \
     popgenvisualization.cpp \
     visualizationgraphbar.cpp \
-    popgendata.cpp
+    popgendata.cpp \
+    testingwindow.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -46,11 +47,13 @@ HEADERS += \
     util.h \
     popgenvisualization.h \
     visualizationgraphbar.h \
-    popgendata.h
+    popgendata.h \
+    testingwindow.h
 
 FORMS += \
         mainwindow.ui \
     geogenvisualization.ui \
-    popgenvisualization.ui
+    popgenvisualization.ui \
+    testingwindow.ui
 
 DISTFILES +=
