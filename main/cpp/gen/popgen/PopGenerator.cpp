@@ -2,7 +2,6 @@
 #include "../files/HouseholdFile.h"
 #include "../structs/School.h"
 #include "util/RNManager.h"
-#include "util/GeoCoordCalculator.h"
 #include "pop/Person.h"
 #include "trng/fast_discrete_dist.hpp"
 #include <map>
@@ -478,40 +477,6 @@ void writePopulation(vector<shared_ptr<Household>> households, const GenConfigur
         }
         my_file.close();
     }
-}
-
-std::vector<shared_ptr<GenStruct>> getClosestStructs(const GeoCoordinate& home_coord, const std::vector<shared_ptr<GenStruct>> structs, const GeoGrid& grid)
-{
-    std::vector<shared_ptr<School>> closest_structs;
-    auto calculator = GeoCoordCalculator.getInstance();
-    // The amount of bands doubles every iteration
-    const unsigned int band_range = 2;
-    // The default search range is 10 km
-    const unsigned int search_range = 10;
-    unsigned int band_of_hh = uint((home_coord.m_longitude - grid.m_min_long)/grid.m_longitude_band_width);
-    // Keep doubling search space until a struct is found
-    while(closest_structs.empty()){
-        // The first and last band define the search space
-        unsigned int firstband = 0;
-        unsigned int lastband = band_of_hh + band_range;
-        if (band_of_hh > band_range) {
-            firstband = band_of_hh - band_range;
-        }
-        if (lastband >= structs.size()) {
-            lastband = structs.size() - 1;
-        }
-        // Go over the search space
-        for (unsigned int index = firstband; index <= lastband; index++) {
-            for (auto gstruct : structs[index]) {
-                if (calculator.getDistance(gstruct->coordinate.m_latitude, home_coord.m_latitude) <= search_range) {
-                    closest_structs.push_back(gstruct);
-                }
-            }
-        }
-        search_range = search_range*2;
-        band_range = band_range*2;
-    }
-    return closest_structs;
 }
 
 } // namespace popgen

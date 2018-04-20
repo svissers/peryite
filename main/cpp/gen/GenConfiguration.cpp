@@ -34,10 +34,7 @@ GenConfiguration::GenConfiguration(string config_file_name, unsigned int thread_
     }
 
     checkValidConfig();
-    initRNG();
-}
 
-void GeoConfiguration::initRNG(){
     // Initialize the random number generator associated with the configuration
     const auto            rng_type = m_config.get<string>("rng.engine");
     const auto            rng_seed = m_config.get<unsigned long>("rng.seed");
@@ -67,3 +64,4 @@ void GenConfiguration::checkValidConfig() const
 
 } // namespace gen
 } // namespace stride
+

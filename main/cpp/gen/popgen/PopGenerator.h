@@ -31,8 +31,6 @@ void assignCommunities
 
 void writePopulation(std::vector<std::shared_ptr<Household>> households, const GenConfiguration& config);
 
-std::vector<shared_ptr<GenStruct>> getClosestStructs(const GeoCoordinate& home_coord, const std::vector<shared_ptr<GenStruct>> structs, const GeoGrid& grid);
-
 } // namespace popgen
 } // namespace gen
 } // namespace stride
