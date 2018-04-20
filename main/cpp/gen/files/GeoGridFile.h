@@ -52,13 +52,13 @@ public:
         util::CSV struct_data(file_path);
         for (util::CSVRow const & row : struct_data) {
             auto center = std::make_shared<UrbanCenter>(UrbanCenter(
-                row.getValue<unsigned int>("id"),
-                row.getValue<unsigned int>("population"),
-                row.getValue<std::string>("name"),
-                row.getValue<int>("province"),
+                row.GetValue<unsigned int>("id"),
+                row.GetValue<unsigned int>("population"),
+                row.GetValue<std::string>("name"),
+                row.GetValue<int>("province"),
                 util::GeoCoordinate(
-                    row.getValue<double>("latitude"),
-                    row.getValue<double>("longitude")
+                    row.GetValue<double>("latitude"),
+                    row.GetValue<double>("longitude")
                     )
                 )
             );

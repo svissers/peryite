@@ -1,5 +1,5 @@
 #include "GenFile.h"
-#include "geo/GeoCoordinate.h"
+#include "../structs/GeoCoordinate.h"
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string/join.hpp>
 
@@ -57,7 +57,7 @@ vector<vector<shared_ptr<GenStruct>>> GenFile::read()
     CSV struct_data(file_path);
     for (CSVRow const & row : struct_data) {
         auto g_struct = getStruct(row);
-        auto band = row.getValue<unsigned int>("band");
+        auto band = row.GetValue<unsigned int>("band");
         m_sorted_structs.at(band).push_back(g_struct);
     }
     return m_sorted_structs;

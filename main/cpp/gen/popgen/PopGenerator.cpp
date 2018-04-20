@@ -67,7 +67,7 @@ vector<shared_ptr<Household>> buildHouseholds(const GenConfiguration& config)
             for (unsigned int age : household_ref) {
                 auto person = make_shared<Person>(
                     current_p_id, age, current_hh_id,
-                    0, 0, 0, 0, 0, 0, 0, 0
+                    0, 0, 0, 0
                 );
                 hh_persons.push_back(person);
                 current_p_id++;
@@ -114,7 +114,7 @@ void assignSchools(vector<vector<shared_ptr<GenStruct>>>& schools, const vector<
         for (auto& g_struct : band) {
             auto school = std::static_pointer_cast<School>(g_struct);
             for(unsigned int size = 0; size < school_size; size += school_cp_size) {
-                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Household, ContactProfiles());
+                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Household);
                 school->pools.push_back(pool);
                 cp_id++;
             }
@@ -140,7 +140,7 @@ void assignSchools(vector<vector<shared_ptr<GenStruct>>>& schools, const vector<
                 // Create a uniform distribution to select a contactpool in the selected school
                 std::function<int()> cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(school->pools.size()));
                 auto pool = school->pools.at(cp_generator());
-                person->setSchoolId(pool->GetId());
+                person->setPoolId(ContactPoolType::Id::School, pool->GetId());
                 pool->AddMember(person.get());
             }
         }
@@ -161,7 +161,7 @@ unsigned int assignUniversities(vector<vector<shared_ptr<GenStruct>>>& universit
             auto university = std::static_pointer_cast<University>(g_struct);
             // Create the contactpools for every university
             for(unsigned int size = 0; size < university_size; size += university_cp_size) {
-                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::School, ContactProfiles());
+                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::School);
                 university->pools.push_back(pool);
                 cp_id++;
             }
@@ -200,11 +200,11 @@ unsigned int assignUniversities(vector<vector<shared_ptr<GenStruct>>>& universit
             // For every university city, calculate the fraction commuting towards it.
             auto row = *(commuting_data.begin() + city.first);
             unsigned int city_total = 0;
-            for (unsigned int col_index = 0; col_index < commuting_data.getColumnCount(); col_index++) {
+            for (unsigned int col_index = 0; col_index < commuting_data.GetColumnCount(); col_index++) {
                 // Ignore commuting towards itself
                 if (city.first == col_index)
                     continue;
-                auto commuting_towards      = row.getValue<unsigned int>(col_index);
+                auto commuting_towards      = row.GetValue<unsigned int>(col_index);
                 // Count the total number of people commuting towards this university city
                 city_total                  += commuting_towards;
                 // Count the total number of people commuting towards all university cities
@@ -257,7 +257,7 @@ unsigned int assignUniversities(vector<vector<shared_ptr<GenStruct>>>& universit
                     auto cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(university->pools.size()));
                     pool = university->pools.at(cp_generator());
                 }
-                person->setSchoolId(pool->GetId());
+                person->setPoolId(ContactPoolType::Id::School, pool->GetId());
                 pool->AddMember(person.get());
             }
         }
@@ -276,7 +276,7 @@ void assignWorkplaces
     for (auto& band : workplaces) {
         for (auto& g_struct : band) {
             auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
-            auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Work, ContactProfiles());
+            auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Work);
             workplace->pool = pool;
             cp_id++;
         }
@@ -302,7 +302,7 @@ void assignWorkplaces
     double commuting_student_active_ratio   = total_commuting_students / total_commuting_actives;
 
     util::CSV commuting_data = util::CSV(config.getTree().get<string>("geoprofile.commuters"));
-    size_t column_count = commuting_data.getColumnCount();
+    size_t column_count = commuting_data.GetColumnCount();
     vector<int> relative_commute(column_count, 0);
     vector<unsigned int> total_commute(column_count, 0);
     if (commuting_data.size() > 1) {
@@ -313,7 +313,7 @@ void assignWorkplaces
                 if (row_index == col_index)
                     continue;
                 util::CSVRow row = *(commuting_data.begin()+row_index);
-                auto commute_count = row.getValue<unsigned int>(col_index);
+                auto commute_count = row.GetValue<unsigned int>(col_index);
                 // Remove commuting students
                 commute_count -= (commuting_student_active_ratio * commute_count);
                 // TODO: ask
@@ -346,7 +346,7 @@ void assignWorkplaces
             if (age >= 18 && age < 65) {
                 if (work_gen() == 1) {
                     // The person is non active
-                    person->setWorkId(0);
+                    person->setPoolId(ContactPoolType::Id::Work, 0);
                     continue;
                 }
                 // The person is active
@@ -384,7 +384,7 @@ void assignWorkplaces
                     auto workplace = closest_workplaces.at(wp_generator());
                     pool = workplace->pool;
                 }
-                person->setWorkId(pool->GetId());
+                person->setPoolId(ContactPoolType::Id::Work, pool->GetId());
                 pool->AddMember(person.get());
             }
         }
@@ -405,7 +405,7 @@ void assignCommunities
         for (auto& g_struct : band) {
             auto community  = std::static_pointer_cast<Community>(g_struct);
             for(unsigned int size = 0; size < community_size; size += community_cp_size) {
-                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::PrimaryCommunity, ContactProfiles());
+                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::PrimaryCommunity);
                 community->pools.push_back(pool);
             }
         }
@@ -431,7 +431,7 @@ void assignCommunities
             auto cp_generator           = rn_manager->GetGenerator(trng::fast_discrete_dist(community->pools.size()));
             auto cp_index               = cp_generator();
             auto pool                   = community->pools[cp_index];
-            person->setPrimaryCommunityId(pool->GetId());
+            person->setPoolId(ContactPoolType::Id::PrimaryCommunity, pool->GetId());
             pool->AddMember(person.get());
             // Remove the pool from the list once it's full
             if (pool->GetSize() >= community_cp_size) {
@@ -459,11 +459,11 @@ void writePopulation(vector<shared_ptr<Household>> households, const GenConfigur
             for (auto person : household->persons) {
                 vector<string> values = {
                     to_string(person->GetAge()),
-                    to_string(person->GetHouseholdId()),
-                    to_string(person->GetSchoolId()),
-                    to_string(person->GetWorkId()),
-                    to_string(person->GetPrimaryCommunityId()),
-                    to_string(person->GetSecondaryCommunityId()),
+                    to_string(person->GetPoolId(ContactPoolType::Id::Household)),
+                    to_string(person->GetPoolId(ContactPoolType::Id::School)),
+                    to_string(person->GetPoolId(ContactPoolType::Id::Work)),
+                    to_string(person->GetPoolId(ContactPoolType::Id::PrimaryCommunity)),
+                    to_string(person->GetPoolId(ContactPoolType::Id::SecondaryCommunity)),
                     to_string(0),
                 };
                 my_file << boost::algorithm::join(values,",") << "\n";

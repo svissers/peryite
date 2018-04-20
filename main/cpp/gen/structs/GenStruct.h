@@ -1,5 +1,5 @@
 #pragma once
-#include "geo/GeoCoordinate.h"
+#include "GeoCoordinate.h"
 #include <memory>
 
 namespace stride {

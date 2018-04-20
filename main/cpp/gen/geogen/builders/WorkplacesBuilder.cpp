@@ -22,7 +22,7 @@ vector<shared_ptr<WorkPlace>> WorkplacesBuilder::build(GenConfiguration& config,
     // Calculate the relative active population for each center in the grid
     // Active population = population - commute_away + commute_towards
     util::CSV commuting_data = util::CSV(config.getTree().get<string>("geoprofile.commuters"));
-    size_t column_count = commuting_data.getColumnCount();
+    size_t column_count = commuting_data.GetColumnCount();
     vector<int> relative_commute (column_count, 0);
     vector<unsigned int> total_commute (column_count, 0);
     if (commuting_data.size() > 1) {
@@ -33,15 +33,15 @@ vector<shared_ptr<WorkPlace>> WorkplacesBuilder::build(GenConfiguration& config,
                 // When indexes are the same, commute is to the same center
                 if (row_index == col_index) {
                     // Commute towards
-                    relative_commute[row_index] += row.getValue<unsigned int>(col_index);
+                    relative_commute[row_index] += row.GetValue<unsigned int>(col_index);
                 }
                 else {
                     // Commute away
-                    relative_commute[col_index] -= row.getValue<unsigned int>(col_index);
+                    relative_commute[col_index] -= row.GetValue<unsigned int>(col_index);
                     // Commute towards
-                    relative_commute[row_index] += row.getValue<unsigned int>(col_index);
+                    relative_commute[row_index] += row.GetValue<unsigned int>(col_index);
                 }
-                total_commute[col_index] += stoi(row.getValue(col_index));
+                total_commute[col_index] += stoi(row.GetValue(col_index));
             }
         }
     }

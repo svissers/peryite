@@ -1,7 +1,7 @@
 #pragma once
 #include "GenStruct.h"
-#include "geo/GeoCoordinate.h"
-#include "core/ContactPool.h"
+#include "GeoCoordinate.h"
+#include "pool/ContactPool.h"
 
 namespace stride {
 namespace gen {

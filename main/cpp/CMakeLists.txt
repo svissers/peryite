@@ -12,55 +12,60 @@
 #  along with the software. If not, see <http://www.gnu.org/licenses/>.
 #  see http://www.gnu.org/licenses/.
 #
-#  Copyright 2017, Willem L, Kuylen E & Broeckhove J
+#  Copyright 2017, 2018 Willem L, Kuylen E & Broeckhove J
 #############################################################################
 
 #============================================================================
-# Sources.
+# Sources. Includes headers to enable code insight by CLion.
 #============================================================================
 set(LIB_SRC
 #---
+	behaviour/behaviour_policies/NoBehaviour.h
+	behaviour/behaviour_policies/Vaccination.h
+	behaviour/belief_policies/Belief.h
+	behaviour/belief_policies/HBM.h
+	behaviour/belief_policies/Imitation.h
+	behaviour/belief_policies/NoBelief.h
+	behaviour/belief_policies/Threshold.h
+	behaviour/information_policies/LocalDiscussion.h
+	behaviour/information_policies/NoGlobalInformation.h
+	behaviour/information_policies/NoLocalInformation.h
+#---
     calendar/Calendar.cpp
+    calendar/DaysOffAll.h
+    calendar/DaysOffInterface.h
+    calendar/DaysOffNone.h
+    calendar/DaysOffSchool.h
+    calendar/DaysOffStandard.h
 #---
-	core/ContactPool.cpp
-    core/ContactPoolType.cpp
-    core/ContactProfile.cpp
-    core/DiseaseProfile.cpp
-    core/Health.cpp
-    core/Infector.cpp
-    core/LogMode.cpp
+	contact/AgeContactProfile.cpp
+	contact/AgeContactProfiles.h
+	contact/ContactHandler.h
+	contact/ContactLogMode.cpp
+	contact/Infector.cpp
+    contact/TransmissionProfile.cpp
 #---
-	immunity/Immunizer.cpp
-	immunity/Vaccinator.cpp
+    disease/DiseaseSeeder.cpp
+	disease/Health.cpp
+    disease/HealthSeeder.cpp
+	disease/Immunizer.cpp
 #---
 	output/AdoptedFile.cpp
 	output/CasesFile.cpp
     output/PersonsFile.cpp
 	output/SummaryFile.cpp
 #---
+	pool/ContactPool.cpp
+	pool/ContactPoolSys.h
+	pool/ContactPoolType.cpp
+    pool/IdSubscriptArray.h
+#---
+    pop/Age.h
+    pop/PopPoolBuilder.cpp
     pop/Person.cpp
     pop/Population.cpp
     pop/PopulationBuilder.cpp
-#---
-	#popgen/AliasSampler.cpp
-	#popgen/FamilyParser.cpp
-    #popgen/utils.cpp
-	#popgen/geo/GeoCoordinate.cpp
-	#popgen/geo/GeoCoordCalculator.cpp
-#---
-	#popgen2/AliasMethod.cpp
-    #popgen2/Community.cpp
-    #popgen2/GeneratorPerson.cpp
-	#popgen2/GrahamScan.cpp
-    #popgen2/Household.cpp
-	#popgen2/main.cpp
-    #popgen2/RNG.cpp
-	#popgen2/Society.cpp
-	#popgen2/SocietyCSVWriter.cpp
-	#popgen2/SocietyGenerator.cpp
-	#popgen2/geo/City.cpp
-	#popgen2/geo/GeoGrid.cpp
-	#popgen2/geo/Geometry.cpp
+    pop/SurveySeeder.cpp
 #---
     gen/popgen/PopGenerator.cpp
     gen/GenConfiguration.cpp
@@ -70,30 +75,38 @@ set(LIB_SRC
     gen/geogen/builders/UniversitiesBuilder.cpp
     gen/geogen/builders/WorkplacesBuilder.cpp
     gen/geogen/builders/CommunitiesBuilder.cpp
+    gen/structs/GeoCoordinate.cpp
 	gen/files/GenFile.cpp
 	gen/files/GenDirectory.cpp
     gen/files/HouseholdFile.cpp
-#---
-	geo/GeoCoordinate.cpp
-	geo/GeoCoordCalculator.cpp
 #---
     sim/CliController.cpp
 	sim/SimRunner.cpp
 	sim/Simulator.cpp
 	sim/SimulatorBuilder.cpp
     sim/event/Id.cpp
+    sim/event/Payload.h
 	sim/event/Subject.cpp
 	sim/python/StrideRunner.cpp
 #---
+    util/Any.h
+    util/ConfigInfo.cpp
     util/CSV.cpp
 	util/CSVRow.cpp
-    util/FileUtils.cpp
     util/FileSys.cpp
-    util/InstallDirs.cpp
 	util/LogUtils.cpp
-	util/PtreeUtils.cpp
     util/RNEngineType.cpp
     util/RNManager.cpp
+    util/RunConfigManager.cpp
+    util/RunConfigString.cpp
+    util/InstallDirs.cpp
+    util/SegmentedVector.h
+    util/Stopwatch.h
+    util/StringUtils.h
+    util/Subject.h
+    util/SVIterator.h
+    util/TimeStamp.h
+    util/TimeToString.h
 #---
 	viewers/AdoptedViewer.cpp
 	viewers/CasesViewer.cpp
@@ -108,35 +121,18 @@ set(LIB_SRC
 add_library(libstride ${LIB_SRC})
 target_link_libraries(libstride ${LIBS})
 target_compile_options(libstride PUBLIC "-fPIC")
+target_compile_definitions(libstride PUBLIC "-DSTRIDE_GIT_HASH=${STRIDE_WC_REVISION_HASH}")
+include(ProcessorCount)
+ProcessorCount(PROCCOUNT)
+target_compile_definitions(libstride PUBLIC "-DPROCCOUNT=${PROCCOUNT}")
 set_target_properties(libstride PROPERTIES PREFIX "")
 
 #============================================================================
 # Build and install the stride executable.
 #============================================================================
 add_executable(stride sim/main.cpp)
-#include tclap
-target_include_directories(stride PUBLIC SYSTEM
-	${CMAKE_HOME_DIRECTORY}/main/resources/lib/tclap/include)
 target_link_libraries(stride ${LIBS} libstride)
 install(TARGETS stride  DESTINATION   ${BIN_INSTALL_LOCATION})
-
-#============================================================================
-# Build and install the stride executable.
-#============================================================================
-#add_executable(popgen popgen/main.cpp)
-#target_include_directories(popgen PUBLIC SYSTEM
-#	${CMAKE_HOME_DIRECTORY}/main/resources/lib/tclap/include)
-#target_link_libraries(popgen ${LIBS} libstride)
-#install(TARGETS popgen  DESTINATION   ${BIN_INSTALL_LOCATION})
-
-#============================================================================
-# Build and install the stride executable.
-#============================================================================
-#add_executable(popgen2 popgen2/main.cpp)
-#target_include_directories(popgen2 PUBLIC SYSTEM
-#	${CMAKE_HOME_DIRECTORY}/main/resources/lib/tclap/include)
-#target_link_libraries(popgen2 ${LIBS} libstride)
-#install(TARGETS popgen2  DESTINATION   ${BIN_INSTALL_LOCATION})
 
 #============================================================================
 # Build and install the geogen executable.

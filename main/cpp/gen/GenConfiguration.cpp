@@ -39,7 +39,7 @@ GenConfiguration::GenConfiguration(string config_file_name, unsigned int thread_
     const auto            rng_type = m_config.get<string>("rng.engine");
     const auto            rng_seed = m_config.get<unsigned long>("rng.seed");
     const util::RNManager::Info info{rng_type, rng_seed, "", m_thread_count};
-    m_rn_manager.Initialize(info);
+    m_rn_manager->Initialize(info);
 }
 
 boost::property_tree::ptree GenConfiguration::getTree() const
@@ -54,7 +54,7 @@ std::string GenConfiguration::getPath() const
 
 std::shared_ptr<util::RNManager> GenConfiguration::getRNManager() const
 {
-    return make_shared<util::RNManager>(m_rn_manager);
+    return m_rn_manager;
 }
 
 void GenConfiguration::checkValidConfig() const

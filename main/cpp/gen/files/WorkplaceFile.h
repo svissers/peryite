@@ -25,10 +25,10 @@ private:
     std::shared_ptr<GenStruct> getStruct(util::CSVRow const & row)
     {
         auto workplace = std::make_shared<WorkPlace>(WorkPlace(
-            row.getValue<unsigned int>("id"),
+            row.GetValue<unsigned int>("id"),
             util::GeoCoordinate(
-                row.getValue<double>("latitude"),
-                row.getValue<double>("longitude")
+                row.GetValue<double>("latitude"),
+                row.GetValue<double>("longitude")
                 )
             )
         );

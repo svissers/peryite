@@ -1,8 +1,8 @@
 #############################################################################
-#  This file is part of the Stride software. 
+#  This file is part of the Stride software.
 #  It is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by 
-#  the Free Software Foundation, either version 3 of the License, or any 
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or any
 #  later version.
 #  The software is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -29,13 +29,17 @@ if ( GIT_FOUND )
 endif()
 message( STATUS " " )
 message( STATUS "------> STRIDE_INCLUDE_DOC          : ${STRIDE_INCLUDE_DOC} "      )
-message( STATUS "------> STRIDE_VERBOSE_TESTING      : ${STRIDE_VERBOSE_TESTING} "  )
 message( STATUS "------> STRIDE_FORCE_NO_OPENMP      : ${STRIDE_FORCE_NO_OPENMP}"   )
+message( STATUS "------> STRIDE_FORCE_NO_PYTHON      : ${STRIDE_FORCE_NO_PYTHON}"   )
+message( STATUS "------> STRIDE_FORCE_NO_HDF5        : ${STRIDE_FORCE_NO_HDF5}"     )
 #
 message( STATUS " " )
 message( STATUS "------> CMAKE_SYSTEM                : ${CMAKE_SYSTEM} "           )
 message( STATUS "------> CMAKE_SYSTEM_VERSION        : ${CMAKE_SYSTEM_VERSION} "   )
 message( STATUS "------> CMAKE_SYSTEM_PROCESSOR      : ${CMAKE_SYSTEM_PROCESSOR} " )
+message( STATUS "------> PROCESSOR_COUNT             : ${PROCCOUNT} "              )
+#
+message( STATUS " " )
 message( STATUS "------> CMAKE_VERSION               : ${CMAKE_VERSION} "          )
 message( STATUS "------> CMAKE_PREFIX_PATH           : ${CMAKE_PREFIX_PATH} "      )
 message( STATUS "------> ENVIRONMENT PATH            : $ENV{PATH} "                )
@@ -70,26 +74,26 @@ if( NOT STRIDE_FORCE_NO_OPENMP )
 endif()
 #
 message( STATUS "" )
-if( STRIDE_FORCE_NO_HDF5 )
-	message( STATUS "------> STRIDE_FORCE_NO_HDF5        : ${STRIDE_FORCE_NO_HDF5}"    )
-else()
+if( NOT STRIDE_FORCE_NO_HDF5 )
 	message( STATUS "------> HDF5_FOUND                  : ${HDF5_FOUND} "             )
-	if( HDF5_FOUND ) 
+	if( HDF5_FOUND )
 		message( STATUS "------> HDF5_INCLUDE_DIRS           : ${HDF5_INCLUDE_DIRS} "  )
 		message( STATUS "------> HDF5_LIBRARIES              : ${HDF5_LIBRARIES} "     )
 	endif()
 endif()
 #
 message( STATUS "" )
-message( STATUS "------> SWIG_FOUND                   : ${SWIG_FOUND} "                )
-message( STATUS "------> SWIG_DIR                     : ${SWIG_DIR} "                  )
-message( STATUS "------> SWIG_VERSION                 : ${SWIG_VERSION} "              )
+if( NOT STRIDE_FORCE_NO_PYTHON )
+	message( STATUS "------> SWIG_FOUND                   : ${SWIG_FOUND} "                )
+	message( STATUS "------> SWIG_DIR                     : ${SWIG_DIR} "                  )
+	message( STATUS "------> SWIG_VERSION                 : ${SWIG_VERSION} "              )
 #
-message( STATUS "" )
-message( STATUS "------> PYTHONLIBS_FOUND             : ${PYTHONLIBS_FOUND} "          )
-message( STATUS "------> Python_INCLUDE_DIRS          : ${PYTHON_INCLUDE_DIRS} "       )
-message( STATUS "------> Python_LIBRARIES             : ${PYTHON_LIBRARIES} "          )
-message( STATUS "------> Python version               : ${PYTHONLIBS_VERSION_STRING} " )
+	message( STATUS "" )
+	message( STATUS "------> PYTHONLIBS_FOUND             : ${PYTHONLIBS_FOUND} "          )
+	message( STATUS "------> Python_INCLUDE_DIRS          : ${PYTHON_INCLUDE_DIRS} "       )
+	message( STATUS "------> Python_LIBRARIES             : ${PYTHON_LIBRARIES} "          )
+	message( STATUS "------> Python version               : ${PYTHONLIBS_VERSION_STRING} " )
+endif()
 #
 message( STATUS "" )
 if ( STRIDE_INCLUDE_DOC )

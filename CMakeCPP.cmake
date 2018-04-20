@@ -1,8 +1,8 @@
 #############################################################################
-#  This file is part of the Stride software. 
+#  This file is part of the Stride software.
 #  It is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by 
-#  the Free Software Foundation, either version 3 of the License, or any 
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or any
 #  later version.
 #  The software is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,8 +16,8 @@
 #############################################################################
 #
 #  This file contains the C++ compile & link configuration.
-#  It is meant to be included in the src/CMakeLists.txt and 
-#  to provide identical C++ configuration for the main/cpp 
+#  It is meant to be included in the src/CMakeLists.txt and
+#  to provide identical C++ configuration for the main/cpp
 #  and the test/ccp directories and subdirectories.
 #
 #############################################################################
@@ -32,7 +32,14 @@ endif()
 #----------------------------------------------------------------------------
 # Compile flags
 #----------------------------------------------------------------------------
-set(CMAKE_CXX_FLAGS         "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wno-unknown-pragmas ")
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+#
+include(ProcessorCount)
+ProcessorCount(PROCCOUNT)
+set(CMAKE_CXX_FLAGS         "${CMAKE_CXX_FLAGS} -DPROCCOUNT=${PROCCOUNT}")
+#
+set(CMAKE_CXX_FLAGS         "${CMAKE_CXX_FLAGS} -Wall -Wno-unknown-pragmas")
 set(CMAKE_CXX_FLAGS         "${CMAKE_CXX_FLAGS} -Wno-array-bounds")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Ofast" )
 set(CMAKE_CXX_FLAGS_DEBUG   "${CMAKE_CXX_FLAGS_DEBUG} -O0"   )
@@ -42,12 +49,17 @@ set(CMAKE_CXX_FLAGS_DEBUG   "${CMAKE_CXX_FLAGS_DEBUG} -O0"   )
 #----------------------------------------------------------------------------
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_HOST_APPLE)
 	add_definitions( -D__APPLE__ )
-	set(CMAKE_CXX_FLAGS           "${CMAKE_CXX_FLAGS} -Wno-unused-private-field -stdlib=libc++")
+	set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+	set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wno-unused-private-field")
+#
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND NOT CMAKE_HOST_APPLE )
-	set( CMAKE_CXX_FLAGS           "${CMAKE_CXX_FLAGS} -pthread -Wno-unused-private-field -Wno-unused-command-line-argument")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-command-line-argument -Wno-self-assign")
 	add_definitions(-D__extern_always_inline=inline)
+#
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-	set(CMAKE_CXX_FLAGS 	       "${CMAKE_CXX_FLAGS} -fPIC -Wno-maybe-uninitialized")
+	set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -fPIC")
+	set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wno-maybe-uninitialized")
 endif()
 #
 include_directories(${CMAKE_HOME_DIRECTORY}/main/cpp)
@@ -63,9 +75,20 @@ set(LIBS   ${LIBS}   m)
 include_directories(SYSTEM ${CMAKE_HOME_DIRECTORY}/main/resources/lib/spdlog/include)
 
 #----------------------------------------------------------------------------
+# TCLAP
+#----------------------------------------------------------------------------
+include_directories(SYSTEM ${CMAKE_HOME_DIRECTORY}/main/resources/lib/tclap/include)
+
+#----------------------------------------------------------------------------
+# SHA1 hash code.
+#----------------------------------------------------------------------------
+include_directories(SYSTEM ${CMAKE_HOME_DIRECTORY}/main/resources/lib/sha1/include)
+set(LIBS ${LIBS} sha1)
+
+#----------------------------------------------------------------------------
 # Tina's Random Number Generator (TRNG) library and paths
 #----------------------------------------------------------------------------
-include_directories(SYSTEM ${CMAKE_HOME_DIRECTORY}/main/resources/lib/trng-4.15/include)
+include_directories(SYSTEM ${CMAKE_HOME_DIRECTORY}/main/resources/lib/trng-4.20/include)
 set(LIBS ${LIBS} trng)
 
 #----------------------------------------------------------------------------
@@ -109,13 +132,13 @@ endif()
 if(NOT OPENMP_FOUND)
     include_directories(${CMAKE_HOME_DIRECTORY}/main/resources/lib/domp/include)
 endif()
- 
+
 #----------------------------------------------------------------------------
 # HDF5 Library
 # Try to find the C variant of libhdf5, if found, USE_HDF5 is defined
 # and passed to the compilers to allow compilation of selective features
 # through preprocessor commands like #ifdef USE_HDF5 and friends.
-# Additional defs are required on Ubuntu where lib are installed 
+# Additional defs are required on Ubuntu where lib are installed
 # with hdf5 v1.6 as default behavior.
 #----------------------------------------------------------------------------
 if(STRIDE_FORCE_NO_HDF5)
@@ -132,7 +155,7 @@ else()
 	else()
 		# This is done to eliminate blank output of undefined CMake variables.
 		set(HDF5_FOUND FALSE)
-	endif()    
+	endif()
 endif()
 
 #############################################################################
