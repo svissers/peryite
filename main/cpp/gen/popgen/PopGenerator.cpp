@@ -1,12 +1,9 @@
 #include "PopGenerator.h"
 #include "../files/HouseholdFile.h"
-#include "../structs/School.h"
-#include "util/RNManager.h"
 #include "util/GeoCoordCalculator.h"
-#include "pop/Person.h"
 #include "trng/fast_discrete_dist.hpp"
 #include <map>
-#include <math.h>
+
 
 namespace stride {
 namespace gen {
@@ -35,14 +32,17 @@ void generate(files::GenDirectory& dir, unsigned int thread_count)
 
     auto university_file = dir.getUniversityFile();
     auto universities    = university_file->read();
+    std::cout << "Assigning universities" << std::endl;
     unsigned int total_commuting_students = assignUniversities(universities, households, config, grid);
 
     auto workplace_file = dir.getWorkplaceFile();
     auto workplaces     = workplace_file->read();
+    std::cout << "Assigning workplaces" << std::endl;
     assignWorkplaces(workplaces, households, config, grid, total_commuting_students);
 
     auto community_file = dir.getCommunityFile();
     auto communities    = community_file->read();
+    std::cout << "Assigning communities" << std::endl;
     assignCommunities(communities, households, config, grid);
     // Write persons
     writePopulation(households, config);
@@ -418,6 +418,7 @@ void assignCommunities(
             for(unsigned int size = 0; size < community_size; size += community_cp_size) {
                 auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::PrimaryCommunity);
                 community->pools.push_back(pool);
+                cp_id++;
             }
         }
     }
@@ -426,6 +427,7 @@ void assignCommunities(
     // ------------------------------
     for (const auto& household : households) {
         for (const auto& person : household->persons) {
+
             auto home_coord = household->coordinate;
             std::vector<shared_ptr<GenStruct>> closest_communities = getClosestStructs(home_coord, communities, grid);
             if (closest_communities.empty()) {
@@ -441,6 +443,7 @@ void assignCommunities(
             auto cp_generator           = rn_manager->GetGenerator(trng::fast_discrete_dist(community->pools.size()));
             auto cp_index               = cp_generator();
             auto pool                   = community->pools[cp_index];
+
             person->setPoolId(ContactPoolType::Id::PrimaryCommunity, pool->GetId());
             pool->AddMember(person.get());
             // Remove the pool from the list once it's full
@@ -505,7 +508,7 @@ vector<shared_ptr<GenStruct>> getClosestStructs(const util::GeoCoordinate& home_
         }
         // Go over the search space
         for (unsigned int index = firstband; index <= lastband; index++) {
-            for (auto gstruct : structs[index]) {
+            for (const auto& gstruct : structs[index]) {
                 if (calculator.getDistance(gstruct->coordinate, home_coord) <= search_range) {
                     closest_structs.push_back(gstruct);
                 }
