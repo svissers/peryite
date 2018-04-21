@@ -116,6 +116,7 @@ set(LIB_SRC
     ui/peryiteuidata.cpp
     ui/popgendata.cpp
     ui/popgenvisualization.cpp
+	ui/testingscattergraph.cpp
     ui/testingwindow.cpp
     ui/util.cpp
     ui/visualizationcircle.cpp
@@ -149,7 +150,7 @@ set_target_properties(libstride PROPERTIES PREFIX "")
 # Build and install the stride executable.
 #============================================================================
 add_executable(stride sim/main.cpp ${UIS_HDRS})
-target_link_libraries(stride ${LIBS} libstride Qt5::Core Qt5::Widgets)
+target_link_libraries(stride ${LIBS} libstride Qt5::Core Qt5::Widgets Qt5::Charts)
 install(TARGETS stride  DESTINATION   ${BIN_INSTALL_LOCATION})
 
 #============================================================================

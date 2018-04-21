@@ -43,7 +43,7 @@ set(CMAKE_PREFIX_PATH "/opt/Qt/5.10.1/gcc_64")
 #============================================================================
 # Configuration for Qt.
 #============================================================================
-find_package(Qt5 COMPONENTS Core Widgets Gui REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Gui Charts REQUIRED)
 include_directories(${Qt5Widgets_INCLUDE_DIRS})
 
 

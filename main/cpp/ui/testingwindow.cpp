@@ -6,11 +6,14 @@
 #include "util/FileSys.h"
 #include "util/ConfigInfo.h"
 #include "util/LogUtils.h"
+#include "ui/testingscattergraph.h"
 
+#include <algorithm>
 #include <QMessageBox>
 #include <QDebug>
 #include <QProcess>
 #include <QCheckBox>
+#include <QtCharts/QScatterSeries>
 #include <boost/property_tree/xml_parser.hpp>
 
 using namespace std;
@@ -19,6 +22,7 @@ using namespace stride::util;
 using namespace boost::filesystem;
 using namespace boost::property_tree;
 using namespace boost::property_tree::xml_parser;
+using namespace QtCharts;
 
 TestingWindow::TestingWindow(QWidget *parent) :
     QWidget(parent),
@@ -57,17 +61,23 @@ void TestingWindow::on_startButton_clicked()
         return;
     }
 
-    // Process name and arguments
+    // Set parameters from our UI
     QString configFile = ui->configInput->text();
     int rngSeed = ui->seedInput->value();
     QString rngType = ui->engineInput->currentText();
     bool printResults = ui->printInput->isChecked();
-
     int runs = ui->runsInput->value();
 
+    // We save the results in a list first so we can sort them before adding them to our QScatterSeries object
+    QList<int> results;
+
+    // -----------------------------------------------------------------------------------------
+    // Start running tests
+    // -----------------------------------------------------------------------------------------
     if (printResults) {
         cout << "Starting Tests." << endl;
     }
+
 
     for (int i = 0; i < runs; i++) {
         // Get progress
@@ -114,16 +124,19 @@ void TestingWindow::on_startButton_clicked()
         runner->Setup(config_pt);
         runner->Run();
 
+        int result = runner->GetSim()->GetPopulation()->GetInfectedCount();
+        results << result;
+
         if (printResults) {
             cout << "Test Instance " << i + 1 << "/" << runs << " completed. " << endl;
-            cout << "Infected: " << runner->GetSim()->GetPopulation()->GetInfectedCount() << endl;
+            cout << "Infected: " << result << endl;
         }
 
         // -----------------------------------------------------------------------------------------
         // Done.
         // -----------------------------------------------------------------------------------------
         spdlog::drop_all();
-        running = false;s
+        running = false;
 
         // Respond to events so OS doesn't think the program is unresponsive
         QCoreApplication::processEvents();
@@ -134,4 +147,38 @@ void TestingWindow::on_startButton_clicked()
     }
 
     ui->startButton->setText("Start Tests");
+
+    // -----------------------------------------------------------------------------------------
+    // Create QScatterSeries for graph
+    // This is where the results will be saved
+    // -----------------------------------------------------------------------------------------
+    QScatterSeries *scatterSeries = new QScatterSeries();
+
+    // Sort our results list
+    sort(results.begin(), results.end());
+
+    // Constructing the name
+    // Add Config name
+    QString name = configFile.split(".").at(0);
+    // Mention random seed
+    name += (ui->varySeedInput->isChecked()) ? " (random seed)" : (" (seed: " + QString::number(rngSeed));
+    // Mention random seed
+    name += (ui->varyEngineInput->isChecked()) ? " (random rng engine)" : (" (rng engine: " + rngType);
+
+    // Set the series name, marker
+    scatterSeries->setName(name);
+    scatterSeries->setMarkerShape(QScatterSeries::MarkerShapeCircle);
+    scatterSeries->setMarkerSize(10);
+
+    // Add our items from the sorted list to the scatterseries
+    for (int i = 0; i < results.size(); i++) {
+        scatterSeries->append(i, results[i]);
+    }
+
+    // -----------------------------------------------------------------------------------------
+    // Create new window for graph
+    // -----------------------------------------------------------------------------------------
+    TestingScatterGraph *wdg = new TestingScatterGraph;
+    wdg->createGraph(scatterSeries);
+    wdg->show();
 }

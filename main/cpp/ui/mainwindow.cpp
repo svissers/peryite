@@ -170,7 +170,7 @@ void MainWindow::on_Pop_visualizePopGen_clicked()
 
     // Create new window and parse pop file
     PopGenVisualization *wdg = new PopGenVisualization;
-    wdg->parseData(data->popgenData); // TODO PUT POPGENDATA POINTER HERE
+    wdg->parseData(data->popgenData);
     wdg->show();
 
     // Reset the button text when we're done
