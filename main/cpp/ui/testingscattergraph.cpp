@@ -26,7 +26,7 @@ void TestingScatterGraph::createGraph(QScatterSeries *series) {
 
     // Create the view and add it to our container
     QChartView *chartView = new QChartView(chart, ui->GraphContainer);
-    chartView->resize(900, 500);
+    chartView->resize(1280, 720);
 
     // Styling
     chartView->setRenderHint(QPainter::Antialiasing);

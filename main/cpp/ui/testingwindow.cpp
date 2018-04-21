@@ -158,12 +158,16 @@ void TestingWindow::on_startButton_clicked()
     sort(results.begin(), results.end());
 
     // Constructing the name
+    QString name = "Total infected count, " + QString::number(runs) + " sorted runs";
     // Add Config name
-    QString name = configFile.split(".").at(0);
+    name += " (config: " + configFile + ")";
     // Mention random seed
     name += (ui->varySeedInput->isChecked()) ? " (random seed)" : (" (seed: " + QString::number(rngSeed));
     // Mention random seed
-    name += (ui->varyEngineInput->isChecked()) ? " (random rng engine)" : (" (rng engine: " + rngType);
+    name += (ui->varyEngineInput->isChecked()) ? " (random rng engine)" : (" (rng engine: " + rngType + ")");
+    // Mention spread percentage
+    float spreadPercentage = (float)(results.last() - results.first()) / results.last();
+    name += " - " + QString::number(spreadPercentage) + "\% spread";
 
     // Set the series name, marker
     scatterSeries->setName(name);
