@@ -166,7 +166,7 @@ void TestingWindow::on_startButton_clicked()
     // Mention random seed
     name += (ui->varyEngineInput->isChecked()) ? " (random rng engine)" : (" (rng engine: " + rngType + ")");
     // Mention spread percentage
-    float spreadPercentage = (float)(results.last() - results.first()) / results.last();
+    float spreadPercentage = 100 * (float)(results.last() - results.first()) / results.last();
     name += " - " + QString::number(spreadPercentage) + "\% spread";
 
     // Set the series name, marker
