@@ -2,7 +2,7 @@
 <Config>
 	<rng>
 		<engine>mrg2</engine>
-		<seed>1</seed>
+		<seed>25646</seed>
 	</rng>
 	<!-- The amount of persons to generate -->
 	<population_size>100000</population_size>

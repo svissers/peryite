@@ -34,7 +34,7 @@ private:
     /// The path leading to the configuration file
     std::string m_path;
     /// Manages the parallel generation of random numbers
-    util::RNManager m_rn_manager;
+    std::shared_ptr<util::RNManager> m_rn_manager;
     /// The amount of threads that will be used.
     unsigned int m_thread_count;
 

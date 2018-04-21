@@ -25,11 +25,11 @@ private:
     std::shared_ptr<GenStruct> getStruct(util::CSVRow const & row)
     {
         auto community = std::make_shared<Community>(Community(
-            row.getValue<unsigned int>("id"),
-            row.getValue<bool>("primary"),
+            row.GetValue<unsigned int>("id"),
+            row.GetValue<bool>("primary"),
             util::GeoCoordinate(
-                row.getValue<double>("latitude"),
-                row.getValue<double>("longitude")
+                row.GetValue<double>("latitude"),
+                row.GetValue<double>("longitude")
             )
         ));
         return community;

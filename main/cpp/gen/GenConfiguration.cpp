@@ -23,10 +23,12 @@ GenConfiguration::GenConfiguration(string config_file_name, unsigned int thread_
             throw runtime_error(std::string(__func__) + "> Data directory not present! Aborting.");
     }
     try {
+            std::cout << "Found data dir" << std::endl;
             ptree config;
             // Populate the configuration tree
             read_xml((util::InstallDirs::GetConfigDir() /= config_file_name).string(), config,
                      xml_parser::trim_whitespace | xml_parser::no_comments);
+            std::cout << "config tree populated" << std::endl;
             m_config = config.get_child("Config");
     } catch (xml_parser_error& e) {
             throw invalid_argument(string("Invalid file: ") +
@@ -36,10 +38,11 @@ GenConfiguration::GenConfiguration(string config_file_name, unsigned int thread_
     checkValidConfig();
 
     // Initialize the random number generator associated with the configuration
+    m_rn_manager = make_shared<util::RNManager>();
     const auto            rng_type = m_config.get<string>("rng.engine");
     const auto            rng_seed = m_config.get<unsigned long>("rng.seed");
     const util::RNManager::Info info{rng_type, rng_seed, "", m_thread_count};
-    m_rn_manager.Initialize(info);
+    m_rn_manager->Initialize(info);
 }
 
 boost::property_tree::ptree GenConfiguration::getTree() const
@@ -54,7 +57,7 @@ std::string GenConfiguration::getPath() const
 
 std::shared_ptr<util::RNManager> GenConfiguration::getRNManager() const
 {
-    return make_shared<util::RNManager>(m_rn_manager);
+    return m_rn_manager;
 }
 
 void GenConfiguration::checkValidConfig() const

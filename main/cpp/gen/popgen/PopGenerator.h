@@ -1,6 +1,7 @@
 #pragma once
 #include "../files/GenDirectory.h"
 #include "../structs/Household.h"
+#include "util/GeoCoordinate.h"
 
 namespace stride {
 namespace gen {
@@ -15,11 +16,11 @@ void assignHouseholds
 
 void assignSchools
 (std::vector<std::vector<std::shared_ptr<GenStruct>>>& schools, const std::vector<std::shared_ptr<Household>>& households,
- const GenConfiguration& config);
+ const GenConfiguration& config, const GeoGrid& grid);
 
 unsigned int assignUniversities
 (std::vector<std::vector<std::shared_ptr<GenStruct>>>& universities, const std::vector<std::shared_ptr<Household>>& households,
- const GenConfiguration& config);
+ const GenConfiguration& config, const GeoGrid& grid);
 
 void assignWorkplaces
 (std::vector<std::vector<std::shared_ptr<GenStruct>>>& workplaces, const std::vector<std::shared_ptr<Household>>& households,
@@ -27,9 +28,11 @@ void assignWorkplaces
 
 void assignCommunities
 (std::vector<std::vector<std::shared_ptr<GenStruct>>> communities, const std::vector<std::shared_ptr<Household>>& households,
- const GenConfiguration& config);
+ const GenConfiguration& config, const GeoGrid& grid);
 
 void writePopulation(std::vector<std::shared_ptr<Household>> households, const GenConfiguration& config);
+
+std::vector<std::shared_ptr<GenStruct>> getClosestStructs(const util::GeoCoordinate& home_coord, const std::vector<std::vector<std::shared_ptr<GenStruct>>>& structs, const GeoGrid& grid);
 
 } // namespace popgen
 } // namespace gen

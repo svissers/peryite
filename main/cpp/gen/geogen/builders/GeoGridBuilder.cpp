@@ -1,7 +1,7 @@
 #include "GeoGridBuilder.h"
 #include "../../structs/UrbanCenter.h"
 #include "util/CSV.h"
-#include "geo/GeoCoordinate.h"
+#include "util/GeoCoordinate.h"
 
 namespace stride {
 namespace gen {
@@ -16,14 +16,15 @@ GeoGrid GeoGridBuilder::build(const GenConfiguration& config)
         util::CSV cities_data = util::CSV(config.getTree().get<string>("geoprofile.cities"));
         double max_long = 0;
         double min_long = 90;
+        // TODO: Loop to get total, then relative
         for (util::CSVRow const & row : cities_data) {
-            auto longitude  = row.getValue<double>("longitude");
-            auto latitude   = row.getValue<double>("latitude");
+            auto longitude  = row.GetValue<double>("longitude");
+            auto latitude   = row.GetValue<double>("latitude");
             auto center = make_shared<UrbanCenter>(UrbanCenter(
-                row.getValue<unsigned int>("id"),
-                row.getValue<unsigned int>("population"),
-                row.getValue<string>("name"),
-                row.getValue<unsigned int>("province"),
+                row.GetValue<unsigned int>("id"),
+                row.GetValue<unsigned int>("population"),
+                row.GetValue<string>("name"),
+                row.GetValue<unsigned int>("province"),
                 util::GeoCoordinate(
                     latitude, longitude)
             ));

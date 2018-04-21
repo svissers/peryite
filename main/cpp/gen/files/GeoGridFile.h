@@ -48,20 +48,29 @@ public:
         if (m_grid.size() != 0)
             return m_grid;
         // Populate the geogrid and return it.
+        m_grid.m_min_long = 90;
+        m_grid.m_max_long = 0;
         std::string file_path = m_out_dir.string()+"/"+m_file_name;
         util::CSV struct_data(file_path);
         for (util::CSVRow const & row : struct_data) {
+            double longitude = row.GetValue<double>("longitude");
             auto center = std::make_shared<UrbanCenter>(UrbanCenter(
-                row.getValue<unsigned int>("id"),
-                row.getValue<unsigned int>("population"),
-                row.getValue<std::string>("name"),
-                row.getValue<int>("province"),
+                row.GetValue<unsigned int>("id"),
+                row.GetValue<unsigned int>("population"),
+                row.GetValue<std::string>("name"),
+                row.GetValue<int>("province"),
                 util::GeoCoordinate(
-                    row.getValue<double>("latitude"),
-                    row.getValue<double>("longitude")
+                    row.GetValue<double>("latitude"),
+                    longitude
                     )
                 )
             );
+            if(longitude > m_grid.m_max_long){
+                m_grid.m_max_long = longitude;
+            }
+            else if(longitude < m_grid.m_min_long){
+                m_grid.m_min_long = longitude;
+            }
             m_grid.push_back(center);
         }
         return m_grid;
