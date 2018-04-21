@@ -20,6 +20,7 @@ private slots:
 
 private:
     Ui::TestingWindow *ui;
+    bool running;
 };
 
 #endif // TESTINGWINDOW_H

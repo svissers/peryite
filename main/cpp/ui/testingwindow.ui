@@ -53,7 +53,7 @@ QGroupBox:title {
      <x>20</x>
      <y>20</y>
      <width>381</width>
-     <height>231</height>
+     <height>261</height>
     </rect>
    </property>
    <property name="title">
@@ -139,6 +139,25 @@ QGroupBox:title {
     </property>
     <property name="text">
      <string>Vary Engine?</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="printLabel">
+    <property name="geometry">
+     <rect>
+      <x>16</x>
+      <y>192</y>
+      <width>96</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="text">
+     <string>Log Output?</string>
     </property>
    </widget>
    <widget class="QSpinBox" name="runsInput">
@@ -266,11 +285,24 @@ QGroupBox:title {
      <string/>
     </property>
    </widget>
+   <widget class="QCheckBox" name="printInput">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>192</y>
+      <width>16</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
    <widget class="QPushButton" name="startButton">
     <property name="geometry">
      <rect>
       <x>16</x>
-      <y>192</y>
+      <y>224</y>
       <width>350</width>
       <height>25</height>
      </rect>

@@ -111,7 +111,7 @@ int main(int argc, char** argv)
                         cntrl.Setup();
                         cntrl.Control();
                 } else if (execArg.getValue() == "gui") {
-                        cerr << "Interface mode!" << endl;
+                        cout << "Launching Peryite UI." << endl;
 
                         QApplication a(argc, argv);
                         MainWindow w;
