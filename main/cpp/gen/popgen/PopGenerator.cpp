@@ -27,6 +27,7 @@ void generate(files::GenDirectory& dir, unsigned int thread_count)
 
     auto school_file    = dir.getSchoolFile();
     auto schools        = school_file->read();
+    std::cout << "Assigning schools" << std::endl;
     assignSchools(schools, households, config, grid);
 
     auto university_file = dir.getUniversityFile();
@@ -83,11 +84,11 @@ vector<shared_ptr<Household>> buildHouseholds(const GenConfiguration& config)
 void assignHouseholds (
     vector<shared_ptr<Household>>& households, const GeoGrid& grid, const GenConfiguration& config)
 {
-    unsigned int total_population = config.getTree().get<unsigned int>("population_size");
+    auto total_population = config.getTree().get<unsigned int>("population_size");
 
     // Create the discrete distribution to sample from.
     vector<double> fractions;
-    for(auto center : grid) {
+    for(const auto center : grid) {
         fractions.push_back(double(center->population) / double(total_population));
     }
     if (fractions.empty()) {
@@ -130,20 +131,21 @@ void assignSchools(
             auto age = person->GetAge();
             if (age >= 3 && age < 18) {
                 auto home_coord = household->coordinate;
-                // TODO
-                // Find the bands within 10 km of home
-                // Keep doubling until found
-
-                std::vector<shared_ptr<School>> closest_schools;
-                if (closest_schools.size() == 0)
+                // Find the closest schools
+                std::cout << "Finding closest schools" << std::endl;
+                std::vector<shared_ptr<GenStruct>> closest_schools = getClosestStructs(home_coord, schools, grid);
+                if (closest_schools.empty()) {
+                    std::cout << "School is empty: " << age << std::endl;
                     continue;
+                }
                 // Create a uniform distribution to select a school
                 auto rn_manager = config.getRNManager();
                 std::function<int()> school_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_schools.size()));
-                auto school = closest_schools.at(school_generator());
+                auto school = static_pointer_cast<School>(closest_schools.at(school_generator()));
                 // Create a uniform distribution to select a contactpool in the selected school
                 std::function<int()> cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(school->pools.size()));
                 auto pool = school->pools.at(cp_generator());
+                std::cout << "Found a pool: " << pool->GetId() << std::endl;
                 person->setPoolId(ContactPoolType::Id::School, pool->GetId());
                 pool->AddMember(person.get());
             }
@@ -186,8 +188,8 @@ unsigned int assignUniversities(
     auto rn_manager = config.getRNManager();
 
     // Create two distributions, one to select if the person is a student and one to select if the student commutes.
-    double student_fraction     = config.getTree().get<double>("university.student_fraction");
-    double commute_fraction     = config.getTree().get<double>("university.commute_fraction");
+    auto student_fraction       = config.getTree().get<double>("university.student_fraction");
+    auto commute_fraction       = config.getTree().get<double>("university.commute_fraction");
     auto student_fractions      = vector<double>{student_fraction, 1.0 - student_fraction};
     auto commute_fractions      = vector<double>{commute_fraction, 1.0 - commute_fraction};
     auto student_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(student_fractions.begin(), student_fractions.end()));
@@ -233,8 +235,8 @@ unsigned int assignUniversities(
     // Assign students to universities.
     // --------------------------------
     unsigned int total_commuting_students = 0;
-    for (auto household : households) {
-        for (auto person : household->persons) {
+    for (const auto household : households) {
+        for (const auto person : household->persons) {
             auto age = person->GetAge();
             if (age >= 18 && age < 26 && student_gen() == 0) {
                 shared_ptr<ContactPool> pool;
@@ -292,10 +294,10 @@ void assignWorkplaces(
     // -------------
     auto rn_manager = config.getRNManager();
 
-    unsigned int total_population = config.getTree().get<unsigned int>("population_size");
-    double student_fraction = config.getTree().get<double>("university.student_fraction");
-    double work_fraction    = config.getTree().get<double>("work.work_fraction");
-    double commute_fraction = config.getTree().get<double>("work.commute_fraction");
+    auto total_population = config.getTree().get<unsigned int>("population_size");
+    auto student_fraction = config.getTree().get<double>("university.student_fraction");
+    auto work_fraction    = config.getTree().get<double>("work.work_fraction");
+    auto commute_fraction = config.getTree().get<double>("work.commute_fraction");
     auto student_fractions  = vector<double>{student_fraction, 1.0 - student_fraction};
     auto work_fractions     = vector<double>{work_fraction, 1.0 - work_fraction};
     auto commute_fractions  = vector<double>{commute_fraction, 1.0 - commute_fraction};
@@ -342,8 +344,8 @@ void assignWorkplaces(
     // --------------------------------
     // Assign employables to workplaces.
     // --------------------------------
-    for (auto household : households) {
-        for (auto person : household->persons) {
+    for (const auto household : households) {
+        for (const auto person : household->persons) {
             auto age = person->GetAge();
             if (age >= 18 && age < 26 && student_gen() == 0) {
                 // Students are not employable
@@ -462,8 +464,8 @@ void writePopulation(vector<shared_ptr<Household>> households, const GenConfigur
     if(my_file.is_open()) {
         vector<string> labels = {"age", "household_id", "school_id", "work_id", "primary_community", "secondary_community", "risk_averseness"};
         my_file << boost::algorithm::join(labels,",") << "\n";
-        for (auto household : households) {
-            for (auto person : household->persons) {
+        for (const auto household : households) {
+            for (const auto person : household->persons) {
                 vector<string> values = {
                     to_string(person->GetAge()),
                     to_string(person->GetPoolId(ContactPoolType::Id::Household)),
@@ -480,14 +482,14 @@ void writePopulation(vector<shared_ptr<Household>> households, const GenConfigur
     }
 }
 
-std::vector<shared_ptr<GenStruct>> getClosestStructs(const GeoCoordinate& home_coord, const std::vector<shared_ptr<GenStruct>> structs, const GeoGrid& grid)
+vector<shared_ptr<GenStruct>> getClosestStructs(const util::GeoCoordinate& home_coord, const vector<vector<shared_ptr<GenStruct>>>& structs, const GeoGrid& grid)
 {
-    std::vector<shared_ptr<School>> closest_structs;
-    auto calculator = GeoCoordCalculator.getInstance();
+    vector<shared_ptr<GenStruct>> closest_structs;
+    const util::GeoCoordCalculator& calculator = util::GeoCoordCalculator::getInstance();
     // The amount of bands doubles every iteration
-    const unsigned int band_range = 2;
+    unsigned int band_range = 2;
     // The default search range is 10 km
-    const unsigned int search_range = 10;
+    unsigned int search_range = 10;
     unsigned int band_of_hh = uint((home_coord.m_longitude - grid.m_min_long)/grid.m_longitude_band_width);
     // Keep doubling search space until a struct is found
     while(closest_structs.empty()){
@@ -503,7 +505,7 @@ std::vector<shared_ptr<GenStruct>> getClosestStructs(const GeoCoordinate& home_c
         // Go over the search space
         for (unsigned int index = firstband; index <= lastband; index++) {
             for (auto gstruct : structs[index]) {
-                if (calculator.getDistance(gstruct->coordinate.m_latitude, home_coord.m_latitude) <= search_range) {
+                if (calculator.getDistance(gstruct->coordinate, home_coord) <= search_range) {
                     closest_structs.push_back(gstruct);
                 }
             }

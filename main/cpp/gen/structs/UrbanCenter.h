@@ -1,7 +1,6 @@
 #pragma once
 #include "GenStruct.h"
 #include "UrbanCenter.h"
-#include "GeoCoordinate.h"
 #include <vector>
 
 namespace stride {

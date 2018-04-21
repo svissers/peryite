@@ -1,7 +1,7 @@
 #include "GeoGridBuilder.h"
 #include "../../structs/UrbanCenter.h"
 #include "util/CSV.h"
-#include "../../structs/GeoCoordinate.h"
+#include "util/GeoCoordinate.h"
 
 namespace stride {
 namespace gen {
