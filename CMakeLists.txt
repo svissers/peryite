@@ -18,9 +18,12 @@
 #  CMake config.
 #
 #############################################################################
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.5)
 include(CMakeConfig.cmake)
 include(CMakeLocal.cmake OPTIONAL)
+if(CMAKE_VERSION VERSION_LESS 3.8)
+    set(STRIDE_FORCE_NO_PYTHON ON)
+endif()
 
 #============================================================================
 # Configuration for CMake, for build & install.
@@ -35,6 +38,14 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_PREFIX_PATH "/opt/Qt/5.10.1/gcc_64")
+# set_property(SOURCE cmake-build-release/main/python/stridePYTHON_wrap.cxx PROPERTY SKIP_AUTOMOC ON)
+
+#============================================================================
+# Configuration for Qt.
+#============================================================================
+find_package(Qt5 COMPONENTS Core Widgets Gui REQUIRED)
+include_directories(${Qt5Widgets_INCLUDE_DIRS})
+
 
 #============================================================================
 # INSTALL LOCATION for bin, doc etc.
@@ -47,6 +58,19 @@ set(DOC_INSTALL_LOCATION     doc)
 set(TESTS_INSTALL_LOCATION   tests)
 
 #============================================================================
+# Configuration for Git.
+#============================================================================
+find_package(Git QUIET)
+if(GIT_FOUND)
+    GIT_WC_INFO(${CMAKE_SOURCE_DIR} STRIDE)
+else()
+    # This is done to eliminate blank output of undefined CMake variables.
+    set(GIT_FOUND FALSE)
+    set(STRIDE_WC_REVISION_HASH       "0000-0000-000")
+    set(STRIDE_WC_LAST_CHANGED_DATE   "0000 0000 0000")
+endif()
+
+#============================================================================
 # Configuration for CPP.
 #============================================================================
 include(CMakeCPP.cmake)
@@ -54,27 +78,10 @@ include(CMakeCPP.cmake)
 #============================================================================
 # Configuration for Swig & Python.
 #============================================================================
-find_package(SWIG)
-find_package(PythonInterp 3)
-find_package(PythonLibs 3)
-
-#============================================================================
-# Configuration for Qt.
-#============================================================================
-find_package(Qt5 COMPONENTS Core Widgets Gui REQUIRED)
-include_directories(${Qt5Widgets_INCLUDE_DIRS})
-
-#============================================================================
-# Configuration for Git.
-#============================================================================
-find_package(Git QUIET)
-if(GIT_FOUND)
-	GIT_WC_INFO(${CMAKE_SOURCE_DIR} STRIDE)
-else()
-    # This is done to eliminate blank output of undefined CMake variables.
-    set(GIT_FOUND FALSE)
-	set(STRIDE_WC_REVISION_HASH       "0000-0000-000")
-	set(STRIDE_WC_LAST_CHANGED_DATE   "0000 0000 0000")
+if(NOT STRIDE_FORCE_NO_PYTHON)
+	find_package(SWIG)
+	find_package(PythonInterp 3)
+	find_package(PythonLibs 3)
 endif()
 
 #============================================================================

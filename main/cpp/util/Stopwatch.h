@@ -30,15 +30,15 @@ namespace util {
  * Provides a stopwatch interface to time: it accumulates time between
  * start/stop pairs.
  */
-template <typename T = std::chrono::system_clock>
+template <typename T = std::chrono::steady_clock>
 class Stopwatch
 {
 public:
         using TClock = T;
 
         /// Constructor initializes stopwatch.
-        Stopwatch(std::string name = "stopwatch", bool running = false)
-            : m_accumulated(T::duration::zero()), m_name(name), m_running(running)
+        explicit Stopwatch(std::string name = "stopwatch", bool running = false)
+            : m_accumulated(T::duration::zero()), m_name(std::move(name)), m_running(running)
         {
                 if (m_running) {
                         m_last_start = T::now();

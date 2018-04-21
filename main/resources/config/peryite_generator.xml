@@ -2,19 +2,26 @@
 <Config>
 	<rng>
 		<engine>mrg2</engine>
-		<seed>1</seed>
+		<seed>25646</seed>
 	</rng>
-	<household_profile>./data/households_flanders.xml</household_profile>
+	<!-- The amount of persons to generate -->
 	<population_size>100000</population_size>
+	<!-- The household reference set to sample from -->
+	<household_profile>households_flanders.xml</household_profile>
 	<geoprofile>
 		<cities>data/flanders_cities2.csv</cities>
 		<commuters>data/flanders_commuting.csv</commuters>
 	</geoprofile>
 	<university>
-		<fraction>0.25</fraction>
+		<!-- Among the 18-26 year olds, a fraction is a student -->
+		<student_fraction>0.50</student_fraction>
+		<!-- Among the students, a fraction commutes -->
+		<commute_fraction>0.50</commute_fraction>
 	</university>
 	<work>
-		<fraction>0.70</fraction>
-		<commute_fraction>0.70</commute_fraction>
+		<!-- Among the employable population (excluding students), a fraction is active -->
+		<work_fraction>0.70</work_fraction>
+		<!-- Among the active population, a fraction commutes -->
+		<commute_fraction>0.50</commute_fraction>
 	</work>
 </Config>
