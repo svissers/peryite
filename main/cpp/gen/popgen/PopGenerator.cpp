@@ -17,10 +17,13 @@ using namespace gen;
 
 void generate(files::GenDirectory& dir, unsigned int thread_count)
 {
+    std::cout << "Popgen" << std::endl;
     auto config = dir.getConfig();
     // Build households
+    std::cout << "buildHouseholds" << std::endl;
     auto households = buildHouseholds(config);
     // Assign persons
+    std::cout << "Assign persons to households" << std::endl;
     auto geogrid_file   = dir.getGeoGridFile();
     auto grid           = geogrid_file->readGrid();
     assignHouseholds(households, grid, config);
@@ -132,10 +135,9 @@ void assignSchools(
             if (age >= 3 && age < 18) {
                 auto home_coord = household->coordinate;
                 // Find the closest schools
-                std::cout << "Finding closest schools" << std::endl;
                 std::vector<shared_ptr<GenStruct>> closest_schools = getClosestStructs(home_coord, schools, grid);
                 if (closest_schools.empty()) {
-                    std::cout << "School is empty: " << age << std::endl;
+                    std::cout << "closest_schools is empty: " << age << std::endl;
                     continue;
                 }
                 // Create a uniform distribution to select a school
@@ -145,7 +147,6 @@ void assignSchools(
                 // Create a uniform distribution to select a contactpool in the selected school
                 std::function<int()> cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(school->pools.size()));
                 auto pool = school->pools.at(cp_generator());
-                std::cout << "Found a pool: " << pool->GetId() << std::endl;
                 person->setPoolId(ContactPoolType::Id::School, pool->GetId());
                 pool->AddMember(person.get());
             }
@@ -252,15 +253,16 @@ unsigned int assignUniversities(
                 } else {
                     /// Non-commuting student
                     auto home_coord = household->coordinate;
-                    // TODO : Find the bands within 10 km of home
-                    // Keep doubling until found
-                    std::vector<shared_ptr<University>> closest_universities;
-                    if (closest_universities.size() == 0)
+                    // Find the closest schools
+                    std::vector<shared_ptr<GenStruct>> closest_universities = getClosestStructs(home_coord, universities, grid);
+                    if (closest_universities.size() == 0) {
+                        std::cout << "closest_universities is empty: " << age << std::endl;
                         continue;
+                    }
                     // Create a uniform distribution to select a university
                     auto rn_manager = config.getRNManager();
                     auto uni_gen    = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_universities.size()));
-                    auto university = closest_universities[uni_gen()];
+                    auto university = static_pointer_cast<University>(closest_universities[uni_gen()]);
                     // Create a uniform distribution to select a contactpool in the selected university
                     auto cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(university->pools.size()));
                     pool = university->pools.at(cp_generator());
@@ -382,14 +384,14 @@ void assignWorkplaces(
                 } else {
                     // Non-commuting
                     auto home_coord = household->coordinate;
-                    // TODO : Find the bands within 10 km of home
-                    // Keep doubling until found
-                    std::vector<shared_ptr<WorkPlace>> closest_workplaces;
-                    if (closest_workplaces.size() == 0)
+                    std::vector<shared_ptr<GenStruct>> closest_workplaces = getClosestStructs(home_coord, workplaces, grid);
+                    if (closest_workplaces.size() == 0) {
+                        std::cout << "closest_workplaces is empty: " << age << std::endl;
                         continue;
+                    }
                     // Create a uniform distribution to select a workplace
                     std::function<int()> wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_workplaces.size()));
-                    auto workplace = closest_workplaces.at(wp_generator());
+                    auto workplace = static_pointer_cast<WorkPlace>(closest_workplaces.at(wp_generator()));
                     pool = workplace->pool;
                 }
                 person->setPoolId(ContactPoolType::Id::Work, pool->GetId());
@@ -425,17 +427,16 @@ void assignCommunities(
     for (auto household : households) {
         for (auto person : household->persons) {
             auto home_coord = household->coordinate;
-            // TODO: Find the bands within 10 km of home
-            // Keep doubling until found
-
-            std::vector<shared_ptr<Community>> closest_communities;
-            if (closest_communities.size() == 0)
+            std::vector<shared_ptr<GenStruct>> closest_communities = getClosestStructs(home_coord, communities, grid);
+            if (closest_communities.size() == 0) {
+                std::cout << "closest_communities is empty: " << std::endl;
                 continue;
+            }
             // Create a uniform distribution to select a community
             auto rn_manager             = config.getRNManager();
             auto community_generator    = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_communities.size()));
             auto community_index        = community_generator();
-            auto community              = closest_communities.at(community_index);
+            auto community              = static_pointer_cast<Community>(closest_communities.at(community_index));
             // Create a uniform distribution to select a contactpool in the selected community
             auto cp_generator           = rn_manager->GetGenerator(trng::fast_discrete_dist(community->pools.size()));
             auto cp_index               = cp_generator();
