@@ -14,6 +14,7 @@
 #include <QProcess>
 #include <QCheckBox>
 #include <QtCharts/QScatterSeries>
+#include <QFile>
 #include <boost/property_tree/xml_parser.hpp>
 
 using namespace std;
@@ -165,9 +166,10 @@ void TestingWindow::on_startButton_clicked()
     name += (ui->varySeedInput->isChecked()) ? " (random seed)" : (" (seed: " + QString::number(rngSeed));
     // Mention random seed
     name += (ui->varyEngineInput->isChecked()) ? " (random rng engine)" : (" (rng engine: " + rngType + ")");
-    // Mention spread percentage
-    float spreadPercentage = 100 * (float)(results.last() - results.first()) / results.last();
-    name += " - " + QString::number(spreadPercentage) + "\% spread";
+    // Mention spread (+percentage)
+    int spread = results.last() - results.first();
+    float spreadPercentage = 100 * (float)(spread) / results.last();
+    name += " - " + QString::number(spread) + "(" +  QString::number(spreadPercentage) + "\%) spread";
 
     // Set the series name, marker
     scatterSeries->setName(name);
@@ -178,6 +180,22 @@ void TestingWindow::on_startButton_clicked()
     for (int i = 0; i < results.size(); i++) {
         scatterSeries->append(i, results[i]);
     }
+
+    // -----------------------------------------------------------------------------------------
+    // Write results to file
+    // -----------------------------------------------------------------------------------------
+    QString filename = "TestResults_" + configFile.split(".").at(0) + ".txt";
+    QFile file(filename);
+
+    if (file.open(QIODevice::ReadWrite)) {
+        QTextStream stream(&file);
+        stream << name << endl;
+        for (int i = 0; i < results.size(); i++) {
+            stream << QString::number(results[i]) << endl;
+        }
+    }
+
+    file.close();
 
     // -----------------------------------------------------------------------------------------
     // Create new window for graph
