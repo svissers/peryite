@@ -28,9 +28,12 @@ vector<shared_ptr<Community>> CommunitiesBuilder::build(const GenConfiguration& 
 
     // Create and map the communities to their samples.
     for (unsigned int i = 0; i < community_count; i++) {
-            // TODO: Currently only primary communities.
-            auto community = make_shared<Community>(Community(i, true, grid.at(generator())->coordinate));
-            communities.push_back(community);
+            auto randomval = generator();
+            auto community = make_shared<Community>(Community(i, true, grid.at(randomval)->coordinate));
+            auto community_secondary = make_shared<Community>(Community(i+community_count, false, grid.at(randomval)->coordinate));
+
+        communities.push_back(community);
+        communities.push_back(community_secondary);
     }
 
     return communities;
