@@ -68,6 +68,7 @@ set(LIB_SRC
     pop/SurveySeeder.cpp
 #---
     gen/popgen/PopGenerator.cpp
+    gen/popgen/assigners/householdAssigner.cpp
     gen/GenConfiguration.cpp
     gen/geogen/GeoGenerator.cpp
     gen/geogen/builders/GeoGridBuilder.cpp

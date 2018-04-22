@@ -1,5 +1,6 @@
 #include "PopGenerator.h"
 #include "../files/HouseholdFile.h"
+#include "assigners/householdAssigner.h"
 #include "util/GeoCoordCalculator.h"
 #include "trng/fast_discrete_dist.hpp"
 #include <map>
@@ -18,12 +19,12 @@ void generate(files::GenDirectory& dir, unsigned int thread_count)
     auto config = dir.getConfig();
     // Build households
     std::cout << "buildHouseholds" << std::endl;
-    auto households = buildHouseholds(config);
+    auto households = hh_assign::BuildHouseholds(config);
     // Assign persons
     std::cout << "Assign persons to households" << std::endl;
     auto geogrid_file   = dir.getGeoGridFile();
     auto grid           = geogrid_file->readGrid();
-    assignHouseholds(households, grid, config);
+    hh_assign::AssignHouseholds(households, grid, config);
 
     auto school_file    = dir.getSchoolFile();
     auto schools        = school_file->read();
@@ -47,77 +48,6 @@ void generate(files::GenDirectory& dir, unsigned int thread_count)
     // Write persons
     writePopulation(households, config);
 }
-
-vector<shared_ptr<Household>> buildHouseholds(const GenConfiguration& config)
-{
-    auto hh_reference           = files::getHouseholds(config);
-    unsigned int current_hh_id  = 0;
-    unsigned int current_p_id   = 0;
-    auto pop_size       = config.getTree().get<unsigned int>("population_size");
-
-    // Create a uniform distribution for the household reference set.
-    auto rn_manager = config.getRNManager();
-    auto generator  = rn_manager->GetGenerator(trng::fast_discrete_dist(hh_reference.size()));
-
-    // Build the households
-    vector<shared_ptr<Household>> result;
-    while (current_p_id < pop_size) {
-            // Select a household from the reference set
-            int index           = generator();
-            auto household_ref  = hh_reference.at(index);
-
-            // Build the selected household
-            auto household = make_shared<Household>(current_hh_id);
-            vector<shared_ptr<Person>> hh_persons;
-            for (unsigned int age : household_ref) {
-                auto person = make_shared<Person>(
-                    current_p_id, age, current_hh_id,
-                    0, 0, 0, 0
-                );
-                hh_persons.push_back(person);
-                current_p_id++;
-            }
-            household->persons = hh_persons;
-            result.push_back(household);
-            current_hh_id++;
-    }
-    return result;
-}
-
-void assignHouseholds (
-    vector<shared_ptr<Household>>& households, const GeoGrid& grid, const GenConfiguration& config)
-{
-    auto total_population = config.getTree().get<unsigned int>("population_size");
-
-    // Create the discrete distribution to sample from.
-    vector<double> fractions;
-    for(const auto& center : grid) {
-        fractions.push_back(double(center->population) / double(total_population));
-    }
-    if (fractions.empty()) {
-        return;
-    }
-
-    // The RNManager allows for parallelization.
-    auto rn_manager = config.getRNManager();
-    std::function<int()> generator = rn_manager->GetGenerator(trng::fast_discrete_dist(fractions.begin(), fractions.end()));
-
-    // Map the households to their samples.
-    for (const auto& household : households) {
-        auto center = grid.at(generator());
-        auto coords = center->coordinate;
-        if (center->is_fragmented) {
-            // Select one of the fragments
-            vector<double> f_fractions;
-            for(const auto& population : center->fragmented_populations)
-                f_fractions.push_back(double(population) / double(center->population));
-            auto frag_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(f_fractions.begin(), f_fractions.end()));
-            coords = center->fragmented_coords.at(frag_gen());
-        }
-        household->coordinate = coords;
-    }
-}
-
 
 void assignSchools(
     vector<vector<shared_ptr<GenStruct>>>& schools, const vector<shared_ptr<Household>>& households,
@@ -390,7 +320,7 @@ void assignWorkplaces(
                     auto wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(dest_workplaces.size()));
                     auto workplace = dest_workplaces[wp_generator()];
                     pool = workplace->pool;
-                    std::cout << "commutor" <<std::endl;
+                    //std::cout << "commutor" <<std::endl;
                 } else {
                     // Non-commuting
                     auto home_coord = household->coordinate;
@@ -403,10 +333,10 @@ void assignWorkplaces(
                     std::function<int()> wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_workplaces.size()));
                     auto workplace = static_pointer_cast<WorkPlace>(closest_workplaces.at(wp_generator()));
                     pool = workplace->pool;
-                    std::cout << "non commutor" <<std::endl;
+                    //std::cout << "non commutor" <<std::endl;
 
                 }
-                std::cout << "assigned workplace pool id: " <<pool->GetId() << std::endl;
+                //std::cout << "assigned workplace pool id: " <<pool->GetId() << std::endl;
                 person->setPoolId(ContactPoolType::Id::Work, pool->GetId());
                 pool->AddMember(person.get());
             }
