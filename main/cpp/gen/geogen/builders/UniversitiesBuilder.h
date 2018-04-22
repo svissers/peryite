@@ -6,6 +6,8 @@
 
 namespace stride {
 namespace gen {
+namespace geogen {
+namespace builder {
 
 /**
  * /// Builds a list of universities using the Geogrid and some configured
@@ -23,5 +25,7 @@ public:
 
 };
 
+} // namespace builder
+} // namespace geogen
 } // namespace gen
 } // namespace stride

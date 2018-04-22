@@ -10,6 +10,7 @@
 
 namespace stride {
 namespace gen {
+namespace geogen {
 
 /**
  * Generator class for the geo component.
@@ -25,5 +26,6 @@ public:
         static void Generate(files::GenDirectory& dir, unsigned int thread_count);
 };
 
+} // namespace geogen
 } // namespace gen
 } // namespace stride

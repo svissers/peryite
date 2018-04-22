@@ -50,10 +50,10 @@ void Generate(files::GenDirectory& dir, unsigned int thread_count)
     std::cout << "Assigning communities" << std::endl;
     assigner::AssignCommunities(communities, households, config, grid);
     // Write persons
-    writePopulation(households, config);
+    WritePopulation(households, config);
 }
 
-void writePopulation(vector<shared_ptr<Household>> households, const GenConfiguration& config)
+void WritePopulation(vector<shared_ptr<Household>> households, const GenConfiguration& config)
 {
     string config_path = config.getPath();
     boost::filesystem::path out_dir = "output/"+config_path.substr(0, config_path.find_last_of("."));
@@ -80,7 +80,7 @@ void writePopulation(vector<shared_ptr<Household>> households, const GenConfigur
     }
 }
 
-vector<shared_ptr<GenStruct>> getClosestStructs(const util::GeoCoordinate& home_coord, const vector<vector<shared_ptr<GenStruct>>>& structs, const GeoGrid& grid)
+vector<shared_ptr<GenStruct>> GetClosestStructs(const util::GeoCoordinate& home_coord, const vector<vector<shared_ptr<GenStruct>>>& structs, const GeoGrid& grid)
 {
     vector<shared_ptr<GenStruct>> closest_structs;
     const util::GeoCoordCalculator& calculator = util::GeoCoordCalculator::getInstance();

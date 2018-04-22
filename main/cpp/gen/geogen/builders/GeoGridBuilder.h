@@ -4,6 +4,8 @@
 
 namespace stride {
 namespace gen {
+namespace geogen {
+namespace builder {
 
 /**
  * Builds a geogrid using city data.
@@ -17,5 +19,7 @@ public:
         static GeoGrid Build(const GenConfiguration& config);
 };
 
+} // namespace builder
+} // namespace geogen
 } // namespace gen
 } // namespace stride

@@ -6,6 +6,8 @@
 
 namespace stride {
 namespace gen {
+namespace geogen {
+namespace builder {
 
 /**
  * Builds a list of schools using the Geogrid and some configured values.
@@ -19,5 +21,7 @@ public:
         static std::vector<std::shared_ptr<School>> Build(const GenConfiguration& config, GeoGrid& locations);
 };
 
+} // namespace builder
+} // namespace geogen
 } // namespace gen
 } // namespace stride

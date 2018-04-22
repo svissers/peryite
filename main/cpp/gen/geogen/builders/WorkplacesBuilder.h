@@ -6,6 +6,8 @@
 
 namespace stride {
 namespace gen {
+namespace geogen {
+namespace builder {
 
 /**
  *  Builds a list of workplaces using the Geogrid and some configured values.
@@ -20,5 +22,7 @@ public:
         static std::vector<std::shared_ptr<WorkPlace>> Build(GenConfiguration& config, GeoGrid& grid);
 };
 
+} // namespace builder
+} // namespace geogen
 } // namespace gen
 } // namespace stride

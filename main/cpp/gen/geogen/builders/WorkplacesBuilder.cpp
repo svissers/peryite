@@ -10,6 +10,8 @@
 
 namespace stride {
 namespace gen {
+namespace geogen {
+namespace builder {
 
 using namespace std;
 using namespace util;
@@ -77,6 +79,7 @@ vector<shared_ptr<WorkPlace>> WorkplacesBuilder::Build(GenConfiguration& config,
     return workplaces;
 }
 
-
+} // namespace builder
+} // namespace geogen
 } // namespace gen
 } // namespace stride

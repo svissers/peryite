@@ -5,6 +5,8 @@
 
 namespace stride {
 namespace gen {
+namespace geogen {
+namespace builder {
 
 using namespace std;
 
@@ -59,6 +61,7 @@ vector<shared_ptr<University>> UniversitiesBuilder::Build(GenConfiguration& conf
     return universities;
 }
 
-
+} // namespace builder
+} // namespace geogen
 } // namespace gen
 } // namespace stride

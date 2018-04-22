@@ -36,7 +36,7 @@ void AssignSchools(
             if (age >= 3 && age < 18) {
                 auto home_coord = household->coordinate;
                 // Find the closest schools
-                std::vector<shared_ptr<GenStruct>> closest_schools = getClosestStructs(home_coord, schools, grid);
+                std::vector<shared_ptr<GenStruct>> closest_schools = GetClosestStructs(home_coord, schools, grid);
                 if (closest_schools.empty()) {
                     std::cout << "closest_schools is empty: " << age << std::endl;
                     continue;

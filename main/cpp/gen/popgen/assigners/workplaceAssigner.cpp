@@ -121,7 +121,7 @@ void AssignWorkplaces(
                 } else {
                     // Non-commuting
                     auto home_coord = household->coordinate;
-                    std::vector<shared_ptr<GenStruct>> closest_workplaces = getClosestStructs(home_coord, workplaces, grid);
+                    std::vector<shared_ptr<GenStruct>> closest_workplaces = GetClosestStructs(home_coord, workplaces, grid);
                     if (closest_workplaces.empty()) {
                         std::cout << "closest_workplaces is empty: " << age << std::endl;
                         continue;

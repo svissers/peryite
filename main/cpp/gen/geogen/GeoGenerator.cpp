@@ -10,6 +10,7 @@
 using namespace boost::filesystem;
 namespace stride {
 namespace gen {
+namespace geogen {
 
 using namespace std;
 using namespace files;
@@ -71,6 +72,6 @@ void GeoGenerator::Generate(GenDirectory& dir, unsigned int thread_count)
     dir.initialize(geo_grid_file, school_file, university_file, workplace_file, community_file);
 }
 
-
+} // namespace geogen
 } // namespace gen
 } // namespace stride

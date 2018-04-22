@@ -113,7 +113,7 @@ unsigned int AssignUniversities(
                     /// Non-commuting student
                     auto home_coord = household->coordinate;
                     // Find the closest schools
-                    std::vector<shared_ptr<GenStruct>> closest_universities = getClosestStructs(home_coord, universities, grid);
+                    std::vector<shared_ptr<GenStruct>> closest_universities = GetClosestStructs(home_coord, universities, grid);
                     if (closest_universities.empty()) {
                         std::cout << "closest_universities is empty: " << age << std::endl;
                         continue;

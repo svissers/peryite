@@ -9,6 +9,8 @@
 
 namespace stride {
 namespace gen {
+namespace geogen {
+namespace builder {
 
 using namespace std;
 
@@ -97,5 +99,7 @@ GeoGrid GeoGridBuilder::Build(const GenConfiguration& config)
         return geo_grid;
 }
 
+} // namespace builder
+} // namespace geogen
 } // namespace gen
 } // namespace stride

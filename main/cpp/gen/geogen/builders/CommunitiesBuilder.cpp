@@ -4,12 +4,14 @@
 
 namespace stride {
 namespace gen {
+namespace geogen {
+namespace builder {
 
 using namespace std;
 using namespace util;
 using namespace trng;
 
-vector<shared_ptr<Community>> CommunitiesBuilder::Build(const GenConfiguration& config, GeoGrid& grid)
+vector<shared_ptr<Community>> Build(const GenConfiguration& config, GeoGrid& grid)
 {
     vector<shared_ptr<Community>> communities = vector<shared_ptr<Community>>();
     unsigned int total_population = config.getTree().get<unsigned int>("population_size");
@@ -46,11 +48,9 @@ vector<shared_ptr<Community>> CommunitiesBuilder::Build(const GenConfiguration& 
     }
 
     return communities;
-}
+}0
 
-
-
-
-
+} // namespace builder
+} // namespace geogen
 } // namespace gen
 } // namespace stride

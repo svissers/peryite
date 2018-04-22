@@ -47,7 +47,7 @@ void AssignCommunities(
     // ------------------------------
     for (const auto& household : households) {
         auto home_coord = household->coordinate;
-        std::vector<shared_ptr<GenStruct>> closest_communities = getClosestStructs(home_coord, communities, grid);
+        std::vector<shared_ptr<GenStruct>> closest_communities = GetClosestStructs(home_coord, communities, grid);
         if (closest_communities.empty()) {
             std::cout << "closest_communities is empty: " << std::endl;
             continue;
