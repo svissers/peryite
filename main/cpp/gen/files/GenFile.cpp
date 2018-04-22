@@ -1,5 +1,5 @@
 #include "GenFile.h"
-#include "../structs/GeoCoordinate.h"
+#include "util/GeoCoordinate.h"
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string/join.hpp>
 

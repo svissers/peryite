@@ -22,7 +22,7 @@ public:
         /// And then writes them to their corresponding files.
         /// @param dir             The directory that the files will be generated in.
         /// @param thread_count    The amount of threads that will be used.
-        static void generate(files::GenDirectory& dir, unsigned int thread_count);
+        static void Generate(files::GenDirectory& dir, unsigned int thread_count);
 };
 
 } // namespace gen

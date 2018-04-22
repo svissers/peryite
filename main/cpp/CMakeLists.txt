@@ -68,6 +68,11 @@ set(LIB_SRC
     pop/SurveySeeder.cpp
 #---
     gen/popgen/PopGenerator.cpp
+    gen/popgen/assigners/householdAssigner.cpp
+    gen/popgen/assigners/schoolAssigner.cpp
+    gen/popgen/assigners/universityAssigner.cpp
+    gen/popgen/assigners/workplaceAssigner.cpp
+    gen/popgen/assigners/communityAssigner.cpp
     gen/GenConfiguration.cpp
     gen/geogen/GeoGenerator.cpp
     gen/geogen/builders/GeoGridBuilder.cpp
@@ -75,7 +80,6 @@ set(LIB_SRC
     gen/geogen/builders/UniversitiesBuilder.cpp
     gen/geogen/builders/WorkplacesBuilder.cpp
     gen/geogen/builders/CommunitiesBuilder.cpp
-    gen/structs/GeoCoordinate.cpp
 	gen/files/GenFile.cpp
 	gen/files/GenDirectory.cpp
     gen/files/HouseholdFile.cpp
@@ -100,6 +104,8 @@ set(LIB_SRC
     util/RunConfigManager.cpp
     util/RunConfigString.cpp
     util/InstallDirs.cpp
+    util/GeoCoordinate.cpp
+    util/GeoCoordCalculator.cpp
     util/SegmentedVector.h
     util/Stopwatch.h
     util/StringUtils.h

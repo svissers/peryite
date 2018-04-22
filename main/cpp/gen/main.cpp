@@ -75,13 +75,13 @@ int main(int argc, char* argv[])
                 // Run Generator-Geo
                 // -----------------------------------------------------------------------------------------
                 if (generate_geo) {
-                    GeoGenerator::generate(dir, num_threads);
+                    GeoGenerator::Generate(dir, num_threads);
                 }
                 // -----------------------------------------------------------------------------------------
                 // Run Generator-Pop
                 // -----------------------------------------------------------------------------------------
                 if (generate_pop) {
-                    popgen::generate(dir, num_threads);
+                    popgen::Generate(dir, num_threads);
                 }
                 // -----------------------------------------------------------------------------------------
                 // Finished
