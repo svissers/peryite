@@ -104,8 +104,17 @@ void assignHouseholds (
 
     // Map the households to their samples.
     for (const auto& household : households) {
-            int index = generator();
-            household->coordinate = grid.at(index)->coordinate;
+        auto center = grid.at(generator());
+        auto coords = center->coordinate;
+        if (center->is_fragmented) {
+            // Select one of the fragments
+            vector<double> f_fractions;
+            for(const auto& population : center->fragmented_populations)
+                f_fractions.push_back(double(population) / double(center->population));
+            auto frag_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(f_fractions.begin(), f_fractions.end()));
+            coords = center->fragmented_coords.at(frag_gen());
+        }
+        household->coordinate = coords;
     }
 }
 
@@ -141,12 +150,12 @@ void assignSchools(
                     continue;
                 }
                 // Create a uniform distribution to select a school
-                auto rn_manager = config.getRNManager();
-                std::function<int()> school_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_schools.size()));
+                auto rn_manager         = config.getRNManager();
+                auto school_generator   = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_schools.size()));
                 auto school = static_pointer_cast<School>(closest_schools.at(school_generator()));
                 // Create a uniform distribution to select a contactpool in the selected school
-                std::function<int()> cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(school->pools.size()));
-                auto pool = school->pools.at(cp_generator());
+                auto cp_generator   = rn_manager->GetGenerator(trng::fast_discrete_dist(school->pools.size()));
+                auto pool           = school->pools.at(cp_generator());
                 person->setPoolId(ContactPoolType::Id::School, pool->GetId());
                 pool->AddMember(person.get());
             }
@@ -559,24 +568,21 @@ vector<shared_ptr<GenStruct>> getClosestStructs(const util::GeoCoordinate& home_
     unsigned int band_range = 2;
     // The default search range is 10 km
     unsigned int search_range = 10;
-    auto band_of_hh = uint((home_coord.m_longitude - grid.m_min_long)/grid.m_longitude_band_width);
+    auto band_of_hh = uint( (home_coord.m_longitude - grid.m_min_long) / grid.m_longitude_band_width );
     // Keep doubling search space until a struct is found
     while(closest_structs.empty()){
         // The first and last band define the search space
         unsigned int firstband = 0;
         unsigned int lastband = band_of_hh + band_range;
-        if (band_of_hh > band_range) {
+        if (band_of_hh > band_range)
             firstband = band_of_hh - band_range;
-        }
-        if (lastband >= structs.size()) {
+        if (lastband >= structs.size())
             lastband = structs.size() - 1;
-        }
         // Go over the search space
         for (unsigned int index = firstband; index <= lastband; index++) {
             for (const auto& gstruct : structs[index]) {
-                if (calculator.getDistance(gstruct->coordinate, home_coord) <= search_range) {
+                if (calculator.getDistance(gstruct->coordinate, home_coord) <= search_range)
                     closest_structs.push_back(gstruct);
-                }
             }
         }
         search_range = search_range*2;

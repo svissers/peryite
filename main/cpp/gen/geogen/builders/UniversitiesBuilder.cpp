@@ -14,8 +14,8 @@ vector<shared_ptr<University>> UniversitiesBuilder::build(GenConfiguration& conf
     unsigned int total_population = config.getTree().get<unsigned int>("population_size");
 
     // The total amount of university students is given.
-    double universityFraction = config.getTree().get<double>("university.student_fraction");
-    unsigned int student_count = (unsigned int)(universityFraction * total_population);
+    double universityFraction   = config.getTree().get<double>("university.student_fraction");
+    unsigned int student_count  = (unsigned int)(universityFraction * total_population);
 
     // Every university has an average of 3000 students
     unsigned int uni_count = student_count / 3000;
@@ -29,6 +29,8 @@ vector<shared_ptr<University>> UniversitiesBuilder::build(GenConfiguration& conf
     auto biggest = grid.begin();
     auto smallest = grid.begin() + city_count;
     vector<shared_ptr<UrbanCenter>> big_cities(biggest, smallest);
+    if (big_cities.empty())
+        return universities;
 
     // The distribution will be relative to the top ten city population (not total).
     unsigned int total_city_population = 0;
@@ -38,8 +40,8 @@ vector<shared_ptr<University>> UniversitiesBuilder::build(GenConfiguration& conf
 
     // Create the discrete distribution to sample from.
     vector<double> fractions;
-    for(auto center : big_cities){
-            fractions.push_back(center->population/total_city_population);
+    for(auto center : big_cities) {
+            fractions.push_back(center->population / total_city_population);
     }
 
     // The RNManager allows for parallelization.

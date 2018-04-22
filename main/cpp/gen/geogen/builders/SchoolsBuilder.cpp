@@ -31,13 +31,22 @@ vector<shared_ptr<School>> SchoolsBuilder::build(const GenConfiguration& config,
 
     // The RNManager allows for parallelization.
     auto rn_manager = config.getRNManager();
-    std::function<int()> generator = rn_manager->GetGenerator(trng::fast_discrete_dist(fractions.begin(), fractions.end()));
+    auto generator  = rn_manager->GetGenerator(trng::fast_discrete_dist(fractions.begin(), fractions.end()));
 
     // Create and map the schools to their samples.
     for (unsigned int i = 0; i < school_count; i++) {
-            int index = generator();
-            auto school = make_shared<School>(School(i, grid.at(index)->coordinate));
-            schools.push_back(school);
+        auto center = grid.at(generator());
+        auto coords = center->coordinate;
+        if (center->is_fragmented) {
+            // Select one of the fragments
+            vector<double> f_fractions;
+            for(const auto& population : center->fragmented_populations)
+                f_fractions.push_back(double(population) / double(center->population));
+            auto frag_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(f_fractions.begin(), f_fractions.end()));
+            coords = center->fragmented_coords.at(frag_gen());
+        }
+        auto school = make_shared<School>(School(i, coords));
+        schools.push_back(school);
     }
 
     return schools;
