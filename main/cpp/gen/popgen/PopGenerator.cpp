@@ -358,7 +358,7 @@ void assignWorkplaces(
     for (const auto& household : households) {
         for (const auto& person : household->persons) {
             auto age = person->GetAge();
-            if (age >= 18 && age < 26 && student_gen() == 0) {
+            if (age >= 18 && age < 26 && person->GetPoolId(ContactPoolType::Id::School) != 0) {
                 // Students are not employable
                 continue;
             }
@@ -390,6 +390,7 @@ void assignWorkplaces(
                     auto wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(dest_workplaces.size()));
                     auto workplace = dest_workplaces[wp_generator()];
                     pool = workplace->pool;
+                    std::cout << "commutor" <<std::endl;
                 } else {
                     // Non-commuting
                     auto home_coord = household->coordinate;
@@ -402,7 +403,10 @@ void assignWorkplaces(
                     std::function<int()> wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_workplaces.size()));
                     auto workplace = static_pointer_cast<WorkPlace>(closest_workplaces.at(wp_generator()));
                     pool = workplace->pool;
+                    std::cout << "non commutor" <<std::endl;
+
                 }
+                std::cout << "assigned workplace pool id: " <<pool->GetId() << std::endl;
                 person->setPoolId(ContactPoolType::Id::Work, pool->GetId());
                 pool->AddMember(person.get());
             }
