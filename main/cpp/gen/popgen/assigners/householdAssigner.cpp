@@ -5,7 +5,7 @@
 namespace stride {
 namespace gen {
 namespace popgen {
-namespace hh_assign {
+namespace assigner {
 
 using namespace std;
 using namespace gen;
@@ -80,7 +80,7 @@ void AssignHouseholds (
     }
 }
 
-} // hh_assign
+} // assigner
 } // popgen
 } // namespace gen
 } // namespace stride

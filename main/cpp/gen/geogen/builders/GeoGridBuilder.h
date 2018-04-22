@@ -14,7 +14,7 @@ public:
         /// Builds the GeoGrid using city data.
         /// @param config       The configuration for a geogrid.
         /// @return             A vector of urban centers representing a geogrid.
-        static GeoGrid build(const GenConfiguration& config);
+        static GeoGrid Build(const GenConfiguration& config);
 };
 
 } // namespace gen

@@ -6,7 +6,7 @@
 namespace stride {
 namespace gen {
 namespace popgen {
-namespace hh_assign {
+namespace assigner {
 
 /// Builds a set of households for the population.
 /// @param config     Property_tree with general configuration settings.
@@ -20,7 +20,7 @@ std::vector<std::shared_ptr<Household>>  BuildHouseholds(const GenConfiguration&
 void AssignHouseholds
 (std::vector<std::shared_ptr<Household>>& households, const GeoGrid& grid, const GenConfiguration& config);
 
-} // hh_assign
+} // assigner
 } // popgen
 } // namespace gen
 } // namespace stride

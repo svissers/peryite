@@ -12,7 +12,7 @@ namespace gen {
 
 using namespace std;
 
-GeoGrid GeoGridBuilder::build(const GenConfiguration& config)
+GeoGrid GeoGridBuilder::Build(const GenConfiguration& config)
 {
         GeoGrid geo_grid;
 

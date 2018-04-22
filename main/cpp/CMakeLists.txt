@@ -69,6 +69,10 @@ set(LIB_SRC
 #---
     gen/popgen/PopGenerator.cpp
     gen/popgen/assigners/householdAssigner.cpp
+    gen/popgen/assigners/schoolAssigner.cpp
+    gen/popgen/assigners/universityAssigner.cpp
+    gen/popgen/assigners/workplaceAssigner.cpp
+    gen/popgen/assigners/communityAssigner.cpp
     gen/GenConfiguration.cpp
     gen/geogen/GeoGenerator.cpp
     gen/geogen/builders/GeoGridBuilder.cpp

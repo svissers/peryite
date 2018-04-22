@@ -9,7 +9,7 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
-vector<shared_ptr<School>> SchoolsBuilder::build(const GenConfiguration& config, GeoGrid& grid)
+vector<shared_ptr<School>> SchoolsBuilder::Build(const GenConfiguration& config, GeoGrid& grid)
 {
     auto schools = vector<shared_ptr<School>>();
     unsigned int total_population = config.getTree().get<unsigned int>("population_size");

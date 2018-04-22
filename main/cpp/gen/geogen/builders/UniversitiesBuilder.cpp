@@ -8,7 +8,7 @@ namespace gen {
 
 using namespace std;
 
-vector<shared_ptr<University>> UniversitiesBuilder::build(GenConfiguration& config, GeoGrid& grid)
+vector<shared_ptr<University>> UniversitiesBuilder::Build(GenConfiguration& config, GeoGrid& grid)
 {
     auto universities = vector<shared_ptr<University>>();
     unsigned int total_population = config.getTree().get<unsigned int>("population_size");
