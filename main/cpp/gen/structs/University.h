@@ -1,6 +1,5 @@
 #pragma once
 #include "GenStruct.h"
-#include "GeoCoordinate.h"
 #include "pool/ContactPool.h"
 #include <vector>
 

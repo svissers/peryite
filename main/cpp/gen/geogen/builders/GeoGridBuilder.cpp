@@ -1,22 +1,31 @@
 #include "GeoGridBuilder.h"
 #include "../../structs/UrbanCenter.h"
+#include "trng/fast_discrete_dist.hpp"
+#include "trng/uniform_dist.hpp"
 #include "util/CSV.h"
-#include "../../structs/GeoCoordinate.h"
+#include "util/GeoCoordinate.h"
+#include <iostream>
+#include <iterator>
 
 namespace stride {
 namespace gen {
 
 using namespace std;
 
-GeoGrid GeoGridBuilder::build(const GenConfiguration& config)
+GeoGrid GeoGridBuilder::Build(const GenConfiguration& config)
 {
         GeoGrid geo_grid;
 
-        // Construct the urban centers from the city data
-        util::CSV cities_data = util::CSV(config.getTree().get<string>("geoprofile.cities"));
-        double max_long = 0;
-        double min_long = 90;
-        // TODO: Loop to get total, then relative
+        // Reference set of cities
+        util::CSV cities_data = util::CSV(config.getTree().get<string>("geoprofile.cities"));;
+        // Total population from reference set
+        unsigned int total_ref_population   = 0;
+        // Total population to be generated
+        unsigned int total_population       = config.getTree().get<unsigned int>("population_size");
+        // Longitude bounds for efficient distance based searches
+        double max_longitude = 0;
+        double min_longitude = 90;
+        // Load the centers from the cities file
         for (util::CSVRow const & row : cities_data) {
             auto longitude  = row.GetValue<double>("longitude");
             auto latitude   = row.GetValue<double>("latitude");
@@ -25,22 +34,66 @@ GeoGrid GeoGridBuilder::build(const GenConfiguration& config)
                 row.GetValue<unsigned int>("population"),
                 row.GetValue<string>("name"),
                 row.GetValue<unsigned int>("province"),
-                util::GeoCoordinate(
-                    latitude, longitude)
+                util::GeoCoordinate(latitude, longitude)
             ));
             geo_grid.push_back(center);
-            geo_grid.addPopulation(center->population);
-            if(longitude > max_long)
-                    max_long = longitude;
-            if(longitude < min_long)
-                    min_long = longitude;
+
+            total_ref_population += center->population;
+            if(longitude > max_longitude) {
+                    max_longitude = longitude;
+            }
+            else if(longitude < min_longitude) {
+                    min_longitude = longitude;
+            }
         }
-        // Initialize the bands which allow for efficient lookup.
-        // TODO discuss bands, add AMOUNTOFBANDS to config file
-        double longitude_bandwidth = (max_long - min_long)/AMOUNTOFBANDS;
+        // Calculate actual population
+        for (auto& center : geo_grid) {
+            double ref_pop          = center->population;
+            double relative_pop     = (ref_pop / total_ref_population);
+            unsigned int actual_pop = relative_pop * total_population;
+            center->population = actual_pop;
+        }
+
+        // Fragmentation parameters
+        const unsigned int fragmentation_bound  = 10000;
+        const unsigned int nr_to_fragment       = 50;
+        const unsigned int fragment_dist[4]     = {40,40,15,5};
+        const unsigned int fragment_amounts[4]  = {2,3,4,5};
+        const double lat_lon_diff               = 0.1;
+        auto rn_manager         = config.getRNManager();
+        auto frag_center_gen    = rn_manager->GetGenerator(trng::fast_discrete_dist(geo_grid.size()));
+        auto frag_amount_gen    = rn_manager->GetGenerator(trng::fast_discrete_dist(std::begin(fragment_dist), std::end(fragment_dist)));
+        auto latlon_diff_gen    = rn_manager->GetGenerator(trng::uniform_dist<>(-lat_lon_diff, lat_lon_diff));
+        unsigned int nr_fragmented = 0;
+
+        while(nr_fragmented < nr_to_fragment) {
+            // Uniformly pick center from grid
+            auto center = geo_grid.at(frag_center_gen());
+            if (center->population <= fragmentation_bound) {
+                // Fragment center
+                center->is_fragmented = true;
+                int frag_amount = fragment_amounts[frag_amount_gen()];
+                int frag_size   = center->population / frag_amount;
+                std::vector<unsigned int> frag_pop;
+                std::vector<util::GeoCoordinate> frag_coords;
+
+                for (int i = 0; i < frag_amount; i++) {
+                    frag_pop.push_back(frag_size);
+                    double lat = center->coordinate.m_latitude + latlon_diff_gen();
+                    double lon = center->coordinate.m_longitude + latlon_diff_gen();
+                    frag_coords.push_back(util::GeoCoordinate(lat, lon));
+                }
+                center->fragmented_populations  = frag_pop;
+                center->fragmented_coords       = frag_coords;
+                nr_fragmented++;
+            }
+        }
+
+        // Initialize the bands which allow for efficient distance based search.
+        double longitude_bandwidth = (max_longitude - min_longitude)/AMOUNTOFBANDS;
         geo_grid.m_longitude_band_width = longitude_bandwidth;
-        geo_grid.m_max_long = max_long;
-        geo_grid.m_min_long = min_long;
+        geo_grid.m_max_long = max_longitude;
+        geo_grid.m_min_long = min_longitude;
         return geo_grid;
 }
 
