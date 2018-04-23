@@ -9,18 +9,12 @@ namespace gen {
 namespace geogen {
 namespace builder {
 
-/**
- *  Builds a list of workplaces using the Geogrid and some configured values.
- */
-class WorkplacesBuilder
-{
-public:
-        /// Builds a list of workplaces using the Geogrid and some configuration
-        /// values.
-        /// @param config       TODO
-        /// @param grid         TODO
-        static std::vector<std::shared_ptr<WorkPlace>> Build(GenConfiguration& config, GeoGrid& grid);
-};
+/// Builds a list of workplaces using the Geogrid and some configuration
+/// values.
+/// @param config       The configuration file that specifies parameters used in building workplaces.
+/// @param grid         The geogrid that the workplaces will be mapped to.
+/// @return             A vector of newly created workplaces.
+std::vector<std::shared_ptr<WorkPlace>> BuildWorkplaces(GenConfiguration& config, GeoGrid& grid);
 
 } // namespace builder
 } // namespace geogen

@@ -11,7 +11,7 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
-vector<shared_ptr<Community>> Build(const GenConfiguration& config, GeoGrid& grid)
+vector<shared_ptr<Community>> BuildCommunities(const GenConfiguration& config, GeoGrid& grid)
 {
     vector<shared_ptr<Community>> communities = vector<shared_ptr<Community>>();
     unsigned int total_population = config.getTree().get<unsigned int>("population_size");
@@ -48,7 +48,7 @@ vector<shared_ptr<Community>> Build(const GenConfiguration& config, GeoGrid& gri
     }
 
     return communities;
-}0
+}
 
 } // namespace builder
 } // namespace geogen

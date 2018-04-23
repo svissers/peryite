@@ -10,9 +10,10 @@ namespace geogen {
 namespace builder {
 
 /// Builds a vector of communities using the Geogrid and a configuration.
-/// @param config       TODO
-/// @param locations    TODO
-std::vector<std::shared_ptr<Community>> Build(const GenConfiguration& config, GeoGrid& grid);
+/// @param config       The configuration file that specifies parameters used in building communities.
+/// @param grid         The geogrid that the communities will be mapped to.
+/// @return             A vector of newly created communities.
+std::vector<std::shared_ptr<Community>> BuildCommunities(const GenConfiguration& config, GeoGrid& grid);
 
 } // namespace builder
 } // namespace geogen

@@ -16,24 +16,23 @@ using namespace std;
 using namespace files;
 using namespace util;
 
-void GeoGenerator::Generate(GenDirectory& dir, unsigned int thread_count)
+void Generate(GenDirectory& dir, unsigned int thread_count)
 {
     auto config = dir.getConfig();
 
     // Build
     std::cout << "Building geogen" << std::endl;
-    GeoGrid geogrid = GeoGridBuilder::Build(config);
+    GeoGrid geogrid = builder::BuildGeoGrid(config);
     std::cout << "Building schools" << std::endl;
-    vector<shared_ptr<School>> schools = SchoolsBuilder::Build(config, geogrid);
+    vector<shared_ptr<School>> schools = builder::BuildSchools(config, geogrid);
     std::cout << "Building universities" << std::endl;
-    vector<shared_ptr<University>> universities = UniversitiesBuilder::Build(config, geogrid);
+    vector<shared_ptr<University>> universities = builder::BuildUniversities(config, geogrid);
     std::cout << "Building workplaces" << std::endl;
-    vector<shared_ptr<WorkPlace>> workplaces = WorkplacesBuilder::Build(config, geogrid);
+    vector<shared_ptr<WorkPlace>> workplaces = builder::BuildWorkplaces(config, geogrid);
     std::cout << "Building communities" << std::endl;
-    vector<shared_ptr<Community>> communities = CommunitiesBuilder::Build(config, geogrid);
+    vector<shared_ptr<Community>> communities = builder::BuildCommunities(config, geogrid);
 
     // Write
-    std::cout << "Writing geogen" << std::endl;
     auto geo_grid_file = make_shared<GeoGridFile>(
         config,
         geogrid

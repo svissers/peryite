@@ -16,7 +16,7 @@ namespace builder {
 using namespace std;
 using namespace util;
 
-vector<shared_ptr<WorkPlace>> WorkplacesBuilder::Build(GenConfiguration& config, GeoGrid& grid)
+vector<shared_ptr<WorkPlace>> BuildWorkplaces(GenConfiguration& config, GeoGrid& grid)
 {
     auto workplaces = vector<shared_ptr<WorkPlace>>();
     unsigned int total_population = config.getTree().get<unsigned int>("population_size");

@@ -84,7 +84,7 @@ public:
             auto longs_str  = row.GetValue<std::string>("fragmented_longs");
             boost::split(lats, lats_str, boost::is_any_of(";"));
             boost::split(longs, longs_str, boost::is_any_of(";"));
-            for (int i = 0; i < lats.size(); i++) {
+            for (unsigned int i = 0; i < lats.size(); i++) {
                 double lat = std::stod(lats[i]);
                 double lon = std::stod(longs[i]);
                 center->fragmented_coords.push_back(util::GeoCoordinate(lat,lon));
