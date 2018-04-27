@@ -81,7 +81,7 @@ before_install:
 
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew install qt
-      sudo brew link qt --force && sudo ln -s /usr/local/Cellar/qt5/5.4.0/mkspecs /usr/local/mkspecs && sudo ln -s /usr/local/Cellar/qt5/5.4.0/plugins /usr/local/plugins
+      brew link qt --force && sudo ln -s /usr/local/Cellar/qt5/5.4.0/mkspecs /usr/local/mkspecs && sudo ln -s /usr/local/Cellar/qt5/5.4.0/plugins /usr/local/plugins
     fi
 
 install:
