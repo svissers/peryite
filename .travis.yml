@@ -78,7 +78,7 @@ before_install:
   #- sudo apt-get install qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev libsqlite3-dev
   #- sudo apt-get install qt5-default qttools5-dev-tools
   #- sudo apt-get install libqt5charts5 libqt5charts5-dev
-  - sudo apt-get install qt510-meta-full qt510charts-no-lgpl
+  - sudo apt-get install qt510-meta-minimal qt510charts-no-lgpl
 
 install:
   # Check for presence of boost cache, otherwise build boost
@@ -115,3 +115,4 @@ script:
       STRIDE_BOOST_ROOT=$HOME/boost_1_66_0_cache STRIDE_BOOST_NO_SYSTEM_PATHS=ON make all
       make test
     fi
+    echo $LD_LIBRARY_PATH
