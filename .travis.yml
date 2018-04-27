@@ -102,11 +102,10 @@ install:
     else
       echo "Already have boost cache"
     fi
-    export LD_LIBRARY_PATH=~/boost_1_66_0/stage/lib/
+    export LD_LIBRARY_PATH=$HOME/boost_1_66_0_cache/lib
+    /opt/qt510/bin/qt510-env.sh
     sudo rm -f /usr/local/lib/libboost*.dylib*
     sudo ln -s $HOME/boost_1_66_0_cache/lib/*.{so,dylib}* /usr/local/lib
-
-  # /opt/qt510/bin/qt510-env.sh
 
 script:
   # Build stride and run tests
