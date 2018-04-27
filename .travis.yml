@@ -82,6 +82,7 @@ before_install:
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew install qt
       brew link qt --force && sudo ln -s /usr/local/Cellar/qt5/5.4.0/mkspecs /usr/local/mkspecs && sudo ln -s /usr/local/Cellar/qt5/5.4.0/plugins /usr/local/plugins
+      export PATH=/usr/local/opt/qt5/bin:$PATH
     fi
 
 install:
@@ -119,6 +120,3 @@ script:
       STRIDE_BOOST_ROOT=$HOME/boost_1_66_0_cache STRIDE_BOOST_NO_SYSTEM_PATHS=ON make all
       make test
     fi
-
-  - echo $LD_LIBRARY_PATH
-  - find /opt/ -name "libQt5Charts.so.5"
