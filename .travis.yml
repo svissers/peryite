@@ -106,8 +106,6 @@ install:
     sudo rm -f /usr/local/lib/libboost*.dylib*
     sudo ln -s $HOME/boost_1_66_0_cache/lib/*.{so,dylib}* /usr/local/lib
 
-  - /opt/qt510/bin/qt510-env.sh
-
 script:
       sudo brew link qt --force && sudo ln -s /usr/local/Cellar/qt5/5.4.0/mkspecs /usr/local/mkspecs && ln -s /us
   # Build stride and run tests
