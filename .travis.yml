@@ -107,7 +107,6 @@ install:
     sudo ln -s $HOME/boost_1_66_0_cache/lib/*.{so,dylib}* /usr/local/lib
 
 script:
-      sudo brew link qt --force && sudo ln -s /usr/local/Cellar/qt5/5.4.0/mkspecs /usr/local/mkspecs && ln -s /us
   # Build stride and run tests
   #			STRIDE_BOOST_ROOT: specify where the correct version of boost can be found
   #			STRIDE_BOOST_NO_SYSTEM_PATHS: should be ON to prevent mixing different versions of boost
