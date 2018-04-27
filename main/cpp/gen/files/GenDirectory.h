@@ -1,10 +1,12 @@
 #pragma once
 #include "../GenConfiguration.h"
+#include "PopulationFile.h"
 #include "GeoGridFile.h"
 #include "SchoolFile.h"
 #include "UniversityFile.h"
 #include "WorkplaceFile.h"
 #include "CommunityFile.h"
+#include <boost/property_tree/ptree.hpp>
 
 namespace stride {
 namespace gen {
@@ -18,12 +20,14 @@ class GenDirectory
 public:
     GenDirectory(std::string config_file_name, unsigned int thread_count);
 
-    void initialize(GeoGridFilePtr geo_file,
+    void initialize(PopulationFilePtr hh_file, GeoGridFilePtr geo_file,
                 SchoolFilePtr school_file, UniversityFilePtr university_file,
                 WorkplaceFilePtr workplace_file, CommunityFilePtr community_file);
 
     GenConfiguration getConfig() { return m_config; }
+    boost::property_tree::ptree getBeliefConfig() { return m_belief_pt; }
 
+    PopulationFilePtr GetPopulationFile();
     GeoGridFilePtr getGeoGridFile();
     SchoolFilePtr getSchoolFile();
     UniversityFilePtr getUniversityFile();
@@ -32,6 +36,9 @@ public:
 
 private:
     GenConfiguration m_config;
+    boost::property_tree::ptree m_belief_pt;
+
+    PopulationFilePtr m_pop_file;
     GeoGridFilePtr m_geo_file;
     SchoolFilePtr m_school_file;
     UniversityFilePtr m_university_file;

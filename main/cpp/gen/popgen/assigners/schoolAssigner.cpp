@@ -42,7 +42,7 @@ void AssignSchools(
                     continue;
                 }
                 // Create a uniform distribution to select a school
-                auto rn_manager         = config.getRNManager();
+                auto rn_manager         = config.GetRNManager();
                 auto school_generator   = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_schools.size()));
                 auto school = static_pointer_cast<School>(closest_schools.at(school_generator()));
                 // Create a uniform distribution to select a contactpool in the selected school

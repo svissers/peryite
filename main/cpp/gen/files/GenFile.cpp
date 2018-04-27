@@ -13,7 +13,7 @@ using namespace util;
 GenFile::GenFile(GenConfiguration& config)
 {
     // Get the output directory for this configuration.
-    string config_path = config.getPath();
+    string config_path = config.GetPath();
     m_out_dir = "output/"+config_path.substr(0, config_path.find_last_of("."));
     try {
         create_directories(m_out_dir);

@@ -5,6 +5,8 @@
 #include "assigners/universityAssigner.h"
 #include "assigners/workplaceAssigner.h"
 #include "assigners/communityAssigner.h"
+#include "pool/ContactPoolSys.h"
+#include "pop/Population.h"
 #include "util/GeoCoordCalculator.h"
 #include "trng/fast_discrete_dist.hpp"
 #include <map>
@@ -17,45 +19,57 @@ namespace popgen {
 using namespace std;
 using namespace gen;
 
-void Generate(files::GenDirectory& dir, unsigned int thread_count)
+void Generate(files::GenDirectory& dir, shared_ptr<Population>& population, ContactPoolSys& pool_sys, bool write)
 {
     std::cout << "Popgen" << std::endl;
     auto config = dir.getConfig();
     // Build households
     std::cout << "buildHouseholds" << std::endl;
-    auto households = assigner::BuildHouseholds(config);
+    auto population_file    = dir.GetPopulationFile();
+    auto population         = population_file->Read();
     // Assign persons
-    std::cout << "Assign persons to households" << std::endl;
+    std::cout << "Assign households to coordinates" << std::endl;
     auto geogrid_file   = dir.getGeoGridFile();
     auto grid           = geogrid_file->readGrid();
     assigner::AssignHouseholds(households, grid, config);
-
+    // Assign schools
     auto school_file    = dir.getSchoolFile();
     auto schools        = school_file->read();
     std::cout << "Assigning schools" << std::endl;
     assigner::AssignSchools(schools, households, config, grid);
-
+    // Assign universities
     auto university_file = dir.getUniversityFile();
     auto universities    = university_file->read();
     std::cout << "Assigning universities" << std::endl;
     unsigned int total_commuting_students = assigner::AssignUniversities(universities, households, config, grid);
-
+    // Assign workplaces
     auto workplace_file = dir.getWorkplaceFile();
     auto workplaces     = workplace_file->read();
     std::cout << "Assigning workplaces" << std::endl;
     assigner::AssignWorkplaces(workplaces, households, config, grid, total_commuting_students);
-
+    // Assign communities
     auto community_file = dir.getCommunityFile();
     auto communities    = community_file->read();
     std::cout << "Assigning communities" << std::endl;
     assigner::AssignCommunities(communities, households, config, grid);
+
+    // Households to population
+    const auto population = make_shared<Population>();
+    for (const auto& household : households) {
+        population->
+
+    }
+    // Concatenate contactpools
+
+
     // Write persons
-    WritePopulation(households, config);
+    if (write)
+        WritePopulation(households, config);
 }
 
 void WritePopulation(vector<shared_ptr<Household>> households, const GenConfiguration& config)
 {
-    string config_path = config.getPath();
+    string config_path = config.GetPath();
     boost::filesystem::path out_dir = "output/"+config_path.substr(0, config_path.find_last_of("."));
     string file_path = out_dir.string()+"/pop.csv";
     std::ofstream my_file{file_path};

@@ -14,7 +14,7 @@ using namespace trng;
 vector<shared_ptr<School>> BuildSchools(const GenConfiguration& config, GeoGrid& grid)
 {
     auto schools = vector<shared_ptr<School>>();
-    unsigned int total_population = config.getTree().get<unsigned int>("population_size");
+    unsigned int total_population = config.GetTree().get<unsigned int>("population_size");
 
     // We assume (overestimate) the fraction of mandatory students to be 25%.
     unsigned int mandatory_students_count = (unsigned int)(0.25 * total_population);
@@ -32,7 +32,7 @@ vector<shared_ptr<School>> BuildSchools(const GenConfiguration& config, GeoGrid&
     }
 
     // The RNManager allows for parallelization.
-    auto rn_manager = config.getRNManager();
+    auto rn_manager = config.GetRNManager();
     auto generator  = rn_manager->GetGenerator(trng::fast_discrete_dist(fractions.begin(), fractions.end()));
 
     // Create and map the schools to their samples.

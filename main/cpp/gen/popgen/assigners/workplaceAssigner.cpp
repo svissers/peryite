@@ -30,12 +30,12 @@ void AssignWorkplaces(
     // -------------
     // Distributions
     // -------------
-    auto rn_manager = config.getRNManager();
+    auto rn_manager = config.GetRNManager();
 
-    auto total_population = config.getTree().get<unsigned int>("population_size");
-    auto student_fraction = config.getTree().get<double>("university.student_fraction");
-    auto work_fraction    = config.getTree().get<double>("work.work_fraction");
-    auto commute_fraction = config.getTree().get<double>("work.commute_fraction");
+    auto total_population = config.GetTree().get<unsigned int>("population_size");
+    auto student_fraction = config.GetTree().get<double>("university.student_fraction");
+    auto work_fraction    = config.GetTree().get<double>("work.work_fraction");
+    auto commute_fraction = config.GetTree().get<double>("work.commute_fraction");
     auto student_fractions  = vector<double>{student_fraction, 1.0 - student_fraction};
     auto work_fractions     = vector<double>{work_fraction, 1.0 - work_fraction};
     auto commute_fractions  = vector<double>{commute_fraction, 1.0 - commute_fraction};
@@ -47,7 +47,7 @@ void AssignWorkplaces(
     unsigned int total_commuting_actives    = 100000; // TODO
     double commuting_student_active_ratio   = total_commuting_students / total_commuting_actives;
 
-    util::CSV commuting_data = util::CSV(config.getTree().get<string>("geoprofile.commuters"));
+    util::CSV commuting_data = util::CSV(config.GetTree().get<string>("geoprofile.commuters"));
     size_t column_count = commuting_data.GetColumnCount();
     vector<int> relative_commute(column_count, 0);
     vector<unsigned int> total_commute(column_count, 0);

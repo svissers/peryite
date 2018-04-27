@@ -13,10 +13,10 @@ using namespace std;
 vector<shared_ptr<University>> BuildUniversities(GenConfiguration& config, GeoGrid& grid)
 {
     auto universities = vector<shared_ptr<University>>();
-    unsigned int total_population = config.getTree().get<unsigned int>("population_size");
+    unsigned int total_population = config.GetTree().get<unsigned int>("population_size");
 
     // The total amount of university students is given.
-    double universityFraction   = config.getTree().get<double>("university.student_fraction");
+    double universityFraction   = config.GetTree().get<double>("university.student_fraction");
     unsigned int student_count  = (unsigned int)(universityFraction * total_population);
 
     // Every university has an average of 3000 students
@@ -47,7 +47,7 @@ vector<shared_ptr<University>> BuildUniversities(GenConfiguration& config, GeoGr
     }
 
     // The RNManager allows for parallelization.
-    auto rn_manager = config.getRNManager();
+    auto rn_manager = config.GetRNManager();
     auto generator = rn_manager->GetGenerator(trng::fast_discrete_dist(fractions.begin(), fractions.end()));
 
     // Create and map the universities to their samples.

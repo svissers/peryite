@@ -7,7 +7,7 @@ namespace stride {
 namespace gen {
 namespace popgen {
 
-void Generate(files::GenDirectory& dir, unsigned int thread_count);
+void Generate(files::GenDirectory& dir, std::shared_ptr<Population>& population, ContactPoolSys& pool_sys, bool write=true);
 
 void WritePopulation(std::vector<std::shared_ptr<Household>> households, const GenConfiguration& config);
 

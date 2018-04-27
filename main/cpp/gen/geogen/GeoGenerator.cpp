@@ -1,6 +1,7 @@
 #include "GeoGenerator.h"
 #include "builders/SchoolsBuilder.h"
 #include "builders/WorkplacesBuilder.h"
+#include "../files/PopulationFile.h"
 #include "../files/GeoGridFile.h"
 #include "../files/SchoolFile.h"
 #include "../files/UniversityFile.h"
@@ -16,11 +17,13 @@ using namespace std;
 using namespace files;
 using namespace util;
 
-void Generate(GenDirectory& dir, unsigned int thread_count)
+void Generate(GenDirectory& dir)
 {
     auto config = dir.getConfig();
 
     // Build
+    std::cout << "Building population" << std::endl;
+    shared_ptr<Population> population = builder::BuildPopulation(config, dir.getBeliefConfig());
     std::cout << "Building geogen" << std::endl;
     GeoGrid geogrid = builder::BuildGeoGrid(config);
     std::cout << "Building schools" << std::endl;
@@ -33,6 +36,12 @@ void Generate(GenDirectory& dir, unsigned int thread_count)
     vector<shared_ptr<Community>> communities = builder::BuildCommunities(config, geogrid);
 
     // Write
+    auto population_file = make_shared<PopulationFile>(
+        config,
+        population
+    );
+    population_file->write();
+
     auto geo_grid_file = make_shared<GeoGridFile>(
         config,
         geogrid

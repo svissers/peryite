@@ -19,11 +19,11 @@ GeoGrid BuildGeoGrid(const GenConfiguration& config)
         GeoGrid geo_grid;
 
         // Reference set of cities
-        util::CSV cities_data = util::CSV(config.getTree().get<string>("geoprofile.cities"));;
+        util::CSV cities_data = util::CSV(config.GetTree().get<string>("geoprofile.cities"));;
         // Total population from reference set
         unsigned int total_ref_population   = 0;
         // Total population to be generated
-        unsigned int total_population       = config.getTree().get<unsigned int>("population_size");
+        unsigned int total_population       = config.GetTree().get<unsigned int>("population_size");
         // Longitude bounds for efficient distance based searches
         double max_longitude = 0;
         double min_longitude = 90;
@@ -62,7 +62,7 @@ GeoGrid BuildGeoGrid(const GenConfiguration& config)
         const unsigned int fragment_dist[4]     = {40,40,15,5};
         const unsigned int fragment_amounts[4]  = {2,3,4,5};
         const double lat_lon_diff               = 0.1;
-        auto rn_manager         = config.getRNManager();
+        auto rn_manager         = config.GetRNManager();
         auto frag_center_gen    = rn_manager->GetGenerator(trng::fast_discrete_dist(geo_grid.size()));
         auto frag_amount_gen    = rn_manager->GetGenerator(trng::fast_discrete_dist(std::begin(fragment_dist), std::end(fragment_dist)));
         auto latlon_diff_gen    = rn_manager->GetGenerator(trng::uniform_dist<>(-lat_lon_diff, lat_lon_diff));

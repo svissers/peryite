@@ -8,11 +8,6 @@ namespace gen {
 namespace popgen {
 namespace assigner {
 
-/// Builds a set of households for the population.
-/// @param config     Property_tree with general configuration settings.
-/// @return           The newly constructed households.
-std::vector<std::shared_ptr<Household>>  BuildHouseholds(const GenConfiguration& config);
-
 /// Assigns households to urban centers.
 /// @param households   Households that will be assigned.
 /// @param grid         The geogrid containing all centers that a household can be assigned to.

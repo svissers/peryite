@@ -45,11 +45,11 @@ unsigned int AssignUniversities(
     // -------------
     // Distributions
     // -------------
-    auto rn_manager = config.getRNManager();
+    auto rn_manager = config.GetRNManager();
 
     // Create two distributions, one to select if the person is a student and one to select if the student commutes.
-    auto student_fraction       = config.getTree().get<double>("university.student_fraction");
-    auto commute_fraction       = config.getTree().get<double>("university.commute_fraction");
+    auto student_fraction       = config.GetTree().get<double>("university.student_fraction");
+    auto commute_fraction       = config.GetTree().get<double>("university.commute_fraction");
     auto student_fractions      = vector<double>{student_fraction, 1.0 - student_fraction};
     auto commute_fractions      = vector<double>{commute_fraction, 1.0 - commute_fraction};
     auto student_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(student_fractions.begin(), student_fractions.end()));
@@ -59,7 +59,7 @@ unsigned int AssignUniversities(
     auto cp_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(floor(university_size / university_cp_size)));
 
     // Commuting distributions
-    util::CSV commuting_data(config.getTree().get<string>("geoprofile.commuters"));
+    util::CSV commuting_data(config.GetTree().get<string>("geoprofile.commuters"));
     map<unsigned int, std::function<int()>> city_generators;
     vector<unsigned int>                    commute_towards;
     unsigned int                            commute_towards_total = 0;
@@ -119,7 +119,7 @@ unsigned int AssignUniversities(
                         continue;
                     }
                     // Create a uniform distribution to select a university
-                    auto rn_manager = config.getRNManager();
+                    auto rn_manager = config.GetRNManager();
                     auto uni_gen    = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_universities.size()));
                     auto university = static_pointer_cast<University>(closest_universities[uni_gen()]);
                     // Create a uniform distribution to select a contactpool in the selected university

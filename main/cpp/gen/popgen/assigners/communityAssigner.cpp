@@ -53,7 +53,7 @@ void AssignCommunities(
             continue;
         }
         // Create a uniform distribution to select a primary community
-        auto rn_manager             = config.getRNManager();
+        auto rn_manager             = config.GetRNManager();
         auto community_generator    = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_communities.size()));
 
         auto community_index        = community_generator();
@@ -92,7 +92,7 @@ void AssignCommunities(
                 continue;
             }
             // Create a uniform distribution to select a secondary community
-            auto secondary_rn_manager             = config.getRNManager();
+            auto secondary_rn_manager             = config.GetRNManager();
             auto secondary_community_generator    = secondary_rn_manager->GetGenerator(trng::fast_discrete_dist(closest_communities.size()));
 
             auto secondary_community_index        = secondary_community_generator();
