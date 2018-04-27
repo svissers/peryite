@@ -98,7 +98,7 @@ install:
     else
       echo "Already have boost cache"
     fi
-    export LD_LIBRARY_PATH=$HOME/boost_1_66_0_cache/lib
+    export LD_LIBRARY_PATH=~/boost_1_66_0/stage/lib/:/opt/Qt/5.10.1/gcc_64/lib
     sudo rm -f /usr/local/lib/libboost*.dylib*
     sudo ln -s $HOME/boost_1_66_0_cache/lib/*.{so,dylib}* /usr/local/lib
 
