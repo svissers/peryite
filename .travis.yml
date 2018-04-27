@@ -120,3 +120,5 @@ script:
       STRIDE_BOOST_ROOT=$HOME/boost_1_66_0_cache STRIDE_BOOST_NO_SYSTEM_PATHS=ON make all
       make test
     fi
+
+  - find /opt/ -name "libQt5Charts.so.5"
