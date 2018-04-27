@@ -81,7 +81,7 @@ before_install:
 
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew install qt
-      brew link qt --force && ln -s /usr/local/Cellar/qt5/5.4.0/mkspecs /usr/local/mkspecs && ln -s /usr/local/Cellar/qt5/5.4.0/plugins /usr/local/plugins
+      sudo brew link qt --force && sudo ln -s /usr/local/Cellar/qt5/5.4.0/mkspecs /usr/local/mkspecs && sudo ln -s /usr/local/Cellar/qt5/5.4.0/plugins /usr/local/plugins
     fi
 
 install:
@@ -103,9 +103,10 @@ install:
       echo "Already have boost cache"
     fi
     export LD_LIBRARY_PATH=$HOME/boost_1_66_0_cache/lib
-    /opt/qt510/bin/qt510-env.sh
     sudo rm -f /usr/local/lib/libboost*.dylib*
     sudo ln -s $HOME/boost_1_66_0_cache/lib/*.{so,dylib}* /usr/local/lib
+
+  - /opt/qt510/bin/qt510-env.sh
 
 script:
   # Build stride and run tests
