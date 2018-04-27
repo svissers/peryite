@@ -72,13 +72,17 @@ before_install:
   - export GTEST_COLOR=1
 
   # Qt
-  #- sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
-  - sudo add-apt-repository --yes ppa:beineri/opt-qt-5.10.1-trusty
-  - sudo apt-get update -qq
-  #- sudo apt-get install qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev libsqlite3-dev
-  #- sudo apt-get install qt5-default qttools5-dev-tools
-  #- sudo apt-get install libqt5charts5 libqt5charts5-dev
-  - sudo apt-get install qt510-meta-minimal qt510charts-no-lgpl
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      sudo add-apt-repository --yes ppa:beineri/opt-qt-5.10.1-trusty
+      sudo apt-get update -qq
+      sudo apt-get install qt510-meta-minimal qt510charts-no-lgpl
+    fi
+
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      brew install qt5
+      brew link qt5 --force
+    fi
 
 install:
   # Check for presence of boost cache, otherwise build boost
@@ -98,7 +102,7 @@ install:
     else
       echo "Already have boost cache"
     fi
-    export LD_LIBRARY_PATH=~/boost_1_66_0/stage/lib/:/opt/Qt/5.10.1/gcc_64/lib
+    export LD_LIBRARY_PATH=~/boost_1_66_0/stage/lib/
     sudo rm -f /usr/local/lib/libboost*.dylib*
     sudo ln -s $HOME/boost_1_66_0_cache/lib/*.{so,dylib}* /usr/local/lib
 
@@ -107,6 +111,7 @@ script:
   #			STRIDE_BOOST_ROOT: specify where the correct version of boost can be found
   #			STRIDE_BOOST_NO_SYSTEM_PATHS: should be ON to prevent mixing different versions of boost
   # Arbitrarily chosen one platform for Debug build.
+  - export LD_LIBRARY_PATH=~/boost_1_66_0/stage/lib/:/opt/Qt/5.10.1/gcc_64/lib
   - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$CXX_COMPILER_ID" == "LLVM" ]]; then
       CMAKE_BUILD_TYPE=Debug STRIDE_BOOST_ROOT=$HOME/boost_1_66_0_cache STRIDE_BOOST_NO_SYSTEM_PATHS=ON make all
@@ -115,4 +120,3 @@ script:
       STRIDE_BOOST_ROOT=$HOME/boost_1_66_0_cache STRIDE_BOOST_NO_SYSTEM_PATHS=ON make all
       make test
     fi
-    echo $LD_LIBRARY_PATH
