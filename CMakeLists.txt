@@ -56,6 +56,7 @@ set(DATA_INSTALL_LOCATION    data)
 set(CONFIG_INSTALL_LOCATION  config)
 set(DOC_INSTALL_LOCATION     doc)
 set(TESTS_INSTALL_LOCATION   tests)
+set(UI_INSTALL_LOCATION      ui)
 
 #============================================================================
 # Configuration for Git.

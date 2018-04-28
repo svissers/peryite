@@ -19,7 +19,8 @@ GeoGenVisualization::GeoGenVisualization(QWidget *parent) :
     setStyleSheet("QWidget { background-color: #eaeaea; }");
 
     // Load background image into image
-    QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("../vlaanderen.png");
+    QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("./ui/vlaanderen.png");
+    qDebug() << filename;
     image = new QImage(filename);
 
     // Setup GraphicsScene
@@ -30,7 +31,7 @@ GeoGenVisualization::GeoGenVisualization(QWidget *parent) :
     // Set timer interval for draw update
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &GeoGenVisualization::update);
-    timer->start(1000/60 * 2); // 30 fps
+    timer->start(1000 / 30); // 30 fps
 }
 
 GeoGenVisualization::~GeoGenVisualization()
@@ -89,6 +90,7 @@ void GeoGenVisualization::addCircle(VisualizationCircle *c) {
 void GeoGenVisualization::drawCircle(QPixmap *pm, QPointF point, float radius, bool selected) {
     // QPainter
     QPainter painter(pm);
+    painter.scale(1, 1);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setBrush(selected ? QColor("#3c6382") : QColor("#78e08f"));
     painter.setPen(QColor(0, 0, 0, 0));
@@ -189,8 +191,8 @@ void GeoGenVisualization::addUniversity(QString csvLine) {
     QStringList list = Util::parseCSVLine(csvLine);
 
     // Read data from CSV and find corresponding circle
-    float latitude = list[1].toFloat();
-    float longitude = list[2].toFloat();
+    float latitude = list[2].toFloat();
+    float longitude = list[3].toFloat();
     VisualizationCircle* circle = findCircle(longitude, latitude);
 
     // Nullcheck
