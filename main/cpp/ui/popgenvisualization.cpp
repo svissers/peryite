@@ -74,7 +74,11 @@ void PopGenVisualization::parseData(PopGenData *data) {
         // Get the line
         QStringList list = Util::parseCSVLine(line);
 
-        addAge(list[0].toInt());
+        if (list[0].contains(".")) {
+            addAge(int(list[0].toFloat()));
+        } else {
+            addAge(list[0].toInt());
+        }
     }
 
     popgenFile.close();
