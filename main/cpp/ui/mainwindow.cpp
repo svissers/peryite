@@ -30,7 +30,7 @@ MainWindow::~MainWindow()
  */
 
 void MainWindow::setOutputFolder(QString path)
-{   
+{
     // Now that we're sure the files exist, we can set them.
     ui->General_outputFolderLabel->setText(path);
     data->outputFolder = path;
@@ -51,7 +51,7 @@ void MainWindow::on_General_outputFolderSelect_clicked()
     QString filename = QFileDialog::getExistingDirectory(
                 this,
                 tr("Select the output folder."),
-                "../../cmake-build-release/installed/output",
+                "./output",
                 QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
     if (filename == "") {
@@ -67,7 +67,7 @@ void MainWindow::on_General_configFileSelect_clicked()
     QString filename = QFileDialog::getOpenFileName(
                 this,
                 tr("Select the config file."),
-                "../../cmake-build-release/installed/config",
+                "./config",
                 "XML Files (*.xml)");
 
     if (filename == "") {
