@@ -34,8 +34,7 @@ public:
     {
         if (m_grid.size() == 0)
             return;
-        std::string file_path = m_out_dir.string()+"/"+m_file_name;
-        std::ofstream my_file{file_path};
+        std::ofstream my_file{m_file_path.string()};
         if(my_file.is_open()) {
             my_file << boost::algorithm::join(m_labels,",") << "\n";
                 for (auto center : m_grid) {
@@ -52,8 +51,7 @@ public:
         // Populate the geogrid and return it.
         m_grid.m_min_long = 90;
         m_grid.m_max_long = 0;
-        std::string file_path = m_out_dir.string()+"/"+m_file_name;
-        util::CSV struct_data(file_path);
+        util::CSV struct_data(m_file_path.string());
         for (util::CSVRow const & row : struct_data) {
             double longitude = row.GetValue<double>("longitude");
             auto center = std::make_shared<UrbanCenter>(UrbanCenter(

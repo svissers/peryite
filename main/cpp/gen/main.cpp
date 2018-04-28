@@ -2,16 +2,21 @@
  * @file
  * Main program for the generation of geogrids and a population.
  */
-#include "../util/ConfigInfo.h"
-#include "../util/InstallDirs.h"
-#include "../util/TimeStamp.h"
+#include "util/ConfigInfo.h"
+#include "util/InstallDirs.h"
+#include "util/TimeStamp.h"
+#include "util/RunConfigManager.h"
+#include "pop/Population.h"
+#include "pool/ContactPoolSys.h"
 #include "geogen/GeoGenerator.h"
 #include "popgen/PopGenerator.h"
 #include "GenConfiguration.h"
 #include "files/GenDirectory.h"
 
+
 #include <tclap/CmdLine.h>
 #include <omp.h>
+#include <memory>
 
 using namespace std;
 using namespace stride::gen;
@@ -57,31 +62,34 @@ int main(int argc, char* argv[])
                 // -----------------------------------------------------------------------------------------
                 unsigned int num_threads = 1;
                 if (ConfigInfo::HaveOpenMP()) {
-                        #pragma omp parallel
-                        {
-                                num_threads = static_cast<unsigned int>(omp_get_num_threads());
-                        }
-                        cout << "\nUsing OpenMP threads:  " << num_threads << endl;
+                    #pragma omp parallel
+                    {
+                            num_threads = static_cast<unsigned int>(omp_get_num_threads());
+                    }
+                    cout << "\nUsing OpenMP threads:  " << num_threads << endl;
                 } else {
-                        cout << "\nNot using parallellization" << endl;
+                    cout << "\nNot using parallellization" << endl;
                 }
 
                 // -----------------------------------------------------------------------------------------
                 // Initialize the directory for the given configuration
                 // -----------------------------------------------------------------------------------------
-                GenDirectory dir = GenDirectory(config_file_name, num_threads);
+                auto configPt = RunConfigManager::Create(config_file_name);
+                GenDirectory dir = GenDirectory(configPt, num_threads, "output");
 
                 // -----------------------------------------------------------------------------------------
                 // Run Generator-Geo
                 // -----------------------------------------------------------------------------------------
                 if (generate_geo) {
-                    geogen::Generate(dir, num_threads);
+                    geogen::Generate(dir);
                 }
                 // -----------------------------------------------------------------------------------------
                 // Run Generator-Pop
                 // -----------------------------------------------------------------------------------------
                 if (generate_pop) {
-                    popgen::Generate(dir, num_threads);
+                    auto population = make_shared<stride::Population>();
+                    stride::ContactPoolSys pool_sys;
+                    popgen::Generate(dir, population, pool_sys, true);
                 }
                 // -----------------------------------------------------------------------------------------
                 // Finished

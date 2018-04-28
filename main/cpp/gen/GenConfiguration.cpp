@@ -15,8 +15,8 @@ namespace gen {
 using namespace std;
 using namespace boost::property_tree;
 
-GenConfiguration::GenConfiguration(boost::property_tree::ptree& config_pt, unsigned int thread_count)
-        : m_config(config_pt), m_thread_count(thread_count)
+GenConfiguration::GenConfiguration(boost::property_tree::ptree config_pt, unsigned int thread_count, string output_prefix)
+        : m_config(config_pt), m_output_prefix(output_prefix), m_thread_count(thread_count)
 {
     CheckValidConfig();
 
@@ -29,8 +29,8 @@ GenConfiguration::GenConfiguration(boost::property_tree::ptree& config_pt, unsig
 }
 
 
-GenConfiguration::GenConfiguration(boost::property_tree::ptree& config_tree, std::shared_ptr<util::RNManager>& rn_manager)
-    : m_config(config_tree), m_rn_manager(rn_manager)
+GenConfiguration::GenConfiguration(boost::property_tree::ptree config_tree, std::shared_ptr<util::RNManager>& rn_manager, string output_prefix)
+    : m_config(config_tree), m_output_prefix(output_prefix), m_rn_manager(rn_manager)
 {
 }
 
@@ -38,6 +38,12 @@ boost::property_tree::ptree GenConfiguration::GetTree() const
 {
     return m_config;
 }
+
+string GenConfiguration::GetOutputPrefix() const
+{
+    return m_output_prefix;
+}
+
 
 std::shared_ptr<util::RNManager> GenConfiguration::GetRNManager() const
 {

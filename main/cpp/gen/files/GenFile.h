@@ -17,12 +17,12 @@ public:
     GenFile(GenConfiguration& config);
     GenFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, GeoGrid& geo);
 
-    virtual void write();
+    virtual void Write();
     virtual std::vector<std::vector<std::shared_ptr<GenStruct>>> read();
 
 protected:
     std::vector<std::string> m_labels;
-    boost::filesystem::path m_out_dir;
+    boost::filesystem::path m_file_path;
     std::string m_file_name;
     std::vector<std::vector<std::shared_ptr<GenStruct>>> m_sorted_structs;
 

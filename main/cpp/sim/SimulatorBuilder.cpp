@@ -110,13 +110,13 @@ std::shared_ptr<Simulator> SimulatorBuilder::Build(const ptree& disease_pt, cons
                 sim->m_contact_logger = LogUtils::CreateNullLogger("contact_logger");
         }
 
-        const ptree pop_config_pt = m_config_pt.get_child_optional("pop_config");
+        auto pop_config_pt = m_config_pt.get_child_optional("pop_config");
 
         // --------------------------------------------------------------
         // Build population and ContactPoolSystem
         // --------------------------------------------------------------
         if (pop_config_pt) {
-            sim->m_population =
+            //sim->m_population =
         } else {
             sim->m_population = PopulationBuilder::Build(m_config_pt, sim->m_rn_manager);
             PopPoolBuilder(m_stride_logger).Build(sim->m_pool_sys, *sim->m_population);

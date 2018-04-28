@@ -18,7 +18,7 @@ namespace files {
 class GenDirectory
 {
 public:
-    GenDirectory(std::string config_file_name, unsigned int thread_count);
+    GenDirectory(const boost::property_tree::ptree& config_pt, unsigned int thread_count, std::string output_prefix);
 
     void initialize(PopulationFilePtr hh_file, GeoGridFilePtr geo_file,
                 SchoolFilePtr school_file, UniversityFilePtr university_file,

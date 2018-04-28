@@ -1,7 +1,6 @@
 #include "PopulationFile.h"
 #include "util/InstallDirs.h"
-
-#include <boost/property_tree/ptree.hpp>
+#include "util/FileSys.h"
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/foreach.hpp>
 #include <string>
@@ -11,6 +10,8 @@ namespace gen {
 namespace files {
 
 using namespace std;
+using namespace util;
+using namespace boost::filesystem;
 using namespace boost::property_tree;
 
 PopulationFile::PopulationFile(GenConfiguration& config)
@@ -19,10 +20,10 @@ PopulationFile::PopulationFile(GenConfiguration& config)
     m_labels = {"age", "household_id", "school_id", "work_id", "primary_community", "secondary_community"};
 
     // Get the output directory for this configuration.
-    string config_path = config.GetPath();
-    m_out_dir = "output/"+config_path.substr(0, config_path.find_last_of("."));
+    string output_prefix = config.GetOutputPrefix();
+    m_file_path = FileSys::BuildPath(output_prefix, m_file_name);
     try {
-        create_directories(m_out_dir);
+        create_directories(output_prefix);
     } catch (exception& e) {
         cout << "GeoGenerator::generate> Exception while creating output directory:  {}", e.what();
         throw;
@@ -30,32 +31,32 @@ PopulationFile::PopulationFile(GenConfiguration& config)
 }
 
 PopulationFile::PopulationFile(GenConfiguration& config, std::shared_ptr<Population> population)
-    : PopulationFile(config), m_population(population)
-{}
+    : PopulationFile(config)
+{
+    m_population = population;
+}
 
 
 void PopulationFile::Write()
 {
-    if (m_population.empty())
+    if (m_population->empty())
         return;
-    string file_path = m_out_dir.string()+"/"+m_file_name;
-    std::ofstream my_file{file_path};
+    std::ofstream my_file{m_file_path.string()};
     if(my_file.is_open()) {
         my_file << boost::algorithm::join(m_labels,",") << "\n";
-        for (const auto& person : m_population)
+        for (const auto& person : *m_population)
             my_file << boost::algorithm::join(getValues(person),",") << "\n";
         my_file.close();
     }
 }
 
-std::shared_ptr<Population> PopulationFile::Read(const ptree& belief_pt)
+std::shared_ptr<Population> PopulationFile::Read(const boost::property_tree::ptree& belief_pt)
 {
-    if (!m_population.empty())
+    if (!m_population->empty())
         return m_population;
     // Populate the population and return it
     m_population = make_shared<Population>();
-    string file_path = m_out_dir.string()+"/"+m_file_name;
-    CSV pop_data(file_path);
+    CSV pop_data(m_file_path.string());
     unsigned int person_id = 0U;
     for (CSVRow const & row : pop_data) {
         m_population->CreatePerson(
@@ -71,10 +72,10 @@ std::shared_ptr<Population> PopulationFile::Read(const ptree& belief_pt)
         );
        ++person_id;
     }
-    return population;
+    return m_population;
 }
 
-vector<vector<unsigned int>> PopulationFile::GetReferenceHouseholds(const GenConfiguration& config)
+vector<vector<unsigned int>> GetReferenceHouseholds(const GenConfiguration& config)
 {
     string file_name = config.GetTree().get<string>("household_profile");
     ptree tree;
@@ -107,15 +108,15 @@ vector<vector<unsigned int>> PopulationFile::GetReferenceHouseholds(const GenCon
 }
 
 
-std::vector<std::string> PopulationFile::getValues(std::shared_ptr<Person> person)
+std::vector<std::string> PopulationFile::getValues(const Person& person)
 {
     vector<string> values = {
-        to_string(person->GetAge()),
-        to_string(person->GetPoolId(ContactPoolType::Id::Household)),
-        to_string(person->GetPoolId(ContactPoolType::Id::School)),
-        to_string(person->GetPoolId(ContactPoolType::Id::Work)),
-        to_string(person->GetPoolId(ContactPoolType::Id::PrimaryCommunity)),
-        to_string(person->GetPoolId(ContactPoolType::Id::SecondaryCommunity))
+        to_string(person.GetAge()),
+        to_string(person.GetPoolId(ContactPoolType::Id::Household)),
+        to_string(person.GetPoolId(ContactPoolType::Id::School)),
+        to_string(person.GetPoolId(ContactPoolType::Id::Work)),
+        to_string(person.GetPoolId(ContactPoolType::Id::PrimaryCommunity)),
+        to_string(person.GetPoolId(ContactPoolType::Id::SecondaryCommunity))
     };
     return values;
 }

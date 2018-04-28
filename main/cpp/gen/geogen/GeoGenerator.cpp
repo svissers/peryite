@@ -1,4 +1,5 @@
 #include "GeoGenerator.h"
+#include "builders/PopulationBuilder.h"
 #include "builders/SchoolsBuilder.h"
 #include "builders/WorkplacesBuilder.h"
 #include "../files/PopulationFile.h"
@@ -40,44 +41,44 @@ void Generate(GenDirectory& dir)
         config,
         population
     );
-    population_file->write();
+    population_file->Write();
 
     auto geo_grid_file = make_shared<GeoGridFile>(
         config,
         geogrid
     );
-    geo_grid_file->write();
+    geo_grid_file->Write();
 
     auto school_file = make_shared<SchoolFile>(
         config,
         vector<GenStruct::ptr>(schools.begin(), schools.end()),
         geogrid
     );
-    school_file->write();
+    school_file->Write();
 
     auto university_file = make_shared<UniversityFile>(
         config,
         vector<GenStruct::ptr>(universities.begin(), universities.end()),
         geogrid
     );
-    university_file->write();
+    university_file->Write();
 
     auto workplace_file = make_shared<WorkplaceFile>(
         config,
         vector<GenStruct::ptr>(workplaces.begin(), workplaces.end()),
         geogrid
     );
-    workplace_file->write();
+    workplace_file->Write();
 
     auto community_file = make_shared<CommunityFile>(
         config,
         vector<GenStruct::ptr>(communities.begin(), communities.end()),
         geogrid
     );
-    community_file->write();
+    community_file->Write();
 
     // Initialize
-    dir.initialize(geo_grid_file, school_file, university_file, workplace_file, community_file);
+    dir.initialize(population_file, geo_grid_file, school_file, university_file, workplace_file, community_file);
 }
 
 } // namespace geogen

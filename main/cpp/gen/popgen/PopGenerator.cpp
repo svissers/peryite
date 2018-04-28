@@ -25,7 +25,7 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population, Cont
     // Get the population and structs (by file or memory)
     // --------------------------------------------------
     auto config         = dir.getConfig();
-    population          = dir.GetPopulationFile()->Read();
+    population          = dir.GetPopulationFile()->Read(dir.getBeliefConfig());
     auto grid           = dir.getGeoGridFile()->readGrid();
     auto schools        = dir.getSchoolFile()->read();
     auto universities   = dir.getUniversityFile()->read();
@@ -62,7 +62,48 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population, Cont
         }
         cp_id++;
     }
-
+    // Schools
+    for (const auto& band : schools) {
+        for (const auto& g_struct : band) {
+            auto school = std::static_pointer_cast<School>(g_struct);
+            for(const auto& pool : school->pools) {
+                pool_sys[ContactPoolType::Id::School].emplace_back(*pool);
+                cp_id++;
+            }
+        }
+    }
+    // Universities
+    for (auto& band : universities) {
+        for (auto& g_struct : band) {
+            auto university = std::static_pointer_cast<University>(g_struct);
+            // Create the contactpools for every university
+            for(const auto& pool : university->pools) {
+                pool_sys[ContactPoolType::Id::School].emplace_back(*pool);
+                cp_id++;
+            }
+        }
+    }
+    // Workplaces
+    for (auto& band : workplaces) {
+        for (auto& g_struct : band) {
+            auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
+            pool_sys[ContactPoolType::Id::Work].emplace_back(*(workplace->pool));
+            cp_id++;
+        }
+    }
+    // Communities
+    for (auto& band : communities) {
+        for (auto& g_struct : band) {
+            auto community  = std::static_pointer_cast<Community>(g_struct);
+            auto com_id     = ContactPoolType::Id::PrimaryCommunity;
+            if(!community->is_primary)
+                com_id = ContactPoolType::Id::SecondaryCommunity;
+            for(const auto& pool : community->pools) {
+                pool_sys[com_id].emplace_back(*pool);
+                cp_id++;
+            }
+        }
+    }
 
     // -------------
     // Write persons

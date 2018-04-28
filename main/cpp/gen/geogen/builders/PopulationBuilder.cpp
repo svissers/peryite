@@ -12,7 +12,7 @@ using namespace std;
 shared_ptr<Population> BuildPopulation(const GenConfiguration& config, const boost::property_tree::ptree& belief_pt)
 {
     auto population             = make_shared<Population>();
-    auto hh_reference           = files::getHouseholds(config);
+    auto hh_reference           = files::GetReferenceHouseholds(config);
     unsigned int current_hh_id  = 0;
     unsigned int current_p_id   = 0;
     auto pop_size = config.GetTree().get<unsigned int>("population_size");
@@ -32,7 +32,7 @@ shared_ptr<Population> BuildPopulation(const GenConfiguration& config, const boo
             for (unsigned int age : household_ref) {
                 population->CreatePerson(
                     current_p_id, age, current_hh_id,
-                    0, 0, 0, 0, Health(), belief_pt)
+                    0, 0, 0, 0, Health(), belief_pt
                 );
                 current_p_id++;
             }
