@@ -23,6 +23,7 @@ public:
 protected:
     std::vector<std::string> m_labels;
     boost::filesystem::path m_file_path;
+    std::string m_output_prefix;
     std::string m_file_name;
     std::vector<std::vector<std::shared_ptr<GenStruct>>> m_sorted_structs;
 

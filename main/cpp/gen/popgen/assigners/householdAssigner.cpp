@@ -30,8 +30,14 @@ void AssignHouseholds (
     // Map the households to their samples.
     for (std::size_t i = 0; i < population->size(); ++i) {
         auto hh_id  = population->at(i).GetPoolId(ContactPoolType::Id::Household);
-        auto center = grid.at(generator());
+        auto index  = grid.at(generator());
+        auto center = index;
         auto coord  = center->coordinate;
+        if (coord.m_latitude == 0) {
+            std::cout << "lat is 0 " << coord << std::endl;
+            std::cout << "index: " << index << std::endl;
+            std::cout << "hh_id: " << hh_id << std::endl;
+        }
         if (center->is_fragmented) {
             // Select one of the fragments
             vector<double> f_fractions;

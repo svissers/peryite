@@ -38,7 +38,7 @@ void AssignCommunities(
     // ------------------------------
     // Assign persons to communities
     // ------------------------------
-    for (std::size_t i = 0; i < population->size(); ++i) {
+    for (std::size_t i = 0; i < population->size(); i++) {
         auto hh_id      = population->at(i).GetPoolId(ContactPoolType::Id::Household);
         auto home_coord = population->at(i).GetCoordinate();
         auto closest_communities = GetClosestStructs(home_coord, communities, grid);
@@ -105,11 +105,9 @@ void AssignCommunities(
                     communities.erase(communities.begin() + secondary_community_index);
                 }
             }
-
             if (++i >= population->size())
                 break;
         }
-
         // Remove the primary community pool from the list once it's full
         if (pool->GetSize() >= community_cp_size) {
             auto pools = community->pools;

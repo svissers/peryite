@@ -29,7 +29,6 @@ void AssignSchools(
             }
         }
     }
-    std::cout << "Done creating contactpools, start assinging " << std::endl;
 
     // Assign young students to schools
     for (auto& person : *population) {
@@ -39,7 +38,9 @@ void AssignSchools(
             // Find the closest schools
             std::vector<shared_ptr<GenStruct>> closest_schools = GetClosestStructs(home_coord, schools, grid);
             if (closest_schools.empty()) {
-                //std::cout << "closest_schools is empty: " << age << std::endl;
+                std::cout << "Age: " << age << std::endl;
+                std::cout << "Home coord schools: " << home_coord << std::endl;
+                std::cout << "closest_schools is empty: " << age << std::endl;
                 continue;
             }
             // Create a uniform distribution to select a school
@@ -53,7 +54,6 @@ void AssignSchools(
             pool->AddMember(&person);
         }
     }
-    std::cout << "Done assigning" << std::endl;
 }
 
 } // assigner

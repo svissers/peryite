@@ -15,10 +15,9 @@ using namespace boost::filesystem;
 GenFile::GenFile(GenConfiguration& config)
 {
     // Get the output directory for this configuration.
-    string output_prefix = config.GetOutputPrefix();
-    m_file_path = FileSys::BuildPath(output_prefix, m_file_name);
+    m_output_prefix = config.GetOutputPrefix();
     try {
-        create_directories(output_prefix);
+        create_directories(m_output_prefix);
     } catch (exception& e) {
         cout << "GeoGenerator::generate> Exception while creating output directory:  {}", e.what();
         throw;
@@ -29,10 +28,10 @@ GenFile::GenFile(GenConfiguration& config, vector<shared_ptr<GenStruct>> structs
 : GenFile(config)
 {
     // Get the output directory for this configuration.
-    string output_prefix = config.GetOutputPrefix();
-    m_file_path = FileSys::BuildPath(output_prefix, m_file_name);
+    m_output_prefix = config.GetOutputPrefix();
+    m_file_path = FileSys::BuildPath(m_output_prefix, m_file_name);
     try {
-        create_directories(output_prefix);
+        create_directories(m_output_prefix);
     } catch (exception& e) {
         cout << "GeoGenerator::generate> Exception while creating output directory:  {}", e.what();
         throw;
@@ -44,6 +43,7 @@ void GenFile::Write()
 {
     if (m_sorted_structs.size() == 0)
         return;
+    m_file_path = FileSys::BuildPath(m_output_prefix, m_file_name);
     std::ofstream my_file{m_file_path.string()};
     if(my_file.is_open()) {
         my_file << boost::algorithm::join(m_labels,",") << "\n";
@@ -63,6 +63,7 @@ vector<vector<shared_ptr<GenStruct>>> GenFile::read()
         return m_sorted_structs;
     // Populate the struct vector and return it.
     m_sorted_structs = vector<vector<shared_ptr<GenStruct>>>(AMOUNTOFBANDS);
+    m_file_path = FileSys::BuildPath(m_output_prefix, m_file_name);
     CSV struct_data(m_file_path.string());
     for (CSVRow const & row : struct_data) {
         auto g_struct = getStruct(row);

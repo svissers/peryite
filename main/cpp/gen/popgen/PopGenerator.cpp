@@ -51,7 +51,7 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population, Cont
     // -------------------
     unsigned int cp_id = 1;
     // Households
-    for (std::size_t i = 0; i != population->size(); ++i) {
+    for (std::size_t i = 0; i < population->size(); ++i) {
         auto& person    = population->at(i);
         auto hh_id  = person.GetPoolId(ContactPoolType::Id::Household);
         auto pool   = ContactPool(cp_id, ContactPoolType::Id::Household);
@@ -109,11 +109,11 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population, Cont
     // Write persons
     // -------------
     if (write) {
-        auto output_file = make_shared<files::PopulationFile>(
+        auto output_file = files::PopulationFile(
             config,
             population
         );
-        output_file->Write();
+        output_file.Write();
     }
 }
 
@@ -127,8 +127,13 @@ vector<shared_ptr<GenStruct>> GetClosestStructs(const util::GeoCoordinate& home_
     unsigned int search_range = 10;
 
     auto band_of_hh = uint( (home_coord.m_longitude - grid.m_min_long) / grid.m_longitude_band_width );
-    if (band_of_hh >= structs.size())
+    if (band_of_hh >= structs.size()) {
+        //std::cout << "home_coord: " << home_coord << std::endl;
+        //std::cout << "grid.m_min_long: " << grid.m_min_long << std::endl;
+        //std::cout << "grid.m_longitude_band_width: " << grid.m_longitude_band_width << std::endl;
+        //std::cout << "band_of_hh: " << band_of_hh << " / " << structs.size() << std::endl;
         return closest_structs;
+    }
 
     // Keep doubling search space until a struct is found
     while(closest_structs.empty()){
@@ -137,7 +142,6 @@ vector<shared_ptr<GenStruct>> GetClosestStructs(const util::GeoCoordinate& home_
         unsigned int lastband = band_of_hh + band_range;
         if (band_of_hh > band_range)
             firstband = band_of_hh - band_range;
-        //std::cout << "first: " << firstband << " last: " << lastband << " band_range: " << band_range << std::endl;
         if (lastband >= structs.size()) {
             lastband = structs.size() - 1;
             if (firstband == 0)

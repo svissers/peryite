@@ -16,7 +16,7 @@ using namespace boost::property_tree;
 
 PopulationFile::PopulationFile(GenConfiguration& config)
 {
-    m_file_name = "UnassignedPop.csv";
+    m_file_name = "Pop.csv";
     m_labels = {"age", "household_id", "school_id", "work_id", "primary_community", "secondary_community"};
 
     // Get the output directory for this configuration.
