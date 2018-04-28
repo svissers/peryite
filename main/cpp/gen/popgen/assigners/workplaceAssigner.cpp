@@ -16,6 +16,18 @@ void AssignWorkplaces(
     const GenConfiguration& config, const GeoGrid& grid, unsigned int total_commuting_students)
 {
     // -------------
+    // Contactpools
+    // -------------
+    unsigned int cp_id = 0;
+    for (auto& band : workplaces) {
+        for (auto& g_struct : band) {
+            auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
+            auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Work);
+            workplace->pool = pool;
+            cp_id++;
+        }
+    }
+    // -------------
     // Distributions
     // -------------
     auto rn_manager = config.GetRNManager();

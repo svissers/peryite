@@ -7,9 +7,11 @@ namespace gen {
 namespace geogen {
 namespace builder {
 
-std::shared_ptr<Population> BuildPopulation(const GenConfiguration& config, const boost::property_tree::ptree& belief_pt)
+using namespace std;
+
+shared_ptr<Population> BuildPopulation(const GenConfiguration& config, const boost::property_tree::ptree& belief_pt)
 {
-    auto population = make_shared<Population>();
+    auto population             = make_shared<Population>();
     auto hh_reference           = files::getHouseholds(config);
     unsigned int current_hh_id  = 0;
     unsigned int current_p_id   = 0;

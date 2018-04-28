@@ -17,10 +17,22 @@ unsigned int AssignUniversities(
     vector<vector<shared_ptr<GenStruct>>>& universities, const shared_ptr<Population> population,
     const GenConfiguration& config, const GeoGrid& grid)
 {
+    // -------------
+    // Contactpools
+    // -------------
+    const unsigned int university_size      = 3000;
+    const unsigned int university_cp_size   = 20;
+    unsigned int cp_id                      = 0;
     map<unsigned int, vector<shared_ptr<University>>> cities;
     for (auto& band : universities) {
         for (auto& g_struct : band) {
             auto university = std::static_pointer_cast<University>(g_struct);
+            // Create the contactpools for every university
+            for(unsigned int size = 0; size < university_size; size += university_cp_size) {
+                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::School);
+                university->pools.push_back(pool);
+                cp_id++;
+            }
             // Get the different university locations (urban_id = row_index in commuting data).
             if (cities.find(university->urban_id) == cities.end() ) {
                 cities[university->urban_id] = vector<shared_ptr<University>>({university});
@@ -29,6 +41,7 @@ unsigned int AssignUniversities(
             }
         }
     }
+
     // -------------
     // Distributions
     // -------------
@@ -43,8 +56,6 @@ unsigned int AssignUniversities(
     auto commute_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(commute_fractions.begin(), commute_fractions.end()));
 
     // create a uniform distribution to select a contactpool from a university
-    const unsigned int university_size      = 3000;
-    const unsigned int university_cp_size   = 20;
     auto cp_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(floor(university_size / university_cp_size)));
 
     // Commuting distributions

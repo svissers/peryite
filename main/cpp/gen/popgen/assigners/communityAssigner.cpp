@@ -15,7 +15,26 @@ void AssignCommunities(
     vector<vector<shared_ptr<GenStruct>>> communities, const shared_ptr<Population> population,
     const GenConfiguration& config, const GeoGrid& grid)
 {
-    const unsigned int community_cp_size = 20;
+    // -------------
+    // Contactpools
+    // -------------
+    const unsigned int community_size      = 2000;
+    const unsigned int community_cp_size   = 20;
+    // Create the contactpools for every community
+    unsigned int cp_id = 0;
+    for (auto& band : communities) {
+        for (auto& g_struct : band) {
+            auto community  = std::static_pointer_cast<Community>(g_struct);
+            auto com_id     = ContactPoolType::Id::PrimaryCommunity;
+            if(!community->is_primary)
+                com_id = ContactPoolType::Id::SecondaryCommunity;
+            for(unsigned int size = 0; size < community_size; size += community_cp_size) {
+                auto pool = make_shared<ContactPool>(cp_id, com_id);
+                community->pools.push_back(pool);
+                cp_id++;
+            }
+        }
+    }
     // ------------------------------
     // Assign persons to communities
     // ------------------------------

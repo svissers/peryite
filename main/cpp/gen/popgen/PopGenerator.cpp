@@ -33,80 +33,6 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population, Cont
     auto communities    = dir.getCommunityFile()->read();
 
     // -------------------
-    // Create ContactPools
-    // -------------------
-    unsigned int cp_id = 1;
-    // Households
-    for (std::size_t i = 0; i != population->size(); ++i) {
-        auto& person    = population->at(i);
-        auto hh_id  = person.GetPoolId(ContactPoolType::Id::Household);
-        auto pool   = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Household);
-        pool_sys[ContactPoolType::Id::Household].emplace_back(*pool);
-        while ( person.GetPoolId(ContactPoolType::Id::Household) == hh_id ) {
-            if (++i >= population->size())
-                break;
-        }
-        cp_id++;
-    }
-
-    // Schools
-    const unsigned int school_size      = 500;
-    const unsigned int school_cp_size   = 20;
-    for (const auto& band : schools) {
-        for (const auto& g_struct : band) {
-            auto school = std::static_pointer_cast<School>(g_struct);
-            for(unsigned int size = 0; size < school_size; size += school_cp_size) {
-                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::School);
-                school->pools.push_back(pool);
-                pool_sys[ContactPoolType::Id::School].emplace_back(pool);
-                cp_id++;
-            }
-        }
-    }
-
-    // Universities
-    const unsigned int university_size      = 3000;
-    const unsigned int university_cp_size   = 20;
-    for (auto& band : universities) {
-        for (auto& g_struct : band) {
-            auto university = std::static_pointer_cast<University>(g_struct);
-            // Create the contactpools for every university
-            for(unsigned int size = 0; size < university_size; size += university_cp_size) {
-                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::School);
-                university->pools.push_back(pool);
-                pool_sys[ContactPoolType::Id::School].emplace_back(pool);
-                cp_id++;
-            }
-        }
-    }
-    // Workplaces
-    for (auto& band : workplaces) {
-        for (auto& g_struct : band) {
-            auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
-            auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Work);
-            workplace->pool = pool;
-            pool_sys[ContactPoolType::Id::Work].emplace_back(pool);
-            cp_id++;
-        }
-    }
-
-    // Communities
-    const unsigned int community_size    = 2000;
-    const unsigned int community_cp_size = 20;
-    for (auto& band : communities) {
-        for (auto& g_struct : band) {
-            auto community  = std::static_pointer_cast<Community>(g_struct);
-            auto com_id     = ContactPoolType::Id::PrimaryCommunity;
-            if(!community->is_primary)
-                com_id = ContactPoolType::Id::SecondaryCommunity;
-            auto pool       = make_shared<ContactPool>(cp_id, com_id);
-            community->pools.push_back(pool); // TODO: 1 pool per community
-            pool_sys[ContactPoolType::Id::Work].emplace_back(pool);
-            cp_id++;
-        }
-    }
-
-    // -------------------
     // Assign ContactPools
     // -------------------
     std::cout << "Assign households to coordinates" << std::endl;
@@ -119,6 +45,24 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population, Cont
     assigner::AssignWorkplaces(workplaces, population, config, grid, total_commuting_students);
     std::cout << "Assigning communities" << std::endl;
     assigner::AssignCommunities(communities, population, config, grid);
+
+    // -------------------
+    // Fill ContactPoolSys
+    // -------------------
+    unsigned int cp_id = 1;
+    // Households
+    for (std::size_t i = 0; i != population->size(); ++i) {
+        auto& person    = population->at(i);
+        auto hh_id  = person.GetPoolId(ContactPoolType::Id::Household);
+        auto pool   = ContactPool(cp_id, ContactPoolType::Id::Household);
+        pool_sys[ContactPoolType::Id::Household].emplace_back(pool);
+        while ( person.GetPoolId(ContactPoolType::Id::Household) == hh_id ) {
+            if (++i >= population->size())
+                break;
+        }
+        cp_id++;
+    }
+
 
     // -------------
     // Write persons

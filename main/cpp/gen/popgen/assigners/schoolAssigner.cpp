@@ -15,6 +15,20 @@ void AssignSchools(
     vector<vector<shared_ptr<GenStruct>>>& schools, const shared_ptr<Population> population,
     const GenConfiguration& config, const GeoGrid& grid)
 {
+    const unsigned int school_size      = 500;
+    const unsigned int school_cp_size   = 20;
+    // Create the contactpools for every school
+    unsigned int cp_id = 0;
+    for (const auto& band : schools) {
+        for (const auto& g_struct : band) {
+            auto school = std::static_pointer_cast<School>(g_struct);
+            for(unsigned int size = 0; size < school_size; size += school_cp_size) {
+                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::School);
+                school->pools.push_back(pool);
+                cp_id++;
+            }
+        }
+    }
     // Assign young students to schools
     for (auto& person : *population) {
         auto age = person.GetAge();
