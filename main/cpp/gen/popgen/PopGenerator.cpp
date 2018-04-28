@@ -125,7 +125,11 @@ vector<shared_ptr<GenStruct>> GetClosestStructs(const util::GeoCoordinate& home_
     unsigned int band_range = 2;
     // The default search range is 10 km
     unsigned int search_range = 10;
+
     auto band_of_hh = uint( (home_coord.m_longitude - grid.m_min_long) / grid.m_longitude_band_width );
+    if (band_of_hh >= structs.size())
+        return closest_structs;
+
     // Keep doubling search space until a struct is found
     while(closest_structs.empty()){
         // The first and last band define the search space
@@ -133,8 +137,12 @@ vector<shared_ptr<GenStruct>> GetClosestStructs(const util::GeoCoordinate& home_
         unsigned int lastband = band_of_hh + band_range;
         if (band_of_hh > band_range)
             firstband = band_of_hh - band_range;
-        if (lastband >= structs.size())
+        //std::cout << "first: " << firstband << " last: " << lastband << " band_range: " << band_range << std::endl;
+        if (lastband >= structs.size()) {
             lastband = structs.size() - 1;
+            if (firstband == 0)
+                break;
+        }
         // Go over the search space
         for (unsigned int index = firstband; index <= lastband; index++) {
             for (const auto& gstruct : structs[index]) {

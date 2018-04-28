@@ -8,9 +8,9 @@ using namespace std;
 using namespace gen;
 
 GenDirectory::GenDirectory(const boost::property_tree::ptree& config_pt, unsigned int thread_count, string output_prefix)
-    : m_config(GenConfiguration(config_pt.get_child("run.pop_config"), thread_count, output_prefix))
+    : m_config(GenConfiguration(config_pt.get_child("pop_config"), thread_count, output_prefix))
 {
-    m_belief_pt = config_pt.get_child("run.belief_policy");
+    m_belief_pt = config_pt.get_child("belief_policy");
 }
 
 void GenDirectory::initialize(PopulationFilePtr pop_file, GeoGridFilePtr geo_file,

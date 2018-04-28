@@ -31,8 +31,7 @@ GenConfiguration::GenConfiguration(boost::property_tree::ptree config_pt, unsign
 
 GenConfiguration::GenConfiguration(boost::property_tree::ptree config_tree, std::shared_ptr<util::RNManager>& rn_manager, string output_prefix)
     : m_config(config_tree), m_output_prefix(output_prefix), m_rn_manager(rn_manager)
-{
-}
+{}
 
 boost::property_tree::ptree GenConfiguration::GetTree() const
 {

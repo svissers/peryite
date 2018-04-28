@@ -28,11 +28,10 @@ void AssignHouseholds (
     std::function<int()> generator = rn_manager->GetGenerator(trng::fast_discrete_dist(fractions.begin(), fractions.end()));
 
     // Map the households to their samples.
-    for (std::size_t i = 0; i != population->size(); ++i) {
-        auto& person    = population->at(i);
-        auto hh_id      = person.GetPoolId(ContactPoolType::Id::Household);
-        auto center     = grid.at(generator());
-        auto coord     = center->coordinate;
+    for (std::size_t i = 0; i < population->size(); ++i) {
+        auto hh_id  = population->at(i).GetPoolId(ContactPoolType::Id::Household);
+        auto center = grid.at(generator());
+        auto coord  = center->coordinate;
         if (center->is_fragmented) {
             // Select one of the fragments
             vector<double> f_fractions;
@@ -41,11 +40,10 @@ void AssignHouseholds (
             auto frag_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(f_fractions.begin(), f_fractions.end()));
             coord = center->fragmented_coords.at(frag_gen());
         }
-        while ( person.GetPoolId(ContactPoolType::Id::Household) == hh_id ) {
-            person.SetCoordinate(coord);
+        while ( population->at(i).GetPoolId(ContactPoolType::Id::Household) == hh_id ) {
+            population->at(i).SetCoordinate(coord);
             if (++i >= population->size())
                 break;
-            person = population->at(i);
         }
     }
 }

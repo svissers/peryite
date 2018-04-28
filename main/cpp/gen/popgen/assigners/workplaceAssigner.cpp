@@ -116,13 +116,12 @@ void AssignWorkplaces(
                 auto wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(dest_workplaces.size()));
                 auto workplace = dest_workplaces[wp_generator()];
                 pool = workplace->pool;
-                //std::cout << "commutor" <<std::endl;
             } else {
                 // Non-commuting
                 auto home_coord = person.GetCoordinate();
                 std::vector<shared_ptr<GenStruct>> closest_workplaces = GetClosestStructs(home_coord, workplaces, grid);
                 if (closest_workplaces.empty()) {
-                    std::cout << "closest_workplaces is empty: " << age << std::endl;
+                    //std::cout << "closest_workplaces is empty: " << age << std::endl;
                     continue;
                 }
                 // Create a uniform distribution to select a workplace
