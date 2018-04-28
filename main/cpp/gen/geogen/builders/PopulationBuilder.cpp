@@ -1,6 +1,5 @@
-#pragma once
-#include "HouseholdsBuilder.h"
-#include "../../files/HouseholdFile.h"
+#include "PopulationBuilder.h"
+#include "../../files/PopulationFile.h"
 #include "trng/fast_discrete_dist.hpp"
 
 namespace stride {
@@ -8,7 +7,7 @@ namespace gen {
 namespace geogen {
 namespace builder {
 
-std::shared_ptr<Population> BuildPopulation(const GenConfiguration& config, const ptree& belief_pt)
+std::shared_ptr<Population> BuildPopulation(const GenConfiguration& config, const boost::property_tree::ptree& belief_pt)
 {
     auto population = make_shared<Population>();
     auto hh_reference           = files::getHouseholds(config);
@@ -21,7 +20,6 @@ std::shared_ptr<Population> BuildPopulation(const GenConfiguration& config, cons
     auto generator  = rn_manager->GetGenerator(trng::fast_discrete_dist(hh_reference.size()));
 
     // Build the households
-    vector<shared_ptr<Household>> result;
     while (current_p_id < pop_size) {
             // Select a household from the reference set
             int index           = generator();

@@ -12,21 +12,9 @@ using namespace std;
 using namespace gen;
 
 void AssignWorkplaces(
-    vector<vector<shared_ptr<GenStruct>>>& workplaces, const vector<shared_ptr<Household>>& households,
+    vector<vector<shared_ptr<GenStruct>>>& workplaces, const shared_ptr<Population> population,
     const GenConfiguration& config, const GeoGrid& grid, unsigned int total_commuting_students)
 {
-    // -------------
-    // Contactpools
-    // -------------
-    unsigned int cp_id = 0;
-    for (auto& band : workplaces) {
-        for (auto& g_struct : band) {
-            auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
-            auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Work);
-            workplace->pool = pool;
-            cp_id++;
-        }
-    }
     // -------------
     // Distributions
     // -------------
@@ -82,60 +70,58 @@ void AssignWorkplaces(
     // --------------------------------
     // Assign employables to workplaces.
     // --------------------------------
-    for (const auto& household : households) {
-        for (const auto& person : household->persons) {
-            auto age = person->GetAge();
-            if (age >= 18 && age < 26 && person->GetPoolId(ContactPoolType::Id::School) != 0) {
-                // Students are not employable
+    for (auto& person : *population) {
+        auto age = person.GetAge();
+        if (age >= 18 && age < 26 && person.GetPoolId(ContactPoolType::Id::School) != 0) {
+            // Students are not employable
+            continue;
+        }
+        if (age >= 18 && age < 65) {
+            if (work_gen() == 1) {
+                // The person is non active
+                person.setPoolId(ContactPoolType::Id::Work, 0);
                 continue;
             }
-            if (age >= 18 && age < 65) {
-                if (work_gen() == 1) {
-                    // The person is non active
-                    person->setPoolId(ContactPoolType::Id::Work, 0);
-                    continue;
-                }
-                // The person is active
-                shared_ptr<ContactPool> pool;
-                if (commute_gen() == 0) {
-                    // Commuting
-                    auto destination = grid[city_gen()];
-                    auto dest_coord = destination->coordinate;
-                    vector<shared_ptr<WorkPlace>> dest_workplaces;
-                    for (auto& band : workplaces) {
-                        for (auto& g_struct : band) {
-                            auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
-                            if (workplace->coordinate == dest_coord) {
-                                dest_workplaces.push_back(workplace);
-                            }
+            // The person is active
+            shared_ptr<ContactPool> pool;
+            if (commute_gen() == 0) {
+                // Commuting
+                auto destination = grid[city_gen()];
+                auto dest_coord = destination->coordinate;
+                vector<shared_ptr<WorkPlace>> dest_workplaces;
+                for (auto& band : workplaces) {
+                    for (auto& g_struct : band) {
+                        auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
+                        if (workplace->coordinate == dest_coord) {
+                            dest_workplaces.push_back(workplace);
                         }
                     }
-                    // TODO: ask
-                    if (dest_workplaces.empty())
-                        continue;
-                    // Create a uniform distribution to select a workplace
-                    auto wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(dest_workplaces.size()));
-                    auto workplace = dest_workplaces[wp_generator()];
-                    pool = workplace->pool;
-                    //std::cout << "commutor" <<std::endl;
-                } else {
-                    // Non-commuting
-                    auto home_coord = household->coordinate;
-                    std::vector<shared_ptr<GenStruct>> closest_workplaces = GetClosestStructs(home_coord, workplaces, grid);
-                    if (closest_workplaces.empty()) {
-                        std::cout << "closest_workplaces is empty: " << age << std::endl;
-                        continue;
-                    }
-                    // Create a uniform distribution to select a workplace
-                    std::function<int()> wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_workplaces.size()));
-                    auto workplace = static_pointer_cast<WorkPlace>(closest_workplaces.at(wp_generator()));
-                    pool = workplace->pool;
-                    //std::cout << "non commutor" <<std::endl;
                 }
-                //std::cout << "assigned workplace pool id: " <<pool->GetId() << std::endl;
-                person->setPoolId(ContactPoolType::Id::Work, pool->GetId());
-                pool->AddMember(person.get());
+                // TODO: ask
+                if (dest_workplaces.empty())
+                    continue;
+                // Create a uniform distribution to select a workplace
+                auto wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(dest_workplaces.size()));
+                auto workplace = dest_workplaces[wp_generator()];
+                pool = workplace->pool;
+                //std::cout << "commutor" <<std::endl;
+            } else {
+                // Non-commuting
+                auto home_coord = person.GetCoordinate();
+                std::vector<shared_ptr<GenStruct>> closest_workplaces = GetClosestStructs(home_coord, workplaces, grid);
+                if (closest_workplaces.empty()) {
+                    std::cout << "closest_workplaces is empty: " << age << std::endl;
+                    continue;
+                }
+                // Create a uniform distribution to select a workplace
+                std::function<int()> wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_workplaces.size()));
+                auto workplace = static_pointer_cast<WorkPlace>(closest_workplaces.at(wp_generator()));
+                pool = workplace->pool;
+                //std::cout << "non commutor" <<std::endl;
             }
+            //std::cout << "assigned workplace pool id: " <<pool->GetId() << std::endl;
+            person.setPoolId(ContactPoolType::Id::Work, pool->GetId());
+            pool->AddMember(&person);
         }
     }
 }

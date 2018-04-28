@@ -1,5 +1,5 @@
 #include "householdAssigner.h"
-#include "../../files/HouseholdFile.h"
+#include "pop/Population.h"
 #include "../../structs/University.h"
 #include "../PopGenerator.h"
 #include "trng/fast_discrete_dist.hpp"
@@ -14,25 +14,13 @@ using namespace std;
 using namespace gen;
 
 unsigned int AssignUniversities(
-    vector<vector<shared_ptr<GenStruct>>>& universities, const vector<shared_ptr<Household>>& households,
+    vector<vector<shared_ptr<GenStruct>>>& universities, const shared_ptr<Population> population,
     const GenConfiguration& config, const GeoGrid& grid)
 {
-    // -------------
-    // Contactpools
-    // -------------
-    const unsigned int university_size      = 3000;
-    const unsigned int university_cp_size   = 20;
-    unsigned int cp_id                      = 0;
     map<unsigned int, vector<shared_ptr<University>>> cities;
     for (auto& band : universities) {
         for (auto& g_struct : band) {
             auto university = std::static_pointer_cast<University>(g_struct);
-            // Create the contactpools for every university
-            for(unsigned int size = 0; size < university_size; size += university_cp_size) {
-                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::School);
-                university->pools.push_back(pool);
-                cp_id++;
-            }
             // Get the different university locations (urban_id = row_index in commuting data).
             if (cities.find(university->urban_id) == cities.end() ) {
                 cities[university->urban_id] = vector<shared_ptr<University>>({university});
@@ -41,7 +29,6 @@ unsigned int AssignUniversities(
             }
         }
     }
-
     // -------------
     // Distributions
     // -------------
@@ -56,6 +43,8 @@ unsigned int AssignUniversities(
     auto commute_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(commute_fractions.begin(), commute_fractions.end()));
 
     // create a uniform distribution to select a contactpool from a university
+    const unsigned int university_size      = 3000;
+    const unsigned int university_cp_size   = 20;
     auto cp_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(floor(university_size / university_cp_size)));
 
     // Commuting distributions
@@ -95,40 +84,38 @@ unsigned int AssignUniversities(
     // Assign students to universities.
     // --------------------------------
     unsigned int total_commuting_students = 0;
-    for (const auto& household : households) {
-        for (const auto& person : household->persons) {
-            auto age = person->GetAge();
-            if (age >= 18 && age < 26 && student_gen() == 0) {
-                shared_ptr<ContactPool> pool;
-                if (commute_gen() == 0) {
-                    /// Commuting student
-                    total_commuting_students++;
-                    unsigned int city_index = city_gen();
-                    auto it = cities.begin();
-                    std::advance(it, city_index);
-                    auto city       = *it;
-                    auto university = city.second[city_generators[city.first]()];
-                    pool            = university->pools[cp_gen()];
-                } else {
-                    /// Non-commuting student
-                    auto home_coord = household->coordinate;
-                    // Find the closest schools
-                    std::vector<shared_ptr<GenStruct>> closest_universities = GetClosestStructs(home_coord, universities, grid);
-                    if (closest_universities.empty()) {
-                        std::cout << "closest_universities is empty: " << age << std::endl;
-                        continue;
-                    }
-                    // Create a uniform distribution to select a university
-                    auto rn_manager = config.GetRNManager();
-                    auto uni_gen    = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_universities.size()));
-                    auto university = static_pointer_cast<University>(closest_universities[uni_gen()]);
-                    // Create a uniform distribution to select a contactpool in the selected university
-                    auto cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(university->pools.size()));
-                    pool = university->pools.at(cp_generator());
+    for (auto& person : *population) {
+        auto age = person.GetAge();
+        if (age >= 18 && age < 26 && student_gen() == 0) {
+            shared_ptr<ContactPool> pool;
+            if (commute_gen() == 0) {
+                /// Commuting student
+                total_commuting_students++;
+                unsigned int city_index = city_gen();
+                auto it = cities.begin();
+                std::advance(it, city_index);
+                auto city       = *it;
+                auto university = city.second[city_generators[city.first]()];
+                pool            = university->pools[cp_gen()];
+            } else {
+                /// Non-commuting student
+                auto home_coord = person.GetCoordinate();
+                // Find the closest schools
+                std::vector<shared_ptr<GenStruct>> closest_universities = GetClosestStructs(home_coord, universities, grid);
+                if (closest_universities.empty()) {
+                    std::cout << "closest_universities is empty: " << age << std::endl;
+                    continue;
                 }
-                person->setPoolId(ContactPoolType::Id::School, pool->GetId());
-                pool->AddMember(person.get());
+                // Create a uniform distribution to select a university
+                auto rn_manager = config.GetRNManager();
+                auto uni_gen    = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_universities.size()));
+                auto university = static_pointer_cast<University>(closest_universities[uni_gen()]);
+                // Create a uniform distribution to select a contactpool in the selected university
+                auto cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(university->pools.size()));
+                pool = university->pools.at(cp_generator());
             }
+            person.setPoolId(ContactPoolType::Id::School, pool->GetId());
+            pool->AddMember(&person);
         }
     }
     return total_commuting_students;

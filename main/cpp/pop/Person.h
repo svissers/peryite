@@ -83,7 +83,7 @@ public:
         util::GeoCoordinate GetCoordinate() const { return m_coord; }
 
         // Set the household coordinate
-        void SetCoordinate(util::GeoCoordinate coord) const { m_coord = coord; }
+        void SetCoordinate(util::GeoCoordinate coord) { m_coord = coord; }
 
         /// Check if a person is present today in a given contactpool
         bool IsInPool(const ContactPoolType::Id& pool_type) const { return m_in_pools[pool_type]; }

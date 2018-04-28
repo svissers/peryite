@@ -1,5 +1,5 @@
 #include "PopGenerator.h"
-#include "../files/HouseholdFile.h"
+#include "../files/PopulationFile.h"
 #include "assigners/householdAssigner.h"
 #include "assigners/schoolAssigner.h"
 #include "assigners/universityAssigner.h"
@@ -21,76 +21,114 @@ using namespace gen;
 
 void Generate(files::GenDirectory& dir, shared_ptr<Population>& population, ContactPoolSys& pool_sys, bool write)
 {
-    std::cout << "Popgen" << std::endl;
-    auto config = dir.getConfig();
-    // Build households
-    std::cout << "buildHouseholds" << std::endl;
-    auto population_file    = dir.GetPopulationFile();
-    auto population         = population_file->Read();
-    // Assign persons
-    std::cout << "Assign households to coordinates" << std::endl;
-    auto geogrid_file   = dir.getGeoGridFile();
-    auto grid           = geogrid_file->readGrid();
-    assigner::AssignHouseholds(households, grid, config);
-    // Assign schools
-    auto school_file    = dir.getSchoolFile();
-    auto schools        = school_file->read();
-    std::cout << "Assigning schools" << std::endl;
-    assigner::AssignSchools(schools, households, config, grid);
-    // Assign universities
-    auto university_file = dir.getUniversityFile();
-    auto universities    = university_file->read();
-    std::cout << "Assigning universities" << std::endl;
-    unsigned int total_commuting_students = assigner::AssignUniversities(universities, households, config, grid);
-    // Assign workplaces
-    auto workplace_file = dir.getWorkplaceFile();
-    auto workplaces     = workplace_file->read();
-    std::cout << "Assigning workplaces" << std::endl;
-    assigner::AssignWorkplaces(workplaces, households, config, grid, total_commuting_students);
-    // Assign communities
-    auto community_file = dir.getCommunityFile();
-    auto communities    = community_file->read();
-    std::cout << "Assigning communities" << std::endl;
-    assigner::AssignCommunities(communities, households, config, grid);
+    // --------------------------------------------------
+    // Get the population and structs (by file or memory)
+    // --------------------------------------------------
+    auto config         = dir.getConfig();
+    population          = dir.GetPopulationFile()->Read();
+    auto grid           = dir.getGeoGridFile()->readGrid();
+    auto schools        = dir.getSchoolFile()->read();
+    auto universities   = dir.getUniversityFile()->read();
+    auto workplaces     = dir.getWorkplaceFile()->read();
+    auto communities    = dir.getCommunityFile()->read();
 
-    // Households to population
-    const auto population = make_shared<Population>();
-    for (const auto& household : households) {
-        population->
-
+    // -------------------
+    // Create ContactPools
+    // -------------------
+    unsigned int cp_id = 1;
+    // Households
+    for (std::size_t i = 0; i != population->size(); ++i) {
+        auto& person    = population->at(i);
+        auto hh_id  = person.GetPoolId(ContactPoolType::Id::Household);
+        auto pool   = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Household);
+        pool_sys[ContactPoolType::Id::Household].emplace_back(*pool);
+        while ( person.GetPoolId(ContactPoolType::Id::Household) == hh_id ) {
+            if (++i >= population->size())
+                break;
+        }
+        cp_id++;
     }
-    // Concatenate contactpools
 
-
-    // Write persons
-    if (write)
-        WritePopulation(households, config);
-}
-
-void WritePopulation(vector<shared_ptr<Household>> households, const GenConfiguration& config)
-{
-    string config_path = config.GetPath();
-    boost::filesystem::path out_dir = "output/"+config_path.substr(0, config_path.find_last_of("."));
-    string file_path = out_dir.string()+"/pop.csv";
-    std::ofstream my_file{file_path};
-    if(my_file.is_open()) {
-        vector<string> labels = {"age", "household_id", "school_id", "work_id", "primary_community", "secondary_community", "risk_averseness"};
-        my_file << boost::algorithm::join(labels,",") << "\n";
-        for (const auto& household : households) {
-            for (const auto& person : household->persons) {
-                vector<string> values = {
-                    to_string(person->GetAge()),
-                    to_string(person->GetPoolId(ContactPoolType::Id::Household)),
-                    to_string(person->GetPoolId(ContactPoolType::Id::School)),
-                    to_string(person->GetPoolId(ContactPoolType::Id::Work)),
-                    to_string(person->GetPoolId(ContactPoolType::Id::PrimaryCommunity)),
-                    to_string(person->GetPoolId(ContactPoolType::Id::SecondaryCommunity)),
-                    to_string(0),
-                };
-                my_file << boost::algorithm::join(values,",") << "\n";
+    // Schools
+    const unsigned int school_size      = 500;
+    const unsigned int school_cp_size   = 20;
+    for (const auto& band : schools) {
+        for (const auto& g_struct : band) {
+            auto school = std::static_pointer_cast<School>(g_struct);
+            for(unsigned int size = 0; size < school_size; size += school_cp_size) {
+                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::School);
+                school->pools.push_back(pool);
+                pool_sys[ContactPoolType::Id::School].emplace_back(pool);
+                cp_id++;
             }
         }
-        my_file.close();
+    }
+
+    // Universities
+    const unsigned int university_size      = 3000;
+    const unsigned int university_cp_size   = 20;
+    for (auto& band : universities) {
+        for (auto& g_struct : band) {
+            auto university = std::static_pointer_cast<University>(g_struct);
+            // Create the contactpools for every university
+            for(unsigned int size = 0; size < university_size; size += university_cp_size) {
+                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::School);
+                university->pools.push_back(pool);
+                pool_sys[ContactPoolType::Id::School].emplace_back(pool);
+                cp_id++;
+            }
+        }
+    }
+    // Workplaces
+    for (auto& band : workplaces) {
+        for (auto& g_struct : band) {
+            auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
+            auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Work);
+            workplace->pool = pool;
+            pool_sys[ContactPoolType::Id::Work].emplace_back(pool);
+            cp_id++;
+        }
+    }
+
+    // Communities
+    const unsigned int community_size    = 2000;
+    const unsigned int community_cp_size = 20;
+    for (auto& band : communities) {
+        for (auto& g_struct : band) {
+            auto community  = std::static_pointer_cast<Community>(g_struct);
+            auto com_id     = ContactPoolType::Id::PrimaryCommunity;
+            if(!community->is_primary)
+                com_id = ContactPoolType::Id::SecondaryCommunity;
+            auto pool       = make_shared<ContactPool>(cp_id, com_id);
+            community->pools.push_back(pool); // TODO: 1 pool per community
+            pool_sys[ContactPoolType::Id::Work].emplace_back(pool);
+            cp_id++;
+        }
+    }
+
+    // -------------------
+    // Assign ContactPools
+    // -------------------
+    std::cout << "Assign households to coordinates" << std::endl;
+    assigner::AssignHouseholds(population, grid, config);
+    std::cout << "Assigning schools" << std::endl;
+    assigner::AssignSchools(schools, population, config, grid);
+    std::cout << "Assigning universities" << std::endl;
+    unsigned int total_commuting_students = assigner::AssignUniversities(universities, population, config, grid);
+    std::cout << "Assigning workplaces" << std::endl;
+    assigner::AssignWorkplaces(workplaces, population, config, grid, total_commuting_students);
+    std::cout << "Assigning communities" << std::endl;
+    assigner::AssignCommunities(communities, population, config, grid);
+
+    // -------------
+    // Write persons
+    // -------------
+    if (write) {
+        auto output_file = make_shared<files::PopulationFile>(
+            config,
+            population
+        );
+        output_file->Write();
     }
 }
 

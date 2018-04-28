@@ -29,7 +29,7 @@ GenConfiguration::GenConfiguration(boost::property_tree::ptree& config_pt, unsig
 }
 
 
-GenConfiguration(boost::property_tree::ptree config_tree, std::shared_ptr<util::RNManager> rn_manager)
+GenConfiguration::GenConfiguration(boost::property_tree::ptree& config_tree, std::shared_ptr<util::RNManager>& rn_manager)
     : m_config(config_tree), m_rn_manager(rn_manager)
 {
 }

@@ -10,11 +10,11 @@ namespace assigner {
 
 /// Builds a set of households for the population.
 /// @param communities  The communities that persons can be asssigned to.
-/// @param households   The households that contain the persons that will be assigned to communities.
+/// @param population   The persons that will be assigned to communities.
 /// @param config       The configuration file that specifies parameters used in assigning communities.
 /// @param grid         The geogrid that was used to build the communities.
 void AssignCommunities
-(std::vector<std::vector<std::shared_ptr<GenStruct>>> communities, const std::vector<std::shared_ptr<Household>>& households,
+(std::vector<std::vector<std::shared_ptr<GenStruct>>> communities, const std::shared_ptr<Population> population,
  const GenConfiguration& config, const GeoGrid& grid);
 
 } // assigner

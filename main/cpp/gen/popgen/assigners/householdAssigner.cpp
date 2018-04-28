@@ -10,7 +10,7 @@ using namespace std;
 using namespace gen;
 
 void AssignHouseholds (
-    vector<shared_ptr<Household>>& households, const GeoGrid& grid, const GenConfiguration& config)
+    shared_ptr<Population> population, const GeoGrid& grid, const GenConfiguration& config)
 {
     auto total_population = config.GetTree().get<unsigned int>("population_size");
 
@@ -28,18 +28,25 @@ void AssignHouseholds (
     std::function<int()> generator = rn_manager->GetGenerator(trng::fast_discrete_dist(fractions.begin(), fractions.end()));
 
     // Map the households to their samples.
-    for (const auto& household : households) {
-        auto center = grid.at(generator());
-        auto coords = center->coordinate;
+    for (std::size_t i = 0; i != population->size(); ++i) {
+        auto& person    = population->at(i);
+        auto hh_id      = person.GetPoolId(ContactPoolType::Id::Household);
+        auto center     = grid.at(generator());
+        auto coord     = center->coordinate;
         if (center->is_fragmented) {
             // Select one of the fragments
             vector<double> f_fractions;
-            for(const auto& population : center->fragmented_populations)
-                f_fractions.push_back(double(population) / double(center->population));
+            for(const auto& f_pop_size : center->fragmented_populations)
+                f_fractions.push_back(double(f_pop_size) / double(center->population));
             auto frag_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(f_fractions.begin(), f_fractions.end()));
-            coords = center->fragmented_coords.at(frag_gen());
+            coord = center->fragmented_coords.at(frag_gen());
         }
-        household->coordinate = coords;
+        while ( person.GetPoolId(ContactPoolType::Id::Household) == hh_id ) {
+            person.SetCoordinate(coord);
+            if (++i >= population->size())
+                break;
+            person = population->at(i);
+        }
     }
 }
 

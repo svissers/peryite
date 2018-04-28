@@ -23,7 +23,7 @@ public:
     /// @param thread_count    The amount of threads to be used for parallelization.
     GenConfiguration(boost::property_tree::ptree& config_pt, unsigned int thread_count);
 
-    GenConfiguration(boost::property_tree::ptree config_tree, std::shared_ptr<util::RNManager> rn_manager);
+    GenConfiguration(boost::property_tree::ptree& config_tree, std::shared_ptr<util::RNManager>& rn_manager);
 
     boost::property_tree::ptree GetTree() const;
 

@@ -76,13 +76,14 @@ set(LIB_SRC
     gen/GenConfiguration.cpp
     gen/geogen/GeoGenerator.cpp
     gen/geogen/builders/GeoGridBuilder.cpp
+    gen/geogen/builders/PopulationBuilder.cpp
     gen/geogen/builders/SchoolsBuilder.cpp
     gen/geogen/builders/UniversitiesBuilder.cpp
     gen/geogen/builders/WorkplacesBuilder.cpp
     gen/geogen/builders/CommunitiesBuilder.cpp
 	gen/files/GenFile.cpp
 	gen/files/GenDirectory.cpp
-    gen/files/HouseholdFile.cpp
+    gen/files/PopulationFile.cpp
 #---
     sim/CliController.cpp
 	sim/SimRunner.cpp
