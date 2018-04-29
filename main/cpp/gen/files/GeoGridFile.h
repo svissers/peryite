@@ -9,7 +9,7 @@ namespace gen {
 namespace files {
 
 /**
- *
+ * A class that can read and write geogrid data files.
  */
 class GeoGridFile : public GenFile
 {
