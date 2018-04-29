@@ -12,15 +12,14 @@ using namespace std;
 using namespace gen;
 
 void AssignWorkplaces(
-    vector<vector<shared_ptr<GenStruct>>>& workplaces, const shared_ptr<Population> population,
-    const GenConfiguration& config, const GeoGrid& grid, unsigned int total_commuting_students)
-{
+        vector<vector<shared_ptr<GenStruct>>> &workplaces, const shared_ptr<Population> population,
+        const GenConfiguration &config, const GeoGrid &grid, unsigned int total_commuting_students) {
     // -------------
     // Contactpools
     // -------------
     unsigned int cp_id = 0;
-    for (auto& band : workplaces) {
-        for (auto& g_struct : band) {
+    for (auto &band : workplaces) {
+        for (auto &g_struct : band) {
             auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
             auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Work);
             workplace->pool = pool;
@@ -34,18 +33,21 @@ void AssignWorkplaces(
 
     auto total_population = config.GetTree().get<unsigned int>("population_size");
     auto student_fraction = config.GetTree().get<double>("university.student_fraction");
-    auto work_fraction    = config.GetTree().get<double>("work.work_fraction");
+    auto work_fraction = config.GetTree().get<double>("work.work_fraction");
     auto commute_fraction = config.GetTree().get<double>("work.commute_fraction");
-    auto student_fractions  = vector<double>{student_fraction, 1.0 - student_fraction};
-    auto work_fractions     = vector<double>{work_fraction, 1.0 - work_fraction};
-    auto commute_fractions  = vector<double>{commute_fraction, 1.0 - commute_fraction};
-    auto student_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(student_fractions.begin(), student_fractions.end()));
-    auto work_gen    = rn_manager->GetGenerator(trng::fast_discrete_dist(work_fractions.begin(), work_fractions.end()));
-    auto commute_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(commute_fractions.begin(), commute_fractions.end()));
+    auto student_fractions = vector<double>{student_fraction, 1.0 - student_fraction};
+    auto work_fractions = vector<double>{work_fraction, 1.0 - work_fraction};
+    auto commute_fractions = vector<double>{commute_fraction, 1.0 - commute_fraction};
+    auto student_gen = rn_manager->GetGenerator(
+            trng::fast_discrete_dist(student_fractions.begin(), student_fractions.end()));
+    auto work_gen = rn_manager->GetGenerator(
+            trng::fast_discrete_dist(work_fractions.begin(), work_fractions.end()));
+    auto commute_gen = rn_manager->GetGenerator(
+            trng::fast_discrete_dist(commute_fractions.begin(), commute_fractions.end()));
 
     // Commuting distributions
-    unsigned int total_commuting_actives    = 100000; // TODO
-    double commuting_student_active_ratio   = total_commuting_students / total_commuting_actives;
+    unsigned int total_commuting_actives = 100000; // TODO
+    double commuting_student_active_ratio = total_commuting_students / total_commuting_actives;
 
     util::CSV commuting_data = util::CSV(config.GetTree().get<string>("geoprofile.commuters"));
     size_t column_count = commuting_data.GetColumnCount();
@@ -58,7 +60,7 @@ void AssignWorkplaces(
                 // Ignore commuting towards itself
                 if (row_index == col_index)
                     continue;
-                util::CSVRow row = *(commuting_data.begin()+row_index);
+                util::CSVRow row = *(commuting_data.begin() + row_index);
                 auto commute_count = row.GetValue<unsigned int>(col_index);
                 // Remove commuting students
                 commute_count -= (commuting_student_active_ratio * commute_count);
@@ -72,17 +74,18 @@ void AssignWorkplaces(
 
     // Create a distribution to select a workplace city.
     vector<double> wpc_fractions;
-    for(size_t i = 0; i < relative_commute.size(); i++) {
+    for (size_t i = 0; i < relative_commute.size(); i++) {
         wpc_fractions.push_back(double(relative_commute[i]) / double(total_commute[i]));
     }
-    auto city_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(wpc_fractions.begin(), wpc_fractions.end()));
+    auto city_gen = rn_manager->GetGenerator(
+            trng::fast_discrete_dist(wpc_fractions.begin(), wpc_fractions.end()));
 
     //if (fractions.empty()) {}
 
     // --------------------------------
     // Assign employables to workplaces.
     // --------------------------------
-    for (auto& person : *population) {
+    for (auto &person : *population) {
         auto age = person.GetAge();
         if (age >= 18 && age < 26 && person.GetPoolId(ContactPoolType::Id::School) != 0) {
             // Students are not employable
@@ -101,8 +104,8 @@ void AssignWorkplaces(
                 auto destination = grid[city_gen()];
                 auto dest_coord = destination->coordinate;
                 vector<shared_ptr<WorkPlace>> dest_workplaces;
-                for (auto& band : workplaces) {
-                    for (auto& g_struct : band) {
+                for (auto &band : workplaces) {
+                    for (auto &g_struct : band) {
                         auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
                         if (workplace->coordinate == dest_coord) {
                             dest_workplaces.push_back(workplace);
@@ -113,19 +116,23 @@ void AssignWorkplaces(
                 if (dest_workplaces.empty())
                     continue;
                 // Create a uniform distribution to select a workplace
-                auto wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(dest_workplaces.size()));
+                auto wp_generator = rn_manager->GetGenerator(
+                        trng::fast_discrete_dist(dest_workplaces.size()));
                 auto workplace = dest_workplaces[wp_generator()];
                 pool = workplace->pool;
             } else {
                 // Non-commuting
                 auto home_coord = person.GetCoordinate();
-                std::vector<shared_ptr<GenStruct>> closest_workplaces = GetClosestStructs(home_coord, workplaces, grid);
+                std::vector<shared_ptr<GenStruct>> closest_workplaces = GetClosestStructs(home_coord,
+                                                                                          workplaces,
+                                                                                          grid);
                 if (closest_workplaces.empty()) {
                     //std::cout << "closest_workplaces is empty: " << age << std::endl;
                     continue;
                 }
                 // Create a uniform distribution to select a workplace
-                std::function<int()> wp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(closest_workplaces.size()));
+                std::function<int()> wp_generator = rn_manager->GetGenerator(
+                        trng::fast_discrete_dist(closest_workplaces.size()));
                 auto workplace = static_pointer_cast<WorkPlace>(closest_workplaces.at(wp_generator()));
                 pool = workplace->pool;
                 //std::cout << "non commutor" <<std::endl;

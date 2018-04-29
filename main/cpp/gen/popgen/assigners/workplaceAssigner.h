@@ -15,8 +15,8 @@ namespace assigner {
 /// @param grid                     The geogrid that was used to build the schools.
 /// @param total_commuting_students The total number of students that are commuting to schools/universities.
 void AssignWorkplaces
-(std::vector<std::vector<std::shared_ptr<GenStruct>>>& workplaces, const std::shared_ptr<Population> population,
- const GenConfiguration& config, const GeoGrid& grid, unsigned int total_commuting_students);
+    (std::vector<std::vector<std::shared_ptr<GenStruct>>>& workplaces, const std::shared_ptr<Population> population,
+    const GenConfiguration& config, const GeoGrid& grid, unsigned int total_commuting_students);
 
 } // assigner
 } // popgen

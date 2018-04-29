@@ -14,8 +14,9 @@ namespace assigner {
 /// @param config       The configuration file that specifies parameters used in assigning communities.
 /// @param grid         The geogrid that was used to build the communities.
 void AssignCommunities
-(std::vector<std::vector<std::shared_ptr<GenStruct>>> communities, const std::shared_ptr<Population> population,
- const GenConfiguration& config, const GeoGrid& grid);
+        (std::vector<std::vector<std::shared_ptr<GenStruct>>> communities,
+         const std::shared_ptr<Population> population,
+         const GenConfiguration &config, const GeoGrid &grid);
 
 } // assigner
 } // popgen
