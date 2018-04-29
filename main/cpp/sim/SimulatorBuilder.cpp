@@ -118,16 +118,12 @@ std::shared_ptr<Simulator> SimulatorBuilder::Build(const ptree& disease_pt, cons
         // Build population and ContactPoolSystem
         // --------------------------------------------------------------
         if (pop_config_pt) {
-            std::cout << "Using pop config pt" << std::endl;
             //shared_ptr<util::RNManager>(&sim->m_rn_manager)
             gen::files::GenDirectory dir(m_config_pt, 5, prefix);
             sim->m_population = make_shared<Population>();
             gen::geogen::Generate(dir);
             gen::popgen::Generate(dir, sim->m_population, sim->m_pool_sys, true);
-            std::cout << "Pop size: " << sim->m_population->size() << std::endl;
-            std::cout << "Sys size: " << sim->m_pool_sys.size() << std::endl;
         } else {
-            std::cout << "Using normal method" << std::endl;
             sim->m_population = PopulationBuilder::Build(m_config_pt, sim->m_rn_manager);
             PopPoolBuilder(m_stride_logger).Build(sim->m_pool_sys, *sim->m_population);
         }
