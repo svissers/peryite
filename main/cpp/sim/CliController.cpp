@@ -30,6 +30,7 @@
 #include "viewers/CliViewer.h"
 #include "viewers/PersonsViewer.h"
 #include "viewers/SummaryViewer.h"
+#include "viewers/MapViewer.h"
 
 #include <boost/property_tree/xml_parser.hpp>
 
@@ -141,6 +142,13 @@ void CliController::RegisterViewers(shared_ptr<SimRunner> runner)
                 m_stride_logger->info("Registering SummaryViewer");
                 const auto v = make_shared<viewers::SummaryViewer>(m_output_prefix);
                 runner->Register(v, bind(&viewers::SummaryViewer::Update, v, placeholders::_1));
+        }
+
+        // Map viewer
+        if (m_config_pt.get<bool>("run.output_map", false)) {
+                m_stride_logger->info("Registering MapViewer");
+                const auto v = make_shared<viewers::MapViewer>();
+                runner->Register(v, bind(&viewers::MapViewer::Update, v, placeholders::_1));
         }
 }
 

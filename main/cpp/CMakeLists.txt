@@ -118,7 +118,8 @@ set(LIB_SRC
     ui/geogendata.cpp
     ui/geogenvisualization.cpp
     ui/geogridlocation.cpp
-    ui/mainwindow.cpp
+	ui/mainwindow.cpp
+    ui/mapviewerwindow.cpp
     ui/peryiteuidata.cpp
     ui/popgendata.cpp
     ui/popgenvisualization.cpp
@@ -131,6 +132,7 @@ set(LIB_SRC
 	viewers/AdoptedViewer.cpp
 	viewers/CasesViewer.cpp
     viewers/CliViewer.cpp
+	viewers/MapViewer.cpp
     viewers/PersonsViewer.cpp
 	viewers/SummaryViewer.cpp
 )

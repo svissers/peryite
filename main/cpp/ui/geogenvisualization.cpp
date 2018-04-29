@@ -20,7 +20,6 @@ GeoGenVisualization::GeoGenVisualization(QWidget *parent) :
 
     // Load background image into image
     QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("./ui/vlaanderen.png");
-    qDebug() << filename;
     image = new QImage(filename);
 
     // Setup GraphicsScene
@@ -67,7 +66,7 @@ void GeoGenVisualization::updateSelection(QPointF mousePos) {
 }
 
 void GeoGenVisualization::draw() {
-    // Load pixmap into image
+    // Load pixmap from image
     QPixmap pixmap = QPixmap::fromImage(*image);
 
     // Draw circles on the pixmap

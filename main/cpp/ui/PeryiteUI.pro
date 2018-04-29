@@ -36,7 +36,8 @@ SOURCES += \
     visualizationgraphbar.cpp \
     popgendata.cpp \
     testingwindow.cpp \
-    testingscattergraph.cpp
+    testingscattergraph.cpp \
+    mapviewerwindow.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -50,13 +51,15 @@ HEADERS += \
     visualizationgraphbar.h \
     popgendata.h \
     testingwindow.h \
-    testingscattergraph.h
+    testingscattergraph.h \
+    mapviewerwindow.h
 
 FORMS += \
         mainwindow.ui \
     geogenvisualization.ui \
     popgenvisualization.ui \
     testingwindow.ui \
-    testingscattergraph.ui
+    testingscattergraph.ui \
+    mapviewerwindow.ui
 
 DISTFILES +=
