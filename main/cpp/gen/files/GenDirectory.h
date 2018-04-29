@@ -19,7 +19,7 @@ class GenDirectory
 {
 public:
     GenDirectory(const boost::property_tree::ptree& config_pt, unsigned int thread_count, std::string output_prefix);
-    GenDirectory(const boost::property_tree::ptree& config_pt, std::shared_ptr<util::RNManager> rn_manager, std::string output_prefix);
+    GenDirectory(const boost::property_tree::ptree& config_pt, util::RNManager& rn_manager, std::string output_prefix);
 
     void initialize(PopulationFilePtr hh_file, GeoGridFilePtr geo_file,
                 SchoolFilePtr school_file, UniversityFilePtr university_file,

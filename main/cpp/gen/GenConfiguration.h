@@ -17,6 +17,9 @@ namespace gen {
 class GenConfiguration
 {
 public:
+    /// Default constructor
+    GenConfiguration() {}
+
     /// Constructor. Initializes the GenConfiguration object using the config
     /// file.
     /// @param config_pt       The configuration property tree to use.
