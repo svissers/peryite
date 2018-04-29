@@ -79,7 +79,7 @@ private:
     /// The configuration for the geopop module.
     GenConfiguration m_config;
     /// The belief configuration node from the general configuration file.
-    boost::property_tree::ptree m_belief_pt;h
+    boost::property_tree::ptree m_belief_pt;
     /// The file containing persons.
     PopulationFilePtr m_pop_file;
     /// The file containing the geogrid.
