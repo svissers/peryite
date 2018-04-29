@@ -14,8 +14,8 @@ namespace assigner {
 /// @param config       Property_tree with general configuration settings.
 /// @param grid         The geogrid that was used to build the schools.
 void AssignSchools
-(std::vector<std::vector<std::shared_ptr<GenStruct>>>& schools, const std::shared_ptr<Population> population,
- const GenConfiguration& config, const GeoGrid& grid);
+    (std::vector<std::vector<std::shared_ptr<GenStruct>>>& schools, const std::shared_ptr<Population> population,
+    const GenConfiguration& config, const GeoGrid& grid);
 
 } // assigner
 } // popgen
