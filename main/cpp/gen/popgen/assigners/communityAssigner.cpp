@@ -43,6 +43,7 @@ void AssignCommunities(
         auto home_coord = population->at(i).GetCoordinate();
         auto closest_communities = GetClosestStructs(home_coord, communities, grid);
         if (closest_communities.empty()) {
+
             continue;
         }
         // Create a uniform distribution to select a primary community
@@ -108,6 +109,8 @@ void AssignCommunities(
             if (++i >= population->size())
                 break;
         }
+        i--;
+
         // Remove the primary community pool from the list once it's full
         if (pool->GetSize() >= community_cp_size) {
             auto pools = community->pools;
@@ -116,6 +119,7 @@ void AssignCommunities(
             if (community->pools.empty())
                 communities.erase(communities.begin() + community_index);
         }
+
     }
 }
 

@@ -43,6 +43,7 @@ vector<shared_ptr<WorkPlace>> BuildWorkplaces(GenConfiguration& config, GeoGrid&
                 // When indexes are the same, commute is to the same center
                 if (row_index == col_index) {
                     // Commute towards
+                    // the amount of people going to the urban center is based on the relative number in the csv multiplied by the amount of working people in the urban center
                     relative_commute[row_index] += uint(row.GetValue<double>(col_index)/(double) (total_commute[row_index]) * (grid.at(row_index)->population * (3.0/4.0) * work_fraction));
                 } else {
                     // Commute away

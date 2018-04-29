@@ -28,7 +28,7 @@ void AssignHouseholds (
     std::function<int()> generator = rn_manager->GetGenerator(trng::fast_discrete_dist(fractions.begin(), fractions.end()));
 
     // Map the households to their samples.
-    for (std::size_t i = 0; i < population->size(); ++i) {
+    for (std::size_t i = 0; i < population->size(); i++) {
         auto hh_id  = population->at(i).GetPoolId(ContactPoolType::Id::Household);
         auto index  = grid.at(generator());
         auto center = index;
@@ -51,6 +51,7 @@ void AssignHouseholds (
             if (++i >= population->size())
                 break;
         }
+        i--;
     }
 }
 
