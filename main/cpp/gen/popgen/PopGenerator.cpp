@@ -32,6 +32,12 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population, Cont
     auto workplaces     = dir.getWorkplaceFile()->read();
     auto communities    = dir.getCommunityFile()->read();
 
+    std::cout << "population: " << population->size() << std::endl;
+    std::cout << "grid: " << grid.size() << std::endl;
+    std::cout << "schools: " << schools.size() << std::endl;
+    std::cout << "universities: " << universities.size() << std::endl;
+    std::cout << "workplaces: " << workplaces.size() << std::endl;
+
     // -------------------
     // Assign ContactPools
     // -------------------

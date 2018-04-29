@@ -29,7 +29,7 @@ public:
     /// @param config_pt       The configuration property tree to use.
     /// @param rn_manager      The random number manager to be used by the geopop module.
     /// @param output_prefix   The prefix used for output files.
-    GenConfiguration(boost::property_tree::ptree config_pt, std::shared_ptr<util::RNManager>& rn_manager, std::string output_prefix);
+    GenConfiguration(boost::property_tree::ptree config_pt, std::shared_ptr<util::RNManager> rn_manager, std::string output_prefix);
 
     boost::property_tree::ptree GetTree() const;
 
