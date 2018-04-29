@@ -123,8 +123,8 @@ set(LIB_SRC
     ui/peryiteuidata.cpp
     ui/popgendata.cpp
     ui/popgenvisualization.cpp
-	ui/testingscattergraph.cpp
-    ui/testingwindow.cpp
+	ui/stridescattergraph.cpp
+    ui/stridewindow.cpp
     ui/util.cpp
     ui/visualizationcircle.cpp
     ui/visualizationgraphbar.cpp

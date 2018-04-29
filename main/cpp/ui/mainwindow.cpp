@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include "geogenvisualization.h"
 #include "popgenvisualization.h"
-#include "testingwindow.h"
+#include "stridewindow.h"
 #include "util.h"
 #include <QFileDialog>
 #include <QMessageBox>
@@ -177,8 +177,8 @@ void MainWindow::on_Pop_visualizePopGen_clicked()
     ui->Pop_visualizePopGen->setText("Visualize");
 }
 
-void MainWindow::on_openTestingWindow_clicked()
+void MainWindow::on_openStrideWindow_clicked()
 {
-    TestingWindow *wdg = new TestingWindow;
+    StrideWindow *wdg = new StrideWindow;
     wdg->show();
 }

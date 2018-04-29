@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>PeryiteUI</string>
+   <string>PeryiteUI - Main Window</string>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -230,7 +230,7 @@ QGroupBox:title {
      </property>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="TestingGroup">
+   <widget class="QGroupBox" name="StrideGroup">
     <property name="geometry">
      <rect>
       <x>682</x>
@@ -240,7 +240,7 @@ QGroupBox:title {
      </rect>
     </property>
     <property name="title">
-     <string>Testing</string>
+     <string>Stride</string>
     </property>
     <property name="flat">
      <bool>false</bool>
@@ -248,7 +248,7 @@ QGroupBox:title {
     <property name="checkable">
      <bool>false</bool>
     </property>
-    <widget class="QPushButton" name="openTestingWindow">
+    <widget class="QPushButton" name="openStrideWindow">
      <property name="geometry">
       <rect>
        <x>16</x>
@@ -258,7 +258,7 @@ QGroupBox:title {
       </rect>
      </property>
      <property name="text">
-      <string>Open Testing Window</string>
+      <string>Open Stride Window</string>
      </property>
     </widget>
    </widget>

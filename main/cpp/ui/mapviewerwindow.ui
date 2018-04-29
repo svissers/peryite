@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>PeryiteUI Map Viewer</string>
+   <string>PeryiteUI - Map Viewer</string>
   </property>
   <widget class="QLabel" name="CircleInfoTitle">
    <property name="geometry">

@@ -1,24 +1,24 @@
-#include "testingscattergraph.h"
-#include "ui_testingscattergraph.h"
+#include "stridescattergraph.h"
+#include "ui_stridescattergraph.h"
 
 #include <QtCharts/QChartView>
 #include <QtCharts/QValueAxis>
 
 using namespace QtCharts;
 
-TestingScatterGraph::TestingScatterGraph(QWidget *parent) :
+StrideScatterGraph::StrideScatterGraph(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::TestingScatterGraph)
+    ui(new Ui::StrideScatterGraph)
 {
     ui->setupUi(this);
 }
 
-TestingScatterGraph::~TestingScatterGraph()
+StrideScatterGraph::~StrideScatterGraph()
 {
     delete ui;
 }
 
-void TestingScatterGraph::createGraph(QScatterSeries *series) {
+void StrideScatterGraph::createGraph(QScatterSeries *series) {
     // Create the chart and add our series
     QChart *chart = new QChart();
     chart->setTitle("Stride Test Results");

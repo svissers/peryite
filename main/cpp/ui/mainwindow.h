@@ -30,7 +30,7 @@ private slots:
 
     void on_Pop_visualizePopGen_clicked();
 
-    void on_openTestingWindow_clicked();
+    void on_openStrideWindow_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -1,12 +1,12 @@
-#include "testingwindow.h"
-#include "ui_testingwindow.h"
+#include "stridewindow.h"
+#include "ui_stridewindow.h"
 #include "sim/SimRunner.h"
 #include "sim/Simulator.h"
 #include "pop/Population.h"
 #include "util/FileSys.h"
 #include "util/ConfigInfo.h"
 #include "util/LogUtils.h"
-#include "ui/testingscattergraph.h"
+#include "ui/stridescattergraph.h"
 
 #include <algorithm>
 #include <QMessageBox>
@@ -25,9 +25,9 @@ using namespace boost::property_tree;
 using namespace boost::property_tree::xml_parser;
 using namespace QtCharts;
 
-TestingWindow::TestingWindow(QWidget *parent) :
+StrideWindow::StrideWindow(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::TestingWindow)
+    ui(new Ui::StrideWindow)
 {
     ui->setupUi(this);
     ui->configInput->setText("run_default.xml");
@@ -43,12 +43,12 @@ TestingWindow::TestingWindow(QWidget *parent) :
     running = false;
 }
 
-TestingWindow::~TestingWindow()
+StrideWindow::~StrideWindow()
 {
     delete ui;
 }
 
-void TestingWindow::on_startButton_clicked()
+void StrideWindow::on_startButton_clicked()
 {
     // User can't run the simulation when it's already running
     if (running) {
@@ -200,7 +200,7 @@ void TestingWindow::on_startButton_clicked()
     // -----------------------------------------------------------------------------------------
     // Create new window for graph
     // -----------------------------------------------------------------------------------------
-    TestingScatterGraph *wdg = new TestingScatterGraph;
+    StrideScatterGraph *wdg = new StrideScatterGraph;
     wdg->createGraph(scatterSeries);
     wdg->show();
 }
