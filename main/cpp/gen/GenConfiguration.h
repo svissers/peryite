@@ -7,7 +7,6 @@
 namespace stride {
 namespace gen {
 
-// TODO move to configuration
 #define AMOUNTOFBANDS 50
 
 /**
@@ -17,29 +16,48 @@ namespace gen {
 class GenConfiguration
 {
 public:
-    /// Constructor. Initializes the GenConfiguration object using the config
+    /// Default constructor
+    GenConfiguration() {}
+
+    /// Constructor. Constructs the GenConfiguration object using the config.
     /// file.
-    /// @param config_file     The configuration xml file to use.
+    /// @param config_pt       The configuration property tree to use.
     /// @param thread_count    The amount of threads to be used for parallelization.
-    GenConfiguration(std::string config_file, unsigned int thread_count);
+    /// @param output_prefix   The prefix used for output files.
+    GenConfiguration(boost::property_tree::ptree config_pt, unsigned int thread_count, std::string output_prefix);
 
-    boost::property_tree::ptree getTree() const;
+    /// Constructor. Constructs the GenConfiguration object using an existing RNManager.
+    /// file.
+    /// @param config_pt       The configuration property tree to use.
+    /// @param rn_manager      The random number manager to be used by the geopop module.
+    /// @param output_prefix   The prefix used for output files.
+    GenConfiguration(boost::property_tree::ptree config_pt, std::shared_ptr<util::RNManager> rn_manager, std::string output_prefix);
 
-    std::string getPath() const;
+    /// Returns the property tree that this class wraps.
+    /// @return                 The ptree wrapped by this class.
+    boost::property_tree::ptree GetTree() const;
 
-    std::shared_ptr<util::RNManager> getRNManager() const;
+    /// Returns the output prefix that the general configuration describes.
+    /// The outputprefix is the prefix (directory name or prefix to filename)
+    /// to be used in the filepath of all output files.
+    /// @return                 The output prefix.
+    std::string GetOutputPrefix() const;
+
+    /// Returns the RNManager that manages the generation of random numbers.
+    /// @return                 The rn manager.
+    std::shared_ptr<util::RNManager> GetRNManager() const;
 private:
     /// The configuration in a tree structure
     boost::property_tree::ptree m_config;
-    /// The path leading to the configuration file
-    std::string m_path;
+    /// The prefix for the output files
+    std::string m_output_prefix;
     /// Manages the parallel generation of random numbers
     std::shared_ptr<util::RNManager> m_rn_manager;
     /// The amount of threads that will be used.
     unsigned int m_thread_count;
 
     /// Checks if the configuration property tree is valid.
-    void checkValidConfig() const;
+    void CheckValidConfig() const;
 };
 
 } // namespace gen

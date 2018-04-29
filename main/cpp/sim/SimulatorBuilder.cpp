@@ -27,6 +27,10 @@
 #include "pop/PopPoolBuilder.h"
 #include "pop/PopulationBuilder.h"
 #include "pop/SurveySeeder.h"
+#include "gen/geogen/GeoGenerator.h"
+#include "gen/popgen/PopGenerator.h"
+#include "gen/files/GenDirectory.h"
+
 #include "sim/Simulator.h"
 #include "util/FileSys.h"
 #include "util/LogUtils.h"
@@ -98,8 +102,8 @@ std::shared_ptr<Simulator> SimulatorBuilder::Build(const ptree& disease_pt, cons
         // Transmissions: [TRANSMISSION] <infecterID> <infectedID> <contactpoolID> <day>
         // Contacts: [CNT] <person1ID> <person1AGE> <person2AGE> <at_home> <at_work> <at_school> <at_other>
         // -----------------------------------------------------------------------------------------
+        auto prefix = m_config_pt.get<string>("run.output_prefix");
         if (m_config_pt.get<bool>("run.contact_output_file", true)) {
-                const auto prefix     = m_config_pt.get<string>("run.output_prefix");
                 const auto logPath    = FileSys::BuildPath(prefix, "contact_log.txt");
                 sim->m_contact_logger = LogUtils::CreateRotatingLogger("contact_logger", logPath.string());
                 // Remove meta data from log => time-stamp of logging
@@ -108,11 +112,20 @@ std::shared_ptr<Simulator> SimulatorBuilder::Build(const ptree& disease_pt, cons
                 sim->m_contact_logger = LogUtils::CreateNullLogger("contact_logger");
         }
 
-        // --------------------------------------------------------------
-        // Build population.
-        // --------------------------------------------------------------
-        sim->m_population = PopulationBuilder::Build(m_config_pt, sim->m_rn_manager);
+        auto pop_config_pt = m_config_pt.get_child_optional("run.pop_config");
 
+        // --------------------------------------------------------------
+        // Build population and ContactPoolSystem
+        // --------------------------------------------------------------
+        if (pop_config_pt) {
+            sim->m_population = make_shared<Population>();
+            gen::files::GenDirectory dir(m_config_pt, sim->m_rn_manager, prefix);
+            gen::geogen::Generate(dir);
+            gen::popgen::Generate(dir, sim->m_population, sim->m_pool_sys, true);
+        } else {
+            sim->m_population = PopulationBuilder::Build(m_config_pt, sim->m_rn_manager);
+            PopPoolBuilder(m_stride_logger).Build(sim->m_pool_sys, *sim->m_population);
+        }
         // --------------------------------------------------------------
         // Seed the population with social contact survey participants.
         // --------------------------------------------------------------
@@ -129,11 +142,6 @@ std::shared_ptr<Simulator> SimulatorBuilder::Build(const ptree& disease_pt, cons
         for (Id typ : IdList) {
                 sim->m_contact_profiles[typ] = AgeContactProfile(typ, contact_pt);
         }
-
-        // --------------------------------------------------------------
-        // Build the ContactPoolSystem of the simulator.
-        // --------------------------------------------------------------
-        PopPoolBuilder(m_stride_logger).Build(sim->m_pool_sys, *sim->m_population);
 
         // --------------------------------------------------------------
         // Initialize the transmission profile (fixes rates).

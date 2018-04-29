@@ -4,31 +4,32 @@
 
 namespace stride {
 namespace gen {
+namespace geogen {
+namespace builder {
 
 using namespace std;
 using namespace util;
 using namespace trng;
 
-vector<shared_ptr<Community>> CommunitiesBuilder::Build(const GenConfiguration& config, GeoGrid& grid)
+vector<shared_ptr<Community>> BuildCommunities(const GenConfiguration& config, GeoGrid& grid)
 {
     vector<shared_ptr<Community>> communities = vector<shared_ptr<Community>>();
-    unsigned int total_population = config.getTree().get<unsigned int>("population_size");
+    unsigned int total_population = config.GetTree().get<unsigned int>("population_size");
     // Every community has an average of 2000 members.
     unsigned int community_count = total_population / 2000;
 
     // Create the discrete distribution to sample from.
     vector<double> fractions;
     for(auto center : grid) {
-            fractions.push_back(double(center->population) / double(total_population));
+        fractions.push_back(double(center->population) / double(total_population));
     }
 
     // The RNManager allows for parallelization.
-    auto rn_manager = config.getRNManager();
+    auto rn_manager = config.GetRNManager();
     auto generator = rn_manager->GetGenerator(trng::fast_discrete_dist(fractions.begin(), fractions.end()));
 
     // Create and map the communities to their samples.
     for (unsigned int i = 0; i < community_count; i++) {
-            auto randomval = generator();
         auto center = grid.at(generator());
         auto coords = center->coordinate;
         if (center->is_fragmented) {
@@ -48,9 +49,7 @@ vector<shared_ptr<Community>> CommunitiesBuilder::Build(const GenConfiguration& 
     return communities;
 }
 
-
-
-
-
+} // namespace builder
+} // namespace geogen
 } // namespace gen
 } // namespace stride

@@ -1,4 +1,4 @@
-#include "../../structs/Household.h"
+#include "pop/Population.h"
 #include "../../GeoGrid.h"
 #include "../../GenConfiguration.h"
 #include <vector>
@@ -8,17 +8,12 @@ namespace gen {
 namespace popgen {
 namespace assigner {
 
-/// Builds a set of households for the population.
-/// @param config     Property_tree with general configuration settings.
-/// @return           The newly constructed households.
-std::vector<std::shared_ptr<Household>>  BuildHouseholds(const GenConfiguration& config);
-
 /// Assigns households to urban centers.
-/// @param households   Households that will be assigned.
+/// @param population   Households that will be assigned.
 /// @param grid         The geogrid containing all centers that a household can be assigned to.
 /// @param config       Property_tree with general configuration settings.
 void AssignHouseholds
-(std::vector<std::shared_ptr<Household>>& households, const GeoGrid& grid, const GenConfiguration& config);
+    (std::shared_ptr<Population> population, const GeoGrid& grid, const GenConfiguration& config);
 
 } // assigner
 } // popgen

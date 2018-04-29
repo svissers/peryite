@@ -1,5 +1,6 @@
 #include "GenFile.h"
 #include "util/GeoCoordinate.h"
+#include "util/FileSys.h"
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string/join.hpp>
 
@@ -9,14 +10,14 @@ namespace files {
 
 using namespace std;
 using namespace util;
+using namespace boost::filesystem;
 
 GenFile::GenFile(GenConfiguration& config)
 {
     // Get the output directory for this configuration.
-    string config_path = config.getPath();
-    m_out_dir = "output/"+config_path.substr(0, config_path.find_last_of("."));
+    m_output_prefix = config.GetOutputPrefix();
     try {
-        create_directories(m_out_dir);
+        create_directories(m_output_prefix);
     } catch (exception& e) {
         cout << "GeoGenerator::generate> Exception while creating output directory:  {}", e.what();
         throw;
@@ -26,20 +27,29 @@ GenFile::GenFile(GenConfiguration& config)
 GenFile::GenFile(GenConfiguration& config, vector<shared_ptr<GenStruct>> structs, GeoGrid& geo)
 : GenFile(config)
 {
+    // Get the output directory for this configuration.
+    m_output_prefix = config.GetOutputPrefix();
+    m_file_path = FileSys::BuildPath(m_output_prefix, m_file_name);
+    try {
+        create_directories(m_output_prefix);
+    } catch (exception& e) {
+        cout << "GeoGenerator::generate> Exception while creating output directory:  {}", e.what();
+        throw;
+    }
     insertStructs(structs, geo);
 }
 
-void GenFile::write()
+void GenFile::Write()
 {
     if (m_sorted_structs.size() == 0)
         return;
-    string file_path = m_out_dir.string()+"/"+m_file_name;
-    std::ofstream my_file{file_path};
+    m_file_path = FileSys::BuildPath(m_output_prefix, m_file_name);
+    std::ofstream my_file{m_file_path.string()};
     if(my_file.is_open()) {
         my_file << boost::algorithm::join(m_labels,",") << "\n";
         for (unsigned int band = 0; band < m_sorted_structs.size(); band++) {
             for (auto g_struct : m_sorted_structs.at(band)) {
-                my_file << boost::algorithm::join(getValues(g_struct),",");
+                my_file << boost::algorithm::join(GetValues(g_struct),",");
                 my_file << "," << to_string(band) << "\n";
             }
         }
@@ -47,16 +57,16 @@ void GenFile::write()
     }
 }
 
-vector<vector<shared_ptr<GenStruct>>> GenFile::read()
+vector<vector<shared_ptr<GenStruct>>> GenFile::Read()
 {
     if (m_sorted_structs.size() != 0)
         return m_sorted_structs;
     // Populate the struct vector and return it.
     m_sorted_structs = vector<vector<shared_ptr<GenStruct>>>(AMOUNTOFBANDS);
-    string file_path = m_out_dir.string()+"/"+m_file_name;
-    CSV struct_data(file_path);
+    m_file_path = FileSys::BuildPath(m_output_prefix, m_file_name);
+    CSV struct_data(m_file_path.string());
     for (CSVRow const & row : struct_data) {
-        auto g_struct = getStruct(row);
+        auto g_struct = GetStruct(row);
         auto band = row.GetValue<unsigned int>("band");
         m_sorted_structs.at(band).push_back(g_struct);
     }

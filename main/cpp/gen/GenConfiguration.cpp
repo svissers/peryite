@@ -15,27 +15,10 @@ namespace gen {
 using namespace std;
 using namespace boost::property_tree;
 
-GenConfiguration::GenConfiguration(string config_file_name, unsigned int thread_count)
-        : m_thread_count(thread_count), m_path(config_file_name)
+GenConfiguration::GenConfiguration(boost::property_tree::ptree config_pt, unsigned int thread_count, string output_prefix)
+        : m_config(config_pt), m_output_prefix(output_prefix), m_thread_count(thread_count)
 {
-    // Create the configuration property tree
-    if (util::InstallDirs::GetDataDir().empty()) {
-            throw runtime_error(std::string(__func__) + "> Data directory not present! Aborting.");
-    }
-    try {
-            std::cout << "Found data dir" << std::endl;
-            ptree config;
-            // Populate the configuration tree
-            read_xml((util::InstallDirs::GetConfigDir() /= config_file_name).string(), config,
-                     xml_parser::trim_whitespace | xml_parser::no_comments);
-            std::cout << "config tree populated" << std::endl;
-            m_config = config.get_child("Config");
-    } catch (xml_parser_error& e) {
-            throw invalid_argument(string("Invalid file: ") +
-                                        (util::InstallDirs::GetConfigDir() /= config_file_name).string());
-    }
-
-    checkValidConfig();
+    CheckValidConfig();
 
     // Initialize the random number generator associated with the configuration
     m_rn_manager = make_shared<util::RNManager>();
@@ -45,22 +28,28 @@ GenConfiguration::GenConfiguration(string config_file_name, unsigned int thread_
     m_rn_manager->Initialize(info);
 }
 
-boost::property_tree::ptree GenConfiguration::getTree() const
+
+GenConfiguration::GenConfiguration(boost::property_tree::ptree config_tree, std::shared_ptr<util::RNManager> rn_manager, string output_prefix)
+    : m_config(config_tree), m_output_prefix(output_prefix), m_rn_manager(rn_manager)
+{}
+
+boost::property_tree::ptree GenConfiguration::GetTree() const
 {
     return m_config;
 }
 
-std::string GenConfiguration::getPath() const
+string GenConfiguration::GetOutputPrefix() const
 {
-    return m_path;
+    return m_output_prefix;
 }
 
-std::shared_ptr<util::RNManager> GenConfiguration::getRNManager() const
+
+std::shared_ptr<util::RNManager> GenConfiguration::GetRNManager() const
 {
     return m_rn_manager;
 }
 
-void GenConfiguration::checkValidConfig() const
+void GenConfiguration::CheckValidConfig() const
 {
     // TODO checking here.
 }

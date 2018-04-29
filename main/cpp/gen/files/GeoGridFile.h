@@ -9,15 +9,20 @@ namespace gen {
 namespace files {
 
 /**
- *
+ * A class that can read and write geogrid data files.
  */
 class GeoGridFile : public GenFile
 {
 private:
     GeoGrid m_grid;
 public:
+    /// Constructor. Constructs the GeoGridFile object using the config.
+    /// @param config           The geopop configuration to be used.
     GeoGridFile(GenConfiguration& config) : GenFile(config) {}
 
+    /// Constructor. Constructs the GeoGridFile object with an existing grid.
+    /// @param config           The geopop configuration to be used.
+    /// @param grid             The geogrid that the file will contain.
     GeoGridFile(GenConfiguration& config, GeoGrid grid)
     : GenFile(config)
     {
@@ -26,34 +31,36 @@ public:
         m_labels = {"id","latitude","longitude","name","province","population", "is_fragmented", "fragmented_populations", "fragmented_lats", "fragmented_longs"};
     }
 
-    std::vector<std::vector<std::shared_ptr<GenStruct>>> read()
+    /// Read should not be used, use ReadGrid instead.
+    /// @return     A brand new vector of genstructs.
+    std::vector<std::vector<std::shared_ptr<GenStruct>>> Read()
     { return std::vector<std::vector<std::shared_ptr<GenStruct>>>(); }
 
-    // TODO: move the method definitions into a cpp file.
+    /// Writes the geogrid that the file contains to a file.
     void write()
     {
         if (m_grid.size() == 0)
             return;
-        std::string file_path = m_out_dir.string()+"/"+m_file_name;
-        std::ofstream my_file{file_path};
+        std::ofstream my_file{m_file_path.string()};
         if(my_file.is_open()) {
             my_file << boost::algorithm::join(m_labels,",") << "\n";
                 for (auto center : m_grid) {
-                    my_file << boost::algorithm::join(getValues(center),",") << "\n";
+                    my_file << boost::algorithm::join(GetValues(center),",") << "\n";
                 }
             my_file.close();
         }
     }
 
-    GeoGrid readGrid()
+    /// Reads the geogrid from a file or returns it if it already exists.
+    /// @return     The geogrid that the file contains.
+    GeoGrid ReadGrid()
     {
         if (m_grid.size() != 0)
             return m_grid;
         // Populate the geogrid and return it.
         m_grid.m_min_long = 90;
         m_grid.m_max_long = 0;
-        std::string file_path = m_out_dir.string()+"/"+m_file_name;
-        util::CSV struct_data(file_path);
+        util::CSV struct_data(m_file_path.string());
         for (util::CSVRow const & row : struct_data) {
             double longitude = row.GetValue<double>("longitude");
             auto center = std::make_shared<UrbanCenter>(UrbanCenter(
@@ -84,7 +91,7 @@ public:
             auto longs_str  = row.GetValue<std::string>("fragmented_longs");
             boost::split(lats, lats_str, boost::is_any_of(";"));
             boost::split(longs, longs_str, boost::is_any_of(";"));
-            for (int i = 0; i < lats.size(); i++) {
+            for (unsigned int i = 0; i < lats.size(); i++) {
                 double lat = std::stod(lats[i]);
                 double lon = std::stod(longs[i]);
                 center->fragmented_coords.push_back(util::GeoCoordinate(lat,lon));
@@ -103,12 +110,17 @@ public:
 
 private:
 
-    std::shared_ptr<GenStruct> getStruct(util::CSVRow const & row)
+    /// GetStruct should not be used.
+    /// @return     A brand new empty genstruct.
+    std::shared_ptr<GenStruct> GetStruct(util::CSVRow const & row)
     {
         return std::shared_ptr<GenStruct>();
     }
 
-    std::vector<std::string> getValues(std::shared_ptr<GenStruct> g_struct)
+    /// Returns the values of a urban center in string format.
+    /// @param g_struct         The urban center that contains the values.
+    /// @return                 Vector of the values of the urban center in string format.
+    std::vector<std::string> GetValues(std::shared_ptr<GenStruct> g_struct)
     {
         std::shared_ptr<UrbanCenter> center = std::static_pointer_cast<UrbanCenter>(g_struct);
         std::vector<std::string> populations;

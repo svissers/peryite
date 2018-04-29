@@ -2,23 +2,31 @@
  * @file
  * Main program for the generation of geogrids and a population.
  */
-#include "../util/ConfigInfo.h"
-#include "../util/InstallDirs.h"
-#include "../util/TimeStamp.h"
+#include "util/ConfigInfo.h"
+#include "util/InstallDirs.h"
+#include "util/TimeStamp.h"
+#include "util/RunConfigManager.h"
+#include "pop/Population.h"
+#include "pool/ContactPoolSys.h"
 #include "geogen/GeoGenerator.h"
 #include "popgen/PopGenerator.h"
 #include "GenConfiguration.h"
 #include "files/GenDirectory.h"
 
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/xml_parser.hpp>
+
 #include <tclap/CmdLine.h>
 #include <omp.h>
+#include <memory>
 
 using namespace std;
+using namespace stride::util;
 using namespace stride::gen;
 using namespace stride::gen::files;
 using namespace stride::util;
 using namespace TCLAP;
-using boost::filesystem::path;
+using namespace boost::property_tree;
 
 int main(int argc, char* argv[])
 {
@@ -45,6 +53,7 @@ int main(int argc, char* argv[])
                 // -----------------------------------------------------------------------------------------
                 // Check exec environment and configuration file
                 // -----------------------------------------------------------------------------------------
+                /*
                 InstallDirs::Print(cout);
                 InstallDirs::Check();
                 const path file_path = InstallDirs::GetConfigDir() / path(config_file_name);
@@ -52,36 +61,49 @@ int main(int argc, char* argv[])
                         throw runtime_error(string(__func__) + ">Config file " + file_path.string() +
                                             " not present. Aborting.");
                 }
+                */
                 // -----------------------------------------------------------------------------------------
                 // Parallellization
                 // -----------------------------------------------------------------------------------------
                 unsigned int num_threads = 1;
                 if (ConfigInfo::HaveOpenMP()) {
-                        #pragma omp parallel
-                        {
-                                num_threads = static_cast<unsigned int>(omp_get_num_threads());
-                        }
-                        cout << "\nUsing OpenMP threads:  " << num_threads << endl;
+                    #pragma omp parallel
+                    {
+                            num_threads = static_cast<unsigned int>(omp_get_num_threads());
+                    }
+                    cout << "\nUsing OpenMP threads:  " << num_threads << endl;
                 } else {
-                        cout << "\nNot using parallellization" << endl;
+                    cout << "\nNot using parallellization" << endl;
                 }
 
                 // -----------------------------------------------------------------------------------------
                 // Initialize the directory for the given configuration
                 // -----------------------------------------------------------------------------------------
-                GenDirectory dir = GenDirectory(config_file_name, num_threads);
+                ptree configPt;
+                try {
+                        read_xml((InstallDirs::GetConfigDir() /= config_file_name).string(), configPt,
+                                 xml_parser::trim_whitespace | xml_parser::no_comments);
+                        configPt = configPt.get_child("run");
+                        write_xml(std::cout, configPt);
+                } catch (xml_parser_error& e) {
+                        throw invalid_argument(string("Invalid file: ") +
+                                                    (InstallDirs::GetConfigDir() /= config_file_name).string());
+                }
+                GenDirectory dir = GenDirectory(configPt, num_threads, "output");
 
                 // -----------------------------------------------------------------------------------------
                 // Run Generator-Geo
                 // -----------------------------------------------------------------------------------------
                 if (generate_geo) {
-                    GeoGenerator::Generate(dir, num_threads);
+                    geogen::Generate(dir);
                 }
                 // -----------------------------------------------------------------------------------------
                 // Run Generator-Pop
                 // -----------------------------------------------------------------------------------------
                 if (generate_pop) {
-                    popgen::Generate(dir, num_threads);
+                    auto population = make_shared<stride::Population>();
+                    stride::ContactPoolSys pool_sys;
+                    popgen::Generate(dir, population, pool_sys, true);
                 }
                 // -----------------------------------------------------------------------------------------
                 // Finished
