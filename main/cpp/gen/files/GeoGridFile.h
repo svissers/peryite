@@ -16,8 +16,13 @@ class GeoGridFile : public GenFile
 private:
     GeoGrid m_grid;
 public:
+    /// Constructor. Constructs the GeoGridFile object using the config.
+    /// @param config           The geopop configuration to be used.
     GeoGridFile(GenConfiguration& config) : GenFile(config) {}
 
+    /// Constructor. Constructs the GeoGridFile object with an existing grid.
+    /// @param config           The geopop configuration to be used.
+    /// @param grid             The geogrid that the file will contain.
     GeoGridFile(GenConfiguration& config, GeoGrid grid)
     : GenFile(config)
     {
@@ -26,10 +31,12 @@ public:
         m_labels = {"id","latitude","longitude","name","province","population", "is_fragmented", "fragmented_populations", "fragmented_lats", "fragmented_longs"};
     }
 
+    /// Read should not be used, use ReadGrid instead.
+    /// @return     A brand new vector of genstructs.
     std::vector<std::vector<std::shared_ptr<GenStruct>>> Read()
     { return std::vector<std::vector<std::shared_ptr<GenStruct>>>(); }
 
-    // TODO: move the method definitions into a cpp file.
+    /// Writes the geogrid that the file contains to a file.
     void write()
     {
         if (m_grid.size() == 0)
@@ -44,6 +51,8 @@ public:
         }
     }
 
+    /// Reads the geogrid from a file or returns it if it already exists.
+    /// @return     The geogrid that the file contains.
     GeoGrid ReadGrid()
     {
         if (m_grid.size() != 0)
@@ -101,11 +110,16 @@ public:
 
 private:
 
+    /// GetStruct should not be used.
+    /// @return     A brand new empty genstruct.
     std::shared_ptr<GenStruct> GetStruct(util::CSVRow const & row)
     {
         return std::shared_ptr<GenStruct>();
     }
 
+    /// Returns the values of a urban center in string format.
+    /// @param g_struct         The urban center that contains the values.
+    /// @return                 Vector of the values of the urban center in string format.
     std::vector<std::string> GetValues(std::shared_ptr<GenStruct> g_struct)
     {
         std::shared_ptr<UrbanCenter> center = std::static_pointer_cast<UrbanCenter>(g_struct);
