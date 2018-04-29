@@ -26,7 +26,7 @@ public:
         m_labels = {"id","latitude","longitude","name","province","population", "is_fragmented", "fragmented_populations", "fragmented_lats", "fragmented_longs"};
     }
 
-    std::vector<std::vector<std::shared_ptr<GenStruct>>> read()
+    std::vector<std::vector<std::shared_ptr<GenStruct>>> Read()
     { return std::vector<std::vector<std::shared_ptr<GenStruct>>>(); }
 
     // TODO: move the method definitions into a cpp file.
@@ -38,13 +38,13 @@ public:
         if(my_file.is_open()) {
             my_file << boost::algorithm::join(m_labels,",") << "\n";
                 for (auto center : m_grid) {
-                    my_file << boost::algorithm::join(getValues(center),",") << "\n";
+                    my_file << boost::algorithm::join(GetValues(center),",") << "\n";
                 }
             my_file.close();
         }
     }
 
-    GeoGrid readGrid()
+    GeoGrid ReadGrid()
     {
         if (m_grid.size() != 0)
             return m_grid;
@@ -101,12 +101,12 @@ public:
 
 private:
 
-    std::shared_ptr<GenStruct> getStruct(util::CSVRow const & row)
+    std::shared_ptr<GenStruct> GetStruct(util::CSVRow const & row)
     {
         return std::shared_ptr<GenStruct>();
     }
 
-    std::vector<std::string> getValues(std::shared_ptr<GenStruct> g_struct)
+    std::vector<std::string> GetValues(std::shared_ptr<GenStruct> g_struct)
     {
         std::shared_ptr<UrbanCenter> center = std::static_pointer_cast<UrbanCenter>(g_struct);
         std::vector<std::string> populations;

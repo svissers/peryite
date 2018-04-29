@@ -49,7 +49,7 @@ void GenFile::Write()
         my_file << boost::algorithm::join(m_labels,",") << "\n";
         for (unsigned int band = 0; band < m_sorted_structs.size(); band++) {
             for (auto g_struct : m_sorted_structs.at(band)) {
-                my_file << boost::algorithm::join(getValues(g_struct),",");
+                my_file << boost::algorithm::join(GetValues(g_struct),",");
                 my_file << "," << to_string(band) << "\n";
             }
         }
@@ -57,7 +57,7 @@ void GenFile::Write()
     }
 }
 
-vector<vector<shared_ptr<GenStruct>>> GenFile::read()
+vector<vector<shared_ptr<GenStruct>>> GenFile::Read()
 {
     if (m_sorted_structs.size() != 0)
         return m_sorted_structs;
@@ -66,7 +66,7 @@ vector<vector<shared_ptr<GenStruct>>> GenFile::read()
     m_file_path = FileSys::BuildPath(m_output_prefix, m_file_name);
     CSV struct_data(m_file_path.string());
     for (CSVRow const & row : struct_data) {
-        auto g_struct = getStruct(row);
+        auto g_struct = GetStruct(row);
         auto band = row.GetValue<unsigned int>("band");
         m_sorted_structs.at(band).push_back(g_struct);
     }

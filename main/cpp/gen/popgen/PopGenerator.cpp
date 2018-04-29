@@ -24,13 +24,13 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population, Cont
     // --------------------------------------------------
     // Get the population and structs (by file or memory)
     // --------------------------------------------------
-    auto config         = dir.getConfig();
-    population          = dir.GetPopulationFile()->Read(dir.getBeliefConfig());
-    auto grid           = dir.getGeoGridFile()->readGrid();
-    auto schools        = dir.getSchoolFile()->read();
-    auto universities   = dir.getUniversityFile()->read();
-    auto workplaces     = dir.getWorkplaceFile()->read();
-    auto communities    = dir.getCommunityFile()->read();
+    auto config         = dir.GetConfig();
+    population          = dir.GetPopulationFile()->Read(dir.GetBeliefConfig());
+    auto grid           = dir.GetGeoGridFile()->ReadGrid();
+    auto schools        = dir.GetSchoolFile()->Read();
+    auto universities   = dir.GetUniversityFile()->Read();
+    auto workplaces     = dir.GetWorkplaceFile()->Read();
+    auto communities    = dir.GetCommunityFile()->Read();
 
     // -------------------
     // Assign ContactPools

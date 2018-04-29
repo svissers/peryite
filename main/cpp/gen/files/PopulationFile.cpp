@@ -45,7 +45,7 @@ void PopulationFile::Write()
     if(my_file.is_open()) {
         my_file << boost::algorithm::join(m_labels,",") << "\n";
         for (const auto& person : *m_population)
-            my_file << boost::algorithm::join(getValues(person),",") << "\n";
+            my_file << boost::algorithm::join(GetValues(person),",") << "\n";
         my_file.close();
     }
 }
@@ -108,7 +108,7 @@ vector<vector<unsigned int>> GetReferenceHouseholds(const GenConfiguration& conf
 }
 
 
-std::vector<std::string> PopulationFile::getValues(const Person& person)
+std::vector<std::string> PopulationFile::GetValues(const Person& person)
 {
     vector<string> values = {
         to_string(person.GetAge()),

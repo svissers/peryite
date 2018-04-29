@@ -21,7 +21,7 @@ GenDirectory::GenDirectory(const boost::property_tree::ptree& config_pt, util::R
     m_belief_pt = config_pt.get_child("run.belief_policy");
 }
 
-void GenDirectory::initialize(PopulationFilePtr pop_file, GeoGridFilePtr geo_file,
+void GenDirectory::Initialize(PopulationFilePtr pop_file, GeoGridFilePtr geo_file,
                 SchoolFilePtr school_file, UniversityFilePtr university_file,
                 WorkplaceFilePtr workplace_file, CommunityFilePtr community_file)
 {
@@ -41,7 +41,7 @@ PopulationFilePtr GenDirectory::GetPopulationFile()
     return m_pop_file;
 }
 
-GeoGridFilePtr GenDirectory::getGeoGridFile()
+GeoGridFilePtr GenDirectory::GetGeoGridFile()
 {
     if (!m_geo_file) {
         m_geo_file = make_shared<GeoGridFile>(m_config);
@@ -49,7 +49,7 @@ GeoGridFilePtr GenDirectory::getGeoGridFile()
     return m_geo_file;
 }
 
-SchoolFilePtr GenDirectory::getSchoolFile()
+SchoolFilePtr GenDirectory::GetSchoolFile()
 {
     if (!m_school_file) {
         m_school_file = make_shared<SchoolFile>(m_config);
@@ -57,7 +57,7 @@ SchoolFilePtr GenDirectory::getSchoolFile()
     return m_school_file;
 }
 
-UniversityFilePtr GenDirectory::getUniversityFile()
+UniversityFilePtr GenDirectory::GetUniversityFile()
 {
     if (!m_university_file) {
         m_university_file = make_shared<UniversityFile>(m_config);
@@ -65,7 +65,7 @@ UniversityFilePtr GenDirectory::getUniversityFile()
     return m_university_file;
 }
 
-WorkplaceFilePtr GenDirectory::getWorkplaceFile()
+WorkplaceFilePtr GenDirectory::GetWorkplaceFile()
 {
     if (!m_workplace_file) {
         m_workplace_file = make_shared<WorkplaceFile>(m_config);
@@ -73,7 +73,7 @@ WorkplaceFilePtr GenDirectory::getWorkplaceFile()
     return m_workplace_file;
 }
 
-CommunityFilePtr GenDirectory::getCommunityFile()
+CommunityFilePtr GenDirectory::GetCommunityFile()
 {
     if (!m_community_file) {
         m_community_file = make_shared<CommunityFile>(m_config);

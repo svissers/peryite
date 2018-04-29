@@ -22,7 +22,7 @@ public:
     }
 
 private:
-    std::shared_ptr<GenStruct> getStruct(util::CSVRow const & row)
+    std::shared_ptr<GenStruct> GetStruct(util::CSVRow const & row)
     {
         auto university = std::make_shared<University>(University(
             row.GetValue<unsigned int>("id"),
@@ -36,7 +36,7 @@ private:
         return university;
     }
 
-    std::vector<std::string> getValues(std::shared_ptr<GenStruct> g_struct)
+    std::vector<std::string> GetValues(std::shared_ptr<GenStruct> g_struct)
     {
         std::shared_ptr<University> university = std::static_pointer_cast<University>(g_struct);
         std::vector<std::string> values = {

@@ -18,7 +18,7 @@ public:
     GenFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, GeoGrid& geo);
 
     virtual void Write();
-    virtual std::vector<std::vector<std::shared_ptr<GenStruct>>> read();
+    virtual std::vector<std::vector<std::shared_ptr<GenStruct>>> Read();
 
 protected:
     std::vector<std::string> m_labels;
@@ -27,8 +27,8 @@ protected:
     std::string m_file_name;
     std::vector<std::vector<std::shared_ptr<GenStruct>>> m_sorted_structs;
 
-    virtual std::shared_ptr<GenStruct> getStruct(util::CSVRow const & row) =0;
-    virtual std::vector<std::string> getValues(std::shared_ptr<GenStruct>) =0;
+    virtual std::shared_ptr<GenStruct> GetStruct(util::CSVRow const & row) =0;
+    virtual std::vector<std::string> GetValues(std::shared_ptr<GenStruct>) =0;
     void insertStructs(std::vector<std::shared_ptr<GenStruct>> structs, GeoGrid& geo);
 };
 

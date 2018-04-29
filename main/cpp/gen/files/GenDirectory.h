@@ -21,19 +21,19 @@ public:
     GenDirectory(const boost::property_tree::ptree& config_pt, unsigned int thread_count, std::string output_prefix);
     GenDirectory(const boost::property_tree::ptree& config_pt, util::RNManager& rn_manager, std::string output_prefix);
 
-    void initialize(PopulationFilePtr hh_file, GeoGridFilePtr geo_file,
+    void Initialize(PopulationFilePtr hh_file, GeoGridFilePtr geo_file,
                 SchoolFilePtr school_file, UniversityFilePtr university_file,
                 WorkplaceFilePtr workplace_file, CommunityFilePtr community_file);
 
-    GenConfiguration getConfig() { return m_config; }
-    boost::property_tree::ptree getBeliefConfig() { return m_belief_pt; }
+    GenConfiguration GetConfig() { return m_config; }
+    boost::property_tree::ptree GetBeliefConfig() { return m_belief_pt; }
 
     PopulationFilePtr GetPopulationFile();
-    GeoGridFilePtr getGeoGridFile();
-    SchoolFilePtr getSchoolFile();
-    UniversityFilePtr getUniversityFile();
-    WorkplaceFilePtr getWorkplaceFile();
-    CommunityFilePtr getCommunityFile();
+    GeoGridFilePtr GetGeoGridFile();
+    SchoolFilePtr GetSchoolFile();
+    UniversityFilePtr GetUniversityFile();
+    WorkplaceFilePtr GetWorkplaceFile();
+    CommunityFilePtr GetCommunityFile();
 
 private:
     GenConfiguration m_config;

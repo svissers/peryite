@@ -26,7 +26,7 @@ private:
     std::string m_file_name;
     std::shared_ptr<Population> m_population;
 
-    std::vector<std::string> getValues(const Person& person);
+    std::vector<std::string> GetValues(const Person& person);
 };
 
 std::vector<std::vector<unsigned int>> GetReferenceHouseholds(const GenConfiguration& config);

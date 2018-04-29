@@ -20,11 +20,11 @@ using namespace util;
 
 void Generate(GenDirectory& dir)
 {
-    auto config = dir.getConfig();
+    auto config = dir.GetConfig();
 
     // Build
     std::cout << "Building population" << std::endl;
-    shared_ptr<Population> population = builder::BuildPopulation(config, dir.getBeliefConfig());
+    shared_ptr<Population> population = builder::BuildPopulation(config, dir.GetBeliefConfig());
     std::cout << "Building geogen" << std::endl;
     GeoGrid geogrid = builder::BuildGeoGrid(config);
     std::cout << "Building schools" << std::endl;
@@ -78,7 +78,7 @@ void Generate(GenDirectory& dir)
     community_file->Write();
 
     // Initialize
-    dir.initialize(population_file, geo_grid_file, school_file, university_file, workplace_file, community_file);
+    dir.Initialize(population_file, geo_grid_file, school_file, university_file, workplace_file, community_file);
 }
 
 } // namespace geogen
