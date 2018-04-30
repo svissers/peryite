@@ -1,6 +1,5 @@
 #pragma once
 #include "../files/GenDirectory.h"
-#include "../structs/Household.h"
 #include "pool/ContactPoolSys.h"
 #include "util/GeoCoordinate.h"
 

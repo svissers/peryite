@@ -28,7 +28,7 @@ void Generate(GenDirectory& dir)
     std::cout << "Building geogen" << std::endl;
     GeoGrid geogrid = builder::BuildGeoGrid(config);
     std::cout << "Building schools" << std::endl;
-    vector<shared_ptr<School>> schools = builder::BuildSchools(config, geogrid);
+    vector<shared_ptr<School>> schools = builder::BuildSchools(config, geogrid, population);
     std::cout << "Building universities" << std::endl;
     vector<shared_ptr<University>> universities = builder::BuildUniversities(config, geogrid);
     std::cout << "Building workplaces" << std::endl;
