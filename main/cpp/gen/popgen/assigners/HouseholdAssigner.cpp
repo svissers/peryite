@@ -1,4 +1,4 @@
-#include "householdAssigner.h"
+#include "HouseholdAssigner.h"
 #include "trng/fast_discrete_dist.hpp"
 
 namespace stride {

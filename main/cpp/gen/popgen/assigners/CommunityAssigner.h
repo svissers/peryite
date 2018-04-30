@@ -1,6 +1,7 @@
 #include "../../structs/Household.h"
 #include "../../GeoGrid.h"
 #include "../../GenConfiguration.h"
+#include "pop/Population.h"
 #include <vector>
 
 namespace stride {

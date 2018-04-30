@@ -68,11 +68,11 @@ set(LIB_SRC
     pop/SurveySeeder.cpp
 #---
     gen/popgen/PopGenerator.cpp
-    gen/popgen/assigners/householdAssigner.cpp
-    gen/popgen/assigners/schoolAssigner.cpp
-    gen/popgen/assigners/universityAssigner.cpp
-    gen/popgen/assigners/workplaceAssigner.cpp
-    gen/popgen/assigners/communityAssigner.cpp
+    gen/popgen/assigners/HouseholdAssigner.cpp
+    gen/popgen/assigners/SchoolAssigner.cpp
+    gen/popgen/assigners/UniversityAssigner.cpp
+    gen/popgen/assigners/WorkplaceAssigner.cpp
+    gen/popgen/assigners/CommunityAssigner.cpp
     gen/GenConfiguration.cpp
     gen/geogen/GeoGenerator.cpp
     gen/geogen/builders/GeoGridBuilder.cpp

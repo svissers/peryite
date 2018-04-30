@@ -1,4 +1,4 @@
-#include "householdAssigner.h"
+#include "CommunityAssigner.h"
 #include "../../structs/Community.h"
 #include "../PopGenerator.h"
 #include "trng/fast_discrete_dist.hpp"

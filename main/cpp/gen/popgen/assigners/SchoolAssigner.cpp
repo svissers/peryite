@@ -1,4 +1,4 @@
-#include "householdAssigner.h"
+#include "SchoolAssigner.h"
 #include "../../structs/School.h"
 #include "../PopGenerator.h"
 #include "trng/fast_discrete_dist.hpp"
