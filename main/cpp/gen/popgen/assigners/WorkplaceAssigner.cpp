@@ -47,11 +47,11 @@ void AssignWorkplaces(
 
     // Commuting distributions
     unsigned int working_age_people = 0;
-    for(size_t i; i < population->size(); i++){
+    for(size_t i = 0; i < population->size(); i++){
         if(population->at(i).GetAge() >=18 && population->at(i).GetAge() <= 65)
             working_age_people++;
     }
-    unsigned int total_commuting_actives    = working_age_people * commute_fraction;
+    unsigned int total_commuting_actives    = std::ceil(working_age_people * commute_fraction);
     double commuting_student_active_ratio   = total_commuting_students / total_commuting_actives;
 
     util::CSV commuting_data    = util::CSV(config.GetTree().get<string>("geoprofile.commuters"));

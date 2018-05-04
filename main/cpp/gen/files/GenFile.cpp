@@ -80,7 +80,7 @@ void GenFile::insertStructs(vector<shared_ptr<GenStruct>> structs, GeoGrid& geo)
         for(unsigned int i = 0; i < AMOUNTOFBANDS; i++) {
             double offset = (i+1) * geo.m_longitude_band_width;
             if(g_struct->coordinate.m_longitude < geo.m_min_long+offset) {
-                if (sorted.at(i).size() == 0) {
+                if (sorted.at(i).empty()) {
                     // The band is empty, simply insert.
                     sorted.at(i).push_back(g_struct);
                 }
@@ -90,6 +90,7 @@ void GenFile::insertStructs(vector<shared_ptr<GenStruct>> structs, GeoGrid& geo)
                     for(unsigned int j = 0; j < sorted.at(i).size(); j++){
                         if(sorted.at(i).at(j)->coordinate.m_latitude > g_struct->coordinate.m_latitude){
                             sorted.at(i).insert(sorted.at(i).begin()+j, g_struct);
+                            inserted = true;
                             break;
                         }
                     }

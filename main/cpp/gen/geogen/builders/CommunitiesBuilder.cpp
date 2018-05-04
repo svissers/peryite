@@ -17,7 +17,6 @@ vector<shared_ptr<Community>> BuildCommunities(const GenConfiguration& config, G
     unsigned int total_population = config.GetTree().get<unsigned int>("population_size");
     // Every community has an average of 2000 members.
     unsigned int community_count = total_population / 2000;
-
     // Create the discrete distribution to sample from.
     vector<double> fractions;
     for(auto center : grid) {
