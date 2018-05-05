@@ -41,14 +41,14 @@ GenFile::GenFile(GenConfiguration& config, vector<shared_ptr<GenStruct>> structs
 
 void GenFile::Write()
 {
-    if (m_sorted_structs.size() == 0)
+    if (m_sorted_structs.empty())
         return;
     m_file_path = FileSys::BuildPath(m_output_prefix, m_file_name);
     std::ofstream my_file{m_file_path.string()};
     if(my_file.is_open()) {
         my_file << boost::algorithm::join(m_labels,",") << "\n";
         for (unsigned int band = 0; band < m_sorted_structs.size(); band++) {
-            for (auto g_struct : m_sorted_structs.at(band)) {
+            for (const auto& g_struct : m_sorted_structs.at(band)) {
                 my_file << boost::algorithm::join(GetValues(g_struct),",");
                 my_file << "," << to_string(band) << "\n";
             }
@@ -59,7 +59,7 @@ void GenFile::Write()
 
 vector<vector<shared_ptr<GenStruct>>> GenFile::Read()
 {
-    if (m_sorted_structs.size() != 0)
+    if (! m_sorted_structs.empty())
         return m_sorted_structs;
     // Populate the struct vector and return it.
     m_sorted_structs = vector<vector<shared_ptr<GenStruct>>>(AMOUNTOFBANDS);
@@ -73,10 +73,10 @@ vector<vector<shared_ptr<GenStruct>>> GenFile::Read()
     return m_sorted_structs;
 }
 
-void GenFile::insertStructs(vector<shared_ptr<GenStruct>> structs, GeoGrid& geo)
+void GenFile::insertStructs(vector<shared_ptr<GenStruct>>& structs, GeoGrid& geo)
 {
     auto sorted = vector<vector<shared_ptr<GenStruct>>>(AMOUNTOFBANDS);
-    for(auto g_struct : structs) {
+    for(const auto& g_struct : structs) {
         for(unsigned int i = 0; i < AMOUNTOFBANDS; i++) {
             double offset = (i+1) * geo.m_longitude_band_width;
             if(g_struct->coordinate.m_longitude < geo.m_min_long+offset) {

@@ -1,13 +1,5 @@
 #include "GeoGenerator.h"
 #include "builders/PopulationBuilder.h"
-#include "builders/SchoolsBuilder.h"
-#include "builders/WorkplacesBuilder.h"
-#include "../files/PopulationFile.h"
-#include "../files/GeoGridFile.h"
-#include "../files/SchoolFile.h"
-#include "../files/UniversityFile.h"
-#include "../files/WorkplaceFile.h"
-#include "../files/CommunityFile.h"
 
 using namespace boost::filesystem;
 namespace stride {

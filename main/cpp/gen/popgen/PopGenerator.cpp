@@ -1,15 +1,10 @@
 #include "PopGenerator.h"
-#include "../files/PopulationFile.h"
 #include "assigners/HouseholdAssigner.h"
 #include "assigners/SchoolAssigner.h"
 #include "assigners/UniversityAssigner.h"
 #include "assigners/WorkplaceAssigner.h"
 #include "assigners/CommunityAssigner.h"
-#include "pool/ContactPoolSys.h"
-#include "pop/Population.h"
 #include "util/GeoCoordCalculator.h"
-#include "trng/fast_discrete_dist.hpp"
-#include <map>
 
 
 namespace stride {

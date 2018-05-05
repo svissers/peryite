@@ -31,7 +31,7 @@ void AssignWorkplaces(
     // -------------
     auto rn_manager = config.GetRNManager();
 
-    auto total_population   = config.GetTree().get<unsigned int>("population_size");
+    //auto total_population   = config.GetTree().get<unsigned int>("population_size");
     auto student_fraction   = config.GetTree().get<double>("university.student_fraction");
     auto work_fraction      = config.GetTree().get<double>("work.work_fraction");
     auto commute_fraction   = config.GetTree().get<double>("work.commute_fraction");

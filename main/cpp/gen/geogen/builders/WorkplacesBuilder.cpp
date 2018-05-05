@@ -1,12 +1,7 @@
 #include "WorkplacesBuilder.h"
 
 #include "trng/fast_discrete_dist.hpp"
-#include "util/RNManager.h"
-#include "util/CSV.h"
-#include "../../structs/UrbanCenter.h"
 
-#include <vector>
-#include <map>
 
 namespace stride {
 namespace gen {
@@ -19,7 +14,7 @@ using namespace util;
 vector<shared_ptr<WorkPlace>> BuildWorkplaces(GenConfiguration& config, GeoGrid& grid, std::shared_ptr<Population> pop)
 {
     auto workplaces         = vector<shared_ptr<WorkPlace>>();
-    auto total_population   = config.GetTree().get<unsigned int>("population_size");
+    //auto total_population   = config.GetTree().get<unsigned int>("population_size");
     auto work_fraction      = config.GetTree().get<double>("work.work_fraction");
 
     // Calculate the relative active population for each center in the grid
@@ -57,7 +52,7 @@ vector<shared_ptr<WorkPlace>> BuildWorkplaces(GenConfiguration& config, GeoGrid&
         }
     }
     unsigned int working_age_people = 0;
-    for(size_t i; i < pop->size(); i++){
+    for(size_t i = 0; i < pop->size(); i++){
         if(pop->at(i).GetAge() >=18 && pop->at(i).GetAge() <= 65)
             working_age_people++;
     }

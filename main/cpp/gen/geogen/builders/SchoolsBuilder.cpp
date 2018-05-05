@@ -18,7 +18,7 @@ vector<shared_ptr<School>> BuildSchools(const GenConfiguration& config, GeoGrid&
 
     // We check the amount of mandatory students in the population
     unsigned int mandatory_students_count = 0;
-    for(size_t i; i < pop->size(); i++){
+    for(size_t i = 0; i < pop->size(); i++){
         if(pop->at(i).GetAge() >=3 && pop->at(i).GetAge() <= 18)
             mandatory_students_count++;
     }

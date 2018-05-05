@@ -123,7 +123,7 @@ unsigned int AssignUniversities(
                     continue;
                 }
                 // Create a uniform distribution to select a university
-                auto rn_manager = config.GetRNManager();
+                //auto rn_manager = config.GetRNManager();
                 auto uni_gen = rn_manager->GetGenerator(
                         trng::fast_discrete_dist(closest_universities.size()));
                 auto university = static_pointer_cast<University>(closest_universities[uni_gen()]);

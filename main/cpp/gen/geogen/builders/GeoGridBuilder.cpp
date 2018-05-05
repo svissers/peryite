@@ -16,14 +16,14 @@ using namespace std;
 
 GeoGrid BuildGeoGrid(const GenConfiguration& config)
 {
-        GeoGrid geo_grid;
+        GeoGrid geo_grid = GeoGrid();
 
         // Reference set of cities
         util::CSV cities_data = util::CSV(config.GetTree().get<string>("geoprofile.cities"));;
         // Total population from reference set
         unsigned int total_ref_population   = 0;
         // Total population to be generated
-        unsigned int total_population       = config.GetTree().get<unsigned int>("population_size");
+        auto total_population       = config.GetTree().get<unsigned int>("population_size");
         // Longitude bounds for efficient distance based searches
         double max_longitude = 0;
         double min_longitude = 90;
@@ -83,7 +83,7 @@ GeoGrid BuildGeoGrid(const GenConfiguration& config)
                     frag_pop.push_back(frag_size);
                     double lat = center->coordinate.m_latitude + latlon_diff_gen();
                     double lon = center->coordinate.m_longitude + latlon_diff_gen();
-                    frag_coords.push_back(util::GeoCoordinate(lat, lon));
+                    frag_coords.emplace_back(util::GeoCoordinate(lat, lon));
                 }
                 center->fragmented_populations  = frag_pop;
                 center->fragmented_coords       = frag_coords;

@@ -13,11 +13,11 @@ using namespace std;
 vector<shared_ptr<University>> BuildUniversities(GenConfiguration& config, GeoGrid& grid)
 {
     auto universities = vector<shared_ptr<University>>();
-    unsigned int total_population = config.GetTree().get<unsigned int>("population_size");
+    auto total_population = config.GetTree().get<unsigned int>("population_size");
 
     // The total amount of university students is given.
-    double universityFraction   = config.GetTree().get<double>("university.student_fraction");
-    unsigned int student_count  = (unsigned int)(universityFraction * total_population);
+    auto universityFraction   = config.GetTree().get<double>("university.student_fraction");
+    auto student_count  = (unsigned int)(universityFraction * total_population);
 
     // Every university has an average of 3000 students
     unsigned int uni_count = student_count / 3000;
@@ -36,13 +36,13 @@ vector<shared_ptr<University>> BuildUniversities(GenConfiguration& config, GeoGr
 
     // The distribution will be relative to the top ten city population (not total).
     unsigned int total_city_population = 0;
-    for(auto center : big_cities) {
+    for(const auto& center : big_cities) {
             total_city_population += center->population;
     }
 
     // Create the discrete distribution to sample from.
     vector<double> fractions;
-    for(auto center : big_cities) {
+    for(const auto& center : big_cities) {
             fractions.push_back(center->population / total_city_population);
     }
 
