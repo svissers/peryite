@@ -26,7 +26,6 @@
 #include "calendar/DaysOffStandard.h"
 #include "contact/ContactHandler.h"
 #include "contact/Infector.h"
-#include "pool/ContactPoolType.h"
 #include "pop/Population.h"
 
 #include <trng/uniform01_dist.hpp>

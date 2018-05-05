@@ -1,6 +1,5 @@
 #include "SchoolsBuilder.h"
 #include "trng/fast_discrete_dist.hpp"
-#include "util/RNManager.h"
 
 namespace stride {
 namespace gen {

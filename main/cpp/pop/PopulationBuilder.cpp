@@ -25,8 +25,6 @@
 #include "util/FileSys.h"
 #include "util/StringUtils.h"
 
-#include <trng/uniform_int_dist.hpp>
-
 namespace stride {
 
 using namespace std;

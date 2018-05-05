@@ -1,7 +1,6 @@
 #include "GenConfiguration.h"
 #include "util/InstallDirs.h"
 
-#include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
 /**

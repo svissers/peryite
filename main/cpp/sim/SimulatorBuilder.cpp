@@ -23,22 +23,17 @@
 #include "calendar/Calendar.h"
 #include "disease/DiseaseSeeder.h"
 #include "disease/HealthSeeder.h"
-#include "pool/ContactPoolType.h"
 #include "pop/PopPoolBuilder.h"
 #include "pop/PopulationBuilder.h"
 #include "pop/SurveySeeder.h"
 #include "gen/geogen/GeoGenerator.h"
 #include "gen/popgen/PopGenerator.h"
-#include "gen/files/GenDirectory.h"
 
 #include "sim/Simulator.h"
 #include "util/FileSys.h"
 #include "util/LogUtils.h"
 
-#include <boost/filesystem.hpp>
 #include <boost/property_tree/xml_parser.hpp>
-#include <trng/uniform_int_dist.hpp>
-#include <cassert>
 
 namespace stride {
 

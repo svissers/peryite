@@ -10,15 +10,11 @@
 #include "pool/ContactPoolSys.h"
 #include "geogen/GeoGenerator.h"
 #include "popgen/PopGenerator.h"
-#include "GenConfiguration.h"
-#include "files/GenDirectory.h"
 
-#include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
 #include <tclap/CmdLine.h>
 #include <omp.h>
-#include <memory>
 
 using namespace std;
 using namespace stride::util;

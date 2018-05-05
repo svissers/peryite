@@ -1,9 +1,7 @@
 #include "UniversityAssigner.h"
 #include "../../structs/University.h"
 #include "../PopGenerator.h"
-#include "pop/Population.h"
 #include "trng/fast_discrete_dist.hpp"
-#include <map>
 
 namespace stride {
 namespace gen {
@@ -19,7 +17,6 @@ unsigned int AssignUniversities(
     // -------------
     // Contactpools
     // -------------
-    std::cout << "gets here1" << std::endl;
     const unsigned int university_size = 3000;
     const unsigned int university_cp_size = 20;
     unsigned int cp_id = 0;
@@ -42,8 +39,6 @@ unsigned int AssignUniversities(
         }
     }
 
-    std::cout << "gets here2" << std::endl;
-
     // -------------
     // Distributions
     // -------------
@@ -63,12 +58,8 @@ unsigned int AssignUniversities(
     auto cp_gen = rn_manager->GetGenerator(
             trng::fast_discrete_dist(floor(university_size / university_cp_size)));
 
-    std::cout << "gets here3" << std::endl;
-
-
     // Commuting distributions
     util::CSV commuting_data(config.GetTree().get<string>("geoprofile.commuters"));
-    std::cout << "commuting data" << std::endl;
 
     map<unsigned int, std::function<int()>> city_generators;
     vector<unsigned int> commute_towards;
@@ -80,13 +71,8 @@ unsigned int AssignUniversities(
             string label = templabel.str();
                   // For every university city, calculate the fraction commuting towards it.
             auto row = *(commuting_data.begin() + commuting_data.GetIndexForLabel(label));
-
-
             unsigned int city_total = 0;
             for (unsigned int col_index = 0; col_index < commuting_data.GetColumnCount(); col_index++) {
-                std::cout << city.first << std::endl;
-                std::cout << city.second.size() << std::endl;
-
                 // Ignore commuting towards itself
                 if (city.first == col_index)
                     continue;
@@ -102,8 +88,6 @@ unsigned int AssignUniversities(
             city_generators[city.first] = uni_gen;
         }
     }
-
-    std::cout << "gets here4" << std::endl;
 
     // Create a distribution to select a university city when the student commutes.
     vector<double> city_fractions;

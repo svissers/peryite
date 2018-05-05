@@ -1,8 +1,5 @@
 #include "GenFile.h"
-#include "util/GeoCoordinate.h"
 #include "util/FileSys.h"
-#include <boost/filesystem.hpp>
-#include <boost/algorithm/string/join.hpp>
 
 namespace stride {
 namespace gen {

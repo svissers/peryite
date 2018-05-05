@@ -1,7 +1,5 @@
 #include "UniversitiesBuilder.h"
 #include "trng/fast_discrete_dist.hpp"
-#include "../../structs/UrbanCenter.h"
-#include <algorithm>
 
 namespace stride {
 namespace gen {
