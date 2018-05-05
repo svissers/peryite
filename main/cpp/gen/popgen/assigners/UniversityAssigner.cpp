@@ -19,12 +19,13 @@ unsigned int AssignUniversities(
     // -------------
     // Contactpools
     // -------------
+    std::cout << "gets here1" << std::endl;
     const unsigned int university_size = 3000;
     const unsigned int university_cp_size = 20;
     unsigned int cp_id = 0;
     map<unsigned int, vector<shared_ptr<University>>> cities;
-    for (auto &band : universities) {
-        for (auto &g_struct : band) {
+    for (const auto &band : universities) {
+        for (const auto &g_struct : band) {
             auto university = std::static_pointer_cast<University>(g_struct);
             // Create the contactpools for every university
             for (unsigned int size = 0; size < university_size; size += university_cp_size) {
@@ -40,6 +41,8 @@ unsigned int AssignUniversities(
             }
         }
     }
+
+    std::cout << "gets here2" << std::endl;
 
     // -------------
     // Distributions
@@ -60,17 +63,30 @@ unsigned int AssignUniversities(
     auto cp_gen = rn_manager->GetGenerator(
             trng::fast_discrete_dist(floor(university_size / university_cp_size)));
 
+    std::cout << "gets here3" << std::endl;
+
+
     // Commuting distributions
     util::CSV commuting_data(config.GetTree().get<string>("geoprofile.commuters"));
+    std::cout << "commuting data" << std::endl;
+
     map<unsigned int, std::function<int()>> city_generators;
     vector<unsigned int> commute_towards;
     unsigned int commute_towards_total = 0;
     if (commuting_data.size() > 1) {
         for (auto const &city : cities) {
-            // For every university city, calculate the fraction commuting towards it.
-            auto row = *(commuting_data.begin() + city.first);
+            std::stringstream templabel;
+            templabel << "id_" << city.first;
+            string label = templabel.str();
+                  // For every university city, calculate the fraction commuting towards it.
+            auto row = *(commuting_data.begin() + commuting_data.GetIndexForLabel(label));
+
+
             unsigned int city_total = 0;
             for (unsigned int col_index = 0; col_index < commuting_data.GetColumnCount(); col_index++) {
+                std::cout << city.first << std::endl;
+                std::cout << city.second.size() << std::endl;
+
                 // Ignore commuting towards itself
                 if (city.first == col_index)
                     continue;
@@ -86,6 +102,8 @@ unsigned int AssignUniversities(
             city_generators[city.first] = uni_gen;
         }
     }
+
+    std::cout << "gets here4" << std::endl;
 
     // Create a distribution to select a university city when the student commutes.
     vector<double> city_fractions;

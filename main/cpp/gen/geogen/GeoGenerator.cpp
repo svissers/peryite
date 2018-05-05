@@ -22,7 +22,7 @@ void Generate(GenDirectory& dir)
     std::cout << "Building schools" << std::endl;
     vector<shared_ptr<School>> schools = builder::BuildSchools(config, geogrid, population);
     std::cout << "Building universities" << std::endl;
-    vector<shared_ptr<University>> universities = builder::BuildUniversities(config, geogrid);
+    vector<shared_ptr<University>> universities = builder::BuildUniversities(config, geogrid, schools.size());
     std::cout << "Building workplaces" << std::endl;
     vector<shared_ptr<WorkPlace>> workplaces = builder::BuildWorkplaces(config, geogrid, population);
     std::cout << "Building communities" << std::endl;
