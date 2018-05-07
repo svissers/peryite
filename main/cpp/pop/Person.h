@@ -24,6 +24,7 @@
 #include "pool/ContactPoolType.h"
 #include "pool/IdSubscriptArray.h"
 #include "util/GeoCoordinate.h"
+#include "util/GeometryGeoCoord.h"
 
 #include <boost/property_tree/ptree.hpp>
 
@@ -80,10 +81,10 @@ public:
         unsigned int GetId() const { return m_id; }
 
         // Get the household coordinate
-        util::GeoCoordinate GetCoordinate() const { return m_coord; }
+        util::spherical_point GetCoordinate() const { return m_coord; }
 
         // Set the household coordinate
-        void SetCoordinate(util::GeoCoordinate coord) { m_coord = coord; }
+        void SetCoordinate(util::spherical_point coord) { m_coord = coord; }
 
         /// Check if a person is present today in a given contactpool
         bool IsInPool(const ContactPoolType::Id& pool_type) const { return m_in_pools[pool_type]; }
@@ -108,7 +109,7 @@ private:
         unsigned int m_id;     ///< The id.
         double       m_age;    ///< The age.
         char         m_gender; ///< The gender.
-        util::GeoCoordinate m_coord; ///< The household coordinates
+        util::spherical_point m_coord; ///< The household coordinates
 
         ContactPoolType::IdSubscriptArray<unsigned int> m_pool_ids; ///< Ids (school, work, etc) of pools you belong to.
                                                                     ///< Id value 0 means you do not belong to any

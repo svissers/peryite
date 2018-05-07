@@ -116,8 +116,7 @@ unsigned int AssignUniversities(
                 pool = university->pools[cp_gen()];
             } else {
                 /// Non-commuting student
-                auto home_coord_temp = person.GetCoordinate();
-                util::spherical_point home_coord = util::spherical_point(home_coord_temp.m_latitude, home_coord_temp.m_longitude);
+                auto home_coord = person.GetCoordinate();
                 // Find the closest schools
                 std::vector<shared_ptr<GenStruct>> closest_universities = GetClosestStructs(home_coord,
                                                                                             universities,
