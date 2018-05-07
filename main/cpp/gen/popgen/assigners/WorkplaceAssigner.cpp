@@ -10,6 +10,7 @@ namespace assigner {
 
 using namespace std;
 using namespace gen;
+using namespace util;
 
 void AssignWorkplaces(
         vector<vector<shared_ptr<GenStruct>>> &workplaces, const shared_ptr<Population> population,
@@ -111,7 +112,7 @@ void AssignWorkplaces(
                 for (auto &band : workplaces) {
                     for (auto &g_struct : band) {
                         auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
-                        if (workplace->coordinate == dest_coord) {
+                        if (/*workplace->coordinate == dest_coord*/ util::calculateDistance(workplace->coordinate, dest_coord) == 0) {
                             dest_workplaces.push_back(workplace);
                         }
                     }
@@ -126,7 +127,8 @@ void AssignWorkplaces(
                 pool                = workplace->pool;
             } else {
                 // Non-commuting
-                auto home_coord = person.GetCoordinate();
+                auto home_coord_temp = person.GetCoordinate();
+                util::spherical_point home_coord = util::spherical_point(home_coord_temp.m_latitude, home_coord_temp.m_longitude);
                 std::vector<shared_ptr<GenStruct>> closest_workplaces = GetClosestStructs(home_coord,
                                                                                           workplaces,
                                                                                           grid);

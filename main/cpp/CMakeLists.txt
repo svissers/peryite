@@ -105,6 +105,7 @@ set(LIB_SRC
     util/RunConfigManager.cpp
     util/RunConfigString.cpp
     util/InstallDirs.cpp
+	util/GeometryGeoCoord.cpp
     util/GeoCoordinate.cpp
     util/GeoCoordCalculator.cpp
     util/SegmentedVector.h
@@ -120,7 +121,7 @@ set(LIB_SRC
     viewers/CliViewer.cpp
     viewers/PersonsViewer.cpp
 	viewers/SummaryViewer.cpp
-)
+	)
 
 #============================================================================
 # Build the Stride library.

@@ -10,6 +10,7 @@ namespace assigner {
 
 using namespace std;
 using namespace gen;
+using namespace util;
 
 void AssignCommunities(
         vector<vector<shared_ptr<GenStruct>>> communities, const shared_ptr<Population> population,
@@ -39,7 +40,8 @@ void AssignCommunities(
     // ------------------------------
     for (std::size_t i = 0; i < population->size(); i++) {
         auto hh_id = population->at(i).GetPoolId(ContactPoolType::Id::Household);
-        auto home_coord = population->at(i).GetCoordinate();
+        auto home_coord_temp = population->at(i).GetCoordinate();
+        util::spherical_point home_coord = util::spherical_point(home_coord_temp.m_latitude, home_coord_temp.m_longitude);
         auto closest_communities = GetClosestStructs(home_coord, communities, grid);
         if (closest_communities.empty()) {
 

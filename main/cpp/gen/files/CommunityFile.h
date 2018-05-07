@@ -37,7 +37,7 @@ private:
         auto community = std::make_shared<Community>(Community(
             row.GetValue<unsigned int>("id"),
             row.GetValue<bool>("primary"),
-            util::GeoCoordinate(
+            util::spherical_point(
                 row.GetValue<double>("latitude"),
                 row.GetValue<double>("longitude")
             )
@@ -53,8 +53,8 @@ private:
         std::shared_ptr<Community> community = std::static_pointer_cast<Community>(g_struct);
         std::vector<std::string> values = {
             std::to_string(community->id),
-            std::to_string(community->coordinate.m_latitude),
-            std::to_string(community->coordinate.m_longitude),
+            std::to_string(community->coordinate.get<0>()),
+            std::to_string(community->coordinate.get<1>()),
             std::to_string(community->is_primary)
         };
         return values;

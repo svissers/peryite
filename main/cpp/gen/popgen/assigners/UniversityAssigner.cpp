@@ -10,6 +10,7 @@ namespace assigner {
 
 using namespace std;
 using namespace gen;
+using namespace util;
 
 unsigned int AssignUniversities(
         vector<vector<shared_ptr<GenStruct>>> &universities, const shared_ptr<Population> population,
@@ -115,7 +116,8 @@ unsigned int AssignUniversities(
                 pool = university->pools[cp_gen()];
             } else {
                 /// Non-commuting student
-                auto home_coord = person.GetCoordinate();
+                auto home_coord_temp = person.GetCoordinate();
+                util::spherical_point home_coord = util::spherical_point(home_coord_temp.m_latitude, home_coord_temp.m_longitude);
                 // Find the closest schools
                 std::vector<shared_ptr<GenStruct>> closest_universities = GetClosestStructs(home_coord,
                                                                                             universities,

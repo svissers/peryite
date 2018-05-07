@@ -15,7 +15,7 @@ struct Community : public GenStruct
     /// @param id           The identification number for the community.
     /// @param primary      Indicates if the community is primary or secondary.
     /// @param coord        The coordinates that the community has been assigned to.
-    Community(unsigned int id, bool primary, util::GeoCoordinate coord)
+    Community(unsigned int id, bool primary, util::spherical_point coord)
             : GenStruct(id, coord), is_primary(primary)
     {}
 

@@ -31,7 +31,7 @@ GeoGrid BuildGeoGrid(const GenConfiguration& config)
                 row.GetValue<unsigned int>("population"),
                 row.GetValue<string>("name"),
                 row.GetValue<unsigned int>("province"),
-                util::GeoCoordinate(latitude, longitude)
+                util::spherical_point(latitude, longitude)
             ));
             geo_grid.push_back(center);
 
@@ -72,13 +72,13 @@ GeoGrid BuildGeoGrid(const GenConfiguration& config)
                 int frag_amount = fragment_amounts[frag_amount_gen()];
                 int frag_size   = center->population / frag_amount;
                 std::vector<unsigned int> frag_pop;
-                std::vector<util::GeoCoordinate> frag_coords;
+                std::vector<util::spherical_point> frag_coords;
 
                 for (int i = 0; i < frag_amount; i++) {
                     frag_pop.push_back(frag_size);
-                    double lat = center->coordinate.m_latitude + latlon_diff_gen();
-                    double lon = center->coordinate.m_longitude + latlon_diff_gen();
-                    frag_coords.emplace_back(util::GeoCoordinate(lat, lon));
+                    double lat = center->coordinate.get<0>() + latlon_diff_gen();
+                    double lon = center->coordinate.get<1>() + latlon_diff_gen();
+                    frag_coords.emplace_back(util::spherical_point(lat, lon));
                 }
                 center->fragmented_populations  = frag_pop;
                 center->fragmented_coords       = frag_coords;

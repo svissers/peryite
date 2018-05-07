@@ -35,7 +35,7 @@ private:
     {
         auto school = std::make_shared<School>(School(
             row.GetValue<unsigned int>("id"),
-            util::GeoCoordinate(
+            util::spherical_point(
                 row.GetValue<double>("latitude"),
                 row.GetValue<double>("longitude")
                 )
@@ -52,8 +52,8 @@ private:
         std::shared_ptr<School> school = std::static_pointer_cast<School>(g_struct);
         std::vector<std::string> values = {
             std::to_string(school->id),
-            std::to_string(school->coordinate.m_latitude),
-            std::to_string(school->coordinate.m_longitude)
+            std::to_string(school->coordinate.get<0>()),
+            std::to_string(school->coordinate.get<1>())
         };
         return values;
     }

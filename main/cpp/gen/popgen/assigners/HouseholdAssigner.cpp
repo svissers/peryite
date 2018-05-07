@@ -8,6 +8,7 @@ namespace assigner {
 
 using namespace std;
 using namespace gen;
+using namespace util;
 
 void AssignHouseholds(
         shared_ptr<Population> population, const GeoGrid &grid, const GenConfiguration &config) {
@@ -33,7 +34,7 @@ void AssignHouseholds(
         auto index = grid.at(generator());
         auto center = index;
         auto coord = center->coordinate;
-        if (coord.m_latitude == 0) {
+        if (coord.get<0>() == 0) {
             std::cout << "lat is 0 " << coord << std::endl;
             std::cout << "index: " << index << std::endl;
             std::cout << "hh_id: " << hh_id << std::endl;
@@ -48,7 +49,8 @@ void AssignHouseholds(
             coord = center->fragmented_coords.at(frag_gen());
         }
         while (population->at(i).GetPoolId(ContactPoolType::Id::Household) == hh_id) {
-            population->at(i).SetCoordinate(coord);
+            auto tempcoord = util::GeoCoordinate(coord.get<0>(), coord.get<1>());
+            population->at(i).SetCoordinate(tempcoord);
             if (++i >= population->size())
                 break;
         }
