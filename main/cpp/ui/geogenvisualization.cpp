@@ -2,6 +2,7 @@
 #include "ui_geogenvisualization.h"
 #include "geogridlocation.h"
 #include "util.h"
+
 #include <QtDebug>
 #include <QDir>
 #include <QGraphicsPixmapItem>

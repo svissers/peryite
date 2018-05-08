@@ -4,6 +4,7 @@
 #include "popgenvisualization.h"
 #include "stridewindow.h"
 #include "util.h"
+
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QProcess>
@@ -12,10 +13,13 @@
 #include <QProgressDialog>
 #include <QThread>
 
+using namespace stride;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    data(new PeryiteUIData())
+    data(new PeryiteUIData()),
+    guiController(new GuiController())
 {
     ui->setupUi(this);
 }
@@ -179,6 +183,6 @@ void MainWindow::on_Pop_visualizePopGen_clicked()
 
 void MainWindow::on_openStrideWindow_clicked()
 {
-    StrideWindow *wdg = new StrideWindow;
+    StrideWindow *wdg = new StrideWindow(guiController);
     wdg->show();
 }

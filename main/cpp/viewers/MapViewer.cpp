@@ -51,8 +51,10 @@ void MapViewer::Update(const sim_event::Payload& p)
                 MapViewerWindow *mvw = new MapViewerWindow;
                 mvw->show();
 
-                // TODO: get population geo data here
-                // const auto pop = p.m_runner->GetSim()->GetPopulation() ... -> GetCoordinates();
+                m_qapp->processEvents();
+
+                const auto pop = p.m_runner->GetSim()->GetPopulation();
+                mvw->createPopView(pop);
 
                 m_qapp->processEvents();
 

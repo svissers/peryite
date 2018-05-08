@@ -87,6 +87,7 @@ set(LIB_SRC
     gen/files/PopulationFile.cpp
 #---
     sim/CliController.cpp
+	sim/GuiController.cpp
 	sim/SimRunner.cpp
 	sim/Simulator.cpp
 	sim/SimulatorBuilder.cpp

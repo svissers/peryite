@@ -25,9 +25,10 @@ using namespace boost::property_tree;
 using namespace boost::property_tree::xml_parser;
 using namespace QtCharts;
 
-StrideWindow::StrideWindow(QWidget *parent) :
+StrideWindow::StrideWindow(GuiController *guiCtrl, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::StrideWindow)
+    ui(new Ui::StrideWindow),
+    guiController(guiCtrl)
 {
     ui->setupUi(this);
     ui->configInput->setText("run_default.xml");
@@ -79,7 +80,6 @@ void StrideWindow::on_startButton_clicked()
         cout << "Starting Tests." << endl;
     }
 
-
     for (int i = 0; i < runs; i++) {
         // Get progress
         ui->startButton->setText("Running... " + QString::number(i) + " / " + QString::number(runs));
@@ -110,22 +110,13 @@ void StrideWindow::on_startButton_clicked()
         config_pt.put("run.rng_seed", rngSeed);
         config_pt.put("run.rng_type", rngType.toStdString());
 
-        // -----------------------------------------------------------------------------------------
-        // Instantiate SimRunner & register viewers & setup+execute the run.
-        // -----------------------------------------------------------------------------------------
-        auto runner = SimRunner::Create();
-
         // Respond to events so OS doesn't think the program is unresponsive
         QCoreApplication::processEvents();
 
-        // -----------------------------------------------------------------------------------------
-        // Register viewers do runner setup and the execute.
-        // -----------------------------------------------------------------------------------------
-        // RegisterViewers(runner);
-        runner->Setup(config_pt);
-        runner->Run();
+        guiController->AssignPTree(config_pt);
+        guiController->RunStride();
 
-        int result = runner->GetSim()->GetPopulation()->GetInfectedCount();
+        int result = guiController->GetRunner()->GetSim()->GetPopulation()->GetInfectedCount();
         results << result;
 
         if (printResults) {

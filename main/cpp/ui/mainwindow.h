@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "peryiteuidata.h"
 #include "geogenvisualization.h"
+#include "sim/GuiController.h"
 
 namespace Ui {
 class MainWindow;
@@ -35,6 +36,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     PeryiteUIData *data;
+    stride::GuiController *guiController;
 
     void setOutputFolder(QString path);
     void setConfigFile(QString path);
