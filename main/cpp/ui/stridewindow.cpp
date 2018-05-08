@@ -13,9 +13,7 @@
 #include <QDebug>
 #include <QProcess>
 #include <QCheckBox>
-#include <QtCharts/QScatterSeries>
 #include <QFile>
-#include <boost/property_tree/xml_parser.hpp>
 
 using namespace std;
 using namespace stride;
@@ -39,7 +37,6 @@ StrideWindow::StrideWindow(GuiController *guiCtrl, QWidget *parent) :
     ui->engineInput->addItem("yarn2");
     ui->engineInput->addItem("yarn3");
     ui->varySeedInput->setChecked(true);
-    ui->printInput->setChecked(true);
 
     running = false;
 }
@@ -51,41 +48,45 @@ StrideWindow::~StrideWindow()
 
 void StrideWindow::on_startButton_clicked()
 {
+    // -----------------------------------------------------------------------------------------
     // User can't run the simulation when it's already running
-    if (running) {
-        return;
-    } else {
-        running = true;
-    }
+    // -----------------------------------------------------------------------------------------
+    if (running) { return; }
+    else { running = true; }
 
-    if (ui->configInput->text() == "") {
-        QMessageBox::warning(this, tr("No file selected"), "You have not selected a config file.");
-        return;
-    }
+    // -----------------------------------------------------------------------------------------
+    // Check input config file
+    // -----------------------------------------------------------------------------------------
+    if (!checkConfigFile()) { return; }
 
+    // -----------------------------------------------------------------------------------------
     // Set parameters from our UI
+    // -----------------------------------------------------------------------------------------
     QString configFile = ui->configInput->text();
     int rngSeed = ui->seedInput->value();
     QString rngType = ui->engineInput->currentText();
-    bool printResults = ui->printInput->isChecked();
     int runs = ui->runsInput->value();
 
-    // We save the results in a list first so we can sort them before adding them to our QScatterSeries object
+    // -----------------------------------------------------------------------------------------
+    // We save the results in a list first so we can sort them,
+    // before adding them to our QScatterSeries object.
+    // -----------------------------------------------------------------------------------------
     QList<int> results;
 
     // -----------------------------------------------------------------------------------------
     // Start running tests
     // -----------------------------------------------------------------------------------------
-    if (printResults) {
-        cout << "Starting Tests." << endl;
-    }
 
     for (int i = 0; i < runs; i++) {
-        // Get progress
+        // -----------------------------------------------------------------------------------------
+        // Set progress text in UI
+        // -----------------------------------------------------------------------------------------
         ui->startButton->setText("Running... " + QString::number(i) + " / " + QString::number(runs));
         ui->startButton->repaint();
 
+        // -----------------------------------------------------------------------------------------
         // Set random rngType if requested
+        // -----------------------------------------------------------------------------------------
         if (ui->varyEngineInput->isChecked()) {
             QStringList types;
             types << "lcg64" << "lcg64_shift" << "mrg2" << "mrg3" << "yarn2" << "yarn3";
@@ -93,7 +94,9 @@ void StrideWindow::on_startButton_clicked()
             rngType = types[index];
         }
 
+        // -----------------------------------------------------------------------------------------
         // Set random rngSeed if requested
+        // -----------------------------------------------------------------------------------------
         if (ui->varySeedInput->isChecked()) {
             rngSeed = qrand();
         }
@@ -101,76 +104,41 @@ void StrideWindow::on_startButton_clicked()
         // -----------------------------------------------------------------------------------------
         // Create config ptree
         // -----------------------------------------------------------------------------------------
-        auto config = configFile.toStdString();
-        ptree config_pt;
-
-        const boost::filesystem::path configPath = FileSys::GetConfigDir() /= config;
-
-        config_pt = FileSys::ReadPtreeFile(configPath);
+        ptree config_pt = createConfigPTree(configFile);
         config_pt.put("run.rng_seed", rngSeed);
         config_pt.put("run.rng_type", rngType.toStdString());
 
         // Respond to events so OS doesn't think the program is unresponsive
         QCoreApplication::processEvents();
 
+        // -----------------------------------------------------------------------------------------
+        // Assign the ptree and run the simulation.
+        // -----------------------------------------------------------------------------------------
         guiController->AssignPTree(config_pt);
         guiController->RunStride();
 
+        // -----------------------------------------------------------------------------------------
+        // Record results for graph
+        // -----------------------------------------------------------------------------------------
         int result = guiController->GetRunner()->GetSim()->GetPopulation()->GetInfectedCount();
         results << result;
 
-        if (printResults) {
-            cout << "Test Instance " << i + 1 << "/" << runs << " completed. " << endl;
-            cout << "Infected: " << result << endl;
-        }
-
         // -----------------------------------------------------------------------------------------
-        // Done.
+        // Done. Respond to events so OS doesn't think the program is unresponsive.
         // -----------------------------------------------------------------------------------------
-        spdlog::drop_all();
-        running = false;
-
-        // Respond to events so OS doesn't think the program is unresponsive
         QCoreApplication::processEvents();
     }
 
-    if (printResults) {
-        cout << "Tests completed!" << endl;
-    }
-
+    // -----------------------------------------------------------------------------------------
+    // Reset UI state
+    // -----------------------------------------------------------------------------------------
     ui->startButton->setText("Start Tests");
+    running = false;
 
     // -----------------------------------------------------------------------------------------
     // Create QScatterSeries for graph
-    // This is where the results will be saved
     // -----------------------------------------------------------------------------------------
-    QScatterSeries *scatterSeries = new QScatterSeries();
-
-    // Sort our results list
-    sort(results.begin(), results.end());
-
-    // Constructing the name
-    QString name = "Total infected count, " + QString::number(runs) + " sorted runs";
-    // Add Config name
-    name += " (config: " + configFile + ")";
-    // Mention random seed
-    name += (ui->varySeedInput->isChecked()) ? " (random seed)" : (" (seed: " + QString::number(rngSeed));
-    // Mention random seed
-    name += (ui->varyEngineInput->isChecked()) ? " (random rng engine)" : (" (rng engine: " + rngType + ")");
-    // Mention spread (+percentage)
-    int spread = results.last() - results.first();
-    float spreadPercentage = 100 * (float)(spread) / results.last();
-    name += " - " + QString::number(spread) + "(" +  QString::number(spreadPercentage) + "\%) spread";
-
-    // Set the series name, marker
-    scatterSeries->setName(name);
-    scatterSeries->setMarkerShape(QScatterSeries::MarkerShapeCircle);
-    scatterSeries->setMarkerSize(10);
-
-    // Add our items from the sorted list to the scatterseries
-    for (int i = 0; i < results.size(); i++) {
-        scatterSeries->append(i, results[i]);
-    }
+    QScatterSeries *scatterSeries = createResultsScatterSeries(results, runs, configFile, rngSeed, rngType);
 
     // -----------------------------------------------------------------------------------------
     // Write results to file
@@ -180,7 +148,7 @@ void StrideWindow::on_startButton_clicked()
 
     if (file.open(QIODevice::ReadWrite)) {
         QTextStream stream(&file);
-        stream << name << endl;
+        stream << scatterSeries->name() << endl;
         for (int i = 0; i < results.size(); i++) {
             stream << QString::number(results[i]) << endl;
         }
@@ -194,4 +162,57 @@ void StrideWindow::on_startButton_clicked()
     StrideScatterGraph *wdg = new StrideScatterGraph;
     wdg->createGraph(scatterSeries);
     wdg->show();
+}
+
+bool StrideWindow::checkConfigFile() {
+    if (ui->configInput->text() == "") {
+        QMessageBox::warning(this, tr("No file selected"), "You have not selected a config file.");
+        return false;
+    } else {
+        return true;
+    }
+}
+
+ptree StrideWindow::createConfigPTree(QString configFile) {
+    auto config = configFile.toStdString();
+    ptree config_pt;
+
+    const boost::filesystem::path configPath = FileSys::GetConfigDir() /= config;
+
+    config_pt = FileSys::ReadPtreeFile(configPath);
+
+    return config_pt;
+}
+
+QScatterSeries* StrideWindow::createResultsScatterSeries(QList<int> resultsList, int totalRuns, QString file, int seed, QString rngEngineType) {
+    // Create scatter series
+    QScatterSeries *series = new QScatterSeries();
+
+    // Sort our results list
+    sort(resultsList.begin(), resultsList.end());
+
+    // Constructing the name
+    QString name = "Total infected count, " + QString::number(totalRuns) + " sorted runs";
+    // Add Config name
+    name += " (config: " + file + ")";
+    // Mention random seed
+    name += (ui->varySeedInput->isChecked()) ? " (random seed)" : (" (seed: " + QString::number(seed));
+    // Mention random seed
+    name += (ui->varyEngineInput->isChecked()) ? " (random rng engine)" : (" (rng engine: " + rngEngineType + ")");
+    // Mention spread (+percentage)
+    int spread = resultsList.last() - resultsList.first();
+    float spreadPercentage = 100 * (float)(spread) / resultsList.last();
+    name += " - " + QString::number(spread) + "(" +  QString::number(spreadPercentage) + "\%) spread";
+
+    // Set the series name, marker
+    series->setName(name);
+    series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
+    series->setMarkerSize(10);
+
+    // Add our items from the sorted list to the scatterseries
+    for (int i = 0; i < resultsList.size(); i++) {
+        series->append(i, resultsList[i]);
+    }
+
+    return series;
 }

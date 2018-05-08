@@ -4,6 +4,8 @@
 #include "sim/GuiController.h"
 
 #include <QWidget>
+#include <QtCharts/QScatterSeries>
+#include <boost/property_tree/xml_parser.hpp>
 
 namespace Ui {
 class StrideWindow;
@@ -24,6 +26,10 @@ private:
     Ui::StrideWindow *ui;
     bool running;
     stride::GuiController *guiController;
+
+    bool checkConfigFile();
+    boost::property_tree::ptree createConfigPTree(QString configFile);
+    QtCharts::QScatterSeries* createResultsScatterSeries(QList<int> resultsList, int totalRuns, QString file, int seed, QString rngEngineType);
 };
 
 #endif // STRIDEWINDOW_H

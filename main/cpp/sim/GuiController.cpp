@@ -87,6 +87,11 @@ void GuiController::RunStride()
     // RegisterViewers(runner);
     runner->Setup(m_config_pt);
     runner->Run();
+
+    // -----------------------------------------------------------------------------------------
+    // Done!
+    // -----------------------------------------------------------------------------------------
+    spdlog::drop_all();
 }
 
 void GuiController::AssignPTree(boost::property_tree::ptree pt) {
