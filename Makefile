@@ -64,6 +64,9 @@ endif
 ifneq ($(CMAKE_INSTALL_PREFIX),)
 	CMAKE_ARGS += -DCMAKE_INSTALL_PREFIX:PATH=$(CMAKE_INSTALL_PREFIX)
 endif
+ifneq ($(CMAKE_PREFIX_PATH),)
+	CMAKE_ARGS += -DCMAKE_PREFIX_PATH:PATH=$(CMAKE_PREFIX_PATH)
+endif
 ifneq ($(STRIDE_INCLUDE_DOC),)
 	CMAKE_ARGS += -DSTRIDE_INCLUDE_DOC:BOOL=$(STRIDE_INCLUDE_DOC)
 endif
@@ -146,7 +149,7 @@ test: install
 	cd $(BUILD_DIR)/test; ctest $(TESTARGS) -V
 
 gtest: install
-	cd $(CMAKE_INSTALL_PREFIX); bin/gtester $(GTESTARGS)
+	cd $(CMAKE_INSTALL_PREFIX); bin/gtester $(TESTARGS)
 
 format:
 	resources/bash/clang-format-all .
