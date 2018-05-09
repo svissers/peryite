@@ -16,31 +16,21 @@
 
 /**
  * @file
- * Observer for Map output.
+ * Header for the InfectorExec class.
  */
 
-#include "sim/event/Payload.h"
-
-#include <iostream>
 #include <spdlog/spdlog.h>
-#include <QApplication>
 
 namespace stride {
-namespace viewers {
 
-/// Viewer of Simulator for cases output.
-class MapViewer
-{
-public:
-        /// Instantiate cases viewer.
-        explicit MapViewer() {}
+class ContactPool;
+class AgeContactProfile;
+class TransmissionProfile;
+class ContactHandler;
 
-        /// Let viewer perform update.
-        void Update(const sim_event::Payload& p);
+/// For use in the InfectorMap and Sim.
+typedef void(InfectorExec)(ContactPool& pool, const AgeContactProfile& profile,
+                           const TransmissionProfile& trans_profile, ContactHandler& c_handler,
+                           unsigned short int sim_day, std::shared_ptr<spdlog::logger> c_logger);
 
-private:
-        QApplication *m_qapp;
-};
-
-} // namespace viewers
 } // namespace stride

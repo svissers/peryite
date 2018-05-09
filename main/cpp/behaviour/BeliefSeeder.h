@@ -11,17 +11,20 @@
  *  You should have received a copy of the GNU General Public License
  *  along with the software. If not, see <http://www.gnu.org/licenses/>.
  *
- *  Copyright 2017, 2018 Kuylen E, Willem L, Broeckhove J
+ *  Copyright 2018, Kuylen E, Willem L, Broeckhove J
  */
 
 /**
  * @file
- * Initialize populations.
+ * Header file for the HealthSeeder.
  */
 
+#include "behaviour/belief_policies/Imitation.h"
+#include "behaviour/belief_policies/NoBelief.h"
 #include "util/RNManager.h"
 
 #include <boost/property_tree/ptree.hpp>
+#include <functional>
 #include <memory>
 
 namespace stride {
@@ -29,17 +32,20 @@ namespace stride {
 class Population;
 
 /**
- * Initializes Population objects.
+ * Seeds the population with Health data.
  */
-class PopulationBuilder
+class BeliefSeeder
 {
 public:
-        /// Initializes a Population: add persons, set immunity, seed infection.
-        /// @param config_pt     Property_tree with general configuration settings.
-        /// @param disease_pt    Property_tree with disease configuration settings.
-        /// @return              Pointer to the initialized population.
-        static std::shared_ptr<Population> Build(const boost::property_tree::ptree& config_pt,
-                                                 util::RNManager&                   rn_manager);
+        /// Constructor requires diease data and random number manager.
+        BeliefSeeder(const boost::property_tree::ptree& configPt, util::RNManager& rnManager);
+
+        /// Seeds the population with Health data.
+        void Seed(std::shared_ptr<Population> pop);
+
+private:
+        boost::property_tree::ptree m_config_pt;
+        std::function<double()> m_uniform01_generator;
 };
 
 } // namespace stride

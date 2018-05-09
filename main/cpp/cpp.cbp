@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="cpp" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/cpp" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/cpp" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="behaviour/behaviour_policies/NoBehaviour.h" />
+		<Unit filename="behaviour/behaviour_policies/Vaccination.h" />
+		<Unit filename="behaviour/belief_policies/Belief.h" />
+		<Unit filename="behaviour/belief_policies/HBM.h" />
+		<Unit filename="behaviour/belief_policies/Imitation.h" />
+		<Unit filename="behaviour/belief_policies/NoBelief.h" />
+		<Unit filename="behaviour/belief_policies/Threshold.h" />
+		<Unit filename="behaviour/information_policies/LocalDiscussion.h" />
+		<Unit filename="behaviour/information_policies/NoGlobalInformation.h" />
+		<Unit filename="behaviour/information_policies/NoLocalInformation.h" />
+		<Unit filename="calendar/Calendar.cpp" />
+		<Unit filename="calendar/Calendar.h" />
+		<Unit filename="calendar/DaysOffAll.h" />
+		<Unit filename="calendar/DaysOffInterface.h" />
+		<Unit filename="calendar/DaysOffNone.h" />
+		<Unit filename="calendar/DaysOffSchool.h" />
+		<Unit filename="calendar/DaysOffStandard.h" />
+		<Unit filename="contact/AgeContactProfile.cpp" />
+		<Unit filename="contact/AgeContactProfile.h" />
+		<Unit filename="contact/AgeContactProfiles.h" />
+		<Unit filename="contact/ContactHandler.h" />
+		<Unit filename="contact/ContactLogMode.cpp" />
+		<Unit filename="contact/ContactLogMode.h" />
+		<Unit filename="contact/Infector.cpp" />
+		<Unit filename="contact/Infector.h" />
+		<Unit filename="contact/TransmissionProfile.cpp" />
+		<Unit filename="contact/TransmissionProfile.h" />
+		<Unit filename="disease/DiseaseSeeder.cpp" />
+		<Unit filename="disease/DiseaseSeeder.h" />
+		<Unit filename="disease/Health.cpp" />
+		<Unit filename="disease/Health.h" />
+		<Unit filename="disease/HealthSeeder.cpp" />
+		<Unit filename="disease/HealthSeeder.h" />
+		<Unit filename="disease/Immunizer.cpp" />
+		<Unit filename="disease/Immunizer.h" />
+		<Unit filename="gen/GenConfiguration.cpp" />
+		<Unit filename="gen/GenConfiguration.h" />
+		<Unit filename="gen/GeoGrid.h" />
+		<Unit filename="gen/files/CommunityFile.h" />
+		<Unit filename="gen/files/GenDirectory.cpp" />
+		<Unit filename="gen/files/GenDirectory.h" />
+		<Unit filename="gen/files/GenFile.cpp" />
+		<Unit filename="gen/files/GenFile.h" />
+		<Unit filename="gen/files/GeoGridFile.h" />
+		<Unit filename="gen/files/PopulationFile.cpp" />
+		<Unit filename="gen/files/PopulationFile.h" />
+		<Unit filename="gen/files/SchoolFile.h" />
+		<Unit filename="gen/files/UniversityFile.h" />
+		<Unit filename="gen/files/WorkplaceFile.h" />
+		<Unit filename="gen/geogen/GeoGenerator.cpp" />
+		<Unit filename="gen/geogen/GeoGenerator.h" />
+		<Unit filename="gen/geogen/builders/CommunitiesBuilder.cpp" />
+		<Unit filename="gen/geogen/builders/CommunitiesBuilder.h" />
+		<Unit filename="gen/geogen/builders/GeoGridBuilder.cpp" />
+		<Unit filename="gen/geogen/builders/GeoGridBuilder.h" />
+		<Unit filename="gen/geogen/builders/PopulationBuilder.cpp" />
+		<Unit filename="gen/geogen/builders/PopulationBuilder.h" />
+		<Unit filename="gen/geogen/builders/SchoolsBuilder.cpp" />
+		<Unit filename="gen/geogen/builders/SchoolsBuilder.h" />
+		<Unit filename="gen/geogen/builders/UniversitiesBuilder.cpp" />
+		<Unit filename="gen/geogen/builders/UniversitiesBuilder.h" />
+		<Unit filename="gen/geogen/builders/WorkplacesBuilder.cpp" />
+		<Unit filename="gen/geogen/builders/WorkplacesBuilder.h" />
+		<Unit filename="gen/main.cpp" />
+		<Unit filename="gen/popgen/PopGenerator.cpp" />
+		<Unit filename="gen/popgen/PopGenerator.h" />
+		<Unit filename="gen/popgen/assigners/CommunityAssigner.cpp" />
+		<Unit filename="gen/popgen/assigners/CommunityAssigner.h" />
+		<Unit filename="gen/popgen/assigners/HouseholdAssigner.cpp" />
+		<Unit filename="gen/popgen/assigners/HouseholdAssigner.h" />
+		<Unit filename="gen/popgen/assigners/SchoolAssigner.cpp" />
+		<Unit filename="gen/popgen/assigners/SchoolAssigner.h" />
+		<Unit filename="gen/popgen/assigners/UniversityAssigner.cpp" />
+		<Unit filename="gen/popgen/assigners/UniversityAssigner.h" />
+		<Unit filename="gen/popgen/assigners/WorkplaceAssigner.cpp" />
+		<Unit filename="gen/popgen/assigners/WorkplaceAssigner.h" />
+		<Unit filename="gen/structs/Community.h" />
+		<Unit filename="gen/structs/GenStruct.h" />
+		<Unit filename="gen/structs/Household.h" />
+		<Unit filename="gen/structs/School.h" />
+		<Unit filename="gen/structs/University.h" />
+		<Unit filename="gen/structs/UrbanCenter.h" />
+		<Unit filename="gen/structs/Workplace.h" />
+		<Unit filename="output/AdoptedFile.cpp" />
+		<Unit filename="output/AdoptedFile.h" />
+		<Unit filename="output/CasesFile.cpp" />
+		<Unit filename="output/CasesFile.h" />
+		<Unit filename="output/PersonsFile.cpp" />
+		<Unit filename="output/PersonsFile.h" />
+		<Unit filename="output/SummaryFile.cpp" />
+		<Unit filename="output/SummaryFile.h" />
+		<Unit filename="pool/ContactPool.cpp" />
+		<Unit filename="pool/ContactPool.h" />
+		<Unit filename="pool/ContactPoolSys.h" />
+		<Unit filename="pool/ContactPoolType.cpp" />
+		<Unit filename="pool/ContactPoolType.h" />
+		<Unit filename="pool/IdSubscriptArray.h" />
+		<Unit filename="pop/Age.h" />
+		<Unit filename="pop/Person.cpp" />
+		<Unit filename="pop/Person.h" />
+		<Unit filename="pop/PopPoolBuilder.cpp" />
+		<Unit filename="pop/PopPoolBuilder.h" />
+		<Unit filename="pop/Population.cpp" />
+		<Unit filename="pop/Population.h" />
+		<Unit filename="pop/PopulationBuilder.cpp" />
+		<Unit filename="pop/PopulationBuilder.h" />
+		<Unit filename="pop/SurveySeeder.cpp" />
+		<Unit filename="pop/SurveySeeder.h" />
+		<Unit filename="sim/CliController.cpp" />
+		<Unit filename="sim/CliController.h" />
+		<Unit filename="sim/SimRunner.cpp" />
+		<Unit filename="sim/SimRunner.h" />
+		<Unit filename="sim/Simulator.cpp" />
+		<Unit filename="sim/Simulator.h" />
+		<Unit filename="sim/SimulatorBuilder.cpp" />
+		<Unit filename="sim/SimulatorBuilder.h" />
+		<Unit filename="sim/event/Id.cpp" />
+		<Unit filename="sim/event/Id.h" />
+		<Unit filename="sim/event/Payload.h" />
+		<Unit filename="sim/event/Subject.cpp" />
+		<Unit filename="sim/event/Subject.h" />
+		<Unit filename="sim/main.cpp" />
+		<Unit filename="sim/python/SimulatorObserver.h" />
+		<Unit filename="sim/python/StrideRunner.cpp" />
+		<Unit filename="sim/python/StrideRunner.h" />
+		<Unit filename="sim/python/Subject.h" />
+		<Unit filename="util/Any.h" />
+		<Unit filename="util/CSV.cpp" />
+		<Unit filename="util/CSV.h" />
+		<Unit filename="util/CSVRow.cpp" />
+		<Unit filename="util/CSVRow.h" />
+		<Unit filename="util/ConfigInfo.cpp" />
+		<Unit filename="util/ConfigInfo.h" />
+		<Unit filename="util/FileSys.cpp" />
+		<Unit filename="util/FileSys.h" />
+		<Unit filename="util/GeoCoordCalculator.cpp" />
+		<Unit filename="util/GeoCoordCalculator.h" />
+		<Unit filename="util/GeoCoordinate.cpp" />
+		<Unit filename="util/GeoCoordinate.h" />
+		<Unit filename="util/InstallDirs.cpp" />
+		<Unit filename="util/InstallDirs.h" />
+		<Unit filename="util/LogUtils.cpp" />
+		<Unit filename="util/LogUtils.h" />
+		<Unit filename="util/RNEngineType.cpp" />
+		<Unit filename="util/RNEngineType.h" />
+		<Unit filename="util/RNManager.cpp" />
+		<Unit filename="util/RNManager.h" />
+		<Unit filename="util/RunConfigManager.cpp" />
+		<Unit filename="util/RunConfigManager.h" />
+		<Unit filename="util/RunConfigString.cpp" />
+		<Unit filename="util/RunConfigString.h" />
+		<Unit filename="util/SVIterator.h" />
+		<Unit filename="util/SegmentedVector.h" />
+		<Unit filename="util/Stopwatch.h" />
+		<Unit filename="util/StringUtils.h" />
+		<Unit filename="util/Subject.h" />
+		<Unit filename="util/TimeStamp.h" />
+		<Unit filename="util/TimeToString.h" />
+		<Unit filename="viewers/AdoptedViewer.cpp" />
+		<Unit filename="viewers/AdoptedViewer.h" />
+		<Unit filename="viewers/CasesViewer.cpp" />
+		<Unit filename="viewers/CasesViewer.h" />
+		<Unit filename="viewers/CliViewer.cpp" />
+		<Unit filename="viewers/CliViewer.h" />
+		<Unit filename="viewers/PersonsViewer.cpp" />
+		<Unit filename="viewers/PersonsViewer.h" />
+		<Unit filename="viewers/SummaryViewer.cpp" />
+		<Unit filename="viewers/SummaryViewer.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
