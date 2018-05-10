@@ -97,9 +97,9 @@ unsigned int Population::GetInfectedCount() const
 }
 
 void Population::CreatePerson(unsigned int id, double age, unsigned int householdId, unsigned int schoolId,
-                              unsigned int workId, unsigned int primaryCommunityId, unsigned int secondaryCommunityId)
+                              unsigned int workId, unsigned int primaryCommunityId, unsigned int secondaryCommunityId, double latitude, double longitude)
 {
-        this->emplace_back(Person(id, age, householdId, schoolId, workId, primaryCommunityId, secondaryCommunityId));
+        this->emplace_back(Person(id, age, householdId, schoolId, workId, primaryCommunityId, secondaryCommunityId, latitude, longitude));
 }
 
 } // namespace stride

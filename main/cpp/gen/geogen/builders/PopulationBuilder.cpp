@@ -32,7 +32,7 @@ shared_ptr<Population> BuildPopulation(const GenConfiguration& config, const boo
             for (unsigned int age : household_ref) {
                 population->CreatePerson(
                     current_p_id, age, current_hh_id,
-                    0, 0, 0, 0, 0, 0, Health(), belief_pt
+                    0, 0, 0, 0, 0, 0
                 );
                 current_p_id++;
             }

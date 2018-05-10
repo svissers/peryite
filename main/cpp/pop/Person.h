@@ -38,15 +38,15 @@ class Person
 public:
         /// Default construction (for population vector).
         Person()
-            : m_age(0.0), m_belief(nullptr), m_gender('M'), m_health(), m_id(0), m_is_participant(), m_pool_ids(), m_in_pools()
+            : m_age(0.0), m_belief(nullptr), m_gender('M'), m_health(), m_id(0), m_is_participant(), m_pool_ids(), m_in_pools(), m_coord(util::spherical_point(0,0))
         {
         }
 
         /// Constructor: set the person data.
         Person(unsigned int id, double age, unsigned int householdId, unsigned int schoolId, unsigned int workId,
-               unsigned int primaryCommunityId, unsigned int secondaryCommunityId)
+               unsigned int primaryCommunityId, unsigned int secondaryCommunityId, double latitude, double longitude)
             : m_age(age), m_belief(nullptr), m_gender('M'), m_health(), m_id(id), m_is_participant(false),
-              m_pool_ids{householdId, schoolId, workId, primaryCommunityId, secondaryCommunityId}, m_in_pools(true)
+              m_pool_ids{householdId, schoolId, workId, primaryCommunityId, secondaryCommunityId}, m_in_pools(true), m_coord(util::spherical_point(latitude, longitude))
         {
         }
 
@@ -100,6 +100,8 @@ public:
 
         /// Set ID of contactpool_type
         void setPoolId(const ContactPoolType::Id& pool_type, unsigned int id) { m_pool_ids[pool_type] = id; }
+
+        void SetBelief(Belief* belief){m_belief = belief;}
 
 private:
         double       m_age;            ///< The age.

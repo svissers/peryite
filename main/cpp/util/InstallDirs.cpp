@@ -63,7 +63,7 @@ void InstallDirs::Check()
         }
 }
 
-InstallDirs::Dirs& InstallDirs::Get()
+InstallDirs::Dirs& stride::util::InstallDirs::Get()
 {
         static Dirs dirs = Initialize();
         return dirs;

@@ -70,7 +70,7 @@ public:
         static void Contact(const std::shared_ptr<spdlog::logger>& logger, const Person* p1, const Person* p2,
                             ContactPoolType::Id type, unsigned short int sim_day)
         {
-                if (p1->IsSurveyParticipant()) {
+                if (p1->IsParticipatingInSurvey()) {
                         logger->info("[CONT] {} {} {} {} {} {} {} {} {}", p1->GetId(), p1->GetAge(), p2->GetAge(),
                                      static_cast<unsigned int>(type == ContactPoolType::Id::Household),
                                      static_cast<unsigned int>(type == ContactPoolType::Id::School),
@@ -96,7 +96,7 @@ public:
         static void Contact(const std::shared_ptr<spdlog::logger>& logger, const Person* p1, const Person* p2,
                             ContactPoolType::Id, unsigned short int)
         {
-                if (p1->IsSurveyParticipant() && p1->GetHealth().IsSusceptible() && p2->GetHealth().IsSusceptible()) {
+                if (p1->IsParticipatingInSurvey() && p1->GetHealth().IsSusceptible() && p2->GetHealth().IsSusceptible()) {
                         logger->info("[CONT] {} {}", p1->GetId(), p2->GetId());
                 }
         }

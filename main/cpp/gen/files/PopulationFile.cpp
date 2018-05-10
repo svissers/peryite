@@ -68,9 +68,7 @@ std::shared_ptr<Population> PopulationFile::Read(const boost::property_tree::ptr
             row.GetValue<unsigned int>(4),
             row.GetValue<unsigned int>(5),
             row.GetValue<double>(6),
-            row.GetValue<double>(7),
-            Health(),
-            belief_pt
+            row.GetValue<double>(7)
         );
        ++person_id;
     }

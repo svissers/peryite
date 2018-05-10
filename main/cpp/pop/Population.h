@@ -57,13 +57,14 @@ public:
         /// The ContactPoolSys of the simulator.
         const ContactPoolSys& GetContactPoolSys() const { return m_pool_sys; }
 
-private:
         ///
         Population() = default;
 
         /// Create Person in the population.
         void CreatePerson(unsigned int id, double age, unsigned int householdId, unsigned int schoolId,
-                          unsigned int workId, unsigned int primaryCommunityId, unsigned int secondaryCommunityId);
+                          unsigned int workId, unsigned int primaryCommunityId, unsigned int secondaryCommunityId, double latitude, double longitude);
+
+private:
 
         /// Assign the belief policy.
         /// \tparam BeliefPolicy Template type param (we could use plain overloading here, i guess)
