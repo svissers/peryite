@@ -57,7 +57,7 @@ public:
         bool operator!=(const Person& p) const { return p.m_id != m_id; }
 
         /// Get the age.
-        double GetAge() const { return m_age; }
+        unsigned int GetAge() const { return m_age; }
 
         /// Return belief info.
         Belief* GetBelief() { return m_belief; }
@@ -107,7 +107,7 @@ public:
 
 private:
         unsigned int m_id;     ///< The id.
-        double       m_age;    ///< The age.
+        unsigned int m_age;    ///< The age.
         util::spherical_point m_coord; ///< The household coordinates
         char         m_gender; ///< The gender.
 
