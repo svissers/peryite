@@ -108,8 +108,9 @@ public:
 private:
         unsigned int m_id;     ///< The id.
         double       m_age;    ///< The age.
-        char         m_gender; ///< The gender.
         util::spherical_point m_coord; ///< The household coordinates
+        char         m_gender; ///< The gender.
+
 
         ContactPoolType::IdSubscriptArray<unsigned int> m_pool_ids; ///< Ids (school, work, etc) of pools you belong to.
                                                                     ///< Id value 0 means you do not belong to any
