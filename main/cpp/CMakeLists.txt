@@ -105,6 +105,7 @@ set(LIB_SRC
     util/RNEngineType.cpp
     util/RNManager.cpp
     util/RunConfigManager.cpp
+
     util/SegmentedVector.h
     util/Stopwatch.h
     util/StringUtils.h
@@ -114,6 +115,7 @@ set(LIB_SRC
     util/TimeToString.h
     util/RunConfigString.cpp
     util/InstallDirs.cpp
+    util/GeometryGeoCoord.cpp
     util/GeoCoordinate.cpp
     util/GeoCoordCalculator.cpp
 #---

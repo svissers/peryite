@@ -25,10 +25,7 @@
 #include "util/TimeStamp.h"
 
 #include <tclap/CmdLine.h>
-#include <iostream>
 #include <regex>
-#include <string>
-#include <vector>
 
 using namespace std;
 using namespace stride;

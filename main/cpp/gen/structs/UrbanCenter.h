@@ -1,6 +1,5 @@
 #pragma once
 #include "GenStruct.h"
-#include "UrbanCenter.h"
 #include <vector>
 
 namespace stride {
@@ -17,7 +16,7 @@ struct UrbanCenter : GenStruct
     /// @param uc_name      The name of the urban center.
     /// @param prov         The province id that the center belongs to.
     /// @param coord        The coordinates that the center has been assigned to.
-    UrbanCenter(unsigned int uc_id, unsigned int pop, std::string uc_name, int prov, util::GeoCoordinate coord)
+    UrbanCenter(unsigned int uc_id, unsigned int pop, std::string uc_name, int prov, util::spherical_point coord)
     : GenStruct(uc_id, coord), population(pop), name(uc_name), province(prov)
     {}
 
@@ -28,7 +27,7 @@ struct UrbanCenter : GenStruct
     /// The populations of the fragmented subsets of a center.
     std::vector<unsigned int> fragmented_populations;
     /// The coordinates of the fragmented subsets of a center.
-    std::vector<util::GeoCoordinate> fragmented_coords;
+    std::vector<util::spherical_point> fragmented_coords;
     /// The name of an UrbanCenter.
     std::string name = "";
     /// The province identifier.

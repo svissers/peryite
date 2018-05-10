@@ -1,4 +1,4 @@
-#include "householdAssigner.h"
+#include "CommunityAssigner.h"
 #include "../../structs/Community.h"
 #include "../PopGenerator.h"
 #include "trng/fast_discrete_dist.hpp"
@@ -10,6 +10,7 @@ namespace assigner {
 
 using namespace std;
 using namespace gen;
+using namespace util;
 
 void AssignCommunities(
         vector<vector<shared_ptr<GenStruct>>> communities, const shared_ptr<Population> population,

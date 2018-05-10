@@ -36,7 +36,7 @@ private:
         auto university = std::make_shared<University>(University(
             row.GetValue<unsigned int>("id"),
             row.GetValue<unsigned int>("urban_id"),
-            util::GeoCoordinate(
+            util::spherical_point(
                 row.GetValue<double>("latitude"),
                 row.GetValue<double>("longitude")
                 )
@@ -54,8 +54,8 @@ private:
         std::vector<std::string> values = {
             std::to_string(university->id),
             std::to_string(university->urban_id),
-            std::to_string(university->coordinate.m_latitude),
-            std::to_string(university->coordinate.m_longitude)
+            std::to_string(university->coordinate.get<0>()),
+            std::to_string(university->coordinate.get<1>())
         };
         return values;
     }

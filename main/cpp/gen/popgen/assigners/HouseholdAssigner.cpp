@@ -1,4 +1,4 @@
-#include "householdAssigner.h"
+#include "HouseholdAssigner.h"
 #include "trng/fast_discrete_dist.hpp"
 
 namespace stride {
@@ -8,6 +8,7 @@ namespace assigner {
 
 using namespace std;
 using namespace gen;
+using namespace util;
 
 void AssignHouseholds(
         shared_ptr<Population> population, const GeoGrid &grid, const GenConfiguration &config) {
@@ -33,7 +34,7 @@ void AssignHouseholds(
         auto index = grid.at(generator());
         auto center = index;
         auto coord = center->coordinate;
-        if (coord.m_latitude == 0) {
+        if (coord.get<0>() == 0) {
             std::cout << "lat is 0 " << coord << std::endl;
             std::cout << "index: " << index << std::endl;
             std::cout << "hh_id: " << hh_id << std::endl;

@@ -22,6 +22,7 @@
 #include "disease/Health.h"
 #include "pool/ContactPoolType.h"
 #include "pool/IdSubscriptArray.h"
+#include "util/GeometryGeoCoord.h"
 
 #include <boost/property_tree/ptree.hpp>
 
@@ -77,10 +78,10 @@ public:
         unsigned int GetId() const { return m_id; }
 
         // Get the household coordinate
-        util::GeoCoordinate GetCoordinate() const { return m_coord; }
+        util::spherical_point GetCoordinate() const { return m_coord; }
 
         // Set the household coordinate
-        void SetCoordinate(util::GeoCoordinate coord) { m_coord = coord; }
+        void SetCoordinate(util::spherical_point coord) { m_coord = coord; }
 
         /// Check if a person is present today in a given contactpool
         bool IsInPool(const ContactPoolType::Id& pool_type) const { return m_in_pools[pool_type]; }
@@ -114,7 +115,7 @@ private:
 
         ///< Is person present/absent in pools of each of the types (school, work, etc)?
         ContactPoolType::IdSubscriptArray<bool> m_in_pools;
-        util::GeoCoordinate m_coord; ///< The household coordinates
+        util::spherical_point m_coord; ///< The household coordinates
 };
 
 } // namespace stride

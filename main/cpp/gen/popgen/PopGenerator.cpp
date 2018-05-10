@@ -1,15 +1,10 @@
 #include "PopGenerator.h"
-#include "../files/PopulationFile.h"
-#include "assigners/householdAssigner.h"
-#include "assigners/schoolAssigner.h"
-#include "assigners/universityAssigner.h"
-#include "assigners/workplaceAssigner.h"
-#include "assigners/communityAssigner.h"
-#include "pool/ContactPoolSys.h"
-#include "pop/Population.h"
+#include "assigners/HouseholdAssigner.h"
+#include "assigners/SchoolAssigner.h"
+#include "assigners/UniversityAssigner.h"
+#include "assigners/WorkplaceAssigner.h"
+#include "assigners/CommunityAssigner.h"
 #include "util/GeoCoordCalculator.h"
-#include "trng/fast_discrete_dist.hpp"
-#include <map>
 
 
 namespace stride {
@@ -117,16 +112,15 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population, Cont
     }
 }
 
-vector<shared_ptr<GenStruct>> GetClosestStructs(const util::GeoCoordinate& home_coord, const vector<vector<shared_ptr<GenStruct>>>& structs, const GeoGrid& grid)
+vector<shared_ptr<GenStruct>> GetClosestStructs(const util::spherical_point& home_coord, const vector<vector<shared_ptr<GenStruct>>>& structs, const GeoGrid& grid)
 {
     vector<shared_ptr<GenStruct>> closest_structs;
-    const util::GeoCoordCalculator& calculator = util::GeoCoordCalculator::getInstance();
     // The amount of bands doubles every iteration
     unsigned int band_range = 2;
     // The default search range is 10 km
     unsigned int search_range = 10;
 
-    auto band_of_hh = uint( (home_coord.m_longitude - grid.m_min_long) / grid.m_longitude_band_width );
+    auto band_of_hh = uint( (home_coord.get<1>() - grid.m_min_long) / grid.m_longitude_band_width );
     if (band_of_hh >= structs.size()) {
         //std::cout << "home_coord: " << home_coord << std::endl;
         //std::cout << "grid.m_min_long: " << grid.m_min_long << std::endl;
@@ -150,7 +144,7 @@ vector<shared_ptr<GenStruct>> GetClosestStructs(const util::GeoCoordinate& home_
         // Go over the search space
         for (unsigned int index = firstband; index <= lastband; index++) {
             for (const auto& gstruct : structs[index]) {
-                if (calculator.getDistance(gstruct->coordinate, home_coord) <= search_range)
+                if (util::calculateDistance(gstruct->coordinate, home_coord) <= search_range)
                     closest_structs.push_back(gstruct);
             }
         }

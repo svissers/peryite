@@ -1,9 +1,7 @@
-#include "householdAssigner.h"
-#include "pop/Population.h"
+#include "UniversityAssigner.h"
 #include "../../structs/University.h"
 #include "../PopGenerator.h"
 #include "trng/fast_discrete_dist.hpp"
-#include <map>
 
 namespace stride {
 namespace gen {
@@ -12,6 +10,7 @@ namespace assigner {
 
 using namespace std;
 using namespace gen;
+using namespace util;
 
 unsigned int AssignUniversities(
         vector<vector<shared_ptr<GenStruct>>> &universities, const shared_ptr<Population> population,
@@ -23,8 +22,8 @@ unsigned int AssignUniversities(
     const unsigned int university_cp_size = 20;
     unsigned int cp_id = 0;
     map<unsigned int, vector<shared_ptr<University>>> cities;
-    for (auto &band : universities) {
-        for (auto &g_struct : band) {
+    for (const auto &band : universities) {
+        for (const auto &g_struct : band) {
             auto university = std::static_pointer_cast<University>(g_struct);
             // Create the contactpools for every university
             for (unsigned int size = 0; size < university_size; size += university_cp_size) {
@@ -62,13 +61,17 @@ unsigned int AssignUniversities(
 
     // Commuting distributions
     util::CSV commuting_data(config.GetTree().get<string>("geoprofile.commuters"));
+
     map<unsigned int, std::function<int()>> city_generators;
     vector<unsigned int> commute_towards;
     unsigned int commute_towards_total = 0;
     if (commuting_data.size() > 1) {
         for (auto const &city : cities) {
-            // For every university city, calculate the fraction commuting towards it.
-            auto row = *(commuting_data.begin() + city.first);
+            std::stringstream templabel;
+            templabel << "id_" << city.first;
+            string label = templabel.str();
+                  // For every university city, calculate the fraction commuting towards it.
+            auto row = *(commuting_data.begin() + commuting_data.GetIndexForLabel(label));
             unsigned int city_total = 0;
             for (unsigned int col_index = 0; col_index < commuting_data.GetColumnCount(); col_index++) {
                 // Ignore commuting towards itself
@@ -123,7 +126,7 @@ unsigned int AssignUniversities(
                     continue;
                 }
                 // Create a uniform distribution to select a university
-                auto rn_manager = config.GetRNManager();
+                //auto rn_manager = config.GetRNManager();
                 auto uni_gen = rn_manager->GetGenerator(
                         trng::fast_discrete_dist(closest_universities.size()));
                 auto university = static_pointer_cast<University>(closest_universities[uni_gen()]);

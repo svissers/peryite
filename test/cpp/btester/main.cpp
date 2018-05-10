@@ -23,7 +23,6 @@
 
 #include "myhayai/CliController.hpp"
 
-#include <exception>
 #include <iostream>
 
 using namespace std;
