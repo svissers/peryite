@@ -38,16 +38,16 @@ class Person
 public:
         /// Default construction.
         Person()
-            : m_id(0), m_age(0.0), m_gender(' '), m_pool_ids{0U}, m_in_pools(false), m_belief(nullptr), m_health(),
+            : m_id(0), m_age(0.0), m_coord(util::spherical_point(0,0)), m_gender(' '), m_pool_ids{0U}, m_in_pools(false), m_belief(nullptr), m_health(),
               m_is_participant(false)
         {
         }
 
         /// Constructor: set the person data.
         Person(unsigned int id, double age, unsigned int household_id, unsigned int school_id, unsigned int work_id,
-               unsigned int primary_community_id, unsigned int secondary_community_id, Health health = Health(),
+               unsigned int primary_community_id, unsigned int secondary_community_id, double latitude, double longitude, Health health = Health(),
                double risk_averseness = 0, Belief* bp = nullptr)
-            : m_id(id), m_age(age),
+            : m_id(id), m_age(age), m_coord(util::spherical_point(latitude, longitude)),
               m_gender('M'), m_pool_ids{household_id, school_id, work_id, primary_community_id, secondary_community_id},
               m_in_pools(true), m_belief(bp), m_health(health), m_is_participant(false)
         {

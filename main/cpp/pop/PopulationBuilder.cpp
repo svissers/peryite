@@ -77,9 +77,11 @@ std::shared_ptr<Population> PopulationBuilder::Build(const ptree& config_pt, uti
                 const auto work_id                = FromString<unsigned int>(values[3]);
                 const auto primary_community_id   = FromString<unsigned int>(values[4]);
                 const auto secondary_community_id = FromString<unsigned int>(values[5]);
+                const auto latitude   = FromString<double>(values[6]);
+                const auto longitude = FromString<double>(values[7]);
 
                 population.CreatePerson(person_id, age, household_id, school_id, work_id, primary_community_id,
-                                        secondary_community_id, Health(), belief_pt, risk_averseness);
+                                        secondary_community_id, latitude, longitude,  Health(), belief_pt, risk_averseness);
                 ++person_id;
         }
 

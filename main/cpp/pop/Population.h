@@ -44,14 +44,14 @@ public:
 
         /// New Person in the population.
         void CreatePerson(unsigned int id, double age, unsigned int household_id, unsigned int school_id,
-                          unsigned int work_id, unsigned int primary_community_id, unsigned int secondary_community_id,
+                          unsigned int work_id, unsigned int primary_community_id, unsigned int secondary_community_id, double latitude, double longitude,
                           Health health, const boost::property_tree::ptree& belief_pt, double risk_averseness = 0);
 
 private:
         ///
         template <typename BeliefPolicy>
         void NewPerson(unsigned int id, double age, unsigned int household_id, unsigned int school_id,
-                       unsigned int work_id, unsigned int primary_community_id, unsigned int secondary_community_id,
+                       unsigned int work_id, unsigned int primary_community_id, unsigned int secondary_community_id, double latitude, double longitude,
                        Health health, const boost::property_tree::ptree& belief_pt, double risk_averseness = 0);
 
 private:
