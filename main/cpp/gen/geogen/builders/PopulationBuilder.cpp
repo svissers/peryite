@@ -9,9 +9,8 @@ namespace builder {
 
 using namespace std;
 
-shared_ptr<Population> BuildPopulation(const GenConfiguration& config, const boost::property_tree::ptree& belief_pt)
+void BuildPopulation(const GenConfiguration& config, const boost::property_tree::ptree& belief_pt, shared_ptr<Population>& population)
 {
-    auto population             = make_shared<Population>();
     auto hh_reference           = files::GetReferenceHouseholds(config);
     unsigned int current_hh_id  = 0;
     unsigned int current_p_id   = 0;
@@ -38,7 +37,6 @@ shared_ptr<Population> BuildPopulation(const GenConfiguration& config, const boo
             }
             current_hh_id++;
     }
-    return population;
 }
 
 } // namespace builder

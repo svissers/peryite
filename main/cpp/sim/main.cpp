@@ -19,6 +19,7 @@
  */
 
 #include "sim/CliController.h"
+#include "pop/Population.h"
 #include "util/FileSys.h"
 #include "util/RunConfigManager.h"
 #include "util/StringUtils.h"
@@ -122,7 +123,22 @@ int main(int argc, char** argv)
                 // If geopop ...
                 // -----------------------------------------------------------------------------------------
                 else if (execArg.getValue() == "geopop") {
-                        cout << "Not implented here yet ..." << endl;
+                        // Only generate the population, don't run the simulation
+                        auto pop_config_pt = configPt.get_child_optional("run.pop_config");
+                        if (pop_config_pt) {
+                            // Configure output
+                            if (configPt.get<string>("run.output_prefix", "").empty()) {
+                                configPt.put("run.output_prefix", TimeStamp().ToTag().append("/"));
+                            }
+                            configPt.sort();
+                            auto const t = CliController(configPt);
+                            // Generate the population
+                            Population::Create(configPt);
+                        }
+                        else {
+                            cerr << "Did not generate geopop because Configuration does not contain "
+                                         "pop_config section. " << endl;
+                        }
                 }
                 // -----------------------------------------------------------------------------------------
                 // If clean/dump ...

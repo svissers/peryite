@@ -14,8 +14,9 @@ namespace popgen {
 using namespace std;
 using namespace gen;
 
-void Generate(files::GenDirectory& dir, shared_ptr<Population>& population, ContactPoolSys& pool_sys, bool write)
+void Generate(files::GenDirectory& dir, shared_ptr<Population>& population, bool write)
 {
+    auto& pool_sys    = population->GetContactPoolSys();
     // --------------------------------------------------
     // Get the population and structs (by file or memory)
     // --------------------------------------------------
