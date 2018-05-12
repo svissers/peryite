@@ -56,6 +56,16 @@ std::shared_ptr<Population> PopulationFile::Read(const boost::property_tree::ptr
         return m_population;
     // Populate the population and return it
     m_population = make_shared<Population>();
+    /* TODO: Make sure Population has a contactlogger
+    if (configPt.get<bool>("run.contact_output_file", true)) {
+        const auto prefix       = configPt.get<string>("run.output_prefix");
+        const auto logPath      = FileSys::BuildPath(prefix, "contact_log.txt");
+        pop->GetContactLogger() = LogUtils::CreateRotatingLogger("contact_logger", logPath.string());
+        pop->GetContactLogger()->set_pattern("%v");
+    } else {
+        pop->GetContactLogger() = LogUtils::CreateNullLogger("contact_logger");
+    }
+    */
     CSV pop_data(m_file_path.string());
     unsigned int person_id = 0U;
     for (CSVRow const & row : pop_data) {
