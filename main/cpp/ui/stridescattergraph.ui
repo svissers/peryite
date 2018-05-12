@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Peruit eUI - Stride Scatter Graph</string>
+   <string>Peryite UI - Stride Scatter Graph</string>
   </property>
   <widget class="QWidget" name="GraphContainer" native="true">
    <property name="geometry">

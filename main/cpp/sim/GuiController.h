@@ -47,26 +47,26 @@ public:
 
         /// Actual run of the simulator.
         void RunStride();
-        //
-        // /// Setup the controller.
-        // void Setup();
+
+        /// Setup the controller.
+        void Setup();
 
 
-        std::shared_ptr<SimRunner> GetRunner() { return runner; }
+        std::shared_ptr<SimRunner> GetRunner() { return m_runner; }
 private:
-        // /// Check install environment.
-        // void CheckEnv();
-        //
-        // /// Check the OpenMP environment.
-        // void CheckOpenMP();
-        //
-        // // Output_prefix: if it's a string not containing any / it gets interpreted as a
-        // // filename prefix; otherwise we 'll create the corresponding directory.
-        // void CheckOutputPrefix();
+        /// Check install environment.
+        void CheckEnv();
 
-        // /// Make the appropriate logger for cli environment and register as stride_logger.
-        // void MakeLogger();
-        //
+        /// Check the OpenMP environment.
+        void CheckOpenMP();
+
+        // Output_prefix: if it's a string not containing any / it gets interpreted as a
+        // filename prefix; otherwise we 'll create the corresponding directory.
+        void CheckOutputPrefix();
+
+        /// Make the appropriate logger for cli environment and register as stride_logger.
+        void MakeLogger();
+
         // /// Register the viewers of the SimRunner.
         // void RegisterViewers(std::shared_ptr<SimRunner> runner);
 
@@ -86,7 +86,7 @@ private:
         std::shared_ptr<spdlog::logger> m_stride_logger; ///< General logger.
 
         // TODO use viewers? Maybe too much of a hassle though.
-        std::shared_ptr<SimRunner> runner;
+        std::shared_ptr<SimRunner> m_runner;
 };
 
 } // namespace stride

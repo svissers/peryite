@@ -1,15 +1,18 @@
 #include "mapviewerwindow.h"
 #include "ui_mapviewerwindow.h"
 #include "geogridlocation.h"
+#include "util/GeometryGeoCoord.h"
 #include "util.h"
 
 #include <QDir>
 #include <QGraphicsPixmapItem>
 #include <QFile>
+#include <QTimer>
 #include <QtDebug>
 #include <QCloseEvent>
 
 using namespace stride;
+using namespace std;
 
 MapViewerWindow::MapViewerWindow(QWidget *parent) :
     QWidget(parent),
@@ -28,6 +31,11 @@ MapViewerWindow::MapViewerWindow(QWidget *parent) :
     gfxScene = new QGraphicsScene();
     gfxItem = new QGraphicsPixmapItem();
     gfxScene->addItem(gfxItem);
+
+    // Set timer interval for draw update
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &MapViewerWindow::update);
+    timer->start(1000 / 30); // 30 fps
 }
 
 MapViewerWindow::~MapViewerWindow()
@@ -38,14 +46,24 @@ MapViewerWindow::~MapViewerWindow()
 void MapViewerWindow::createPopView(const std::shared_ptr<Population> population) {
     circles = new QList<VisualizationCircle *>();
 
-    qDebug() << "MAPVIEWER" << endl;
+    cout << "MapViewer enabled." << endl;
 
-    for (int i = 0; i < population->size(); i++) {
-        // qDebug() << population->at(i).GetId();
-        // qDebug() << population->at(i).GetCoordinate().get<0>() << " | " << population->at(i).GetCoordinate().get<1>();
+    for (auto i = 0U; i < population->size(); i++) {
+        util::spherical_point coord = population->at(i).GetCoordinate();
+        VisualizationCircle *circle = findCircle(coord);
+
+        // Create new circle for new locations
+        if (circle == nullptr) {
+            VisualizationCircle *newCircle = new VisualizationCircle(coord);
+            addCircle(newCircle);
+        }
+        // Increase circle population for locations that already exist.
+        else {
+            circle->increasePop(1);
+        }
     }
 
-    addCircle(new VisualizationCircle(QPointF(100, 100), 10));
+    // addCircle(new VisualizationCircle(QPointF(100, 100), 10));
 
     update();
 }
@@ -133,4 +151,17 @@ void MapViewerWindow::noHover() {
     selected = NULL;
     ui->CircleInfoTitle->setText("");
     ui->CircleInfoText->setText("");
+}
+
+VisualizationCircle* MapViewerWindow::findCircle(util::spherical_point coord) {
+    for (int i = 0; i < circles->length(); i++) {
+        float lng = circles->at(i)->geoGridLocation->longitude;
+        float lat = circles->at(i)->geoGridLocation->latitude;
+
+        if ((float)coord.get<0>() == lat && (float)coord.get<1>() == lng) {
+            return circles->at(i);
+        }
+    }
+
+    return nullptr;
 }

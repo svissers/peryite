@@ -1,6 +1,8 @@
 #ifndef GEOGRIDLOCATION_H
 #define GEOGRIDLOCATION_H
 
+#include "util/GeometryGeoCoord.h"
+
 #include <QString>
 
 class GeoGridLocation
@@ -8,6 +10,9 @@ class GeoGridLocation
 public:
     GeoGridLocation();
     GeoGridLocation(QString csvLine);
+    GeoGridLocation(stride::util::spherical_point coord);
+
+    void increasePop(int amount);
 
     int id;
     float latitude;

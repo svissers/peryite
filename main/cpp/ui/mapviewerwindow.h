@@ -27,6 +27,7 @@ public:
 private:
     Ui::MapViewerWindow *ui;
     QImage *image;
+    QTimer *timer;
     QList<VisualizationCircle *> *circles;
     VisualizationCircle *selected;
     QGraphicsScene *gfxScene;
@@ -44,6 +45,7 @@ private:
 
     // Parsing
     void addCircle(VisualizationCircle *c);
+    VisualizationCircle* findCircle(util::spherical_point coord);
 };
 
 #endif // MAPVIEWERWINDOW_H

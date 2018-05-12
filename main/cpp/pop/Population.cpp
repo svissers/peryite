@@ -41,8 +41,6 @@ namespace stride {
 
 std::shared_ptr<Population> Population::Create(const boost::property_tree::ptree& configPt)
 {
-        cout << "Creating empty pop" << endl;
-
         // --------------------------------------------------------------
         // Create (empty) population & and give it a ContactLogger.
         // --------------------------------------------------------------
@@ -59,16 +57,12 @@ std::shared_ptr<Population> Population::Create(const boost::property_tree::ptree
                 pop->GetContactLogger() = LogUtils::CreateNullLogger("contact_logger");
         }
 
-        cout << "done creating empty pop" << endl;
-
         // ------------------------------------------------
         // Setup RNManager.
         // ------------------------------------------------
         RNManager rnManager(RNManager::Info{configPt.get<string>("pop.rng_type", "lcg64"),
                                             configPt.get<unsigned long>("run.rng_seed", 101UL), "",
                                             configPt.get<unsigned int>("run.num_threads")});
-
-        cout << "done setting up rnmanager" << endl;
 
         // -----------------------------------------------------------------------------------------
         // Build population (at later date multiple builder or build instances ...).

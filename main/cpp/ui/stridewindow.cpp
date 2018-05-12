@@ -111,17 +111,11 @@ void StrideWindow::on_startButton_clicked()
         // Respond to events so OS doesn't think the program is unresponsive
         QCoreApplication::processEvents();
 
-        cout << "Starting guicontroler" << endl;
-
-
         // -----------------------------------------------------------------------------------------
         // Assign the ptree and run the simulation.
         // -----------------------------------------------------------------------------------------
         guiController->AssignPTree(config_pt);
-        cout << "ptree assigned" << endl;
         guiController->RunStride();
-
-        cout << "Done with guicontroller" << endl;
 
         // -----------------------------------------------------------------------------------------
         // Record results for graph
@@ -161,7 +155,6 @@ void StrideWindow::on_startButton_clicked()
     }
 
     file.close();
-
     // -----------------------------------------------------------------------------------------
     // Create new window for graph
     // -----------------------------------------------------------------------------------------
