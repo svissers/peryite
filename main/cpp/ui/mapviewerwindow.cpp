@@ -98,7 +98,7 @@ void MapViewerWindow::draw() {
     // Draw circles on the pixmap
     for (int i = 0; i < circles->size(); i++) {
         VisualizationCircle *c = circles->at(i);
-        drawCircle(&pixmap, c->position, c->getRadius(), (c == selected));
+        drawCircle(&pixmap, c);
     }
 
     // Set pixmap pixmap
@@ -112,12 +112,16 @@ void MapViewerWindow::addCircle(VisualizationCircle *c) {
     *circles << c;
 }
 
-void MapViewerWindow::drawCircle(QPixmap *pm, QPointF point, float radius, bool selected) {
+void MapViewerWindow::drawCircle(QPixmap *pm, VisualizationCircle *circle) {
+    // Get params
+    qreal radius = circle->getRadius();
+    QPointF point = circle->position;
+
     // QPainter
     QPainter painter(pm);
     painter.scale(1, 1);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setBrush(selected ? QColor("#3c6382") : QColor("#78e08f"));
+    painter.setBrush(circle->getColor(circle == selected));
     painter.setPen(QColor(0, 0, 0, 0));
 
     // Draw

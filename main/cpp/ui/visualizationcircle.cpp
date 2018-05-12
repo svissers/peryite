@@ -54,3 +54,7 @@ qreal VisualizationCircle::getRadius() {
 qreal VisualizationCircle::sqrDistanceToPoint(QPointF point) {
     return (position.x() - point.x()) * (position.x() - point.x()) + (position.y() - point.y()) * (position.y() - point.y());
 }
+
+QColor VisualizationCircle::getColor(bool selected) {
+    return selected ? QColor("#3c6382") : QColor("#78e08f");
+}

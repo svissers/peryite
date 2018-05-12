@@ -6,6 +6,7 @@
 
 #include <QPointF>
 #include <QString>
+#include <QColor>
 
 class VisualizationCircle
 {
@@ -25,6 +26,7 @@ public:
     void increasePop(int amount);
     qreal getRadius();
     qreal sqrDistanceToPoint(QPointF point);
+    QColor getColor(bool selected);
 
 private:
     static qreal minimumRadius;
