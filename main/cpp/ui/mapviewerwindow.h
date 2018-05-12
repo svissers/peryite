@@ -46,6 +46,8 @@ private:
     // Parsing
     void addCircle(VisualizationCircle *c);
     VisualizationCircle* findCircle(util::spherical_point coord);
+    int getMinimumPop();
+    int getMaximumPop();
 };
 
 #endif // MAPVIEWERWINDOW_H

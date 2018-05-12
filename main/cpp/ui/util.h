@@ -15,6 +15,7 @@ public:
     static QStringList parseCSVLine(QString csvLine);
     static bool fileExists(QString path);
     static QStringList getMissingFiles(QString path, QStringList requiredFiles);
+    static float lerp(float a, float b, float c);
 };
 
 #endif // UTIL_H

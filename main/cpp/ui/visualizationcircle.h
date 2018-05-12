@@ -10,17 +10,24 @@
 class VisualizationCircle
 {
 public:
+    static int minimumRadiusPopulation;
+    static int maximumRadiusPopulation;
+
     VisualizationCircle();
-    VisualizationCircle(QPointF pos, qreal r); // For debugging and testing purposes only
+    VisualizationCircle(QPointF pos, int r); // For debugging and testing purposes only
     VisualizationCircle(GeoGridLocation *gloc);
     VisualizationCircle(stride::util::spherical_point coord);
 
     QPointF position;
-    qreal radius;
     GeoGridLocation *geoGridLocation;
 
     bool containsPoint(QPointF point);
     void increasePop(int amount);
+    qreal getRadius();
+
+private:
+    static qreal minimumRadius;
+    static qreal maximumRadius;
 };
 
 #endif // VISUALIZATIONCIRCLE_H

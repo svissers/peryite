@@ -48,3 +48,10 @@ QStringList Util::getMissingFiles(QString path, QStringList requiredFiles) {
 
     return missingFiles;
 }
+
+float Util::lerp(float a, float b, float t) {
+    if (t > 1) { t = 1; }
+    if (t < 0) { t = 0; }
+
+    return (1 - t) * a + t * b;
+}

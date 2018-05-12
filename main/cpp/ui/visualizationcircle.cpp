@@ -5,40 +5,48 @@
 
 using namespace stride;
 
+int VisualizationCircle::minimumRadiusPopulation = 0;
+int VisualizationCircle::maximumRadiusPopulation = 2500;
+qreal VisualizationCircle::minimumRadius = 3.0f;
+qreal VisualizationCircle::maximumRadius = 15.0f;
+
 VisualizationCircle::VisualizationCircle()
 {
 
 }
 
-VisualizationCircle::VisualizationCircle(QPointF pos, qreal r) :
-    position(pos),
-    radius(r)
+VisualizationCircle::VisualizationCircle(QPointF pos, int r) :
+    position(pos)
 {
     geoGridLocation = new GeoGridLocation();
+    geoGridLocation->population = r;
 }
 
 VisualizationCircle::VisualizationCircle(GeoGridLocation *gloc) :
     geoGridLocation(gloc)
 {
-    radius = std::max(std::sqrt((float)(geoGridLocation->population) / 650), 3.0f);
     position = Util::GCSToQPointF(geoGridLocation->longitude, geoGridLocation->latitude);
 }
 
 VisualizationCircle::VisualizationCircle(util::spherical_point coord)
 {
     geoGridLocation = new GeoGridLocation(coord);
-    radius = std::max(std::sqrt((float)(geoGridLocation->population) / 650), 3.0f);
     position = Util::GCSToQPointF(geoGridLocation->longitude, geoGridLocation->latitude);
 }
 
 
 bool VisualizationCircle::containsPoint(QPointF point) {
     float sqrDistance = std::pow(position.x() - point.x(), 2) + std::pow(position.y() - point.y(), 2);
+    float radius = getRadius();
 
     return (sqrDistance <= radius * radius);
 }
 
 void VisualizationCircle::increasePop(int amount) {
     geoGridLocation->increasePop(amount);
-    radius = std::max(std::sqrt((float)(geoGridLocation->population) / 25), 3.0f);
+}
+
+qreal VisualizationCircle::getRadius() {
+    float t = ((float)(geoGridLocation->population) - minimumRadiusPopulation) / (maximumRadiusPopulation - minimumRadiusPopulation);
+    return Util::lerp(minimumRadius, maximumRadius, std::sqrt(t));
 }

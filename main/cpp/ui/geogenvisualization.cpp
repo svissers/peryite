@@ -73,7 +73,7 @@ void GeoGenVisualization::draw() {
     // Draw circles on the pixmap
     for (int i = 0; i < circles->size(); i++) {
         VisualizationCircle *c = circles->at(i);
-        drawCircle(&pixmap, c->position, c->radius, (c == selected));
+        drawCircle(&pixmap, c->position, c->getRadius(), (c == selected));
     }
 
     // Set pixmap pixmap

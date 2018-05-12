@@ -63,7 +63,9 @@ void MapViewerWindow::createPopView(const std::shared_ptr<Population> population
         }
     }
 
-    // addCircle(new VisualizationCircle(QPointF(100, 100), 10));
+    // Set the minimum and maximum population so the circles can resize themselves accordingly
+    VisualizationCircle::minimumRadiusPopulation = getMinimumPop();
+    VisualizationCircle::maximumRadiusPopulation = getMaximumPop();
 
     update();
 }
@@ -98,7 +100,7 @@ void MapViewerWindow::draw() {
     // Draw circles on the pixmap
     for (int i = 0; i < circles->size(); i++) {
         VisualizationCircle *c = circles->at(i);
-        drawCircle(&pixmap, c->position, c->radius, (c == selected));
+        drawCircle(&pixmap, c->position, c->getRadius(), (c == selected));
     }
 
     // Set pixmap pixmap
@@ -164,4 +166,34 @@ VisualizationCircle* MapViewerWindow::findCircle(util::spherical_point coord) {
     }
 
     return nullptr;
+}
+
+int MapViewerWindow::getMinimumPop() {
+    int minimum = circles->at(0)->geoGridLocation->population;
+
+    for (int i = 0; i < circles->size(); i++) {
+        VisualizationCircle *c = circles->at(i);
+        int pop = c->geoGridLocation->population;
+
+        if (pop < minimum) {
+            minimum = pop;
+        }
+    }
+
+    return minimum;
+}
+
+int MapViewerWindow::getMaximumPop() {
+    int maximum = circles->at(0)->geoGridLocation->population;
+
+    for (int i = 0; i < circles->size(); i++) {
+        VisualizationCircle *c = circles->at(i);
+        int pop = c->geoGridLocation->population;
+
+        if (pop > maximum) {
+            maximum = pop;
+        }
+    }
+
+    return maximum;
 }
