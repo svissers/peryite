@@ -1,7 +1,7 @@
 #include "stridewindow.h"
 #include "ui_stridewindow.h"
 #include "sim/SimRunner.h"
-#include "sim/Simulator.h"
+#include "sim/Sim.h"
 #include "pop/Population.h"
 #include "util/FileSys.h"
 #include "util/ConfigInfo.h"

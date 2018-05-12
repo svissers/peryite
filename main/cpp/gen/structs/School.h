@@ -13,7 +13,7 @@ struct School : public GenStruct
     /// Constructor
     /// @param id           The identification number for the school.
     /// @param coord        The coordinates that the school has been assigned to.
-    School(unsigned int id, util::GeoCoordinate coord)
+    School(unsigned int id, util::spherical_point coord)
     : GenStruct(id, coord)
     {};
 

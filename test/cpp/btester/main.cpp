@@ -23,12 +23,12 @@
 
 #include "myhayai/CliController.hpp"
 
-#include <exception>
 #include <iostream>
 
 using namespace std;
 using namespace myhayai;
 
+void InfluenzaBench();
 void MeaslesBench();
 
 int main(int argc, char** argv)
@@ -36,6 +36,7 @@ int main(int argc, char** argv)
         int exit_status = EXIT_SUCCESS;
 
         /// Prelim: calling function that registers benchmarks tests
+        // InfluenzaBench();
         MeaslesBench();
 
         /// Go ahead and set them up, run hem.

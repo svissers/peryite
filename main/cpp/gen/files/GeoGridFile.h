@@ -68,7 +68,7 @@ public:
                 row.GetValue<unsigned int>("population"),
                 row.GetValue<std::string>("name"),
                 row.GetValue<int>("province"),
-                util::GeoCoordinate(
+                util::spherical_point(
                     row.GetValue<double>("latitude"),
                     longitude
                     )
@@ -94,7 +94,7 @@ public:
             for (unsigned int i = 0; i < lats.size(); i++) {
                 double lat = std::stod(lats[i]);
                 double lon = std::stod(longs[i]);
-                center->fragmented_coords.push_back(util::GeoCoordinate(lat,lon));
+                center->fragmented_coords.push_back(util::spherical_point(lat,lon));
             }
 
             if(longitude > m_grid.m_max_long){
@@ -130,13 +130,13 @@ private:
         std::vector<std::string> lats;
         std::vector<std::string> longs;
         for (const auto& coord : center->fragmented_coords) {
-            lats.push_back(std::to_string(coord.m_latitude));
-            longs.push_back(std::to_string(coord.m_longitude));
+            lats.push_back(std::to_string(coord.get<0>()));
+            longs.push_back(std::to_string(coord.get<1>()));
         }
         std::vector<std::string> values = {
             std::to_string(center->id),
-            std::to_string(center->coordinate.m_latitude),
-            std::to_string(center->coordinate.m_longitude),
+            std::to_string(center->coordinate.get<0>()),
+            std::to_string(center->coordinate.get<1>()),
             center->name,
             std::to_string(center->province),
             std::to_string(center->population),

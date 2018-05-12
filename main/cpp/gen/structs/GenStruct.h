@@ -1,6 +1,8 @@
 #pragma once
 #include "util/GeoCoordinate.h"
+#include "util/GeometryGeoCoord.h"
 #include <memory>
+#include <boost/geometry.hpp>
 
 namespace stride {
 namespace gen {
@@ -19,15 +21,19 @@ struct GenStruct
     /// Constructor
     /// @param id           The identification number for the genstruct.
     /// @param coord        The coordinates that the genstruct has been assigned to.
-    GenStruct(unsigned int id, util::GeoCoordinate coord)
+    GenStruct(unsigned int id, util::spherical_point coord)
     : id(id), coordinate(coord)
     {}
 
     /// The identification number for the genstruct.
     unsigned int id = -1;
     /// The coordinates that the genstruct has been assigned to.
-    util::GeoCoordinate coordinate = util::GeoCoordinate();
+    util::GeoCoordinate coordinateDeprecated = util::GeoCoordinate();
+
+    /// The coordinate of the genstruct in boost geometry spherical coordinates
+    util::spherical_point coordinate;
 };
+
 
 } // namespace gen
 } // namespace stride

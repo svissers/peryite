@@ -1,6 +1,5 @@
 #include "CommunitiesBuilder.h"
 #include "trng/fast_discrete_dist.hpp"
-#include "util/RNManager.h"
 
 namespace stride {
 namespace gen {
@@ -14,13 +13,12 @@ using namespace trng;
 vector<shared_ptr<Community>> BuildCommunities(const GenConfiguration& config, GeoGrid& grid)
 {
     vector<shared_ptr<Community>> communities = vector<shared_ptr<Community>>();
-    unsigned int total_population = config.GetTree().get<unsigned int>("population_size");
+    auto total_population = config.GetTree().get<unsigned int>("population_size");
     // Every community has an average of 2000 members.
     unsigned int community_count = total_population / 2000;
-
     // Create the discrete distribution to sample from.
     vector<double> fractions;
-    for(auto center : grid) {
+    for(const auto& center : grid) {
         fractions.push_back(double(center->population) / double(total_population));
     }
 

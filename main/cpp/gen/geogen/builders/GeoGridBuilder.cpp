@@ -1,11 +1,6 @@
 #include "GeoGridBuilder.h"
-#include "../../structs/UrbanCenter.h"
 #include "trng/fast_discrete_dist.hpp"
 #include "trng/uniform_dist.hpp"
-#include "util/CSV.h"
-#include "util/GeoCoordinate.h"
-#include <iostream>
-#include <iterator>
 
 namespace stride {
 namespace gen {
@@ -16,14 +11,14 @@ using namespace std;
 
 GeoGrid BuildGeoGrid(const GenConfiguration& config)
 {
-        GeoGrid geo_grid;
+        GeoGrid geo_grid = GeoGrid();
 
         // Reference set of cities
         util::CSV cities_data = util::CSV(config.GetTree().get<string>("geoprofile.cities"));;
         // Total population from reference set
         unsigned int total_ref_population   = 0;
         // Total population to be generated
-        unsigned int total_population       = config.GetTree().get<unsigned int>("population_size");
+        auto total_population       = config.GetTree().get<unsigned int>("population_size");
         // Longitude bounds for efficient distance based searches
         double max_longitude = 0;
         double min_longitude = 90;
@@ -36,7 +31,7 @@ GeoGrid BuildGeoGrid(const GenConfiguration& config)
                 row.GetValue<unsigned int>("population"),
                 row.GetValue<string>("name"),
                 row.GetValue<unsigned int>("province"),
-                util::GeoCoordinate(latitude, longitude)
+                util::spherical_point(latitude, longitude)
             ));
             geo_grid.push_back(center);
 
@@ -77,13 +72,13 @@ GeoGrid BuildGeoGrid(const GenConfiguration& config)
                 int frag_amount = fragment_amounts[frag_amount_gen()];
                 int frag_size   = center->population / frag_amount;
                 std::vector<unsigned int> frag_pop;
-                std::vector<util::GeoCoordinate> frag_coords;
+                std::vector<util::spherical_point> frag_coords;
 
                 for (int i = 0; i < frag_amount; i++) {
                     frag_pop.push_back(frag_size);
-                    double lat = center->coordinate.m_latitude + latlon_diff_gen();
-                    double lon = center->coordinate.m_longitude + latlon_diff_gen();
-                    frag_coords.push_back(util::GeoCoordinate(lat, lon));
+                    double lat = center->coordinate.get<0>() + latlon_diff_gen();
+                    double lon = center->coordinate.get<1>() + latlon_diff_gen();
+                    frag_coords.emplace_back(util::spherical_point(lat, lon));
                 }
                 center->fragmented_populations  = frag_pop;
                 center->fragmented_coords       = frag_coords;

@@ -1,8 +1,5 @@
 #include "GenFile.h"
-#include "util/GeoCoordinate.h"
 #include "util/FileSys.h"
-#include <boost/filesystem.hpp>
-#include <boost/algorithm/string/join.hpp>
 
 namespace stride {
 namespace gen {
@@ -41,14 +38,14 @@ GenFile::GenFile(GenConfiguration& config, vector<shared_ptr<GenStruct>> structs
 
 void GenFile::Write()
 {
-    if (m_sorted_structs.size() == 0)
+    if (m_sorted_structs.empty())
         return;
     m_file_path = FileSys::BuildPath(m_output_prefix, m_file_name);
     std::ofstream my_file{m_file_path.string()};
     if(my_file.is_open()) {
         my_file << boost::algorithm::join(m_labels,",") << "\n";
         for (unsigned int band = 0; band < m_sorted_structs.size(); band++) {
-            for (auto g_struct : m_sorted_structs.at(band)) {
+            for (const auto& g_struct : m_sorted_structs.at(band)) {
                 my_file << boost::algorithm::join(GetValues(g_struct),",");
                 my_file << "," << to_string(band) << "\n";
             }
@@ -59,7 +56,7 @@ void GenFile::Write()
 
 vector<vector<shared_ptr<GenStruct>>> GenFile::Read()
 {
-    if (m_sorted_structs.size() != 0)
+    if (! m_sorted_structs.empty())
         return m_sorted_structs;
     // Populate the struct vector and return it.
     m_sorted_structs = vector<vector<shared_ptr<GenStruct>>>(AMOUNTOFBANDS);
@@ -73,14 +70,14 @@ vector<vector<shared_ptr<GenStruct>>> GenFile::Read()
     return m_sorted_structs;
 }
 
-void GenFile::insertStructs(vector<shared_ptr<GenStruct>> structs, GeoGrid& geo)
+void GenFile::insertStructs(vector<shared_ptr<GenStruct>>& structs, GeoGrid& geo)
 {
     auto sorted = vector<vector<shared_ptr<GenStruct>>>(AMOUNTOFBANDS);
-    for(auto g_struct : structs) {
+    for(const auto& g_struct : structs) {
         for(unsigned int i = 0; i < AMOUNTOFBANDS; i++) {
             double offset = (i+1) * geo.m_longitude_band_width;
-            if(g_struct->coordinate.m_longitude < geo.m_min_long+offset) {
-                if (sorted.at(i).size() == 0) {
+            if(g_struct->coordinate.get<1>() < geo.m_min_long+offset) {
+                if (sorted.at(i).empty()) {
                     // The band is empty, simply insert.
                     sorted.at(i).push_back(g_struct);
                 }
@@ -88,8 +85,9 @@ void GenFile::insertStructs(vector<shared_ptr<GenStruct>> structs, GeoGrid& geo)
                     // The band is not empty, sort using latitude.
                     bool inserted = false;
                     for(unsigned int j = 0; j < sorted.at(i).size(); j++){
-                        if(sorted.at(i).at(j)->coordinate.m_latitude > g_struct->coordinate.m_latitude){
+                        if(sorted.at(i).at(j)->coordinate.get<0>() > g_struct->coordinate.get<0>()){
                             sorted.at(i).insert(sorted.at(i).begin()+j, g_struct);
+                            inserted = true;
                             break;
                         }
                     }

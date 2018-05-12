@@ -73,6 +73,13 @@ if( NOT STRIDE_FORCE_NO_OPENMP )
 	message( STATUS "------> OpenMP_CXX_FLAGS            : ${OpenMP_CXX_FLAGS} "       )
 endif()
 #
+if( NOT STRIDE_FORCE_NO_QT5 )
+	message( STATUS " " )
+	message( STATUS "------> Qt5_FOUND                   : ${Qt5_FOUND}"               )
+	message( STATUS "------> QT_INCLUDES                 : ${QT_INCLUDES}"             )
+    message( STATUS "------> QT_LIBRARIES                : ${QT_LIBRARIES}"            )
+endif()
+#
 message( STATUS "" )
 if( NOT STRIDE_FORCE_NO_HDF5 )
 	message( STATUS "------> HDF5_FOUND                  : ${HDF5_FOUND} "             )
@@ -107,7 +114,6 @@ if ( STRIDE_INCLUDE_DOC )
 		message( STATUS "------> DOXYGEN_DOT_EXECUTABLE      : ${DOXYGEN_DOT_EXECUTABLE} " )
 	endif()
 endif()
-#
 message( STATUS "" )
 message( STATUS "Report complete." )
 

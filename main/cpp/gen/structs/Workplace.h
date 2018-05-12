@@ -10,7 +10,7 @@ struct WorkPlace : public GenStruct
     /// Constructor
     /// @param wp_id        The identification number for the workplace.
     /// @param coord        The coordinates that the workplace has been assigned to.
-    WorkPlace(unsigned int wp_id, util::GeoCoordinate coord)
+    WorkPlace(unsigned int wp_id, util::spherical_point coord)
     : GenStruct(wp_id, coord)
     {}
 

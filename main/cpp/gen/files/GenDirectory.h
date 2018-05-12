@@ -94,8 +94,6 @@ private:
     CommunityFilePtr m_community_file;
 };
 
-typedef std::shared_ptr<GenDirectory> GenDirectoryPtr;
-
 } // namespace files
 } // namespace gen
 } // namespace stride

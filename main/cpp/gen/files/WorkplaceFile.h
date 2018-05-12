@@ -35,7 +35,7 @@ private:
     {
         auto workplace = std::make_shared<WorkPlace>(WorkPlace(
             row.GetValue<unsigned int>("id"),
-            util::GeoCoordinate(
+            util::spherical_point(
                 row.GetValue<double>("latitude"),
                 row.GetValue<double>("longitude")
                 )
@@ -52,8 +52,8 @@ private:
         std::shared_ptr<WorkPlace> workplace = std::static_pointer_cast<WorkPlace>(g_struct);
         std::vector<std::string> values = {
             std::to_string(workplace->id),
-            std::to_string(workplace->coordinate.m_latitude),
-            std::to_string(workplace->coordinate.m_longitude)
+            std::to_string(workplace->coordinate.get<0>()),
+            std::to_string(workplace->coordinate.get<1>())
         };
         return values;
     }

@@ -19,22 +19,28 @@
  * Header file for the core Population class
  */
 
+#include "pool/ContactPoolSys.h"
 #include "pop/Person.h"
 #include "util/Any.h"
+#include "util/SegmentedVector.h"
 
 #include <boost/property_tree/ptree_fwd.hpp>
-#include <vector>
+#include <memory>
+#include <spdlog/spdlog.h>
 
 namespace stride {
 
 /**
  * Container for persons in population.
  */
-class Population : public std::vector<Person>
+class Population : public util::SegmentedVector<Person>
 {
 public:
-        /// Inheriting constructors.
-        using std::vector<Person>::vector;
+        /// Create a population initialized by the configuration in property tree.
+        static std::shared_ptr<Population> Create(const boost::property_tree::ptree& configPt);
+
+        /// For use in python environment: create using configuration string i.o ptree.
+        static std::shared_ptr<Population> Create(const std::string& configString);
 
         ///
         unsigned int GetAdoptedCount() const;
@@ -42,20 +48,46 @@ public:
         /// Get the cumulative number of cases.
         unsigned int GetInfectedCount() const;
 
-        /// New Person in the population.
-        void CreatePerson(unsigned int id, double age, unsigned int household_id, unsigned int school_id,
-                          unsigned int work_id, unsigned int primary_community_id, unsigned int secondary_community_id,
-                          Health health, const boost::property_tree::ptree& belief_pt, double risk_averseness = 0);
-
-private:
         ///
-        template <typename BeliefPolicy>
-        void NewPerson(unsigned int id, double age, unsigned int household_id, unsigned int school_id,
-                       unsigned int work_id, unsigned int primary_community_id, unsigned int secondary_community_id,
-                       Health health, const boost::property_tree::ptree& belief_pt, double risk_averseness = 0);
+        std::shared_ptr<spdlog::logger>& GetContactLogger() { return m_contact_logger; }
+
+        /// The ContactPoolSys of the simulator.
+        ContactPoolSys& GetContactPoolSys() { return m_pool_sys; }
+
+        /// The ContactPoolSys of the simulator.
+        const ContactPoolSys& GetContactPoolSys() const { return m_pool_sys; }
+
+        ///
+        Population() = default;
+
+        /// Create Person in the population.
+        void CreatePerson(unsigned int id, double age, unsigned int householdId, unsigned int schoolId,
+                          unsigned int workId, unsigned int primaryCommunityId, unsigned int secondaryCommunityId, double latitude, double longitude);
 
 private:
-        util::Any beliefs_container;
+
+        /// Assign the belief policy.
+        /// \tparam BeliefPolicy Template type param (we could use plain overloading here, i guess)
+        /// \param belief        belief object that wille be associated with the person
+        /// \param person        person associated with this belief object
+        // Cannot follow my preference for declaration of required explicit specializations, because SWIG
+        // does not like that. Hence include of the template method definition in the header file.
+        template <typename BeliefPolicy>
+        void SetBeliefPolicy(const BeliefPolicy& belief, Person& person)
+        {
+                if (!m_beliefs_container) {
+                        m_beliefs_container.emplace<util::SegmentedVector<BeliefPolicy>>();
+                }
+                person.SetBelief(m_beliefs_container.cast<util::SegmentedVector<BeliefPolicy>>()->emplace_back(belief));
+        }
+
+        friend class PopBuilder;
+        friend class BeliefSeeder;
+
+private:
+        util::Any                       m_beliefs_container; ///< Holds belief data for the persons.
+        ContactPoolSys                  m_pool_sys;          ///< Holds vector of ContactPools of different types.
+        std::shared_ptr<spdlog::logger> m_contact_logger;    ///< Logger for contact/transmission.
 };
 
 } // namespace stride

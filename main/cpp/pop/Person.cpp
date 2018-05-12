@@ -20,7 +20,6 @@
 
 #include "Person.h"
 
-#include "pool/ContactPoolType.h"
 #include "pop/Age.h"
 
 namespace stride {
@@ -28,7 +27,7 @@ namespace stride {
 using namespace std;
 using namespace stride::ContactPoolType;
 
-void Person::Update(bool is_work_off, bool is_school_off)
+void Person::Update(bool isWorkOff, bool isSchoolOff)
 {
         m_health.Update();
 
@@ -38,7 +37,7 @@ void Person::Update(bool is_work_off, bool is_school_off)
                 m_in_pools[Id::Work]               = false;
                 m_in_pools[Id::PrimaryCommunity]   = false;
                 m_in_pools[Id::SecondaryCommunity] = false;
-        } else if (is_work_off || (m_age <= MinAdultAge() && is_school_off)) {
+        } else if (isWorkOff || (m_age <= MinAdultAge() && isSchoolOff)) {
                 m_in_pools[Id::School]             = false;
                 m_in_pools[Id::Work]               = false;
                 m_in_pools[Id::PrimaryCommunity]   = true;

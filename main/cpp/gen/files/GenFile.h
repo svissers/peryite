@@ -56,7 +56,7 @@ protected:
     /// Sorts the struct data into latitude bands and sets m_sorted_structs.
     /// @param structs          The structs to be inserted.
     /// @param geo              The geogrid that was used to build the genstructs.
-    void insertStructs(std::vector<std::shared_ptr<GenStruct>> structs, GeoGrid& geo);
+    void insertStructs(std::vector<std::shared_ptr<GenStruct>>& structs, GeoGrid& geo);
 };
 
 } // namespace files

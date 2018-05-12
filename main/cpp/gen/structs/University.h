@@ -15,7 +15,7 @@ struct University : public GenStruct
     /// @param id           The identification number for the university.
     /// @param u_id         The index of the city (that the university belongs to) in the geogrid
     /// @param coord        The coordinates that the university has been assigned to.
-    University(unsigned int id, unsigned int u_id, util::GeoCoordinate coord)
+    University(unsigned int id, unsigned int u_id, util::spherical_point coord)
     : GenStruct(id, coord)
     {
         urban_id = u_id;

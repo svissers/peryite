@@ -1,13 +1,5 @@
 #include "GeoGenerator.h"
 #include "builders/PopulationBuilder.h"
-#include "builders/SchoolsBuilder.h"
-#include "builders/WorkplacesBuilder.h"
-#include "../files/PopulationFile.h"
-#include "../files/GeoGridFile.h"
-#include "../files/SchoolFile.h"
-#include "../files/UniversityFile.h"
-#include "../files/WorkplaceFile.h"
-#include "../files/CommunityFile.h"
 
 using namespace boost::filesystem;
 namespace stride {
@@ -28,11 +20,11 @@ void Generate(GenDirectory& dir)
     std::cout << "Building geogen" << std::endl;
     GeoGrid geogrid = builder::BuildGeoGrid(config);
     std::cout << "Building schools" << std::endl;
-    vector<shared_ptr<School>> schools = builder::BuildSchools(config, geogrid);
+    vector<shared_ptr<School>> schools = builder::BuildSchools(config, geogrid, population);
     std::cout << "Building universities" << std::endl;
-    vector<shared_ptr<University>> universities = builder::BuildUniversities(config, geogrid);
+    vector<shared_ptr<University>> universities = builder::BuildUniversities(config, geogrid, schools.size());
     std::cout << "Building workplaces" << std::endl;
-    vector<shared_ptr<WorkPlace>> workplaces = builder::BuildWorkplaces(config, geogrid);
+    vector<shared_ptr<WorkPlace>> workplaces = builder::BuildWorkplaces(config, geogrid, population);
     std::cout << "Building communities" << std::endl;
     vector<shared_ptr<Community>> communities = builder::BuildCommunities(config, geogrid);
 
