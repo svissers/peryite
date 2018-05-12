@@ -137,6 +137,7 @@ set(LIB_SRC
 	viewers/AdoptedViewer.cpp
 	viewers/InfectedViewer.cpp
     viewers/CliViewer.cpp
+	viewers/MapViewer.cpp
     viewers/PersonsViewer.cpp
 	viewers/SummaryViewer.cpp
 )

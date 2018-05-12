@@ -23,7 +23,7 @@
 #include "ui/mapviewerwindow.h"
 #include "pop/Population.h"
 #include "sim/SimRunner.h"
-#include "sim/Simulator.h"
+#include "sim/Sim.h"
 
 using namespace std;
 using namespace stride::sim_event;
@@ -31,9 +31,9 @@ using namespace stride::sim_event;
 namespace stride {
 namespace viewers {
 
-void MapViewer::Update(const sim_event::Payload& p)
+void MapViewer::Update(sim_event::Id id)
 {
-        switch (p.m_event_id) {
+        switch (id) {
         case Id::AtStart: {
                 // -----------------------------------------------------------------------------------------
                 // Create the Qt app
@@ -53,7 +53,7 @@ void MapViewer::Update(const sim_event::Payload& p)
 
                 m_qapp->processEvents();
 
-                const auto pop = p.m_runner->GetSim()->GetPopulation();
+                const auto pop = m_runner->GetSim()->GetPopulation();
                 mvw->createPopView(pop);
 
                 m_qapp->processEvents();

@@ -18,15 +18,15 @@
  * Header for the command line controller.
  */
 
+#include "pop/Population.h"
 #include "sim/GuiController.h"
-
 #include "sim/SimRunner.h"
 #include "util/ConfigInfo.h"
 #include "util/FileSys.h"
 #include "util/LogUtils.h"
 #include "util/TimeStamp.h"
 #include "viewers/AdoptedViewer.h"
-#include "viewers/CasesViewer.h"
+#include "viewers/InfectedViewer.h"
 #include "viewers/CliViewer.h"
 #include "viewers/PersonsViewer.h"
 #include "viewers/SummaryViewer.h"
@@ -77,15 +77,11 @@ GuiController::GuiController()
 void GuiController::RunStride()
 {
     // -----------------------------------------------------------------------------------------
-    // Instantiate SimRunner & register viewers & setup+execute the run.
+    // Build population, instantiate SimRunner & register viewers & run.
     // -----------------------------------------------------------------------------------------
-    runner = SimRunner::Create();
-
-    // -----------------------------------------------------------------------------------------
-    // Register viewers do runner setup and the execute.
-    // -----------------------------------------------------------------------------------------
+    auto pop    = Population::Create(m_config_pt);
+    auto runner = make_shared<SimRunner>(m_config_pt, pop);
     // RegisterViewers(runner);
-    runner->Setup(m_config_pt);
     runner->Run();
 
     // -----------------------------------------------------------------------------------------

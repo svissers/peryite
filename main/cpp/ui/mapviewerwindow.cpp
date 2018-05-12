@@ -38,10 +38,10 @@ MapViewerWindow::~MapViewerWindow()
 void MapViewerWindow::createPopView(const std::shared_ptr<Population> population) {
     circles = new QList<VisualizationCircle *>();
 
-    for (int i = 0; i < population->size(); i++) {
-        qDebug() << population->at(i).GetId();
-        qDebug() << population->at(i).GetCoordinate().m_latitude << " | " << population->at(i).GetCoordinate().m_longitude;
-    }
+    // for (int i = 0; i < population->size(); i++) {
+    //     qDebug() << population->at(i).GetId();
+    //     qDebug() << population->at(i).GetCoordinate().m_latitude << " | " << population->at(i).GetCoordinate().m_longitude;
+    // }
 
     addCircle(new VisualizationCircle(QPointF(100, 100), 10));
 
