@@ -1,6 +1,7 @@
 #pragma once
 #include "pop/Population.h"
 #include "../../GenConfiguration.h"
+#include "pop/Population.h"
 #include <boost/property_tree/ptree.hpp>
 #include <vector>
 
@@ -11,8 +12,8 @@ namespace builder {
 
 /// Builds a set of households for the population.
 /// @param config     The configuration file that specifies parameters used in building households.
-/// @return           The newly constructed population.
-std::shared_ptr<Population> BuildPopulation(const GenConfiguration& config, const boost::property_tree::ptree& belief_pt);
+/// @param population The population that will be seeded.
+void BuildPopulation(const GenConfiguration& config, const boost::property_tree::ptree& belief_pt, std::shared_ptr<Population>& population);
 
 } // namespace builder
 } // namespace geogen

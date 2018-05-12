@@ -25,6 +25,9 @@
 #include "util/FileSys.h"
 #include "util/RNManager.h"
 #include "util/StringUtils.h"
+#include "gen/geogen/GeoGenerator.h"
+#include "gen/popgen/PopGenerator.h"
+#include "gen/files/GenDirectory.h"
 
 #include <boost/property_tree/ptree.hpp>
 
@@ -136,7 +139,15 @@ shared_ptr<Population> PopBuilder::Build(std::shared_ptr<Population> pop)
         //------------------------------------------------
         // Add persons & fill pools & surveyseeding.
         //------------------------------------------------
-        SurveySeeder(m_config_pt, m_rn_manager).Seed(MakePoolSys(MakePersons(pop)));
+        auto prefix = m_config_pt.get<string>("run.output_prefix");
+        auto pop_config_pt = m_config_pt.get_child_optional("run.pop_config");
+        if (pop_config_pt) {
+            gen::files::GenDirectory dir(m_config_pt, m_rn_manager, prefix);
+            gen::geogen::Generate(dir, pop);
+            gen::popgen::Generate(dir, pop, true);
+        } else {
+            SurveySeeder(m_config_pt, m_rn_manager).Seed(MakePoolSys(MakePersons(pop)));
+        }
         return pop;
 }
 

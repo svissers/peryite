@@ -10,13 +10,13 @@ using namespace std;
 using namespace files;
 using namespace util;
 
-void Generate(GenDirectory& dir)
+void Generate(GenDirectory& dir, shared_ptr<Population>& population)
 {
     auto config = dir.GetConfig();
 
     // Build
     std::cout << "Building population" << std::endl;
-    shared_ptr<Population> population = builder::BuildPopulation(config, dir.GetBeliefConfig());
+    builder::BuildPopulation(config, dir.GetBeliefConfig(), population);
     std::cout << "Building geogen" << std::endl;
     GeoGrid geogrid = builder::BuildGeoGrid(config);
     std::cout << "Building schools" << std::endl;

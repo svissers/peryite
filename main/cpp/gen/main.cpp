@@ -91,15 +91,15 @@ int main(int argc, char* argv[])
                 // Run Generator-Geo
                 // -----------------------------------------------------------------------------------------
                 if (generate_geo) {
-                    geogen::Generate(dir);
+                    //geogen::Generate(dir);
                 }
                 // -----------------------------------------------------------------------------------------
                 // Run Generator-Pop
                 // -----------------------------------------------------------------------------------------
                 if (generate_pop) {
-                    auto population = make_shared<stride::Population>();
-                    stride::ContactPoolSys pool_sys;
-                    popgen::Generate(dir, population, pool_sys, true);
+                    //auto population = make_shared<stride::Population>();
+                    //stride::ContactPoolSys pool_sys;
+                    //popgen::Generate(dir, population, pool_sys, true);
                 }
                 // -----------------------------------------------------------------------------------------
                 // Finished

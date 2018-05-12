@@ -6,6 +6,7 @@
 #include "./builders/UniversitiesBuilder.h"
 #include "./builders/WorkplacesBuilder.h"
 #include "../files/GenDirectory.h"
+#include "pop/Population.h"
 #include <memory>
 
 namespace stride {
@@ -16,8 +17,8 @@ namespace geogen {
 /// communities
 /// And then writes them to their corresponding files.
 /// @param dir             The directory that the files will be generated in.
-/// @param thread_count    The amount of threads that will be used.
-void Generate(files::GenDirectory& dir);
+/// @param population      The population that will be seeded.
+void Generate(files::GenDirectory& dir, std::shared_ptr<Population>& population);
 
 } // namespace geogen
 } // namespace gen
