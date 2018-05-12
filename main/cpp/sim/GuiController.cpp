@@ -79,10 +79,16 @@ void GuiController::RunStride()
     // -----------------------------------------------------------------------------------------
     // Build population, instantiate SimRunner & register viewers & run.
     // -----------------------------------------------------------------------------------------
+    cout << "creating population" << endl;
     auto pop    = Population::Create(m_config_pt);
+    cout << "done" << endl;
+    cout << "creating runner" << endl;
     auto runner = make_shared<SimRunner>(m_config_pt, pop);
+    cout << "done" << endl;
     // RegisterViewers(runner);
+    cout << "running" << endl;
     runner->Run();
+    cout << "done" << endl;
 
     // -----------------------------------------------------------------------------------------
     // Done!
