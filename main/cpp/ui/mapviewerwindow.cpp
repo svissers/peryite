@@ -82,15 +82,13 @@ void MapViewerWindow::update() {
 }
 
 void MapViewerWindow::updateSelection(QPointF mousePos) {
-    for (int i = 0; i < circles->size(); i++) {
-        if (circles->at(i)->containsPoint(mousePos)) {
-            hoverCircle(circles->at(i));
-            return;
-        }
-    }
+    VisualizationCircle *closest = getClosestCircle(mousePos);
 
-    // Nothing selected
-    noHover();
+    if (closest->containsPoint(mousePos, 3)) {
+        hoverCircle(closest);
+    } else {
+        noHover();
+    }
 }
 
 void MapViewerWindow::draw() {
@@ -196,4 +194,22 @@ int MapViewerWindow::getMaximumPop() {
     }
 
     return maximum;
+}
+
+VisualizationCircle* MapViewerWindow::getClosestCircle(QPointF mousePos) {
+    float closestDist = circles->at(0)->sqrDistanceToPoint(mousePos);
+    VisualizationCircle *closest = circles->at(0);
+
+    for (int i = 0; i < circles->size(); i++) {
+        VisualizationCircle *c = circles->at(i);
+
+        float dist = circles->at(i)->sqrDistanceToPoint(mousePos);
+
+        if (dist < closestDist) {
+            closestDist = dist;
+            closest = c;
+        }
+    }
+
+    return closest;
 }

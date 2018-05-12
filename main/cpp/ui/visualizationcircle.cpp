@@ -35,9 +35,9 @@ VisualizationCircle::VisualizationCircle(util::spherical_point coord)
 }
 
 
-bool VisualizationCircle::containsPoint(QPointF point) {
-    float sqrDistance = std::pow(position.x() - point.x(), 2) + std::pow(position.y() - point.y(), 2);
-    float radius = getRadius();
+bool VisualizationCircle::containsPoint(QPointF point, qreal margin) {
+    float sqrDistance = sqrDistanceToPoint(point);
+    float radius = getRadius() + margin;
 
     return (sqrDistance <= radius * radius);
 }
@@ -49,4 +49,8 @@ void VisualizationCircle::increasePop(int amount) {
 qreal VisualizationCircle::getRadius() {
     float t = ((float)(geoGridLocation->population) - minimumRadiusPopulation) / (maximumRadiusPopulation - minimumRadiusPopulation);
     return Util::lerp(minimumRadius, maximumRadius, std::sqrt(t));
+}
+
+qreal VisualizationCircle::sqrDistanceToPoint(QPointF point) {
+    return (position.x() - point.x()) * (position.x() - point.x()) + (position.y() - point.y()) * (position.y() - point.y());
 }

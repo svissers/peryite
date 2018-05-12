@@ -42,6 +42,7 @@ private:
     void drawCircle(QPixmap *pm, QPointF point, float radius, bool selected);
     void hoverCircle(VisualizationCircle *c);
     void noHover();
+    VisualizationCircle* getClosestCircle(QPointF mousePos);
 
     // Parsing
     void addCircle(VisualizationCircle *c);

@@ -21,9 +21,10 @@ public:
     QPointF position;
     GeoGridLocation *geoGridLocation;
 
-    bool containsPoint(QPointF point);
+    bool containsPoint(QPointF point, qreal margin = 0.0f);
     void increasePop(int amount);
     qreal getRadius();
+    qreal sqrDistanceToPoint(QPointF point);
 
 private:
     static qreal minimumRadius;
