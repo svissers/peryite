@@ -141,6 +141,44 @@ QGroupBox:title {
      <string>Vary Engine?</string>
     </property>
    </widget>
+   <widget class="QLabel" name="mapViewerLabel">
+    <property name="geometry">
+     <rect>
+      <x>16</x>
+      <y>192</y>
+      <width>96</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="text">
+     <string>Map Viewer</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="scatterGraphLabel">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>192</y>
+      <width>96</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="text">
+     <string>Output Graph?</string>
+    </property>
+   </widget>
    <widget class="QSpinBox" name="runsInput">
     <property name="geometry">
      <rect>
@@ -258,6 +296,32 @@ QGroupBox:title {
      <rect>
       <x>304</x>
       <y>160</y>
+      <width>16</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="mapViewerInput">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>192</y>
+      <width>16</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="scatterGraphInput">
+    <property name="geometry">
+     <rect>
+      <x>304</x>
+      <y>192</y>
       <width>16</width>
       <height>23</height>
      </rect>

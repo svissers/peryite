@@ -66,6 +66,8 @@ void StrideWindow::on_startButton_clicked()
     int rngSeed = ui->seedInput->value();
     QString rngType = ui->engineInput->currentText();
     int runs = ui->runsInput->value();
+    bool showGraph = ui->scatterGraphInput->isChecked();
+    bool mapViewer = ui->mapViewerInput->isChecked();
 
     // -----------------------------------------------------------------------------------------
     // We save the results in a list first so we can sort them,
@@ -107,6 +109,7 @@ void StrideWindow::on_startButton_clicked()
         ptree config_pt = createConfigPTree(configFile);
         config_pt.put("run.rng_seed", rngSeed);
         config_pt.put("run.rng_type", rngType.toStdString());
+        config_pt.put("run.output_map", mapViewer ? 1 : 0);
 
         // Respond to events so OS doesn't think the program is unresponsive
         QCoreApplication::processEvents();
@@ -120,8 +123,10 @@ void StrideWindow::on_startButton_clicked()
         // -----------------------------------------------------------------------------------------
         // Record results for graph
         // -----------------------------------------------------------------------------------------
-        int result = guiController->GetRunner()->GetSim()->GetPopulation()->GetInfectedCount();
-        results << result;
+        if (showGraph) {
+            int result = guiController->GetRunner()->GetSim()->GetPopulation()->GetInfectedCount();
+            results << result;
+        }
 
         // -----------------------------------------------------------------------------------------
         // Done. Respond to events so OS doesn't think the program is unresponsive.
@@ -135,32 +140,34 @@ void StrideWindow::on_startButton_clicked()
     ui->startButton->setText("Start Tests");
     running = false;
 
-    // -----------------------------------------------------------------------------------------
-    // Create QScatterSeries for graph
-    // -----------------------------------------------------------------------------------------
-    QScatterSeries *scatterSeries = createResultsScatterSeries(results, runs, configFile, rngSeed, rngType);
+    if (showGraph) {
+        // -----------------------------------------------------------------------------------------
+        // Create QScatterSeries for graph
+        // -----------------------------------------------------------------------------------------
+        QScatterSeries *scatterSeries = createResultsScatterSeries(results, runs, configFile, rngSeed, rngType);
 
-    // -----------------------------------------------------------------------------------------
-    // Write results to file
-    // -----------------------------------------------------------------------------------------
-    QString filename = "TestResults_" + configFile.split(".").at(0) + ".txt";
-    QFile file(filename);
+        // -----------------------------------------------------------------------------------------
+        // Write results to file
+        // -----------------------------------------------------------------------------------------
+        QString filename = "TestResults_" + configFile.split(".").at(0) + ".txt";
+        QFile file(filename);
 
-    if (file.open(QIODevice::ReadWrite)) {
-        QTextStream stream(&file);
-        stream << scatterSeries->name() << endl;
-        for (int i = 0; i < results.size(); i++) {
-            stream << QString::number(results[i]) << endl;
+        if (file.open(QIODevice::ReadWrite)) {
+            QTextStream stream(&file);
+            stream << scatterSeries->name() << endl;
+            for (int i = 0; i < results.size(); i++) {
+                stream << QString::number(results[i]) << endl;
+            }
         }
-    }
 
-    file.close();
-    // -----------------------------------------------------------------------------------------
-    // Create new window for graph
-    // -----------------------------------------------------------------------------------------
-    StrideScatterGraph *wdg = new StrideScatterGraph;
-    wdg->createGraph(scatterSeries);
-    wdg->show();
+        file.close();
+        // -----------------------------------------------------------------------------------------
+        // Create new window for graph
+        // -----------------------------------------------------------------------------------------
+        StrideScatterGraph *wdg = new StrideScatterGraph;
+        wdg->createGraph(scatterSeries);
+        wdg->show();
+    }
 }
 
 bool StrideWindow::checkConfigFile() {
