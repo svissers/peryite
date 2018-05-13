@@ -47,10 +47,19 @@ public:
 
         /// Actual run of the simulator.
         void RunStride();
+        void RunStride(int steps);
 
         /// Setup the controller.
         void Setup();
 
+        /// Get the current day (used by Qt windows)
+        int getCurrentDay();
+
+        /// Get the total days (used by Qt windows)
+        int getTotalDays();
+
+        /// Returns true if simulation is over.
+        bool simulationDone();
 
         std::shared_ptr<SimRunner> GetRunner() { return m_runner; }
 private:
@@ -85,7 +94,6 @@ private:
         boost::property_tree::ptree     m_config_pt;     ///< Main configuration for run and sim.
         std::shared_ptr<spdlog::logger> m_stride_logger; ///< General logger.
 
-        // TODO use viewers? Maybe too much of a hassle though.
         std::shared_ptr<SimRunner> m_runner;
 };
 

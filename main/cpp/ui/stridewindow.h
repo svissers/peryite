@@ -5,6 +5,7 @@
 
 #include <QWidget>
 #include <QtCharts/QScatterSeries>
+#include <QList>
 #include <boost/property_tree/xml_parser.hpp>
 
 namespace Ui {
@@ -20,12 +21,31 @@ public:
     ~StrideWindow();
 
 private slots:
+    void on_runButton_batch_clicked();
     void on_runButton_all_clicked();
+    void on_runButton_one_clicked();
+    void on_runButton_multi_clicked();
 
 private:
     Ui::StrideWindow *ui;
     bool running;
+    bool batchRunning;
     stride::GuiController *guiController;
+    QList<int> results;
+
+    // Run related parameters
+    QString m_run_configFile;
+    int m_run_rngSeed;
+    QString m_run_rngType;
+    bool m_run_log;
+    int m_runs;
+    int m_currentRun;
+    bool m_run_mapViewer;
+    bool m_run_showGraph;
+
+    // Running
+    void runAll(bool batch);
+    void run(int steps);
 
     bool checkConfigFile();
     boost::property_tree::ptree createConfigPTree(QString configFile);
@@ -33,6 +53,13 @@ private:
     void setStatus(QString status);
     void setInitialParameters();
     void setRunning(bool isRunning);
+    bool setupRun();
+    void setupBatch();
+    void setExtraOptions();
+    void recordResults();
+    void createScatterGraph();
+    void endOfRun(bool continueBatch);
+    void setRunButtonsEnabled(bool enabled);
 };
 
 #endif // STRIDEWINDOW_H

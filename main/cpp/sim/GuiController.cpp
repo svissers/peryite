@@ -18,9 +18,11 @@
  * Header for the command line controller.
  */
 
+#include "calendar/Calendar.h"
 #include "pop/Population.h"
 #include "sim/GuiController.h"
 #include "sim/SimRunner.h"
+#include "sim/Sim.h"
 #include "util/ConfigInfo.h"
 #include "util/FileSys.h"
 #include "util/LogUtils.h"
@@ -81,11 +83,14 @@ void GuiController::RunStride()
     // Build population, instantiate SimRunner & register viewers & run.
     // -----------------------------------------------------------------------------------------
     m_runner->Run();
+}
 
+void GuiController::RunStride(int steps)
+{
     // -----------------------------------------------------------------------------------------
-    // Done!
+    // Build population, instantiate SimRunner & register viewers & run.
     // -----------------------------------------------------------------------------------------
-    spdlog::drop_all();
+    m_runner->Run(steps);
 }
 
 void GuiController::AssignPTree(boost::property_tree::ptree pt) {
@@ -192,6 +197,21 @@ void GuiController::Setup()
         m_runner = make_shared<SimRunner>(m_config_pt, pop);
         RegisterViewers(m_runner);
 
+}
+
+int GuiController::getCurrentDay()
+{
+    return m_runner->GetSim()->GetCalendar()->GetSimulationDay();
+}
+
+int GuiController::getTotalDays()
+{
+    return m_config_pt.get<unsigned int>("run.num_days");
+}
+
+bool GuiController::simulationDone()
+{
+    return getCurrentDay() >= getTotalDays();
 }
 
 } // namespace stride

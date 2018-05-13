@@ -324,7 +324,7 @@ QGroupBox:title {
    <widget class="QCheckBox" name="scatterGraphInput">
     <property name="geometry">
      <rect>
-      <x>352</x>
+      <x>260</x>
       <y>32</y>
       <width>16</width>
       <height>23</height>
@@ -337,9 +337,9 @@ QGroupBox:title {
    <widget class="QLabel" name="scatterGraphLabel">
     <property name="geometry">
      <rect>
-      <x>216</x>
+      <x>160</x>
       <y>32</y>
-      <width>128</width>
+      <width>96</width>
       <height>25</height>
      </rect>
     </property>
@@ -356,7 +356,7 @@ QGroupBox:title {
    <widget class="QCheckBox" name="mapViewerInput">
     <property name="geometry">
      <rect>
-      <x>152</x>
+      <x>116</x>
       <y>32</y>
       <width>16</width>
       <height>23</height>
@@ -371,7 +371,7 @@ QGroupBox:title {
      <rect>
       <x>16</x>
       <y>32</y>
-      <width>128</width>
+      <width>96</width>
       <height>25</height>
      </rect>
     </property>
@@ -385,13 +385,45 @@ QGroupBox:title {
      <string>Map Viewer</string>
     </property>
    </widget>
+   <widget class="QLabel" name="logLabel">
+    <property name="geometry">
+     <rect>
+      <x>304</x>
+      <y>32</y>
+      <width>96</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="text">
+     <string>Cli Log?</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="logInput">
+    <property name="geometry">
+     <rect>
+      <x>404</x>
+      <y>32</y>
+      <width>16</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QPushButton" name="runButton_all">
    <property name="geometry">
     <rect>
-     <x>16</x>
+     <x>108</x>
      <y>316</y>
-     <width>448</width>
+     <width>76</width>
      <height>25</height>
     </rect>
    </property>
@@ -419,6 +451,61 @@ QGroupBox:title {
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="runButton_one">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>316</y>
+     <width>76</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Run 1</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="runButton_multi">
+   <property name="geometry">
+    <rect>
+     <x>292</x>
+     <y>316</y>
+     <width>76</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Run Multi</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="runMultiInput">
+   <property name="geometry">
+    <rect>
+     <x>384</x>
+     <y>316</y>
+     <width>80</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="minimum">
+    <number>1</number>
+   </property>
+   <property name="maximum">
+    <number>999</number>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="runButton_batch">
+   <property name="geometry">
+    <rect>
+     <x>16</x>
+     <y>316</y>
+     <width>76</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Run Batch</string>
    </property>
   </widget>
  </widget>
