@@ -18,8 +18,8 @@ unsigned int AssignUniversities(
     // -------------
     // Contactpools
     // -------------
-    const unsigned int university_size = 3000;
-    const unsigned int university_cp_size = 20;
+    const unsigned int university_size = config.GetTree().get<unsigned int>("university_size");
+    const unsigned int university_cp_size = config.GetTree().get<unsigned int>("university_cp_size");
     unsigned int cp_id = 0;
     map<unsigned int, vector<shared_ptr<University>>> cities;
     for (const auto &band : universities) {
@@ -122,7 +122,6 @@ unsigned int AssignUniversities(
                                                                                             universities,
                                                                                             grid);
                 if (closest_universities.empty()) {
-                    std::cout << "closest_universities is empty: " << age << std::endl;
                     continue;
                 }
                 // Create a uniform distribution to select a university

@@ -1,0 +1,43 @@
+[ RUN      ] Sim.vaccine_rate - 0.4  (3 runs)
+[     DONE ] Sim.vaccine_rate - 0.4  (total: 00:00:17 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+[ RUN      ] Sim.vaccine_rate - 0.5  (3 runs)
+[     DONE ] Sim.vaccine_rate - 0.5  (total: 00:00:16 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+[ RUN      ] Sim.vaccine_rate - 0.6  (3 runs)
+[     DONE ] Sim.vaccine_rate - 0.6  (total: 00:00:16 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+[ RUN      ] Sim.vaccine_rate - 0.7  (3 runs)
+[     DONE ] Sim.vaccine_rate - 0.7  (total: 00:00:16 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+[ RUN      ] Sim.vaccine_rate - 0.8  (3 runs)
+[     DONE ] Sim.vaccine_rate - 0.8  (total: 00:00:17 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+[ RUN      ] Sim.vaccine_rate - 0.9  (3 runs)
+[     DONE ] Sim.vaccine_rate - 0.9  (total: 00:00:17 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:06
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:06
+

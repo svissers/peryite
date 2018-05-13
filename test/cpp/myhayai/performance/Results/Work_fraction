@@ -1,0 +1,71 @@
+[ RUN      ] Geopop.work_fraction - 0.05  (5 runs)
+[     DONE ] Geopop.work_fraction - 0.05  (total: 00:00:11 ) 
+[   RUNS   ]        Median time: 00:00:02
+       Fastest time: 00:00:02
+       Slowest time: 00:00:02
+       1st quartile: 00:00:02
+       3rd quartile: 00:00:02
+[ RUN      ] Geopop.work_fraction - 0.15  (5 runs)
+[     DONE ] Geopop.work_fraction - 0.15  (total: 00:00:11 ) 
+[   RUNS   ]        Median time: 00:00:02
+       Fastest time: 00:00:02
+       Slowest time: 00:00:02
+       1st quartile: 00:00:02
+       3rd quartile: 00:00:02
+[ RUN      ] Geopop.work_fraction - 0.25  (5 runs)
+[     DONE ] Geopop.work_fraction - 0.25  (total: 00:00:12 ) 
+[   RUNS   ]        Median time: 00:00:02
+       Fastest time: 00:00:02
+       Slowest time: 00:00:02
+       1st quartile: 00:00:02
+       3rd quartile: 00:00:02
+[ RUN      ] Geopop.work_fraction - 0.35  (5 runs)
+[     DONE ] Geopop.work_fraction - 0.35  (total: 00:00:14 ) 
+[   RUNS   ]        Median time: 00:00:02
+       Fastest time: 00:00:02
+       Slowest time: 00:00:02
+       1st quartile: 00:00:02
+       3rd quartile: 00:00:02
+[ RUN      ] Geopop.work_fraction - 0.45  (5 runs)
+[     DONE ] Geopop.work_fraction - 0.45  (total: 00:00:16 ) 
+[   RUNS   ]        Median time: 00:00:03
+       Fastest time: 00:00:03
+       Slowest time: 00:00:03
+       1st quartile: 00:00:03
+       3rd quartile: 00:00:03
+[ RUN      ] Geopop.work_fraction - 0.55  (5 runs)
+[     DONE ] Geopop.work_fraction - 0.55  (total: 00:00:19 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:03
+       Slowest time: 00:00:04
+       1st quartile: 00:00:03
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.work_fraction - 0.65  (5 runs)
+[     DONE ] Geopop.work_fraction - 0.65  (total: 00:00:23 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:06
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.work_fraction - 0.75  (5 runs)
+[     DONE ] Geopop.work_fraction - 0.75  (total: 00:00:27 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:04
+       Slowest time: 00:00:07
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:05
+[ RUN      ] Geopop.work_fraction - 0.85  (5 runs)
+[     DONE ] Geopop.work_fraction - 0.85  (total: 00:00:32 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:08
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:06
+[ RUN      ] Geopop.work_fraction - 0.95  (5 runs)
+[     DONE ] Geopop.work_fraction - 0.95  (total: 00:00:37 ) 
+[   RUNS   ]        Median time: 00:00:07
+       Fastest time: 00:00:06
+       Slowest time: 00:00:08
+       1st quartile: 00:00:06
+       3rd quartile: 00:00:07
+

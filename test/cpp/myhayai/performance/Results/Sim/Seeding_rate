@@ -1,0 +1,29 @@
+[ RUN      ] Sim.Seeding rate - 0.002  (3 runs)
+[     DONE ] Sim.Seeding rate - 0.002  (total: 00:00:17 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:06
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:06
+[ RUN      ] Sim.Seeding rate - 0.003  (3 runs)
+[     DONE ] Sim.Seeding rate - 0.003  (total: 00:00:17 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+[ RUN      ] Sim.Seeding rate - 0.004  (3 runs)
+[     DONE ] Sim.Seeding rate - 0.004  (total: 00:00:17 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+[ RUN      ] Sim.Seeding rate - 0.005  (3 runs)
+[     DONE ] Sim.Seeding rate - 0.005  (total: 00:00:17 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:06
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:06
+

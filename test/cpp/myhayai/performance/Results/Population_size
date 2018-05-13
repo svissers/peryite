@@ -1,0 +1,71 @@
+[ RUN      ] Geopop.Population_size - 10000  (5 runs)
+[     DONE ] Geopop.Population_size - 10000  (total: 00:00:08 ) 
+[   RUNS   ]        Median time: 00:00:01
+       Fastest time: 00:00:01
+       Slowest time: 00:00:01
+       1st quartile: 00:00:01
+       3rd quartile: 00:00:01
+[ RUN      ] Geopop.Population_size - 110000  (5 runs)
+[     DONE ] Geopop.Population_size - 110000  (total: 00:00:25 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:04
+       Slowest time: 00:00:05
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:05
+[ RUN      ] Geopop.Population_size - 160000  (5 runs)
+[     DONE ] Geopop.Population_size - 160000  (total: 00:00:42 ) 
+[   RUNS   ]        Median time: 00:00:08
+       Fastest time: 00:00:08
+       Slowest time: 00:00:08
+       1st quartile: 00:00:08
+       3rd quartile: 00:00:08
+[ RUN      ] Geopop.Population_size - 210000  (5 runs)
+[     DONE ] Geopop.Population_size - 210000  (total: 00:01:06 ) 
+[   RUNS   ]        Median time: 00:00:13
+       Fastest time: 00:00:13
+       Slowest time: 00:00:13
+       1st quartile: 00:00:13
+       3rd quartile: 00:00:13
+[ RUN      ] Geopop.Population_size - 260000  (5 runs)
+[     DONE ] Geopop.Population_size - 260000  (total: 00:01:38 ) 
+[   RUNS   ]        Median time: 00:00:19
+       Fastest time: 00:00:19
+       Slowest time: 00:00:19
+       1st quartile: 00:00:19
+       3rd quartile: 00:00:19
+[ RUN      ] Geopop.Population_size - 310000  (5 runs)
+[     DONE ] Geopop.Population_size - 310000  (total: 00:02:13 ) 
+[   RUNS   ]        Median time: 00:00:26
+       Fastest time: 00:00:26
+       Slowest time: 00:00:26
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:26
+[ RUN      ] Geopop.Population_size - 360000  (5 runs)
+[     DONE ] Geopop.Population_size - 360000  (total: 00:02:57 ) 
+[   RUNS   ]        Median time: 00:00:35
+       Fastest time: 00:00:35
+       Slowest time: 00:00:35
+       1st quartile: 00:00:35
+       3rd quartile: 00:00:35
+[ RUN      ] Geopop.Population_size - 410000  (5 runs)
+[     DONE ] Geopop.Population_size - 410000  (total: 00:03:44 ) 
+[   RUNS   ]        Median time: 00:00:44
+       Fastest time: 00:00:44
+       Slowest time: 00:00:45
+       1st quartile: 00:00:44
+       3rd quartile: 00:00:44
+[ RUN      ] Geopop.Population_size - 460000  (5 runs)
+[     DONE ] Geopop.Population_size - 460000  (total: 00:04:41 ) 
+[   RUNS   ]        Median time: 00:00:56
+       Fastest time: 00:00:55
+       Slowest time: 00:00:56
+       1st quartile: 00:00:55
+       3rd quartile: 00:00:56
+[ RUN      ] Geopop.Population_size - 510000  (5 runs)
+[     DONE ] Geopop.Population_size - 510000  (total: 00:05:43 ) 
+[   RUNS   ]        Median time: 00:01:08
+       Fastest time: 00:01:08
+       Slowest time: 00:01:09
+       1st quartile: 00:01:08
+       3rd quartile: 00:01:08
+

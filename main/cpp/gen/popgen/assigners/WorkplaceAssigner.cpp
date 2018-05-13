@@ -117,7 +117,6 @@ void AssignWorkplaces(
                         }
                     }
                 }
-                // TODO: ask
                 if (dest_workplaces.empty())
                     continue;
                 // Create a uniform distribution to select a workplace
@@ -132,7 +131,6 @@ void AssignWorkplaces(
                                                                                           workplaces,
                                                                                           grid);
                 if (closest_workplaces.empty()) {
-                    //std::cout << "closest_workplaces is empty: " << age << std::endl;
                     continue;
                 }
                 // Create a uniform distribution to select a workplace
@@ -140,9 +138,7 @@ void AssignWorkplaces(
                         trng::fast_discrete_dist(closest_workplaces.size()));
                 auto workplace = static_pointer_cast<WorkPlace>(closest_workplaces.at(wp_generator()));
                 pool = workplace->pool;
-                //std::cout << "non commutor" <<std::endl;
             }
-            //std::cout << "assigned workplace pool id: " <<pool->GetId() << std::endl;
             person.setPoolId(ContactPoolType::Id::Work, pool->GetId());
             pool->AddMember(&person);
         }

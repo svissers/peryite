@@ -56,11 +56,13 @@ vector<shared_ptr<WorkPlace>> BuildWorkplaces(GenConfiguration& config, GeoGrid&
         if(pop->at(i).GetAge() >=18 && pop->at(i).GetAge() <= 65)
             working_age_people++;
     }
-    // Calculate the amount of workplaces, every workplace has 20 workers
+    // Calculate the amount of workplaces, every workplace has X amount of workers
     auto commute_fraction        = config.GetTree().get<double>("work.commute_fraction");
     auto total_active_population = uint(work_fraction*working_age_people);
     auto total_commuting_actives = (unsigned int) (commute_fraction * total_active_population);
-    unsigned int workplace_count =  total_commuting_actives/20;
+
+    auto workplace_size             = config.GetTree().get<unsigned int>("workplace_size");
+    unsigned int workplace_count    =  total_commuting_actives / workplace_size;
 
     // Create the discrete distribution to sample from.
     vector<double> fractions;

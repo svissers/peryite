@@ -22,8 +22,9 @@ vector<shared_ptr<School>> BuildSchools(const GenConfiguration& config, GeoGrid&
             mandatory_students_count++;
     }
 
-    // Every school has an average of 500 students.
-    unsigned int school_count = mandatory_students_count / 500;
+    // Every school has the same average amount of students.
+    auto school_size            =  config.GetTree().get<unsigned int>("school_size");
+    unsigned int school_count   = mandatory_students_count / school_size;
 
     // Create the discrete distribution to sample from.
     vector<double> fractions;

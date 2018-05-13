@@ -146,7 +146,7 @@ shared_ptr<Population> PopBuilder::Build(std::shared_ptr<Population> pop)
         if (pop_config_pt) {
             gen::files::GenDirectory dir(m_config_pt, m_rn_manager, prefix);
             gen::geogen::Generate(dir, pop);
-            gen::popgen::Generate(dir, pop, true);
+            gen::popgen::Generate(dir, pop);
         } else {
             boost::property_tree::write_xml(std::cout, m_config_pt);
 

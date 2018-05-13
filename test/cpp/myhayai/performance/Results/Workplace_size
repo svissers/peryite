@@ -1,0 +1,71 @@
+[ RUN      ] Geopop.Workplace_size - 105  (5 runs)
+[     DONE ] Geopop.Workplace_size - 105  (total: 00:00:13 ) 
+[   RUNS   ]        Median time: 00:00:02
+       Fastest time: 00:00:02
+       Slowest time: 00:00:02
+       1st quartile: 00:00:02
+       3rd quartile: 00:00:02
+[ RUN      ] Geopop.Workplace_size - 205  (5 runs)
+[     DONE ] Geopop.Workplace_size - 205  (total: 00:00:12 ) 
+[   RUNS   ]        Median time: 00:00:02
+       Fastest time: 00:00:02
+       Slowest time: 00:00:02
+       1st quartile: 00:00:02
+       3rd quartile: 00:00:02
+[ RUN      ] Geopop.Workplace_size - 305  (5 runs)
+[     DONE ] Geopop.Workplace_size - 305  (total: 00:00:11 ) 
+[   RUNS   ]        Median time: 00:00:02
+       Fastest time: 00:00:02
+       Slowest time: 00:00:02
+       1st quartile: 00:00:02
+       3rd quartile: 00:00:02
+[ RUN      ] Geopop.Workplace_size - 405  (5 runs)
+[     DONE ] Geopop.Workplace_size - 405  (total: 00:00:11 ) 
+[   RUNS   ]        Median time: 00:00:02
+       Fastest time: 00:00:02
+       Slowest time: 00:00:02
+       1st quartile: 00:00:02
+       3rd quartile: 00:00:02
+[ RUN      ] Geopop.Workplace_size - 5  (5 runs)
+[     DONE ] Geopop.Workplace_size - 5  (total: 00:00:58 ) 
+[   RUNS   ]        Median time: 00:00:11
+       Fastest time: 00:00:11
+       Slowest time: 00:00:11
+       1st quartile: 00:00:11
+       3rd quartile: 00:00:11
+[ RUN      ] Geopop.Workplace_size - 505  (5 runs)
+[     DONE ] Geopop.Workplace_size - 505  (total: 00:00:12 ) 
+[   RUNS   ]        Median time: 00:00:02
+       Fastest time: 00:00:02
+       Slowest time: 00:00:02
+       1st quartile: 00:00:02
+       3rd quartile: 00:00:02
+[ RUN      ] Geopop.Workplace_size - 605  (5 runs)
+[     DONE ] Geopop.Workplace_size - 605  (total: 00:00:11 ) 
+[   RUNS   ]        Median time: 00:00:02
+       Fastest time: 00:00:02
+       Slowest time: 00:00:02
+       1st quartile: 00:00:02
+       3rd quartile: 00:00:02
+[ RUN      ] Geopop.Workplace_size - 705  (5 runs)
+[     DONE ] Geopop.Workplace_size - 705  (total: 00:00:11 ) 
+[   RUNS   ]        Median time: 00:00:02
+       Fastest time: 00:00:02
+       Slowest time: 00:00:02
+       1st quartile: 00:00:02
+       3rd quartile: 00:00:02
+[ RUN      ] Geopop.Workplace_size - 805  (5 runs)
+[     DONE ] Geopop.Workplace_size - 805  (total: 00:00:11 ) 
+[   RUNS   ]        Median time: 00:00:02
+       Fastest time: 00:00:02
+       Slowest time: 00:00:02
+       1st quartile: 00:00:02
+       3rd quartile: 00:00:02
+[ RUN      ] Geopop.Workplace_size - 905  (5 runs)
+[     DONE ] Geopop.Workplace_size - 905  (total: 00:00:11 ) 
+[   RUNS   ]        Median time: 00:00:02
+       Fastest time: 00:00:02
+       Slowest time: 00:00:02
+       1st quartile: 00:00:02
+       3rd quartile: 00:00:02
+

@@ -1,0 +1,72 @@
+[==========] BenchmarkRunner running.
+[ RUN      ] Geopop.university_size - 1  (5 runs)
+[     DONE ] Geopop.university_size - 1  (total: 00:01:20 ) 
+[   RUNS   ]        Median time: 00:00:15
+       Fastest time: 00:00:15
+       Slowest time: 00:00:16
+       1st quartile: 00:00:15
+       3rd quartile: 00:00:16
+[ RUN      ] Geopop.university_size - 1001  (5 runs)
+[     DONE ] Geopop.university_size - 1001  (total: 00:00:23 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:04
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.university_size - 2001  (5 runs)
+[     DONE ] Geopop.university_size - 2001  (total: 00:00:24 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:05
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.university_size - 3001  (5 runs)
+[     DONE ] Geopop.university_size - 3001  (total: 00:00:24 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:04
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.university_size - 4001  (5 runs)
+[     DONE ] Geopop.university_size - 4001  (total: 00:00:24 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:05
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.university_size - 5001  (5 runs)
+[     DONE ] Geopop.university_size - 5001  (total: 00:00:24 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:04
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.university_size - 6001  (5 runs)
+[     DONE ] Geopop.university_size - 6001  (total: 00:00:24 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:05
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.university_size - 7001  (5 runs)
+[     DONE ] Geopop.university_size - 7001  (total: 00:00:25 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:06
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.university_size - 8001  (5 runs)
+[     DONE ] Geopop.university_size - 8001  (total: 00:00:23 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:04
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.university_size - 9001  (5 runs)
+[     DONE ] Geopop.university_size - 9001  (total: 00:00:23 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:04
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+
