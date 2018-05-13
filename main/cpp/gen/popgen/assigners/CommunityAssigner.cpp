@@ -103,28 +103,10 @@ void AssignCommunities(
                                         primary_pool->GetId());
             primary_pool->AddMember(&population->at(i));
 
-            // Remove the primary community pool from the list once it's full
-            if (primary_pool->GetSize() >= community_cp_size) {
-                auto pools = primary_community->pools;
-                pools.erase(pools.begin() + primary_cp_index);
-                primary_community->full_pools.push_back(primary_pool);
-                if (primary_community->pools.empty()) {
-                    communities.erase(communities.begin() + primary_community_index);
-                }
-            }
             if (++i >= population->size())
                 break;
         }
         i--;
-
-        // Remove the secondary community pool from the list once it's full
-        if (pool->GetSize() >= community_cp_size) {
-            auto pools = community->pools;
-            pools.erase(pools.begin() + cp_index);
-            community->full_pools.push_back(pool);
-            if (community->pools.empty())
-                communities.erase(communities.begin() + community_index);
-        }
 
     }
 }

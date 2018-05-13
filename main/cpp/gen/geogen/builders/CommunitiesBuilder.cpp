@@ -10,12 +10,12 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
-vector<shared_ptr<Community>> BuildCommunities(const GenConfiguration& config, GeoGrid& grid)
+vector<shared_ptr<Community>> BuildCommunities(const GenConfiguration& config, GeoGrid& grid, shared_ptr<Population>& population)
 {
     vector<shared_ptr<Community>> communities = vector<shared_ptr<Community>>();
     auto total_population = config.GetTree().get<unsigned int>("population_size");
     // Every community has an average of 2000 members.
-    unsigned int community_count = total_population / 2000;
+    unsigned int community_count = population->size() / 2000;
     // Create the discrete distribution to sample from.
     vector<double> fractions;
     for(const auto& center : grid) {

@@ -20,7 +20,7 @@ void Generate(GenDirectory& dir, shared_ptr<Population>& population)
     vector<shared_ptr<School>> schools = builder::BuildSchools(config, geogrid, population);
     vector<shared_ptr<University>> universities = builder::BuildUniversities(config, geogrid, schools.size());
     vector<shared_ptr<WorkPlace>> workplaces = builder::BuildWorkplaces(config, geogrid, population);
-    vector<shared_ptr<Community>> communities = builder::BuildCommunities(config, geogrid);
+    vector<shared_ptr<Community>> communities = builder::BuildCommunities(config, geogrid, population);
 
     // Write
     auto population_file = make_shared<PopulationFile>(
