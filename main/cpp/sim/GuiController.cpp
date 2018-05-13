@@ -35,6 +35,7 @@
 #include "viewers/SummaryViewer.h"
 #include "viewers/MapViewer.h"
 
+#include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
 using namespace std;
@@ -191,12 +192,17 @@ void GuiController::Setup()
         }
 
         // -----------------------------------------------------------------------------------------
+        // Write ptree to file
+        // -----------------------------------------------------------------------------------------
+        const auto path     = FileSys::BuildPath(m_output_prefix, "config.xml");
+        boost::property_tree::write_xml(path.string(), m_config_pt, std::locale(), xml_writer_make_settings<std::string>('\t', 1));
+
+        // -----------------------------------------------------------------------------------------
         // Create the runner, population and register the viewers
         // -----------------------------------------------------------------------------------------
         auto pop    = Population::Create(m_config_pt);
         m_runner = make_shared<SimRunner>(m_config_pt, pop);
         RegisterViewers(m_runner);
-
 }
 
 int GuiController::getCurrentDay()
