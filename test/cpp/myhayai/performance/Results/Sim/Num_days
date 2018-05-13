@@ -1,0 +1,80 @@
+[     DONE ] Sim.Num_days - 20  (total: 00:00:18 ) 
+[   RUNS   ]        Median time: 00:00:06
+       Fastest time: 00:00:05
+       Slowest time: 00:00:06
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:06
+
+[     DONE ] Sim.Num_days - 40  (total: 00:00:18 ) 
+[   RUNS   ]        Median time: 00:00:06
+       Fastest time: 00:00:06
+       Slowest time: 00:00:06
+       1st quartile: 00:00:06
+       3rd quartile: 00:00:06
+
+[     DONE ] Sim.Num_days - 60  (total: 00:00:19 ) 
+[   RUNS   ]        Median time: 00:00:06
+       Fastest time: 00:00:06
+       Slowest time: 00:00:06
+       1st quartile: 00:00:06
+       3rd quartile: 00:00:06
+
+[     DONE ] Sim.Num_days - 80  (total: 00:00:19 ) 
+[   RUNS   ]        Median time: 00:00:06
+       Fastest time: 00:00:06
+       Slowest time: 00:00:06
+       1st quartile: 00:00:06
+       3rd quartile: 00:00:06
+
+[     DONE ] Sim.Num_days - 100  (total: 00:00:19 ) 
+[   RUNS   ]        Median time: 00:00:06
+       Fastest time: 00:00:06
+       Slowest time: 00:00:06
+       1st quartile: 00:00:06
+       3rd quartile: 00:00:06
+
+[==========] BenchmarkRunner running.
+[ RUN      ] Sim.Num_days - 200  (3 runs)
+[     DONE ] Sim.Num_days - 200  (total: 00:00:19 ) 
+[   RUNS   ]        Median time: 00:00:06
+       Fastest time: 00:00:06
+       Slowest time: 00:00:06
+       1st quartile: 00:00:06
+       3rd quartile: 00:00:06
+[ RUN      ] Sim.Num_days - 300  (3 runs)
+[     DONE ] Sim.Num_days - 300  (total: 00:00:20 ) 
+[   RUNS   ]        Median time: 00:00:06
+       Fastest time: 00:00:06
+       Slowest time: 00:00:07
+       1st quartile: 00:00:06
+       3rd quartile: 00:00:07
+[ RUN      ] Sim.Num_days - 400  (3 runs)
+[     DONE ] Sim.Num_days - 400  (total: 00:00:22 ) 
+[   RUNS   ]        Median time: 00:00:07
+       Fastest time: 00:00:07
+       Slowest time: 00:00:07
+       1st quartile: 00:00:07
+       3rd quartile: 00:00:07
+[ RUN      ] Sim.Num_days - 500  (3 runs)
+[     DONE ] Sim.Num_days - 500  (total: 00:00:23 ) 
+[   RUNS   ]        Median time: 00:00:07
+       Fastest time: 00:00:07
+       Slowest time: 00:00:07
+       1st quartile: 00:00:07
+       3rd quartile: 00:00:07
+[ RUN      ] Sim.Num_days - 600  (3 runs)
+[     DONE ] Sim.Num_days - 600  (total: 00:00:24 ) 
+[   RUNS   ]        Median time: 00:00:08
+       Fastest time: 00:00:08
+       Slowest time: 00:00:08
+       1st quartile: 00:00:08
+       3rd quartile: 00:00:08
+[ RUN      ] Sim.Num_days - 700  (3 runs)
+[     DONE ] Sim.Num_days - 700  (total: 00:00:26 ) 
+[   RUNS   ]        Median time: 00:00:08
+       Fastest time: 00:00:08
+       Slowest time: 00:00:08
+       1st quartile: 00:00:08
+       3rd quartile: 00:00:08
+
+

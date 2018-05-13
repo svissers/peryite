@@ -1,0 +1,36 @@
+[ RUN      ] Sim.vaccine_link_probability - 0  (3 runs)
+[     DONE ] Sim.vaccine_link_probability - 0  (total: 00:00:16 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+[ RUN      ] Sim.vaccine_link_probability - 0.001  (3 runs)
+[     DONE ] Sim.vaccine_link_probability - 0.001  (total: 00:00:17 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+[ RUN      ] Sim.vaccine_link_probability - 0.002  (3 runs)
+[     DONE ] Sim.vaccine_link_probability - 0.002  (total: 00:00:17 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+[ RUN      ] Sim.vaccine_link_probability - 0.003  (3 runs)
+[     DONE ] Sim.vaccine_link_probability - 0.003  (total: 00:00:16 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+[ RUN      ] Sim.vaccine_link_probability - 0.004  (3 runs)
+[     DONE ] Sim.vaccine_link_probability - 0.004  (total: 00:00:17 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+

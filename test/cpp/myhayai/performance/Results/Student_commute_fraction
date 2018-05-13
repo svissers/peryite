@@ -1,0 +1,72 @@
+[==========] BenchmarkRunner running.
+[ RUN      ] Geopop.Student_commute_fraction - 0.05  (5 runs)
+[     DONE ] Geopop.Student_commute_fraction - 0.05  (total: 00:00:22 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:04
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.Student_commute_fraction - 0.15  (5 runs)
+[     DONE ] Geopop.Student_commute_fraction - 0.15  (total: 00:00:22 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:04
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.Student_commute_fraction - 0.25  (5 runs)
+[     DONE ] Geopop.Student_commute_fraction - 0.25  (total: 00:00:22 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:04
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.Student_commute_fraction - 0.35  (5 runs)
+[     DONE ] Geopop.Student_commute_fraction - 0.35  (total: 00:00:22 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:04
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.Student_commute_fraction - 0.45  (5 runs)
+[     DONE ] Geopop.Student_commute_fraction - 0.45  (total: 00:00:22 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:04
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.Student_commute_fraction - 0.55  (5 runs)
+[     DONE ] Geopop.Student_commute_fraction - 0.55  (total: 00:00:22 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:04
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.Student_commute_fraction - 0.65  (5 runs)
+[     DONE ] Geopop.Student_commute_fraction - 0.65  (total: 00:00:22 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:04
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.Student_commute_fraction - 0.75  (5 runs)
+[     DONE ] Geopop.Student_commute_fraction - 0.75  (total: 00:00:23 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:04
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.Student_commute_fraction - 0.85  (5 runs)
+[     DONE ] Geopop.Student_commute_fraction - 0.85  (total: 00:00:23 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:04
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Geopop.Student_commute_fraction - 0.95  (5 runs)
+[     DONE ] Geopop.Student_commute_fraction - 0.95  (total: 00:00:23 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:04
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+

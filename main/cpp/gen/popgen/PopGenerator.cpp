@@ -14,7 +14,7 @@ namespace popgen {
 using namespace std;
 using namespace gen;
 
-void Generate(files::GenDirectory& dir, shared_ptr<Population>& population, bool write)
+void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
 {
     auto& pool_sys    = population->GetContactPoolSys();
     // --------------------------------------------------
@@ -31,15 +31,10 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population, bool
     // -------------------
     // Assign ContactPools
     // -------------------
-    std::cout << "Assign households to coordinates" << std::endl;
     assigner::AssignHouseholds(population, grid, config);
-    std::cout << "Assigning schools" << std::endl;
     assigner::AssignSchools(schools, population, config, grid);
-    std::cout << "Assigning universities" << std::endl;
     unsigned int total_commuting_students = assigner::AssignUniversities(universities, population, config, grid);
-    std::cout << "Assigning workplaces" << std::endl;
     assigner::AssignWorkplaces(workplaces, population, config, grid, total_commuting_students);
-    std::cout << "Assigning communities" << std::endl;
     assigner::AssignCommunities(communities, population, config, grid);
 
     // -------------------
@@ -104,6 +99,7 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population, bool
     // -------------
     // Write persons
     // -------------
+    auto write = config.GetTree().get<bool>("write_population");
     if (write) {
         auto output_file = files::PopulationFile(
             config,
@@ -123,10 +119,6 @@ vector<shared_ptr<GenStruct>> GetClosestStructs(const util::spherical_point& hom
 
     auto band_of_hh = uint( (home_coord.get<1>() - grid.m_min_long) / grid.m_longitude_band_width );
     if (band_of_hh >= structs.size()) {
-        //std::cout << "home_coord: " << home_coord << std::endl;
-        //std::cout << "grid.m_min_long: " << grid.m_min_long << std::endl;
-        //std::cout << "grid.m_longitude_band_width: " << grid.m_longitude_band_width << std::endl;
-        //std::cout << "band_of_hh: " << band_of_hh << " / " << structs.size() << std::endl;
         return closest_structs;
     }
 

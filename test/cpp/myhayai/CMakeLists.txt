@@ -18,6 +18,7 @@
 # Add subdirectories:
 #============================================================================
 include_directories(${CMAKE_SOURCE_DIR}/test/cpp/myhayai)
+add_subdirectory(performance)
 add_subdirectory(demo)
 add_subdirectory(myhayai)
 

@@ -1,0 +1,51 @@
+[==========] BenchmarkRunner running.
+[ RUN      ] Geopop.Geogrid_file - flanders_cities_TEST_150 (5 runs)
+[     DONE ] Geopop.Geogrid_file - flanders_cities_TEST_150 (total: 00:00:15 ) 
+[   RUNS   ]        Median time: 00:00:03
+       Fastest time: 00:00:03
+       Slowest time: 00:00:03
+       1st quartile: 00:00:03
+       3rd quartile: 00:00:03
+
+[==========] BenchmarkRunner running.
+[ RUN      ] Geopop.Geogrid_file - flanders_cities_TEST_75 (5 runs)
+[     DONE ] Geopop.Geogrid_file - flanders_cities_TEST_75 (total: 00:00:13 ) 
+[   RUNS   ]        Median time: 00:00:02
+       Fastest time: 00:00:02
+       Slowest time: 00:00:02
+       1st quartile: 00:00:02
+       3rd quartile: 00:00:02
+
+[==========] BenchmarkRunner running.
+[ RUN      ] Geopop.Geogrid_file - flanders_cities_TEST_40 (5 runs)
+[     DONE ] Geopop.Geogrid_file - flanders_cities_TEST_40 (total: 00:00:13 ) 
+[   RUNS   ]        Median time: 00:00:02
+       Fastest time: 00:00:02
+       Slowest time: 00:00:02
+       1st quartile: 00:00:02
+       3rd quartile: 00:00:02
+
+
+
+[==========] BenchmarkRunner running.
+[ RUN      ] Geopop.Geogrid_file - 500000 pop -  flanders_cities_TEST_40 (5 runs)
+[     DONE ] Geopop.Geogrid_file - 500000 pop -  flanders_cities_TEST_40 (total: 00:05:01 ) 
+[   RUNS   ]        Median time: 00:01:00
+       Fastest time: 00:00:59
+       Slowest time: 00:01:00
+       1st quartile: 00:00:59
+       3rd quartile: 00:01:00
+[ RUN      ] Geopop.Geogrid_file - 500000 pop -  flanders_cities_TEST_75 (5 runs)
+[     DONE ] Geopop.Geogrid_file - 500000 pop -  flanders_cities_TEST_75 (total: 00:05:10 ) 
+[   RUNS   ]        Median time: 00:01:02
+       Fastest time: 00:01:01
+       Slowest time: 00:01:02
+       1st quartile: 00:01:01
+       3rd quartile: 00:01:02
+[ RUN      ] Geopop.Geogrid_file - 500000 pop - flanders_cities_TEST_150 (5 runs)
+[     DONE ] Geopop.Geogrid_file - 500000 pop - flanders_cities_TEST_150 (total: 00:05:40 ) 
+[   RUNS   ]        Median time: 00:01:08
+       Fastest time: 00:01:06
+       Slowest time: 00:01:08
+       1st quartile: 00:01:07
+       3rd quartile: 00:01:08

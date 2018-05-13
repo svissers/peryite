@@ -15,8 +15,8 @@ using namespace util;
 void AssignSchools(
         vector<vector<shared_ptr<GenStruct>>> &schools, const shared_ptr<Population> population,
         const GenConfiguration &config, const GeoGrid &grid) {
-    const unsigned int school_size = 500;
-    const unsigned int school_cp_size = 20;
+    const unsigned int school_size = config.GetTree().get<unsigned int>("school_size");
+    const unsigned int school_cp_size = config.GetTree().get<unsigned int>("school_cp_size");
     // Create the contactpools for every school
     unsigned int cp_id = 0;
     for (const auto &band : schools) {
@@ -39,9 +39,6 @@ void AssignSchools(
             std::vector<shared_ptr<GenStruct>> closest_schools = GetClosestStructs(home_coord, schools,
                                                                                    grid);
             if (closest_schools.empty()) {
-                std::cout << "Age: " << age << std::endl;
-                std::cout << "Home coord schools: " << home_coord << std::endl;
-                std::cout << "closest_schools is empty: " << age << std::endl;
                 continue;
             }
             // Create a uniform distribution to select a school

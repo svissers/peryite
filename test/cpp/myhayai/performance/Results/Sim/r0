@@ -1,0 +1,71 @@
+[ RUN      ] Sim.r0 - 10  (3 runs)
+[     DONE ] Sim.r0 - 10  (total: 00:00:17 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:06
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:06
+[ RUN      ] Sim.r0 - 11  (3 runs)
+[     DONE ] Sim.r0 - 11  (total: 00:00:17 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+[ RUN      ] Sim.r0 - 12  (3 runs)
+[     DONE ] Sim.r0 - 12  (total: 00:00:16 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+[ RUN      ] Sim.r0 - 13  (3 runs)
+[     DONE ] Sim.r0 - 13  (total: 00:00:17 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+[ RUN      ] Sim.r0 - 14  (3 runs)
+[     DONE ] Sim.r0 - 14  (total: 00:00:16 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+[ RUN      ] Sim.r0 - 5  (3 runs)
+[     DONE ] Sim.r0 - 5  (total: 00:00:19 ) 
+[   RUNS   ]        Median time: 00:00:06
+       Fastest time: 00:00:06
+       Slowest time: 00:00:06
+       1st quartile: 00:00:06
+       3rd quartile: 00:00:06
+[ RUN      ] Sim.r0 - 6  (3 runs)
+[     DONE ] Sim.r0 - 6  (total: 00:00:19 ) 
+[   RUNS   ]        Median time: 00:00:06
+       Fastest time: 00:00:06
+       Slowest time: 00:00:06
+       1st quartile: 00:00:06
+       3rd quartile: 00:00:06
+[ RUN      ] Sim.r0 - 7  (3 runs)
+[     DONE ] Sim.r0 - 7  (total: 00:00:19 ) 
+[   RUNS   ]        Median time: 00:00:06
+       Fastest time: 00:00:06
+       Slowest time: 00:00:06
+       1st quartile: 00:00:06
+       3rd quartile: 00:00:06
+[ RUN      ] Sim.r0 - 8  (3 runs)
+[     DONE ] Sim.r0 - 8  (total: 00:00:18 ) 
+[   RUNS   ]        Median time: 00:00:06
+       Fastest time: 00:00:06
+       Slowest time: 00:00:06
+       1st quartile: 00:00:06
+       3rd quartile: 00:00:06
+[ RUN      ] Sim.r0 - 9  (3 runs)
+[     DONE ] Sim.r0 - 9  (total: 00:00:17 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+

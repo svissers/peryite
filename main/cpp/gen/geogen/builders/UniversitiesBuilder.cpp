@@ -17,8 +17,9 @@ vector<shared_ptr<University>> BuildUniversities(GenConfiguration& config, GeoGr
     auto universityFraction   = config.GetTree().get<double>("university.student_fraction");
     auto student_count  = (unsigned int)(universityFraction * total_population);
 
-    // Every university has an average of 3000 students
-    unsigned int uni_count = student_count / 3000;
+    // Every university has the same average amount of students
+    auto uni_size           = config.GetTree().get<unsigned int>("university_size");
+    unsigned int uni_count  = student_count / uni_size;
 
     // Sort cities based on population size, biggest to smallest.
     auto compare_population = [](const shared_ptr<UrbanCenter> a, const shared_ptr<UrbanCenter> b) { return a->population > b->population; };
