@@ -24,6 +24,8 @@ public:
 
     bool containsPoint(QPointF point, qreal margin = 0.0f);
     void increasePop(int amount);
+    void resetInfected();
+    void increaseInfected(int amount);
     qreal getRadius();
     qreal sqrDistanceToPoint(QPointF point);
     QColor getColor(bool selected);

@@ -13,6 +13,8 @@ public:
     GeoGridLocation(stride::util::spherical_point coord);
 
     void increasePop(int amount);
+    void resetInfected();
+    void increaseInfected(int amount);
 
     int id;
     float latitude;
@@ -20,6 +22,7 @@ public:
     QString name;
     int province;
     int population;
+    int infected;
     int communities;
     int schools;
     int universities;

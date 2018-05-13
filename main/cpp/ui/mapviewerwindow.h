@@ -22,7 +22,9 @@ public:
     explicit MapViewerWindow(QWidget *parent = 0);
     ~MapViewerWindow();
 
+    // MapViewer calls
     void createPopView(const std::shared_ptr<Population> population);
+    void updateInfected(const std::shared_ptr<Population> population);
 
 private:
     Ui::MapViewerWindow *ui;

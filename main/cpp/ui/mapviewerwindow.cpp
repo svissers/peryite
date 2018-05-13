@@ -70,6 +70,29 @@ void MapViewerWindow::createPopView(const std::shared_ptr<Population> population
     update();
 }
 
+void MapViewerWindow::updateInfected(const std::shared_ptr<Population> population) {
+    // Reset infected data
+    for (int i = 0; i < circles->size(); i++) {
+        circles->at(i)->resetInfected();
+    }
+
+    // Rebuild infected data
+    for (auto i = 0U; i < population->size(); i++) {
+        Person person = population->at(i);
+
+        if (person.GetHealth().IsInfected() || person.GetHealth().IsRecovered()) {
+            util::spherical_point coord = person.GetCoordinate();
+            VisualizationCircle *circle = findCircle(coord);
+
+            if (circle != nullptr) {
+                circle->increaseInfected(1);
+            } else {
+                cerr << "Circle not found in updateInfected. This shouldn't happen." << endl;
+            }
+        }
+    }
+}
+
 void MapViewerWindow::update() {
     // Get cursor position
     QPoint mousePos = mapFromGlobal(QCursor::pos());

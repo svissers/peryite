@@ -21,6 +21,7 @@
 
 #include "sim/SimRunner.h"
 #include "sim/event/Id.h"
+#include "ui/mapviewerwindow.h"
 
 #include <iostream>
 #include <spdlog/spdlog.h>
@@ -45,6 +46,7 @@ public:
 private:
         QApplication *m_qapp;
         std::shared_ptr<SimRunner> m_runner;
+        MapViewerWindow *mvw;
 };
 
 } // namespace viewers

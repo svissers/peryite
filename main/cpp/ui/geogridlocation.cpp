@@ -33,8 +33,17 @@ GeoGridLocation::GeoGridLocation(util::spherical_point coord) {
     latitude = coord.get<0>();
     longitude = coord.get<1>();
     population = 1;
+    infected = 0;
 }
 
 void GeoGridLocation::increasePop(int amount) {
     population += amount;
+}
+
+void GeoGridLocation::resetInfected() {
+    infected = 0;
+}
+
+void GeoGridLocation::increaseInfected(int amount) {
+    infected += amount;
 }

@@ -56,5 +56,21 @@ qreal VisualizationCircle::sqrDistanceToPoint(QPointF point) {
 }
 
 QColor VisualizationCircle::getColor(bool selected) {
-    return selected ? QColor("#3c6382") : QColor("#78e08f");
+    if (selected) {
+        return QColor::fromHsv(206, 173, 196);
+    } else {
+        // Hue from green to red tints
+        float t = (float)geoGridLocation->infected / geoGridLocation->population;
+        float hue = Util::lerp(94, 0, t);
+
+        return QColor::fromHsv(hue, 117, 224);
+    }
+}
+
+void VisualizationCircle::resetInfected() {
+    geoGridLocation->resetInfected();
+}
+
+void VisualizationCircle::increaseInfected(int amount) {
+    geoGridLocation->increaseInfected(amount);
 }
