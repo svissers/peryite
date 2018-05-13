@@ -46,7 +46,7 @@ void AssignCommunities(
 
             continue;
         }
-        // Create a uniform distribution to select a primary community
+        // Create a uniform distribution to select a secondary community
         auto rn_manager = config.GetRNManager();
         auto community_generator = rn_manager->GetGenerator(
                 trng::fast_discrete_dist(closest_communities.size() - 1));
@@ -57,7 +57,7 @@ void AssignCommunities(
         while (p_counter < (closest_communities.size() * 2)) {
             community_index = community_generator();
             community = static_pointer_cast<Community>(closest_communities.at(community_index));
-            if (community->is_primary)
+            if (!community->is_primary)
                 break;
             p_counter++;
         }
@@ -69,47 +69,47 @@ void AssignCommunities(
         auto pool = community->pools[cp_index];
         // Iterate over the household in the population
         while (population->at(i).GetPoolId(ContactPoolType::Id::Household) == hh_id) {
-            // Add entire household to the same primary community.
+            // Add entire household to the same secondary community.
             // ------------------------------
-            population->at(i).setPoolId(ContactPoolType::Id::PrimaryCommunity, pool->GetId());
+            population->at(i).setPoolId(ContactPoolType::Id::SecondaryCommunity, pool->GetId());
             pool->AddMember(&population->at(i));
 
-            // Add Persons from the same household to different secondary communities.
+            // Add Persons from the same household to different primary communities.
             // ------------------------------
-            // Create a uniform distribution to select a secondary community
-            auto secondary_rn_manager = config.GetRNManager();
-            auto secondary_community_generator = secondary_rn_manager->GetGenerator(
+            // Create a uniform distribution to select a primary community
+            auto primary_rn_manager = config.GetRNManager();
+            auto primary_community_generator = primary_rn_manager->GetGenerator(
                     trng::fast_discrete_dist(closest_communities.size()));
 
-            auto secondary_community_index = secondary_community_generator();
-            auto secondary_community = static_pointer_cast<Community>(
-                    closest_communities.at(secondary_community_index));
+            auto primary_community_index = primary_community_generator();
+            auto primary_community = static_pointer_cast<Community>(
+                    closest_communities.at(primary_community_index));
             unsigned int s_counter = 0;
-            // Search uniformly for a secondary community in the vector of closest communities.
-            while (s_counter < closest_communities.size() * 2 && !secondary_community->is_primary) {
-                secondary_community_index = secondary_community_generator();
-                secondary_community = static_pointer_cast<Community>(
-                        closest_communities.at(secondary_community_index));
+            // Search uniformly for a primary community in the vector of closest communities.
+            while (s_counter < closest_communities.size() * 2 && primary_community->is_primary) {
+                primary_community_index = primary_community_generator();
+                primary_community = static_pointer_cast<Community>(
+                        closest_communities.at(primary_community_index));
                 s_counter++;
             }
             // Create a uniform distribution to select a contactpool within the selected community
-            auto secondary_cp_generator = secondary_rn_manager->GetGenerator(
-                    trng::fast_discrete_dist(secondary_community->pools.size()));
-            auto secondary_cp_index = secondary_cp_generator();
-            auto secondary_pool = secondary_community->pools[secondary_cp_index];
+            auto primary_cp_generator = primary_rn_manager->GetGenerator(
+                    trng::fast_discrete_dist(primary_community->pools.size()));
+            auto primary_cp_index = primary_cp_generator();
+            auto primary_pool = primary_community->pools[primary_cp_index];
 
-            // Add person to the selected secondary community
-            population->at(i).setPoolId(ContactPoolType::Id::SecondaryCommunity,
-                                        secondary_pool->GetId());
-            secondary_pool->AddMember(&population->at(i));
+            // Add person to the selected primary community
+            population->at(i).setPoolId(ContactPoolType::Id::PrimaryCommunity,
+                                        primary_pool->GetId());
+            primary_pool->AddMember(&population->at(i));
 
-            // Remove the secondary community pool from the list once it's full
-            if (secondary_pool->GetSize() >= community_cp_size) {
-                auto pools = secondary_community->pools;
-                pools.erase(pools.begin() + secondary_cp_index);
-                secondary_community->full_pools.push_back(secondary_pool);
-                if (secondary_community->pools.empty()) {
-                    communities.erase(communities.begin() + secondary_community_index);
+            // Remove the primary community pool from the list once it's full
+            if (primary_pool->GetSize() >= community_cp_size) {
+                auto pools = primary_community->pools;
+                pools.erase(pools.begin() + primary_cp_index);
+                primary_community->full_pools.push_back(primary_pool);
+                if (primary_community->pools.empty()) {
+                    communities.erase(communities.begin() + primary_community_index);
                 }
             }
             if (++i >= population->size())
@@ -117,7 +117,7 @@ void AssignCommunities(
         }
         i--;
 
-        // Remove the primary community pool from the list once it's full
+        // Remove the secondary community pool from the list once it's full
         if (pool->GetSize() >= community_cp_size) {
             auto pools = community->pools;
             pools.erase(pools.begin() + cp_index);
