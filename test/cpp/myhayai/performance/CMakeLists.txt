@@ -22,7 +22,7 @@ set(SRC
     )
 
 add_executable(performance_tests ${SRC})
-target_link_libraries(performance_tests myhayai libstride)
+target_link_libraries(performance_tests myhayai libstride Qt5::Core Qt5::Widgets Qt5::Charts)
 install(TARGETS performance_tests  DESTINATION   ${BIN_INSTALL_LOCATION})
 unset(SRC)
 

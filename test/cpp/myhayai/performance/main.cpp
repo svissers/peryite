@@ -52,7 +52,7 @@ int main(int argc, char** argv)
             unsigned int school_size, unsigned int university_size,
             unsigned int workplace_size, unsigned int school_cp_size,
             unsigned int university_cp_size, unsigned int population_size,
-            bool fragment_centers)
+            bool fragment_centers, string postfix)
             {
                 return [
                         student_fraction, student_commute_fraction,
@@ -60,7 +60,7 @@ int main(int argc, char** argv)
                         school_size, university_size,
                         workplace_size, school_cp_size,
                         university_cp_size, population_size,
-                        fragment_centers]() 
+                        fragment_centers, postfix]() 
                     {
                     // Get configuration
                     auto  config = "run_geopop.xml";
@@ -140,6 +140,15 @@ int main(int argc, char** argv)
                     configPt.put(
                         "run.pop_config.fragment_centers",
                         fragment_centers
+                    );
+
+                    configPt.put(
+                        "run.pop_config.geoprofile.cities",
+                        "data/flanders_cities_TEST_" + postfix + ".csv"
+                    );
+                    configPt.put(
+                        "run.pop_config.geoprofile.commuters",
+                        "data/flanders_commuting_TEST_" + postfix + ".csv"
                     );
 
                     // Check output
@@ -273,7 +282,7 @@ int main(int argc, char** argv)
                 geopop_factory_builder(0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, i));    
         } 
         */
-
+        /*
         // Fragment centers
         BenchmarkRunner::RegisterTest(
             "Geopop",
@@ -285,7 +294,23 @@ int main(int argc, char** argv)
             "Fragment centers",
             5,
             geopop_factory_builder(0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 500000, true));    
-         
+        */
+
+        /*
+        for (double i = 10000; i <= 310000; i += 100000) {
+            for (double j = 0.1; j < 0.8; j += 0.1) {
+                for (auto postfix : {"40", "75", "150"}) {
+                    BenchmarkRunner::RegisterTest(
+                        "Geopop",
+                        ToString(i) + ", " + ToString(j) + ", " + postfix,
+                        1,
+                        geopop_factory_builder(
+                            0.5, 0.5, 0.7, j, 500, 3500, 20, 20, 20, i, true, postfix)); 
+                }
+            }
+        } 
+        */
+        
         // GEOGRID
         auto geopop_geogrid_builder = [](string postfix)
             {
@@ -586,6 +611,22 @@ int main(int argc, char** argv)
                     i));    
         } 
         */
+        
+        for (double i = 200; i <= 700; i += 100) {
+            for (double j = 1; j < 8; j += 1) {
+                for (double k = 100000; k <= 400000; k += 100000) {
+                    BenchmarkRunner::RegisterTest(
+                        "Sim",
+                        ToString(i) + ", " + ToString(j) + ", " + ToString(k),
+                        1,
+                        sim_factory_builder(
+                            0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, k,
+                            j, i,
+                            0.002, 0, 0.8,
+                            11));   
+                }
+            }
+        } 
 
         // Run tests
         try {
