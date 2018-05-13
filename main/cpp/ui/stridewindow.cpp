@@ -7,6 +7,7 @@
 #include "util/ConfigInfo.h"
 #include "util/LogUtils.h"
 #include "ui/stridescattergraph.h"
+#include "ui/util.h"
 
 #include <algorithm>
 #include <QMessageBox>
@@ -37,127 +38,167 @@ StrideWindow::~StrideWindow()
     delete ui;
 }
 
-void StrideWindow::on_runButton_all_clicked()
-{
+bool StrideWindow::setupRun() {
     // -----------------------------------------------------------------------------------------
-    // User can't run the simulation when it's already running
+    // Set our running status and process events so buttons get disabled
     // -----------------------------------------------------------------------------------------
-    if (running) { return; }
-    else { setRunning(true); }
+    setRunning(true);
+    setStatus("Setup");
+    QCoreApplication::processEvents();
 
     // -----------------------------------------------------------------------------------------
     // Check input config file
     // -----------------------------------------------------------------------------------------
-    if (!checkConfigFile()) { return; }
+    if (!checkConfigFile()) {
+        QMessageBox::warning(this, tr("Setup failed."), "Incorrect config file.");
+        return false;
+    }
 
     // -----------------------------------------------------------------------------------------
     // Set parameters from our UI
     // -----------------------------------------------------------------------------------------
-    QString configFile = ui->configInput->text();
-    int rngSeed = ui->seedInput->value();
-    QString rngType = ui->engineInput->currentText();
-    int runs = ui->runsInput->value();
-    bool showGraph = ui->scatterGraphInput->isChecked();
-    bool mapViewer = ui->mapViewerInput->isChecked();
+    m_run_configFile = ui->configInput->text();
+    m_run_rngSeed = ui->seedInput->value();
+    m_run_rngType = ui->engineInput->currentText();
+    m_runs = 1; /*ui->runsInput->value()*/
+    m_run_mapViewer = ui->mapViewerInput->isChecked();
 
     // -----------------------------------------------------------------------------------------
-    // We save the results in a list first so we can sort them,
-    // before adding them to our QScatterSeries object.
+    // Set random rngType if requested
     // -----------------------------------------------------------------------------------------
-    QList<int> results;
-
-    // -----------------------------------------------------------------------------------------
-    // Start running tests
-    // -----------------------------------------------------------------------------------------
-
-    for (int i = 0; i < runs; i++) {
-        // -----------------------------------------------------------------------------------------
-        // Set progress text in UI
-        // -----------------------------------------------------------------------------------------
-        setStatus("Running... " + QString::number(i) + " / " + QString::number(runs));
-
-        // -----------------------------------------------------------------------------------------
-        // Set random rngType if requested
-        // -----------------------------------------------------------------------------------------
-        if (ui->varyEngineInput->isChecked()) {
-            QStringList types;
-            types << "lcg64" << "lcg64_shift" << "mrg2" << "mrg3" << "yarn2" << "yarn3";
-            int index = qrand() % types.size();
-            rngType = types[index];
-        }
-
-        // -----------------------------------------------------------------------------------------
-        // Set random rngSeed if requested
-        // -----------------------------------------------------------------------------------------
-        if (ui->varySeedInput->isChecked()) {
-            rngSeed = qrand();
-        }
-
-        // -----------------------------------------------------------------------------------------
-        // Create config ptree
-        // -----------------------------------------------------------------------------------------
-        ptree config_pt = createConfigPTree(configFile);
-        config_pt.put("run.rng_seed", rngSeed);
-        config_pt.put("run.rng_type", rngType.toStdString());
-        config_pt.put("run.output_map", mapViewer ? 1 : 0);
-
-        // Respond to events so OS doesn't think the program is unresponsive
-        QCoreApplication::processEvents();
-
-        // -----------------------------------------------------------------------------------------
-        // Assign the ptree and run the simulation.
-        // -----------------------------------------------------------------------------------------
-        guiController->AssignPTree(config_pt);
-        guiController->Setup();
-        guiController->RunStride();
-
-        // -----------------------------------------------------------------------------------------
-        // Record results for graph
-        // -----------------------------------------------------------------------------------------
-        if (showGraph) {
-            int result = guiController->GetRunner()->GetSim()->GetPopulation()->GetInfectedCount();
-            results << result;
-        }
-
-        // -----------------------------------------------------------------------------------------
-        // Done. Respond to events so OS doesn't think the program is unresponsive.
-        // -----------------------------------------------------------------------------------------
-        QCoreApplication::processEvents();
+    if (ui->varyEngineInput->isChecked()) {
+        QStringList types;
+        types << "lcg64" << "lcg64_shift" << "mrg2" << "mrg3" << "yarn2" << "yarn3";
+        int index = qrand() % types.size();
+        m_run_rngType = types[index];
     }
 
     // -----------------------------------------------------------------------------------------
-    // Reset UI state
+    // Set random rngSeed if requested
     // -----------------------------------------------------------------------------------------
-    setStatus("Idle");
-    setRunning(false);
+    if (ui->varySeedInput->isChecked()) {
+        m_run_rngSeed = qrand();
+    }
 
-    if (showGraph) {
-        // -----------------------------------------------------------------------------------------
-        // Create QScatterSeries for graph
-        // -----------------------------------------------------------------------------------------
-        QScatterSeries *scatterSeries = createResultsScatterSeries(results, runs, configFile, rngSeed, rngType);
+    // -----------------------------------------------------------------------------------------
+    // Create config ptree
+    // -----------------------------------------------------------------------------------------
+    ptree config_pt = createConfigPTree(m_run_configFile);
+    config_pt.put("run.rng_seed", m_run_rngSeed);
+    config_pt.put("run.rng_type", m_run_rngType.toStdString());
+    config_pt.put("run.output_map", m_run_mapViewer ? 1 : 0);
 
-        // -----------------------------------------------------------------------------------------
-        // Write results to file
-        // -----------------------------------------------------------------------------------------
-        QString filename = "TestResults_" + configFile.split(".").at(0) + ".txt";
-        QFile file(filename);
+    // -----------------------------------------------------------------------------------------
+    // Assign the ptree and setup the simulation
+    // -----------------------------------------------------------------------------------------
+    guiController->AssignPTree(config_pt);
+    guiController->Setup();
 
-        if (file.open(QIODevice::ReadWrite)) {
-            QTextStream stream(&file);
-            stream << scatterSeries->name() << endl;
-            for (int i = 0; i < results.size(); i++) {
-                stream << QString::number(results[i]) << endl;
-            }
-        }
+    // -----------------------------------------------------------------------------------------
+    // We save the results in a list first so we can sort them,
+    // before adding them to our QScatterSeries object. (if that option is enabled)
+    // -----------------------------------------------------------------------------------------
+    results = QList<int>();
 
-        file.close();
-        // -----------------------------------------------------------------------------------------
-        // Create new window for graph
-        // -----------------------------------------------------------------------------------------
-        StrideScatterGraph *wdg = new StrideScatterGraph;
-        wdg->createGraph(scatterSeries);
-        wdg->show();
+    return true;
+}
+
+void StrideWindow::setExtraOptions() {
+    // -----------------------------------------------------------------------------------------
+    // Set parameters from our UI
+    // -----------------------------------------------------------------------------------------
+    m_run_showGraph = ui->scatterGraphInput->isChecked();
+}
+
+void StrideWindow::on_runButton_one_clicked() {
+    run(1);
+}
+
+void StrideWindow::on_runButton_all_clicked() {
+    runAll();
+}
+
+void StrideWindow::on_runButton_multi_clicked() {
+    run(ui->runMultiInput->value());
+}
+
+
+void StrideWindow::run(int steps) {
+    // -----------------------------------------------------------------------------------------
+    // Disable the buttons
+    // -----------------------------------------------------------------------------------------
+    setRunButtonsEnabled(false);
+
+    // -----------------------------------------------------------------------------------------
+    // Set up the run
+    // -----------------------------------------------------------------------------------------
+    if (!running) {
+        setRunning(setupRun());
+    }
+
+    if (!running) {
+        QMessageBox::warning(this, tr("Setup failed."), "Setup failed.");
+        return;
+    }
+
+    // -----------------------------------------------------------------------------------------
+    // Set the options that can be changed mid-run
+    // -----------------------------------------------------------------------------------------
+    setExtraOptions();
+
+    // -----------------------------------------------------------------------------------------
+    // Set progress text in UI
+    // -----------------------------------------------------------------------------------------
+    setStatus("Running " + Util::formatInt(steps) + " step(s)... Run " + QString::number(0) + " / " + QString::number(m_runs));
+
+    // -----------------------------------------------------------------------------------------
+    // Run the simulation.
+    // -----------------------------------------------------------------------------------------
+    guiController->RunStride(steps);
+
+    if (guiController->simulationDone()) {
+        endOfRun();
+    } else {
+        setStatus("Paused. Day " + Util::formatInt(guiController->getCurrentDay()) + "/" + Util::formatInt(guiController->getTotalDays()));
+        setRunButtonsEnabled(true);
+    }
+}
+
+void StrideWindow::runAll() {
+    // -----------------------------------------------------------------------------------------
+    // Set up the run
+    // -----------------------------------------------------------------------------------------
+    if (!running) {
+        setRunning(setupRun());
+    }
+
+    if (!running) {
+        QMessageBox::warning(this, tr("Setup failed."), "Setup failed.");
+        return;
+    }
+
+    // -----------------------------------------------------------------------------------------
+    // Set the options that can be changed mid-run
+    // -----------------------------------------------------------------------------------------
+    setExtraOptions();
+
+    // -----------------------------------------------------------------------------------------
+    // Set progress text in UI
+    // -----------------------------------------------------------------------------------------
+    setStatus("Running all... Run " + QString::number(0) + " / " + QString::number(m_runs));
+
+    // -----------------------------------------------------------------------------------------
+    // Run the simulation.
+    // -----------------------------------------------------------------------------------------
+    guiController->RunStride();
+
+    // -----------------------------------------------------------------------------------------
+    // Done!
+    // -----------------------------------------------------------------------------------------
+    endOfRun();
+
+    if (m_run_showGraph) {
+        createScatterGraph();
     }
 }
 
@@ -217,13 +258,21 @@ QScatterSeries* StrideWindow::createResultsScatterSeries(QList<int> resultsList,
 void StrideWindow::setStatus(QString status) {
     ui->statusLabel->setText("Status: " + status);
 
-    // We need to explicitly repaint because the status is often updated during eventloop-blocking moments
-    ui->statusLabel->repaint();
+    // -----------------------------------------------------------------------------------------
+    // Respond to events so OS doesn't think the program is unresponsive.
+    // Since we would have to repaint here anyway, this is a good time to do it.
+    // -----------------------------------------------------------------------------------------
+    QCoreApplication::processEvents();
 }
 
 void StrideWindow::setRunning(bool isRunning) {
     running = isRunning;
-    ui->runButton_all->setEnabled(!isRunning);
+    setRunButtonsEnabled(!isRunning);
+}
+
+void StrideWindow::setRunButtonsEnabled(bool enabled) {
+    ui->runButton_all->setEnabled(enabled);
+    ui->runButton_one->setEnabled(enabled);
 }
 
 void StrideWindow::setInitialParameters() {
@@ -241,9 +290,65 @@ void StrideWindow::setInitialParameters() {
     ui->mapViewerInput->setChecked(true);
 
     setRunning(false);
+    setStatus("Idle");
 
     // -----------------------------------------------------------------------------------------
     // Disable buttons that are WIP
     // -----------------------------------------------------------------------------------------
     ui->editConfigButton->setEnabled(false);
+}
+
+void StrideWindow::recordResults() {
+    if (m_run_showGraph) {
+        int result = guiController->GetRunner()->GetSim()->GetPopulation()->GetInfectedCount();
+        results << result;
+    }
+}
+
+void StrideWindow::createScatterGraph() {
+    // -----------------------------------------------------------------------------------------
+    // Create QScatterSeries for graph
+    // -----------------------------------------------------------------------------------------
+    QScatterSeries *scatterSeries = createResultsScatterSeries(results, m_runs, m_run_configFile, m_run_rngSeed, m_run_rngType);
+
+    // -----------------------------------------------------------------------------------------
+    // Write results to file
+    // -----------------------------------------------------------------------------------------
+    QString filename = "TestResults_" + m_run_configFile.split(".").at(0) + ".txt";
+    QFile file(filename);
+
+    if (file.open(QIODevice::ReadWrite)) {
+        QTextStream stream(&file);
+        stream << scatterSeries->name() << endl;
+        for (int i = 0; i < results.size(); i++) {
+            stream << QString::number(results[i]) << endl;
+        }
+    }
+
+    file.close();
+
+    // -----------------------------------------------------------------------------------------
+    // Create new window for graph
+    // -----------------------------------------------------------------------------------------
+    StrideScatterGraph *wdg = new StrideScatterGraph;
+    wdg->createGraph(scatterSeries);
+    wdg->show();
+}
+
+void StrideWindow::endOfRun() {
+    // -----------------------------------------------------------------------------------------
+    // Reset a few things so we're ready for the next run.
+    // -----------------------------------------------------------------------------------------
+    spdlog::drop_all();
+
+    // -----------------------------------------------------------------------------------------
+    // Record results for graph
+    // -----------------------------------------------------------------------------------------
+    recordResults();
+
+    // -----------------------------------------------------------------------------------------
+    // Reset UI state
+    // -----------------------------------------------------------------------------------------
+    setStatus("Idle");
+    setRunning(false);
 }

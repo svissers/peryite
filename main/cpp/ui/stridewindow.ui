@@ -391,7 +391,7 @@ QGroupBox:title {
     <rect>
      <x>16</x>
      <y>316</y>
-     <width>448</width>
+     <width>100</width>
      <height>25</height>
     </rect>
    </property>
@@ -419,6 +419,48 @@ QGroupBox:title {
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="runButton_one">
+   <property name="geometry">
+    <rect>
+     <x>132</x>
+     <y>316</y>
+     <width>100</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Run 1</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="runButton_multi">
+   <property name="geometry">
+    <rect>
+     <x>248</x>
+     <y>316</y>
+     <width>100</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Run Multi</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="runMultiInput">
+   <property name="geometry">
+    <rect>
+     <x>364</x>
+     <y>316</y>
+     <width>100</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="minimum">
+    <number>1</number>
+   </property>
+   <property name="maximum">
+    <number>999</number>
    </property>
   </widget>
  </widget>
