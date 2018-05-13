@@ -1,6 +1,6 @@
-#include "mapviewerwindow.h"
-#include "ui_mapviewerwindow.h"
-#include "geogridlocation.h"
+#include "ui/mapviewerwindow.h"
+#include "ui/ui_mapviewerwindow.h"
+#include "ui/geogridlocation.h"
 #include "util/GeometryGeoCoord.h"
 #include "util.h"
 
@@ -178,6 +178,10 @@ void MapViewerWindow::noHover() {
     selected = NULL;
     ui->CircleInfoTitle->setText("");
     ui->CircleInfoText->setText("");
+}
+
+void MapViewerWindow::updateDaysLabel(int day) {
+    ui->DaysLabel->setText("Day " + QString::number(day));
 }
 
 VisualizationCircle* MapViewerWindow::findCircle(util::spherical_point coord) {

@@ -25,6 +25,7 @@ public:
     // MapViewer calls
     void createPopView(const std::shared_ptr<Population> population);
     void updateInfected(const std::shared_ptr<Population> population);
+    void updateDaysLabel(int day);
 
 private:
     Ui::MapViewerWindow *ui;
