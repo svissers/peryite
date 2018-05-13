@@ -21,13 +21,15 @@ public:
     ~StrideWindow();
 
 private slots:
-    void on_runButton_one_clicked();
+    void on_runButton_batch_clicked();
     void on_runButton_all_clicked();
+    void on_runButton_one_clicked();
     void on_runButton_multi_clicked();
 
 private:
     Ui::StrideWindow *ui;
     bool running;
+    bool batchRunning;
     stride::GuiController *guiController;
     QList<int> results;
 
@@ -35,14 +37,14 @@ private:
     QString m_run_configFile;
     int m_run_rngSeed;
     QString m_run_rngType;
+    bool m_run_log;
     int m_runs;
-
-    // Extra Options
-    bool m_run_showGraph;
+    int m_currentRun;
     bool m_run_mapViewer;
+    bool m_run_showGraph;
 
     // Running
-    void runAll();
+    void runAll(bool batch);
     void run(int steps);
 
     bool checkConfigFile();
@@ -52,10 +54,11 @@ private:
     void setInitialParameters();
     void setRunning(bool isRunning);
     bool setupRun();
+    void setupBatch();
     void setExtraOptions();
     void recordResults();
     void createScatterGraph();
-    void endOfRun();
+    void endOfRun(bool continueBatch);
     void setRunButtonsEnabled(bool enabled);
 };
 

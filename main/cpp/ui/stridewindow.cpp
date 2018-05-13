@@ -38,6 +38,28 @@ StrideWindow::~StrideWindow()
     delete ui;
 }
 
+void StrideWindow::setupBatch() {
+    // -----------------------------------------------------------------------------------------
+    // Set parameters from our UI
+    // -----------------------------------------------------------------------------------------
+    m_run_configFile = ui->configInput->text();
+    m_run_rngSeed = ui->seedInput->value();
+    m_run_rngType = ui->engineInput->currentText();
+    m_runs = ui->runsInput->value();
+
+    // -----------------------------------------------------------------------------------------
+    // We save the results in a list first so we can sort them,
+    // before adding them to our QScatterSeries object. (if that option is enabled)
+    // -----------------------------------------------------------------------------------------
+    results = QList<int>();
+
+    // -----------------------------------------------------------------------------------------
+    // Setup batch bookkeeping
+    // -----------------------------------------------------------------------------------------
+    m_currentRun = 0;
+    batchRunning = true;
+}
+
 bool StrideWindow::setupRun() {
     // -----------------------------------------------------------------------------------------
     // Set our running status and process events so buttons get disabled
@@ -57,11 +79,8 @@ bool StrideWindow::setupRun() {
     // -----------------------------------------------------------------------------------------
     // Set parameters from our UI
     // -----------------------------------------------------------------------------------------
-    m_run_configFile = ui->configInput->text();
-    m_run_rngSeed = ui->seedInput->value();
-    m_run_rngType = ui->engineInput->currentText();
-    m_runs = 1; /*ui->runsInput->value()*/
     m_run_mapViewer = ui->mapViewerInput->isChecked();
+    m_run_log = ui->logInput->isChecked();
 
     // -----------------------------------------------------------------------------------------
     // Set random rngType if requested
@@ -87,6 +106,7 @@ bool StrideWindow::setupRun() {
     config_pt.put("run.rng_seed", m_run_rngSeed);
     config_pt.put("run.rng_type", m_run_rngType.toStdString());
     config_pt.put("run.output_map", m_run_mapViewer ? 1 : 0);
+    config_pt.put("run.stride_log_level", m_run_log ? "info" : "None");
 
     // -----------------------------------------------------------------------------------------
     // Assign the ptree and setup the simulation
@@ -95,10 +115,9 @@ bool StrideWindow::setupRun() {
     guiController->Setup();
 
     // -----------------------------------------------------------------------------------------
-    // We save the results in a list first so we can sort them,
-    // before adding them to our QScatterSeries object. (if that option is enabled)
+    // Assign the ptree and setup the simulation
     // -----------------------------------------------------------------------------------------
-    results = QList<int>();
+    m_currentRun++;
 
     return true;
 }
@@ -110,12 +129,31 @@ void StrideWindow::setExtraOptions() {
     m_run_showGraph = ui->scatterGraphInput->isChecked();
 }
 
-void StrideWindow::on_runButton_one_clicked() {
-    run(1);
+void StrideWindow::on_runButton_batch_clicked() {
+    // -----------------------------------------------------------------------------------------
+    // Warn users against running this with mapviewer on. Because that's insane.
+    // -----------------------------------------------------------------------------------------
+    if (ui->mapViewerInput->isChecked()) {
+        QMessageBox::StandardButton reply;
+        QString text = "You are trying to execute a full batch with MapViewer enabled.\n";
+        text += "This will open up a mapviewer for every run and probably freeze your pc.\n";
+        text += "Continue? (Not recommended)";
+
+        reply = QMessageBox::question(this, "You might not want this...", text, QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::Yes) {
+            runAll(true);
+        }
+    } else {
+        runAll(true);
+    }
 }
 
 void StrideWindow::on_runButton_all_clicked() {
-    runAll();
+    runAll(false);
+}
+
+void StrideWindow::on_runButton_one_clicked() {
+    run(1);
 }
 
 void StrideWindow::on_runButton_multi_clicked() {
@@ -130,6 +168,13 @@ void StrideWindow::run(int steps) {
     setRunButtonsEnabled(false);
 
     // -----------------------------------------------------------------------------------------
+    // Set up the batch
+    // -----------------------------------------------------------------------------------------
+    if (!batchRunning) {
+        setupBatch();
+    }
+
+    // -----------------------------------------------------------------------------------------
     // Set up the run
     // -----------------------------------------------------------------------------------------
     if (!running) {
@@ -149,7 +194,7 @@ void StrideWindow::run(int steps) {
     // -----------------------------------------------------------------------------------------
     // Set progress text in UI
     // -----------------------------------------------------------------------------------------
-    setStatus("Running " + Util::formatInt(steps) + " step(s)... Run " + QString::number(0) + " / " + QString::number(m_runs));
+    setStatus("Running " + Util::formatInt(steps) + " step(s)... Run " + QString::number(m_currentRun) + " / " + QString::number(m_runs));
 
     // -----------------------------------------------------------------------------------------
     // Run the simulation.
@@ -157,14 +202,21 @@ void StrideWindow::run(int steps) {
     guiController->RunStride(steps);
 
     if (guiController->simulationDone()) {
-        endOfRun();
+        endOfRun(false);
     } else {
         setStatus("Paused. Day " + Util::formatInt(guiController->getCurrentDay()) + "/" + Util::formatInt(guiController->getTotalDays()));
         setRunButtonsEnabled(true);
     }
 }
 
-void StrideWindow::runAll() {
+void StrideWindow::runAll(bool batch) {
+    // -----------------------------------------------------------------------------------------
+    // Set up the batch
+    // -----------------------------------------------------------------------------------------
+    if (!batchRunning) {
+        setupBatch();
+    }
+
     // -----------------------------------------------------------------------------------------
     // Set up the run
     // -----------------------------------------------------------------------------------------
@@ -185,7 +237,7 @@ void StrideWindow::runAll() {
     // -----------------------------------------------------------------------------------------
     // Set progress text in UI
     // -----------------------------------------------------------------------------------------
-    setStatus("Running all... Run " + QString::number(0) + " / " + QString::number(m_runs));
+    setStatus("Running all... Run " + QString::number(m_currentRun) + " / " + QString::number(m_runs));
 
     // -----------------------------------------------------------------------------------------
     // Run the simulation.
@@ -195,11 +247,7 @@ void StrideWindow::runAll() {
     // -----------------------------------------------------------------------------------------
     // Done!
     // -----------------------------------------------------------------------------------------
-    endOfRun();
-
-    if (m_run_showGraph) {
-        createScatterGraph();
-    }
+    endOfRun(batch);
 }
 
 bool StrideWindow::checkConfigFile() {
@@ -271,8 +319,10 @@ void StrideWindow::setRunning(bool isRunning) {
 }
 
 void StrideWindow::setRunButtonsEnabled(bool enabled) {
+    ui->runButton_batch->setEnabled(enabled);
     ui->runButton_all->setEnabled(enabled);
     ui->runButton_one->setEnabled(enabled);
+    ui->runButton_multi->setEnabled(enabled);
 }
 
 void StrideWindow::setInitialParameters() {
@@ -291,6 +341,8 @@ void StrideWindow::setInitialParameters() {
 
     setRunning(false);
     setStatus("Idle");
+
+    batchRunning = false;
 
     // -----------------------------------------------------------------------------------------
     // Disable buttons that are WIP
@@ -335,11 +387,12 @@ void StrideWindow::createScatterGraph() {
     wdg->show();
 }
 
-void StrideWindow::endOfRun() {
+void StrideWindow::endOfRun(bool continueBatch) {
     // -----------------------------------------------------------------------------------------
     // Reset a few things so we're ready for the next run.
     // -----------------------------------------------------------------------------------------
     spdlog::drop_all();
+    setRunning(false);
 
     // -----------------------------------------------------------------------------------------
     // Record results for graph
@@ -347,8 +400,22 @@ void StrideWindow::endOfRun() {
     recordResults();
 
     // -----------------------------------------------------------------------------------------
-    // Reset UI state
+    // If we're done with the batch, reset UI state.
+    // If not, continue if continueBatch (in other words, when user pressed run batch)
     // -----------------------------------------------------------------------------------------
-    setStatus("Idle");
-    setRunning(false);
+    if (m_runs == m_currentRun) {
+        setStatus("Idle");
+        m_currentRun = 0;
+        batchRunning = false;
+
+        if (m_run_showGraph) {
+            createScatterGraph();
+        }
+    } else {
+        if (continueBatch) {
+            runAll(true);
+        } else {
+            setStatus("Done with run " + Util::formatInt(m_currentRun) + "/" + Util::formatInt(m_runs));
+        }
+    }
 }
