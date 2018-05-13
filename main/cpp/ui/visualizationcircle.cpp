@@ -74,3 +74,7 @@ void VisualizationCircle::resetInfected() {
 void VisualizationCircle::increaseInfected(int amount) {
     geoGridLocation->increaseInfected(amount);
 }
+
+qreal VisualizationCircle::getInfectedPercent() {
+    return geoGridLocation->getInfectedPercent();
+}

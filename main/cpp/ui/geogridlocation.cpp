@@ -47,3 +47,7 @@ void GeoGridLocation::resetInfected() {
 void GeoGridLocation::increaseInfected(int amount) {
     infected += amount;
 }
+
+qreal GeoGridLocation::getInfectedPercent() {
+    return 100 * infected / population;
+}

@@ -15,6 +15,7 @@ public:
     void increasePop(int amount);
     void resetInfected();
     void increaseInfected(int amount);
+    qreal getInfectedPercent();
 
     int id;
     float latitude;

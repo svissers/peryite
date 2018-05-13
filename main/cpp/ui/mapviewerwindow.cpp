@@ -159,19 +159,14 @@ void MapViewerWindow::closeEvent(QCloseEvent *event) {
 void MapViewerWindow::hoverCircle(VisualizationCircle *c) {
     selected = c;
 
-    /*
     // Title
-    QString title = c->geoGridLocation->name;
+    QString title = "Location Info";
     ui->CircleInfoTitle->setText(title);
 
     // Info text
     QString text = "Population: " + Util::formatInt(c->geoGridLocation->population);
-    text += "\nCommunities: " + Util::formatInt(c->geoGridLocation->communities);
-    text += "\nSchools: " + Util::formatInt(c->geoGridLocation->schools);
-    text += "\nUniversities: " + Util::formatInt(c->geoGridLocation->universities);
-    text += "\nWorkplaces: " + Util::formatInt(c->geoGridLocation->workplaces);
+    text += "\nInfected: " + Util::formatInt(c->geoGridLocation->infected) + " (" + Util::formatInt(c->getInfectedPercent()) + "\%)";
     ui->CircleInfoText->setText(text);
-    */
 }
 
 void MapViewerWindow::noHover() {

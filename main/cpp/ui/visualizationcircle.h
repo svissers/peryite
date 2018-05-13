@@ -29,6 +29,7 @@ public:
     qreal getRadius();
     qreal sqrDistanceToPoint(QPointF point);
     QColor getColor(bool selected);
+    qreal getInfectedPercent();
 
 private:
     static qreal minimumRadius;
