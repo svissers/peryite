@@ -22,11 +22,15 @@ public:
     explicit MapViewerWindow(QWidget *parent = 0);
     ~MapViewerWindow();
 
+    // MapViewer calls
     void createPopView(const std::shared_ptr<Population> population);
+    void updateInfected(const std::shared_ptr<Population> population);
+    void updateDaysLabel(int day);
 
 private:
     Ui::MapViewerWindow *ui;
     QImage *image;
+    QTimer *timer;
     QList<VisualizationCircle *> *circles;
     VisualizationCircle *selected;
     QGraphicsScene *gfxScene;
@@ -38,12 +42,16 @@ private:
     void update();
     void updateSelection(QPointF mousePos);
     void draw();
-    void drawCircle(QPixmap *pm, QPointF point, float radius, bool selected);
+    void drawCircle(QPixmap *pm, VisualizationCircle *circle);
     void hoverCircle(VisualizationCircle *c);
     void noHover();
+    VisualizationCircle* getClosestCircle(QPointF mousePos);
 
     // Parsing
     void addCircle(VisualizationCircle *c);
+    VisualizationCircle* findCircle(util::spherical_point coord);
+    int getMinimumPop();
+    int getMaximumPop();
 };
 
 #endif // MAPVIEWERWINDOW_H

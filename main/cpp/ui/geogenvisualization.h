@@ -38,7 +38,7 @@ private:
     void update();
     void updateSelection(QPointF mousePos);
     void draw();
-    void drawCircle(QPixmap *pm, QPointF point, float radius, bool selected);    
+    void drawCircle(QPixmap *pm, VisualizationCircle *c);    
     void hoverCircle(VisualizationCircle *c);
     void noHover();
 

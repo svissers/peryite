@@ -24,7 +24,9 @@
 #include "util/RunConfigManager.h"
 #include "util/StringUtils.h"
 #include "util/TimeStamp.h"
+#include "ui/mainwindow.h"
 
+#include <QApplication>
 #include <tclap/CmdLine.h>
 #include <regex>
 
@@ -109,7 +111,13 @@ int main(int argc, char** argv)
                 // If run simulation in gui ...
                 // -----------------------------------------------------------------------------------------
                 else if (execArg.getValue() == "simgui") {
-                        cout << "Not implented here yet ..." << endl;
+                    cout << "Launching Peryite UI." << endl;
+
+                    QApplication a(argc, argv);
+                    MainWindow w;
+                    w.show();
+
+                    return a.exec();
                 }
                 // -----------------------------------------------------------------------------------------
                 // If geopop ...

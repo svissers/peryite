@@ -1,15 +1,18 @@
-#include "mapviewerwindow.h"
-#include "ui_mapviewerwindow.h"
-#include "geogridlocation.h"
+#include "ui/mapviewerwindow.h"
+#include "ui/ui_mapviewerwindow.h"
+#include "ui/geogridlocation.h"
+#include "util/GeometryGeoCoord.h"
 #include "util.h"
 
 #include <QDir>
 #include <QGraphicsPixmapItem>
 #include <QFile>
+#include <QTimer>
 #include <QtDebug>
 #include <QCloseEvent>
 
 using namespace stride;
+using namespace std;
 
 MapViewerWindow::MapViewerWindow(QWidget *parent) :
     QWidget(parent),
@@ -28,6 +31,11 @@ MapViewerWindow::MapViewerWindow(QWidget *parent) :
     gfxScene = new QGraphicsScene();
     gfxItem = new QGraphicsPixmapItem();
     gfxScene->addItem(gfxItem);
+
+    // Set timer interval for draw update
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &MapViewerWindow::update);
+    timer->start(1000 / 30); // 30 fps
 }
 
 MapViewerWindow::~MapViewerWindow()
@@ -38,14 +46,51 @@ MapViewerWindow::~MapViewerWindow()
 void MapViewerWindow::createPopView(const std::shared_ptr<Population> population) {
     circles = new QList<VisualizationCircle *>();
 
-    // for (int i = 0; i < population->size(); i++) {
-    //     qDebug() << population->at(i).GetId();
-    //     qDebug() << population->at(i).GetCoordinate().m_latitude << " | " << population->at(i).GetCoordinate().m_longitude;
-    // }
+    cout << "MapViewer enabled." << endl;
 
-    addCircle(new VisualizationCircle(QPointF(100, 100), 10));
+    for (auto i = 0U; i < population->size(); i++) {
+        util::spherical_point coord = population->at(i).GetCoordinate();
+        VisualizationCircle *circle = findCircle(coord);
+
+        // Create new circle for new locations
+        if (circle == nullptr) {
+            VisualizationCircle *newCircle = new VisualizationCircle(coord);
+            addCircle(newCircle);
+        }
+        // Increase circle population for locations that already exist.
+        else {
+            circle->increasePop(1);
+        }
+    }
+
+    // Set the minimum and maximum population so the circles can resize themselves accordingly
+    VisualizationCircle::minimumRadiusPopulation = getMinimumPop();
+    VisualizationCircle::maximumRadiusPopulation = getMaximumPop();
 
     update();
+}
+
+void MapViewerWindow::updateInfected(const std::shared_ptr<Population> population) {
+    // Reset infected data
+    for (int i = 0; i < circles->size(); i++) {
+        circles->at(i)->resetInfected();
+    }
+
+    // Rebuild infected data
+    for (auto i = 0U; i < population->size(); i++) {
+        Person person = population->at(i);
+
+        if (person.GetHealth().IsInfected() || person.GetHealth().IsRecovered()) {
+            util::spherical_point coord = person.GetCoordinate();
+            VisualizationCircle *circle = findCircle(coord);
+
+            if (circle != nullptr) {
+                circle->increaseInfected(1);
+            } else {
+                cerr << "Circle not found in updateInfected. This shouldn't happen." << endl;
+            }
+        }
+    }
 }
 
 void MapViewerWindow::update() {
@@ -60,15 +105,13 @@ void MapViewerWindow::update() {
 }
 
 void MapViewerWindow::updateSelection(QPointF mousePos) {
-    for (int i = 0; i < circles->size(); i++) {
-        if (circles->at(i)->containsPoint(mousePos)) {
-            hoverCircle(circles->at(i));
-            return;
-        }
-    }
+    VisualizationCircle *closest = getClosestCircle(mousePos);
 
-    // Nothing selected
-    noHover();
+    if (closest->containsPoint(mousePos, 3)) {
+        hoverCircle(closest);
+    } else {
+        noHover();
+    }
 }
 
 void MapViewerWindow::draw() {
@@ -78,7 +121,7 @@ void MapViewerWindow::draw() {
     // Draw circles on the pixmap
     for (int i = 0; i < circles->size(); i++) {
         VisualizationCircle *c = circles->at(i);
-        drawCircle(&pixmap, c->position, c->radius, (c == selected));
+        drawCircle(&pixmap, c);
     }
 
     // Set pixmap pixmap
@@ -92,12 +135,16 @@ void MapViewerWindow::addCircle(VisualizationCircle *c) {
     *circles << c;
 }
 
-void MapViewerWindow::drawCircle(QPixmap *pm, QPointF point, float radius, bool selected) {
+void MapViewerWindow::drawCircle(QPixmap *pm, VisualizationCircle *circle) {
+    // Get params
+    qreal radius = circle->getRadius();
+    QPointF point = circle->position;
+
     // QPainter
     QPainter painter(pm);
     painter.scale(1, 1);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setBrush(selected ? QColor("#3c6382") : QColor("#78e08f"));
+    painter.setBrush(circle->getColor(circle == selected));
     painter.setPen(QColor(0, 0, 0, 0));
 
     // Draw
@@ -112,23 +159,83 @@ void MapViewerWindow::closeEvent(QCloseEvent *event) {
 void MapViewerWindow::hoverCircle(VisualizationCircle *c) {
     selected = c;
 
-    /*
     // Title
-    QString title = c->geoGridLocation->name;
+    QString title = "Location Info";
     ui->CircleInfoTitle->setText(title);
 
     // Info text
     QString text = "Population: " + Util::formatInt(c->geoGridLocation->population);
-    text += "\nCommunities: " + Util::formatInt(c->geoGridLocation->communities);
-    text += "\nSchools: " + Util::formatInt(c->geoGridLocation->schools);
-    text += "\nUniversities: " + Util::formatInt(c->geoGridLocation->universities);
-    text += "\nWorkplaces: " + Util::formatInt(c->geoGridLocation->workplaces);
+    text += "\nInfected: " + Util::formatInt(c->geoGridLocation->infected) + " (" + Util::formatInt(c->getInfectedPercent()) + "\%)";
     ui->CircleInfoText->setText(text);
-    */
 }
 
 void MapViewerWindow::noHover() {
     selected = NULL;
     ui->CircleInfoTitle->setText("");
     ui->CircleInfoText->setText("");
+}
+
+void MapViewerWindow::updateDaysLabel(int day) {
+    ui->DaysLabel->setText("Day " + QString::number(day));
+}
+
+VisualizationCircle* MapViewerWindow::findCircle(util::spherical_point coord) {
+    for (int i = 0; i < circles->length(); i++) {
+        float lng = circles->at(i)->geoGridLocation->longitude;
+        float lat = circles->at(i)->geoGridLocation->latitude;
+
+        if ((float)coord.get<0>() == lat && (float)coord.get<1>() == lng) {
+            return circles->at(i);
+        }
+    }
+
+    return nullptr;
+}
+
+int MapViewerWindow::getMinimumPop() {
+    int minimum = circles->at(0)->geoGridLocation->population;
+
+    for (int i = 0; i < circles->size(); i++) {
+        VisualizationCircle *c = circles->at(i);
+        int pop = c->geoGridLocation->population;
+
+        if (pop < minimum) {
+            minimum = pop;
+        }
+    }
+
+    return minimum;
+}
+
+int MapViewerWindow::getMaximumPop() {
+    int maximum = circles->at(0)->geoGridLocation->population;
+
+    for (int i = 0; i < circles->size(); i++) {
+        VisualizationCircle *c = circles->at(i);
+        int pop = c->geoGridLocation->population;
+
+        if (pop > maximum) {
+            maximum = pop;
+        }
+    }
+
+    return maximum;
+}
+
+VisualizationCircle* MapViewerWindow::getClosestCircle(QPointF mousePos) {
+    float closestDist = circles->at(0)->sqrDistanceToPoint(mousePos);
+    VisualizationCircle *closest = circles->at(0);
+
+    for (int i = 0; i < circles->size(); i++) {
+        VisualizationCircle *c = circles->at(i);
+
+        float dist = circles->at(i)->sqrDistanceToPoint(mousePos);
+
+        if (dist < closestDist) {
+            closestDist = dist;
+            closest = c;
+        }
+    }
+
+    return closest;
 }

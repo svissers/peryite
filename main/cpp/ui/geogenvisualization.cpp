@@ -73,7 +73,7 @@ void GeoGenVisualization::draw() {
     // Draw circles on the pixmap
     for (int i = 0; i < circles->size(); i++) {
         VisualizationCircle *c = circles->at(i);
-        drawCircle(&pixmap, c->position, c->radius, (c == selected));
+        drawCircle(&pixmap, c);
     }
 
     // Set pixmap pixmap
@@ -87,17 +87,21 @@ void GeoGenVisualization::addCircle(VisualizationCircle *c) {
     *circles << c;
 }
 
-void GeoGenVisualization::drawCircle(QPixmap *pm, QPointF point, float radius, bool selected) {
-    // QPainter
-    QPainter painter(pm);
-    painter.scale(1, 1);
-    painter.setRenderHint(QPainter::Antialiasing);
-    painter.setBrush(selected ? QColor("#3c6382") : QColor("#78e08f"));
-    painter.setPen(QColor(0, 0, 0, 0));
+void GeoGenVisualization::drawCircle(QPixmap *pm, VisualizationCircle *circle) {
+        // Get params
+        qreal radius = circle->getRadius();
+        QPointF point = circle->position;
 
-    // Draw
-    painter.drawEllipse(point, radius, radius);
-}
+        // QPainter
+        QPainter painter(pm);
+        painter.scale(1, 1);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setBrush(circle->getColor(circle == selected));
+        painter.setPen(QColor(0, 0, 0, 0));
+
+        // Draw
+        painter.drawEllipse(point, radius, radius);
+    }
 
 void GeoGenVisualization::closeEvent(QCloseEvent *event) {
     timer->stop();

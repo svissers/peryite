@@ -20,7 +20,7 @@
 
 #include "MapViewer.h"
 
-#include "ui/mapviewerwindow.h"
+#include "calendar/Calendar.h"
 #include "pop/Population.h"
 #include "sim/SimRunner.h"
 #include "sim/Sim.h"
@@ -48,30 +48,33 @@ void MapViewer::Update(sim_event::Id id)
                 int argc = 1;
                 char *argv[1] = { (char *)"" };
                 m_qapp = new QApplication(argc, argv);
-                MapViewerWindow *mvw = new MapViewerWindow;
+                mvw = new MapViewerWindow;
                 mvw->show();
 
                 m_qapp->processEvents();
 
                 const auto pop = m_runner->GetSim()->GetPopulation();
                 mvw->createPopView(pop);
+                mvw->updateDaysLabel(0);
 
                 m_qapp->processEvents();
 
                 break;
         }
         case Id::Stepped: {
-                // TODO: get population geo data here
-                // const auto pop = p.m_runner->GetSim()->GetPopulation() ... -> GetCoordinates();
+                const auto pop = m_runner->GetSim()->GetPopulation();
+                mvw->updateInfected(pop);
+
+                int days = m_runner->GetSim()->GetCalendar()->GetSimulationDay();
+                mvw->updateDaysLabel(days);
 
                 m_qapp->processEvents();
 
                 break;
         }
         case Id::Finished: {
-                // TODO: get population geo data here
-                // const auto pop = p.m_runner->GetSim()->GetPopulation() ... -> GetCoordinates();
-
+                const auto pop = m_runner->GetSim()->GetPopulation();
+                mvw->updateInfected(pop);
                 m_qapp->exec();
 
                 break;

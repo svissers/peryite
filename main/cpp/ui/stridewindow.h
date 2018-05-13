@@ -20,7 +20,7 @@ public:
     ~StrideWindow();
 
 private slots:
-    void on_startButton_clicked();
+    void on_runButton_all_clicked();
 
 private:
     Ui::StrideWindow *ui;
@@ -30,6 +30,9 @@ private:
     bool checkConfigFile();
     boost::property_tree::ptree createConfigPTree(QString configFile);
     QtCharts::QScatterSeries* createResultsScatterSeries(QList<int> resultsList, int totalRuns, QString file, int seed, QString rngEngineType);
+    void setStatus(QString status);
+    void setInitialParameters();
+    void setRunning(bool isRunning);
 };
 
 #endif // STRIDEWINDOW_H

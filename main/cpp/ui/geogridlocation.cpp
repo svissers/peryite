@@ -4,6 +4,8 @@
 #include <QRegularExpression>
 #include <QDebug>
 
+using namespace stride;
+
 GeoGridLocation::GeoGridLocation()
 {
 
@@ -25,4 +27,27 @@ GeoGridLocation::GeoGridLocation(QString csvLine) {
     schools = 0;
     universities = 0;
     workplaces = 0;
+}
+
+GeoGridLocation::GeoGridLocation(util::spherical_point coord) {
+    latitude = coord.get<0>();
+    longitude = coord.get<1>();
+    population = 1;
+    infected = 0;
+}
+
+void GeoGridLocation::increasePop(int amount) {
+    population += amount;
+}
+
+void GeoGridLocation::resetInfected() {
+    infected = 0;
+}
+
+void GeoGridLocation::increaseInfected(int amount) {
+    infected += amount;
+}
+
+qreal GeoGridLocation::getInfectedPercent() {
+    return 100 * infected / population;
 }
