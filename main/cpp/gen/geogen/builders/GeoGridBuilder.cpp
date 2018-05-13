@@ -81,6 +81,12 @@ GeoGrid BuildGeoGrid(const GenConfiguration& config)
                         double lat = center->coordinate.get<0>() + latlon_diff_gen();
                         double lon = center->coordinate.get<1>() + latlon_diff_gen();
                         frag_coords.emplace_back(util::spherical_point(lat, lon));
+                        if(lon > max_longitude) {
+                            max_longitude = lon;
+                        }
+                        else if(lon < min_longitude) {
+                            min_longitude = lon;
+                        }
                     }
                     center->fragmented_populations  = frag_pop;
                     center->fragmented_coords       = frag_coords;
