@@ -29,16 +29,7 @@ StrideWindow::StrideWindow(GuiController *guiCtrl, QWidget *parent) :
     guiController(guiCtrl)
 {
     ui->setupUi(this);
-    ui->configInput->setText("run_geopop.xml");
-    ui->engineInput->addItem("lcg64");
-    ui->engineInput->addItem("lcg64_shift");
-    ui->engineInput->addItem("mrg2");
-    ui->engineInput->addItem("mrg3");
-    ui->engineInput->addItem("yarn2");
-    ui->engineInput->addItem("yarn3");
-    ui->varySeedInput->setChecked(true);
-
-    running = false;
+    setInitialParameters();
 }
 
 StrideWindow::~StrideWindow()
@@ -46,13 +37,13 @@ StrideWindow::~StrideWindow()
     delete ui;
 }
 
-void StrideWindow::on_startButton_clicked()
+void StrideWindow::on_runButton_all_clicked()
 {
     // -----------------------------------------------------------------------------------------
     // User can't run the simulation when it's already running
     // -----------------------------------------------------------------------------------------
     if (running) { return; }
-    else { running = true; }
+    else { setRunning(true); }
 
     // -----------------------------------------------------------------------------------------
     // Check input config file
@@ -83,8 +74,7 @@ void StrideWindow::on_startButton_clicked()
         // -----------------------------------------------------------------------------------------
         // Set progress text in UI
         // -----------------------------------------------------------------------------------------
-        ui->startButton->setText("Running... " + QString::number(i) + " / " + QString::number(runs));
-        ui->startButton->repaint();
+        setStatus("Running... " + QString::number(i) + " / " + QString::number(runs));
 
         // -----------------------------------------------------------------------------------------
         // Set random rngType if requested
@@ -138,8 +128,8 @@ void StrideWindow::on_startButton_clicked()
     // -----------------------------------------------------------------------------------------
     // Reset UI state
     // -----------------------------------------------------------------------------------------
-    ui->startButton->setText("Start Tests");
-    running = false;
+    setStatus("Idle");
+    setRunning(false);
 
     if (showGraph) {
         // -----------------------------------------------------------------------------------------
@@ -222,4 +212,38 @@ QScatterSeries* StrideWindow::createResultsScatterSeries(QList<int> resultsList,
     }
 
     return series;
+}
+
+void StrideWindow::setStatus(QString status) {
+    ui->statusLabel->setText("Status: " + status);
+
+    // We need to explicitly repaint because the status is often updated during eventloop-blocking moments
+    ui->statusLabel->repaint();
+}
+
+void StrideWindow::setRunning(bool isRunning) {
+    running = isRunning;
+    ui->runButton_all->setEnabled(!isRunning);
+}
+
+void StrideWindow::setInitialParameters() {
+    // -----------------------------------------------------------------------------------------
+    // Set the initial values for checkboxes, scrollboxes, ...
+    // -----------------------------------------------------------------------------------------
+    ui->configInput->setText("run_geopop.xml");
+    ui->engineInput->addItem("lcg64");
+    ui->engineInput->addItem("lcg64_shift");
+    ui->engineInput->addItem("mrg2");
+    ui->engineInput->addItem("mrg3");
+    ui->engineInput->addItem("yarn2");
+    ui->engineInput->addItem("yarn3");
+    ui->varySeedInput->setChecked(true);
+    ui->mapViewerInput->setChecked(true);
+
+    setRunning(false);
+
+    // -----------------------------------------------------------------------------------------
+    // Disable buttons that are WIP
+    // -----------------------------------------------------------------------------------------
+    ui->editConfigButton->setEnabled(false);
 }

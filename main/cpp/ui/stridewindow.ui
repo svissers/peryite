@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>420</width>
-    <height>307</height>
+    <width>480</width>
+    <height>384</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,6 +35,10 @@ QPushButton:hover {
 	background-color: #3c6382;
 }
 
+QPushButton:disabled {
+	background-color: #aaaaaa;
+}
+
 QGroupBox {
 	border: none;
 	background-color: #eaeaea;
@@ -47,17 +51,17 @@ QGroupBox:title {
 	top: 8;
 }</string>
   </property>
-  <widget class="QGroupBox" name="Parameters">
+  <widget class="QGroupBox" name="ConfigGroup">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>20</y>
-     <width>381</width>
-     <height>261</height>
+     <x>16</x>
+     <y>16</y>
+     <width>448</width>
+     <height>96</height>
     </rect>
    </property>
    <property name="title">
-    <string>Parameters</string>
+    <string>Main Configuration</string>
    </property>
    <property name="flat">
     <bool>false</bool>
@@ -69,7 +73,7 @@ QGroupBox:title {
     <property name="geometry">
      <rect>
       <x>16</x>
-      <y>32</y>
+      <y>64</y>
       <width>96</width>
       <height>25</height>
      </rect>
@@ -88,7 +92,7 @@ QGroupBox:title {
     <property name="geometry">
      <rect>
       <x>16</x>
-      <y>64</y>
+      <y>32</y>
       <width>96</width>
       <height>25</height>
      </rect>
@@ -103,89 +107,13 @@ QGroupBox:title {
      <string>Config File</string>
     </property>
    </widget>
-   <widget class="QLabel" name="varySeedLabel">
-    <property name="geometry">
-     <rect>
-      <x>16</x>
-      <y>160</y>
-      <width>96</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::Box</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Plain</enum>
-    </property>
-    <property name="text">
-     <string>Vary Seed?</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="varyEngineLabel">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>160</y>
-      <width>96</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::Box</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Plain</enum>
-    </property>
-    <property name="text">
-     <string>Vary Engine?</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="mapViewerLabel">
-    <property name="geometry">
-     <rect>
-      <x>16</x>
-      <y>192</y>
-      <width>96</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::Box</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Plain</enum>
-    </property>
-    <property name="text">
-     <string>Map Viewer</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="scatterGraphLabel">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>192</y>
-      <width>96</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::Box</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Plain</enum>
-    </property>
-    <property name="text">
-     <string>Output Graph?</string>
-    </property>
-   </widget>
    <widget class="QSpinBox" name="runsInput">
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>32</y>
-      <width>250</width>
-      <height>26</height>
+      <y>64</y>
+      <width>312</width>
+      <height>25</height>
      </rect>
     </property>
     <property name="minimum">
@@ -198,30 +126,53 @@ QGroupBox:title {
      <number>10</number>
     </property>
    </widget>
-   <widget class="QLabel" name="seedLabel">
+   <widget class="QLineEdit" name="configInput">
     <property name="geometry">
      <rect>
-      <x>16</x>
-      <y>96</y>
-      <width>96</width>
+      <x>120</x>
+      <y>32</y>
+      <width>242</width>
+      <height>26</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="editConfigButton">
+    <property name="geometry">
+     <rect>
+      <x>368</x>
+      <y>32</y>
+      <width>64</width>
       <height>25</height>
      </rect>
     </property>
-    <property name="frameShape">
-     <enum>QFrame::Box</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Plain</enum>
-    </property>
     <property name="text">
-     <string>Seed</string>
+     <string>Edit</string>
     </property>
    </widget>
+  </widget>
+  <widget class="QGroupBox" name="RngGroup">
+   <property name="geometry">
+    <rect>
+     <x>16</x>
+     <y>128</y>
+     <width>448</width>
+     <height>96</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>RNG</string>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
    <widget class="QLabel" name="engineLabel">
     <property name="geometry">
      <rect>
       <x>16</x>
-      <y>128</y>
+      <y>32</y>
       <width>96</width>
       <height>25</height>
      </rect>
@@ -240,8 +191,8 @@ QGroupBox:title {
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>128</y>
-      <width>250</width>
+      <y>32</y>
+      <width>208</width>
       <height>25</height>
      </rect>
     </property>
@@ -255,22 +206,31 @@ QGroupBox:title {
      <number>-1</number>
     </property>
    </widget>
-   <widget class="QLineEdit" name="configInput">
+   <widget class="QLabel" name="seedLabel">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>16</x>
       <y>64</y>
-      <width>250</width>
-      <height>26</height>
+      <width>96</width>
+      <height>25</height>
      </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="text">
+     <string>Seed</string>
     </property>
    </widget>
    <widget class="QSpinBox" name="seedInput">
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>96</y>
-      <width>250</width>
+      <y>64</y>
+      <width>208</width>
       <height>26</height>
      </rect>
     </property>
@@ -278,11 +238,11 @@ QGroupBox:title {
      <number>2147483647</number>
     </property>
    </widget>
-   <widget class="QCheckBox" name="varySeedInput">
+   <widget class="QCheckBox" name="varyEngineInput">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>160</y>
+      <x>416</x>
+      <y>32</y>
       <width>16</width>
       <height>23</height>
      </rect>
@@ -291,24 +251,113 @@ QGroupBox:title {
      <string/>
     </property>
    </widget>
-   <widget class="QCheckBox" name="varyEngineInput">
+   <widget class="QLabel" name="varyEngineLabel">
     <property name="geometry">
      <rect>
-      <x>304</x>
-      <y>160</y>
+      <x>336</x>
+      <y>32</y>
+      <width>64</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="text">
+     <string>Random?</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="varySeedLabel">
+    <property name="geometry">
+     <rect>
+      <x>336</x>
+      <y>64</y>
+      <width>64</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="text">
+     <string>Random?</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="varySeedInput">
+    <property name="geometry">
+     <rect>
+      <x>416</x>
+      <y>64</y>
       <width>16</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="OptionsGroup">
+   <property name="geometry">
+    <rect>
+     <x>16</x>
+     <y>240</y>
+     <width>448</width>
+     <height>64</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Extra Options</string>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <widget class="QCheckBox" name="scatterGraphInput">
+    <property name="geometry">
+     <rect>
+      <x>352</x>
+      <y>32</y>
+      <width>16</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="scatterGraphLabel">
+    <property name="geometry">
+     <rect>
+      <x>216</x>
+      <y>32</y>
+      <width>128</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="text">
+     <string>Output Graph?</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="mapViewerInput">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>192</y>
+      <x>152</x>
+      <y>32</y>
       <width>16</width>
       <height>23</height>
      </rect>
@@ -317,32 +366,60 @@ QGroupBox:title {
      <string/>
     </property>
    </widget>
-   <widget class="QCheckBox" name="scatterGraphInput">
-    <property name="geometry">
-     <rect>
-      <x>304</x>
-      <y>192</y>
-      <width>16</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="startButton">
+   <widget class="QLabel" name="mapViewerLabel">
     <property name="geometry">
      <rect>
       <x>16</x>
-      <y>224</y>
-      <width>350</width>
+      <y>32</y>
+      <width>128</width>
       <height>25</height>
      </rect>
     </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
     <property name="text">
-     <string>Start Tests</string>
+     <string>Map Viewer</string>
     </property>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="runButton_all">
+   <property name="geometry">
+    <rect>
+     <x>16</x>
+     <y>316</y>
+     <width>448</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Run All</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="statusLabel">
+   <property name="geometry">
+    <rect>
+     <x>16</x>
+     <y>348</y>
+     <width>448</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
+   </property>
+   <property name="text">
+    <string>Status: Idle</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
   </widget>
  </widget>
  <resources/>
