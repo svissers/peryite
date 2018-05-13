@@ -82,7 +82,7 @@ void GuiController::RunStride()
     // -----------------------------------------------------------------------------------------
     auto pop    = Population::Create(m_config_pt);
     m_runner = make_shared<SimRunner>(m_config_pt, pop);
-    // RegisterViewers(runner);
+    RegisterViewers(m_runner);
     m_runner->Run();
 
     // -----------------------------------------------------------------------------------------
@@ -115,49 +115,49 @@ void GuiController::MakeLogger()
     m_stride_logger->flush_on(spdlog::level::err);
 }
 
-// void CliController::RegisterViewers(shared_ptr<SimRunner> runner)
-// {
-//         // Command line viewer
-//         m_stride_logger->info("Registering CliViewer");
-//         const auto cli_v = make_shared<viewers::CliViewer>(m_stride_logger);
-//         runner->Register(cli_v, bind(&viewers::CliViewer::Update, cli_v, placeholders::_1));
-//
-//         // Adopted viewer
-//         if (m_config_pt.get<bool>("run.output_adopted", false)) {
-//                 m_stride_logger->info("registering AdoptedViewer,");
-//                 const auto v = make_shared<viewers::AdoptedViewer>(m_output_prefix);
-//                 runner->Register(v, bind(&viewers::AdoptedViewer::Update, v, placeholders::_1));
-//         }
-//
-//         // Cases viewer
-//         if (m_config_pt.get<bool>("run.output_cases", false)) {
-//                 m_stride_logger->info("Registering CasesViewer");
-//                 const auto v = make_shared<viewers::CasesViewer>(m_output_prefix);
-//                 runner->Register(v, bind(&viewers::CasesViewer::Update, v, placeholders::_1));
-//         }
-//
-//         // Persons viewer
-//         if (m_config_pt.get<bool>("run.output_persons", false)) {
-//                 m_stride_logger->info("registering PersonsViewer.");
-//                 const auto v = make_shared<viewers::PersonsViewer>(m_output_prefix);
-//                 runner->Register(v, bind(&viewers::PersonsViewer::Update, v, placeholders::_1));
-//         }
-//
-//         // Summary viewer
-//         if (m_config_pt.get<bool>("run.output_summary", false)) {
-//                 m_stride_logger->info("Registering SummaryViewer");
-//                 const auto v = make_shared<viewers::SummaryViewer>(m_output_prefix);
-//                 runner->Register(v, bind(&viewers::SummaryViewer::Update, v, placeholders::_1));
-//         }
-//
-//         // Map viewer
-//         if (m_config_pt.get<bool>("run.output_map", false)) {
-//                 m_stride_logger->info("Registering MapViewer");
-//                 const auto v = make_shared<viewers::MapViewer>();
-//                 runner->Register(v, bind(&viewers::MapViewer::Update, v, placeholders::_1));
-//         }
-// }
-//
+void GuiController::RegisterViewers(shared_ptr<SimRunner> runner)
+{
+    // Command line viewer
+    m_stride_logger->info("Registering CliViewer");
+    const auto cli_v = make_shared<viewers::CliViewer>(runner, m_stride_logger);
+    runner->Register(cli_v, bind(&viewers::CliViewer::Update, cli_v, placeholders::_1));
+
+    // Adopted viewer
+    if (m_config_pt.get<bool>("run.output_adopted", false)) {
+            m_stride_logger->info("registering AdoptedViewer,");
+            const auto v = make_shared<viewers::AdoptedViewer>(runner, m_output_prefix);
+            runner->Register(v, bind(&viewers::AdoptedViewer::Update, v, placeholders::_1));
+    }
+
+    // Infection counts viewer
+    if (m_config_pt.get<bool>("run.output_cases", false)) {
+            m_stride_logger->info("Registering InfectedViewer");
+            const auto v = make_shared<viewers::InfectedViewer>(runner, m_output_prefix);
+            runner->Register(v, bind(&viewers::InfectedViewer::Update, v, placeholders::_1));
+    }
+
+    // Persons viewer
+    if (m_config_pt.get<bool>("run.output_persons", false)) {
+            m_stride_logger->info("registering PersonsViewer.");
+            const auto v = make_shared<viewers::PersonsViewer>(runner, m_output_prefix);
+            runner->Register(v, bind(&viewers::PersonsViewer::Update, v, placeholders::_1));
+    }
+
+    // Summary viewer
+    if (m_config_pt.get<bool>("run.output_summary", false)) {
+            m_stride_logger->info("Registering SummaryViewer");
+            const auto v = make_shared<viewers::SummaryViewer>(runner, m_output_prefix);
+            runner->Register(v, bind(&viewers::SummaryViewer::Update, v, placeholders::_1));
+    }
+
+    // Map viewer
+    if (m_config_pt.get<bool>("run.output_map", false)) {
+            m_stride_logger->info("Registering MapViewer");
+            const auto v = make_shared<viewers::MapViewer>(runner);
+            runner->Register(v, bind(&viewers::MapViewer::Update, v, placeholders::_1));
+    }
+}
+
 void GuiController::Setup()
 {
         // -----------------------------------------------------------------------------------------

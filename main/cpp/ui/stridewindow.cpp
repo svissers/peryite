@@ -29,7 +29,7 @@ StrideWindow::StrideWindow(GuiController *guiCtrl, QWidget *parent) :
     guiController(guiCtrl)
 {
     ui->setupUi(this);
-    ui->configInput->setText("run_default.xml");
+    ui->configInput->setText("run_geopop.xml");
     ui->engineInput->addItem("lcg64");
     ui->engineInput->addItem("lcg64_shift");
     ui->engineInput->addItem("mrg2");

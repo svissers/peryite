@@ -67,8 +67,8 @@ private:
         /// Make the appropriate logger for cli environment and register as stride_logger.
         void MakeLogger();
 
-        // /// Register the viewers of the SimRunner.
-        // void RegisterViewers(std::shared_ptr<SimRunner> runner);
+        /// Register the viewers of the SimRunner.
+        void RegisterViewers(std::shared_ptr<SimRunner> runner);
 
 private:
         std::string                                       m_config_file; /// Config parameters file name.
