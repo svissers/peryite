@@ -80,9 +80,6 @@ void GuiController::RunStride()
     // -----------------------------------------------------------------------------------------
     // Build population, instantiate SimRunner & register viewers & run.
     // -----------------------------------------------------------------------------------------
-    auto pop    = Population::Create(m_config_pt);
-    m_runner = make_shared<SimRunner>(m_config_pt, pop);
-    RegisterViewers(m_runner);
     m_runner->Run();
 
     // -----------------------------------------------------------------------------------------
@@ -100,10 +97,6 @@ void GuiController::AssignPTree(boost::property_tree::ptree pt) {
     m_config_pt.sort();
 
     m_output_prefix = m_config_pt.get<string>("run.output_prefix");
-
-    cout << m_output_prefix << endl;
-
-    Setup();
 }
 
 void GuiController::MakeLogger()
@@ -191,6 +184,14 @@ void GuiController::Setup()
         } else {
                 m_stride_logger->info("Not using OpenMP threads.");
         }
+
+        // -----------------------------------------------------------------------------------------
+        // Create the runner, population and register the viewers
+        // -----------------------------------------------------------------------------------------
+        auto pop    = Population::Create(m_config_pt);
+        m_runner = make_shared<SimRunner>(m_config_pt, pop);
+        RegisterViewers(m_runner);
+
 }
 
 } // namespace stride

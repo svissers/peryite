@@ -118,6 +118,7 @@ void StrideWindow::on_startButton_clicked()
         // Assign the ptree and run the simulation.
         // -----------------------------------------------------------------------------------------
         guiController->AssignPTree(config_pt);
+        guiController->Setup();
         guiController->RunStride();
 
         // -----------------------------------------------------------------------------------------
