@@ -108,16 +108,19 @@ shared_ptr<Population> PopBuilder::MakePersons(std::shared_ptr<Population> pop)
         unsigned int person_id = 0U;
 
         while (getline(pop_file, line)) {
-                const auto values                 = Split(line, ",");
-                const auto age                    = FromString<unsigned int>(values[0]);
-                const auto household_id           = FromString<unsigned int>(values[1]);
-                const auto school_id              = FromString<unsigned int>(values[2]);
-                const auto work_id                = FromString<unsigned int>(values[3]);
-                const auto primary_community_id   = FromString<unsigned int>(values[4]);
+                const auto values = Split(line, ",");
+                const auto age = FromString<unsigned int>(values[0]);
+                const auto household_id = FromString<unsigned int>(values[1]);
+                const auto school_id = FromString<unsigned int>(values[2]);
+                const auto work_id = FromString<unsigned int>(values[3]);
+                const auto primary_community_id = FromString<unsigned int>(values[4]);
                 const auto secondary_community_id = FromString<unsigned int>(values[5]);
-                //TODO FIX
-                const auto latitude               = 0;//FromString<double>(values[6]);
-                const auto longitude              = 0;//FromString<double>(values[7]);
+                auto latitude = 0.0;
+                auto longitude = 0.0;
+                if (values.size() > 6) {
+                        latitude = FromString<double>(values[6]);
+                        longitude = FromString<double>(values[7]);
+                }
                 pop->CreatePerson(person_id, age, household_id, school_id, work_id, primary_community_id,
                                   secondary_community_id, latitude, longitude);
                 ++person_id;
