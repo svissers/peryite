@@ -117,7 +117,7 @@ shared_ptr<Population> PopBuilder::MakePersons(std::shared_ptr<Population> pop)
                 const auto secondary_community_id = FromString<unsigned int>(values[5]);
                 auto latitude = 0.0;
                 auto longitude = 0.0;
-                if (values.size() > 6) {
+                if (values.size() == 8) {
                         latitude = FromString<double>(values[6]);
                         longitude = FromString<double>(values[7]);
                 }
@@ -139,7 +139,6 @@ shared_ptr<Population> PopBuilder::Build(std::shared_ptr<Population> pop)
         if (seeding_rate > 1.0) {
                 throw runtime_error(string(__func__) + "> Bad input data for seeding_rate.");
         }
-
         //------------------------------------------------
         // Add persons & fill pools & surveyseeding.
         //------------------------------------------------
