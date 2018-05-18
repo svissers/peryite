@@ -15,7 +15,7 @@ void Generate(GenDirectory& dir, shared_ptr<Population>& population)
     auto config = dir.GetConfig();
 
     // Build
-    builder::BuildPopulation(config, dir.GetBeliefConfig(), population);
+    builder::BuildPopulation(config, population);
     GeoGrid geogrid = builder::BuildGeoGrid(config);
     vector<shared_ptr<School>> schools = builder::BuildSchools(config, geogrid, population);
     vector<shared_ptr<University>> universities = builder::BuildUniversities(config, geogrid, schools.size());

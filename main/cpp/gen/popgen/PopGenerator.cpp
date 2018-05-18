@@ -21,7 +21,7 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
     // Get the population and structs (by file or memory)
     // --------------------------------------------------
     auto config         = dir.GetConfig();
-    population          = dir.GetPopulationFile()->Read(dir.GetBeliefConfig());
+    dir.GetPopulationFile()->Read(population);
     auto grid           = dir.GetGeoGridFile()->ReadGrid();
     auto schools        = dir.GetSchoolFile()->Read();
     auto universities   = dir.GetUniversityFile()->Read();

@@ -9,7 +9,7 @@ namespace builder {
 
 using namespace std;
 
-void BuildPopulation(const GenConfiguration& config, const boost::property_tree::ptree& belief_pt, shared_ptr<Population>& population)
+void BuildPopulation(const GenConfiguration& config, shared_ptr<Population>& population)
 {
     auto hh_reference           = files::GetReferenceHouseholds(config);
     unsigned int current_hh_id  = 0;

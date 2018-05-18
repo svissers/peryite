@@ -27,9 +27,9 @@ public:
     /// Writes the population that the file contains to a file.
     void Write();
 
-    /// Reads the population from a file or returns it if it already exists.
-    /// @return                 The population that the file contains.
-    std::shared_ptr<Population> Read(const boost::property_tree::ptree& belief_pt);
+    /// Reads the population from a file or returns it if it already exists
+    /// @param population        The population to be seeded or replaced.
+    void Read(std::shared_ptr<Population>& population);
 
 private:
     /// The labels for the first line in a csv file.

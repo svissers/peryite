@@ -13,7 +13,7 @@ namespace builder {
 /// Builds a set of households for the population.
 /// @param config     The configuration file that specifies parameters used in building households.
 /// @param population The population that will be seeded.
-void BuildPopulation(const GenConfiguration& config, const boost::property_tree::ptree& belief_pt, std::shared_ptr<Population>& population);
+void BuildPopulation(const GenConfiguration& config, std::shared_ptr<Population>& population);
 
 } // namespace builder
 } // namespace geogen
