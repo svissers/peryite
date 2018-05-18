@@ -36,6 +36,8 @@ GenFile::GenFile(GenConfiguration& config, vector<shared_ptr<GenStruct>> structs
     insertStructs(structs, geo);
 }
 
+GenFile::~GenFile() {}
+
 void GenFile::Write()
 {
     if (m_sorted_structs.empty())

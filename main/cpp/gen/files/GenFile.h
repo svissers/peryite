@@ -24,6 +24,9 @@ public:
     /// @param geo              The geogrid that was used to build the genstructs.
     GenFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, GeoGrid& geo);
 
+    // Virtual destructor
+    virtual ~GenFile() = 0;
+
     /// Writes the genstruct data that the file contains to a file.
     virtual void Write();
 
