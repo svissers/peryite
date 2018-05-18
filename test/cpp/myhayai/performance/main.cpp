@@ -296,7 +296,6 @@ int main(int argc, char** argv)
             geopop_factory_builder(0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 500000, true));    
         */
 
-        /*
         for (double i = 10000; i <= 310000; i += 100000) {
             for (double j = 0.1; j < 0.8; j += 0.1) {
                 for (auto postfix : {"40", "75", "150"}) {
@@ -309,7 +308,6 @@ int main(int argc, char** argv)
                 }
             }
         } 
-        */
         
         // GEOGRID
         auto geopop_geogrid_builder = [](string postfix)
@@ -359,7 +357,6 @@ int main(int argc, char** argv)
                         });
                 };
         };  
-        /*
         // 150
         BenchmarkRunner::RegisterTest(
         "Geopop",
@@ -367,7 +364,7 @@ int main(int argc, char** argv)
         5,
         geopop_geogrid_builder("150"));   
 
-
+        /*
         // 75
         BenchmarkRunner::RegisterTest(
         "Geopop",

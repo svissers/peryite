@@ -151,8 +151,6 @@ shared_ptr<Population> PopBuilder::Build(std::shared_ptr<Population> pop)
             gen::geogen::Generate(dir, pop);
             gen::popgen::Generate(dir, pop);
         } else {
-            boost::property_tree::write_xml(std::cout, m_config_pt);
-
             SurveySeeder(m_config_pt, m_rn_manager).Seed(MakePoolSys(MakePersons(pop)));
         }
 
