@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     loadLogo();
+    loadIcon();
 }
 
 MainWindow::~MainWindow()
@@ -67,6 +68,11 @@ void MainWindow::loadLogo()
 
     // Display the scene
     ui->logo->setScene(gfxScene);
+}
+
+void MainWindow::loadIcon()
+{
+    setWindowIcon(QIcon("./ui/logo.png"));
 }
 
 /*

@@ -41,6 +41,7 @@ private:
     void setOutputFolder(QString path);
     void setConfigFile(QString path);
     void loadLogo();
+    void loadIcon();
 };
 
 #endif // MAINWINDOW_H
