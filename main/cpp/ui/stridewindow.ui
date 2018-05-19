@@ -52,6 +52,12 @@ QGroupBox {
 QGroupBox:title {
 	left: 16;
 	top: 8;
+}
+
+QToolTip {
+	font: 10pt &quot;FreeSans&quot;;
+ 	background-color: #f7f7f7;
+	border-radius: 4px;
 }</string>
   </property>
   <widget class="QGroupBox" name="ConfigGroup">

@@ -32,6 +32,7 @@ StrideWindow::StrideWindow(GuiController *guiCtrl, QWidget *parent) :
     ui->setupUi(this);
 
     setInitialParameters();
+    setTooltips();
 
     this->setFixedSize(QSize(480, 384));
 }
@@ -354,6 +355,40 @@ void StrideWindow::setInitialParameters() {
     // Disable buttons that are WIP
     // -----------------------------------------------------------------------------------------
     ui->editConfigButton->setEnabled(false);
+}
+
+void StrideWindow::setTooltips() {
+    // Main Config
+    ui->configInput->setToolTip("The Config file that will be used by Stride.");
+    ui->configLabel->setToolTip("The Config file that will be used by Stride.");
+    ui->editConfigButton->setToolTip("Edit the current config file.");
+    ui->runsInput->setToolTip("The amount of runs in this batch. >1 runs is used for testing, mainly.");
+    ui->runsLabel->setToolTip("The amount of runs in this batch. >1 runs is used for testing, mainly.");
+
+    // Options
+    ui->logInput->setToolTip("Should Stride log to the command line?");
+    ui->logLabel->setToolTip("Should Stride log to the command line?");
+    ui->mapViewerInput->setToolTip("Enable to show a live map with epidemiologic info during the simulation.");
+    ui->mapViewerLabel->setToolTip("Enable to show a live map with epidemiologic info during the simulation.");
+    ui->scatterGraphInput->setToolTip("Enable to show a scatter graph with results for all runs after completion of the batch.\nMainly used for testing.");
+    ui->scatterGraphLabel->setToolTip("Enable to show a scatter graph with results for all runs after completion of the batch.\nMainly used for testing.");
+
+    // RNG
+    ui->engineInput->setToolTip("The RNG engine that will be used by Stride.");
+    ui->engineLabel->setToolTip("The RNG engine that will be used by Stride.");
+    ui->seedInput->setToolTip("The RNG seed that will be used by Stride.");
+    ui->seedLabel->setToolTip("The RNG seed that will be used by Stride.");
+    ui->varyEngineInput->setToolTip("If enabled, a random RNG engine will be used every run.");
+    ui->varyEngineLabel->setToolTip("If enabled, a random RNG engine will be used every run.");
+    ui->varySeedInput->setToolTip("If enabled, a random RNG seed will be used every run.");
+    ui->varySeedLabel->setToolTip("If enabled, a random RNG seed will be used every run.");
+
+    // Running
+    ui->runButton_all->setToolTip("Run all (remaining) steps of the current simulation run.");
+    ui->runButton_batch->setToolTip("Run all (remaining) runs in this batch.");
+    ui->runButton_multi->setToolTip("Run X steps of the current simulation run. (Input X to the right)");
+    ui->runButton_one->setToolTip("Run 1 step of the current simulation run.");
+    ui->runMultiInput->setToolTip("The amount of steps that 'Run Multi' runs.");
 }
 
 void StrideWindow::recordResults() {

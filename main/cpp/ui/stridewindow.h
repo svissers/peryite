@@ -60,6 +60,7 @@ private:
     void createScatterGraph();
     void endOfRun(bool continueBatch);
     void setRunButtonsEnabled(bool enabled);
+    void setTooltips();
 };
 
 #endif // STRIDEWINDOW_H

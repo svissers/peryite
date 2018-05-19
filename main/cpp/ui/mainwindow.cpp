@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     loadLogo();
     loadIcon();
+    setTooltips();
 
     this->setFixedSize(QSize(1013, 360));
 }
@@ -75,6 +76,20 @@ void MainWindow::loadLogo()
 void MainWindow::loadIcon()
 {
     setWindowIcon(QIcon("./ui/logo.png"));
+}
+
+void MainWindow::setTooltips()
+{
+    ui->General_configFileLabel->setToolTip("The generator file that will be used by geopop.");
+    ui->General_configFileSelect->setToolTip("Click to select the file that will be used by geopop.");
+    ui->General_outputFolderLabel->setToolTip("The output folder that will be used by geopop.");
+    ui->General_outputFolderSelect->setToolTip("Click to select the output folder that will be used by geopop.");
+    ui->Geo_generateGeoGen->setToolTip("Run GeoGen.");
+    ui->Geo_visualizeGeoGen->setToolTip("Visualize GeoGen (after running).");
+    ui->Pop_generatePopGen->setToolTip("Run PopGen.");
+    ui->Pop_visualizePopGen->setToolTip("Visualize PopGen (after running).");
+    ui->openStrideWindow->setToolTip("Open the Stride Window where you can run the simulator.");
+    ui->logo->setToolTip("Hey! Don't block our logo with your mouse :(");
 }
 
 /*
