@@ -33,12 +33,14 @@ QLabel {
  	background-color: #f7f7f7;
  	color: black;
   	border: 1px solid #dddddd;
+	border-radius: 4px;
 }
 
 QPushButton {
 	background-color: #78e08f;
 	color: white;
 	border: none;
+	border-radius: 4px;
 }
 
 QPushButton:hover {
@@ -50,6 +52,7 @@ QGroupBox {
 	background-color: #eaeaea;
 	font-size: 16px;
 	text-align: center;
+	border-radius: 4px;
 }
 
 QGroupBox:title {

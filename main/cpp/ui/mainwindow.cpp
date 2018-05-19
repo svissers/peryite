@@ -66,7 +66,7 @@ void MainWindow::loadLogo()
     QPixmap pixmap = QPixmap::fromImage(*image);
 
     // Set pixmap pixmap
-    gfxItem->setPixmap(pixmap.scaledToWidth(300));
+    gfxItem->setPixmap(pixmap.scaledToWidth(300, Qt::SmoothTransformation));
 
     // Display the scene
     ui->logo->setScene(gfxScene);
