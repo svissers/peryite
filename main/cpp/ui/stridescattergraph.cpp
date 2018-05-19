@@ -11,6 +11,8 @@ StrideScatterGraph::StrideScatterGraph(QWidget *parent) :
     ui(new Ui::StrideScatterGraph)
 {
     ui->setupUi(this);
+
+    this->setFixedSize(QSize(1280, 720));
 }
 
 StrideScatterGraph::~StrideScatterGraph()

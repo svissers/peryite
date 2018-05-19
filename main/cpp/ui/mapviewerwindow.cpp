@@ -20,6 +20,8 @@ MapViewerWindow::MapViewerWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->setFixedSize(QSize(1000, 600));
+
     // Background color
     setStyleSheet("QWidget { background-color: #eaeaea; }");
 

@@ -30,7 +30,10 @@ StrideWindow::StrideWindow(GuiController *guiCtrl, QWidget *parent) :
     guiController(guiCtrl)
 {
     ui->setupUi(this);
+
     setInitialParameters();
+
+    this->setFixedSize(QSize(480, 384));
 }
 
 StrideWindow::~StrideWindow()

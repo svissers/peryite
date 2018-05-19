@@ -25,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     loadLogo();
     loadIcon();
+
+    this->setFixedSize(QSize(1013, 360));
 }
 
 MainWindow::~MainWindow()
