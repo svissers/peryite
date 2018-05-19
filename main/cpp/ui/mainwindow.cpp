@@ -22,6 +22,8 @@ MainWindow::MainWindow(QWidget *parent) :
     guiController(new GuiController())
 {
     ui->setupUi(this);
+
+    loadLogo();
 }
 
 MainWindow::~MainWindow()
@@ -44,6 +46,27 @@ void MainWindow::setConfigFile(QString path)
 {
     ui->General_configFileLabel->setText(path);
     data->configFile = path;
+}
+
+void MainWindow::loadLogo()
+{
+    // Load background image into image
+    QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("./ui/logo.png");
+    QImage *image = new QImage(filename);
+
+    // Setup GraphicsScene
+    QGraphicsScene *gfxScene = new QGraphicsScene();
+    QGraphicsPixmapItem *gfxItem = new QGraphicsPixmapItem();
+    gfxScene->addItem(gfxItem);
+
+    // Load pixmap from image
+    QPixmap pixmap = QPixmap::fromImage(*image);
+
+    // Set pixmap pixmap
+    gfxItem->setPixmap(pixmap.scaledToWidth(300));
+
+    // Display the scene
+    ui->logo->setScene(gfxScene);
 }
 
 /*

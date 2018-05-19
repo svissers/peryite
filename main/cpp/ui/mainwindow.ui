@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1013</width>
-    <height>242</height>
+    <height>360</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -61,7 +61,7 @@ QGroupBox:title {
     <property name="geometry">
      <rect>
       <x>16</x>
-      <y>128</y>
+      <y>248</y>
       <width>317</width>
       <height>101</height>
      </rect>
@@ -106,7 +106,7 @@ QGroupBox:title {
     <property name="geometry">
      <rect>
       <x>16</x>
-      <y>12</y>
+      <y>132</y>
       <width>981</width>
       <height>101</height>
      </rect>
@@ -189,7 +189,7 @@ QGroupBox:title {
     <property name="geometry">
      <rect>
       <x>349</x>
-      <y>128</y>
+      <y>248</y>
       <width>317</width>
       <height>101</height>
      </rect>
@@ -234,7 +234,7 @@ QGroupBox:title {
     <property name="geometry">
      <rect>
       <x>682</x>
-      <y>128</y>
+      <y>248</y>
       <width>316</width>
       <height>101</height>
      </rect>
@@ -259,6 +259,43 @@ QGroupBox:title {
      </property>
      <property name="text">
       <string>Open Stride Window</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="logoBox">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1013</width>
+      <height>120</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget {
+	background-color: #78e08f;
+}</string>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QGraphicsView" name="logo">
+     <property name="geometry">
+      <rect>
+       <x>356</x>
+       <y>0</y>
+       <width>300</width>
+       <height>120</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
     </widget>
    </widget>

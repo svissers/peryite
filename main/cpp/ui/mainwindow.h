@@ -40,6 +40,7 @@ private:
 
     void setOutputFolder(QString path);
     void setConfigFile(QString path);
+    void loadLogo();
 };
 
 #endif // MAINWINDOW_H
