@@ -53,8 +53,10 @@ void PopulationFile::Write()
 void PopulationFile::Read(shared_ptr<Population>& population)
 {
     // Read the population from memory
-    if (!m_population->empty())
+    if (!m_population->empty()) {
         population = m_population;
+        return;
+    }
     // Read the population from file
     m_population = population;
     CSV pop_data(m_file_path.string());
