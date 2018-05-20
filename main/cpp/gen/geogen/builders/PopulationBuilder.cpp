@@ -9,11 +9,11 @@ namespace builder {
 
 using namespace std;
 
-void BuildPopulation(const GenConfiguration& config, const boost::property_tree::ptree& belief_pt, shared_ptr<Population>& population)
+std::tuple<unsigned int, unsigned int> BuildPopulation(const GenConfiguration& config, const boost::property_tree::ptree& belief_pt, shared_ptr<Population>& population, unsigned int start_person_id, unsigned int start_hh_id)
 {
     auto hh_reference           = files::GetReferenceHouseholds(config);
-    unsigned int current_hh_id  = 0;
-    unsigned int current_p_id   = 0;
+    unsigned int current_hh_id  = start_hh_id;
+    unsigned int current_p_id   = start_person_id;
     auto pop_size = config.GetTree().get<unsigned int>("population_size");
 
     // Create a uniform distribution for the household reference set.
@@ -37,6 +37,7 @@ void BuildPopulation(const GenConfiguration& config, const boost::property_tree:
             }
             current_hh_id++;
     }
+    return std::tuple<unsigned int, unsigned int>(current_p_id, current_hh_id);
 }
 
 } // namespace builder

@@ -12,13 +12,13 @@ using namespace std;
 using namespace gen;
 using namespace util;
 
-void AssignWorkplaces(
+unsigned int AssignWorkplaces(
         vector<vector<shared_ptr<GenStruct>>> &workplaces, const shared_ptr<Population> population,
-        const GenConfiguration &config, const GeoGrid &grid, unsigned int total_commuting_students) {
+        const GenConfiguration &config, const GeoGrid &grid, unsigned int total_commuting_students, unsigned int start_cp_id) {
     // -------------
     // Contactpools
     // -------------
-    unsigned int cp_id = 0;
+    unsigned int cp_id = start_cp_id;
     for (auto &band : workplaces) {
         for (auto &g_struct : band) {
             auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
@@ -143,6 +143,7 @@ void AssignWorkplaces(
             pool->AddMember(&person);
         }
     }
+    return cp_id;
 }
 } // assigner
 } // popgen

@@ -12,16 +12,16 @@ using namespace std;
 using namespace gen;
 using namespace util;
 
-void AssignCommunities(
+unsigned int AssignCommunities(
         vector<vector<shared_ptr<GenStruct>>> communities, const shared_ptr<Population> population,
-        const GenConfiguration &config, const GeoGrid &grid) {
+        const GenConfiguration &config, const GeoGrid &grid, unsigned int start_cp_id) {
     // -------------
     // Contactpools
     // -------------
     const unsigned int community_size = 2000;
     const unsigned int community_cp_size = 20;
     // Create the contactpools for every community
-    unsigned int cp_id = 0;
+    unsigned int cp_id = start_cp_id;
     for (auto &band : communities) {
         for (auto &g_struct : band) {
             auto community = std::static_pointer_cast<Community>(g_struct);
@@ -109,6 +109,7 @@ void AssignCommunities(
         i--;
 
     }
+    return cp_id;
 }
 } // assigner
 } // popgen

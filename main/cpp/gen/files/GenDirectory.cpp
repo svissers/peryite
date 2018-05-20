@@ -8,7 +8,7 @@ using namespace std;
 using namespace gen;
 
 GenDirectory::GenDirectory(const boost::property_tree::ptree& config_pt, unsigned int thread_count, string output_prefix)
-    : m_config(GenConfiguration(config_pt.get_child("run.pop_config"), thread_count, std::move(output_prefix)))
+    : m_config(GenConfiguration(config_pt.get_child("run.pop_config1"), thread_count, std::move(output_prefix)))
 {
     m_belief_pt = config_pt.get_child("run.belief_policy");
 }
@@ -17,7 +17,7 @@ GenDirectory::GenDirectory(const boost::property_tree::ptree& config_pt, util::R
 {
     // Make a pointer to the rn_manager without it being automatically deleted.
     auto manager = std::shared_ptr<util::RNManager>(&rn_manager, [](util::RNManager*){});
-    m_config = GenConfiguration(config_pt.get_child("run.pop_config"), manager, std::move(output_prefix));
+    m_config = GenConfiguration(config_pt.get_child("run.pop_config1"), manager, std::move(output_prefix));
     m_belief_pt = config_pt.get_child("run.belief_policy");
 }
 

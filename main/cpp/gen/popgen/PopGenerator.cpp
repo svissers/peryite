@@ -31,11 +31,18 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
     // -------------------
     // Assign ContactPools
     // -------------------
+    unsigned int next_cp_id_communities = 0; //TODO: put in loops
+    unsigned int next_cp_id_schools = 0;
+    unsigned int next_cp_id_universities = 0;
+    unsigned int next_cp_id_workplaces = 0;
+
     assigner::AssignHouseholds(population, grid, config);
-    assigner::AssignSchools(schools, population, config, grid);
-    unsigned int total_commuting_students = assigner::AssignUniversities(universities, population, config, grid);
-    assigner::AssignWorkplaces(workplaces, population, config, grid, total_commuting_students);
-    assigner::AssignCommunities(communities, population, config, grid);
+    next_cp_id_schools = assigner::AssignSchools(schools, population, config, grid, next_cp_id_schools);
+    std::tuple<unsigned int, unsigned int> assignUniReturnVal = assigner::AssignUniversities(universities, population, config, grid, next_cp_id_universities);
+    unsigned int total_commuting_students = std::get<0>(assignUniReturnVal);
+    next_cp_id_universities = std::get<1>(assignUniReturnVal);
+    next_cp_id_workplaces = assigner::AssignWorkplaces(workplaces, population, config, grid, total_commuting_students, next_cp_id_workplaces);
+    next_cp_id_communities = assigner::AssignCommunities(communities, population, config, grid, next_cp_id_communities);
 
     // -------------------
     // Fill ContactPoolSys

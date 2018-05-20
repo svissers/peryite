@@ -14,8 +14,12 @@ void Generate(GenDirectory& dir, shared_ptr<Population>& population)
 {
     auto config = dir.GetConfig();
 
+    unsigned int next_person_id = 0;
+    unsigned int next_hh_id = 0;
     // Build
-    builder::BuildPopulation(config, dir.GetBeliefConfig(), population);
+    std::tuple<unsigned int, unsigned int> PopulationReturnVal = builder::BuildPopulation(config, dir.GetBeliefConfig(), population, next_person_id, next_hh_id);
+    next_person_id = std::get<0>(PopulationReturnVal);
+    next_hh_id = std::get<1>(PopulationReturnVal);
     GeoGrid geogrid = builder::BuildGeoGrid(config);
     vector<shared_ptr<School>> schools = builder::BuildSchools(config, geogrid, population);
     vector<shared_ptr<University>> universities = builder::BuildUniversities(config, geogrid, schools.size());

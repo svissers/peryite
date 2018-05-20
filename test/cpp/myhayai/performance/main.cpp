@@ -78,76 +78,76 @@ int main(int argc, char** argv)
 
                     // Student fraction
                     configPt.put(
-                        "run.pop_config.university.student_fraction",
+                        "run.pop_config1.university.student_fraction",
                         student_fraction
                     );
 
                     // Student commute 
                     configPt.put(
-                        "run.pop_config.university.commute_fraction",
+                        "run.pop_config1.university.commute_fraction",
                         student_commute_fraction
                     );
 
                     // Work fraction
                     configPt.put(
-                        "run.pop_config.work.work_fraction",
+                        "run.pop_config1.work.work_fraction",
                         work_fraction
                     );
 
                     // Work commute
                     configPt.put(
-                        "run.pop_config.work.commute_fraction",
+                        "run.pop_config1.work.commute_fraction",
                         work_commute_fraction
                     );
 
                     // School size
                     configPt.put(
-                        "run.pop_config.school_size",
+                        "run.pop_config1.school_size",
                         school_size
                     );
 
                     // University size
                     configPt.put(
-                        "run.pop_config.university_size",
+                        "run.pop_config1.university_size",
                         university_size
                     );
 
                     // Workplace size
                     configPt.put(
-                        "run.pop_config.workplace_size",
+                        "run.pop_config1.workplace_size",
                         workplace_size
                     );
 
                     // School cp size
                     configPt.put(
-                        "run.pop_config.school_cp_size",
+                        "run.pop_config1.school_cp_size",
                         school_cp_size
                     );
 
                     // University cp size
                     configPt.put(
-                        "run.pop_config.university_cp_size",
+                        "run.pop_config1.university_cp_size",
                         university_cp_size
                     );
 
                     // Population_size
                     configPt.put(
-                        "run.pop_config.population_size",
+                        "run.pop_config1.population_size",
                         population_size
                     );
 
                     // Fragment centers
                     configPt.put(
-                        "run.pop_config.fragment_centers",
+                        "run.pop_config1.fragment_centers",
                         fragment_centers
                     );
 
                     configPt.put(
-                        "run.pop_config.geoprofile.cities",
+                        "run.pop_config1.geoprofile.cities",
                         "data/flanders_cities_TEST_" + postfix + ".csv"
                     );
                     configPt.put(
-                        "run.pop_config.geoprofile.commuters",
+                        "run.pop_config1.geoprofile.commuters",
                         "data/flanders_commuting_TEST_" + postfix + ".csv"
                     );
 
@@ -330,16 +330,16 @@ int main(int argc, char** argv)
 
                     // Population_size
                     configPt.put(
-                        "run.pop_config.population_size",
+                        "run.pop_config1.population_size",
                         500000
                     );
 
                     configPt.put(
-                        "run.pop_config.geoprofile.cities",
+                        "run.pop_config1.geoprofile.cities",
                         "data/flanders_cities_TEST_" + postfix + ".csv"
                     );
                     configPt.put(
-                        "run.pop_config.geoprofile.commuters",
+                        "run.pop_config1.geoprofile.commuters",
                         "data/flanders_commuting_TEST_" + postfix + ".csv"
                     );
 
@@ -421,61 +421,61 @@ int main(int argc, char** argv)
 
                     // Student fraction
                     configPt.put(
-                        "run.pop_config.university.student_fraction",
+                        "run.pop_config1.university.student_fraction",
                         student_fraction
                     );
 
                     // Student commute 
                     configPt.put(
-                        "run.pop_config.university.commute_fraction",
+                        "run.pop_config1.university.commute_fraction",
                         student_commute_fraction
                     );
 
                     // Work fraction
                     configPt.put(
-                        "run.pop_config.work.work_fraction",
+                        "run.pop_config1.work.work_fraction",
                         work_fraction
                     );
 
                     // Work commute
                     configPt.put(
-                        "run.pop_config.work.commute_fraction",
+                        "run.pop_config1.work.commute_fraction",
                         work_commute_fraction
                     );
 
                     // School size
                     configPt.put(
-                        "run.pop_config.school_size",
+                        "run.pop_config1.school_size",
                         school_size
                     );
 
                     // University size
                     configPt.put(
-                        "run.pop_config.university_size",
+                        "run.pop_config1.university_size",
                         university_size
                     );
 
                     // Workplace size
                     configPt.put(
-                        "run.pop_config.workplace_size",
+                        "run.pop_config1.workplace_size",
                         workplace_size
                     );
 
                     // School cp size
                     configPt.put(
-                        "run.pop_config.school_cp_size",
+                        "run.pop_config1.school_cp_size",
                         school_cp_size
                     );
 
                     // University cp size
                     configPt.put(
-                        "run.pop_config.university_cp_size",
+                        "run.pop_config1.university_cp_size",
                         university_cp_size
                     );
 
                     // Population_size
                     configPt.put(
-                        "run.pop_config.population_size",
+                        "run.pop_config1.population_size",
                         population_size
                     );
 

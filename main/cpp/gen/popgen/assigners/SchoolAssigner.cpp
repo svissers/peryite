@@ -12,13 +12,13 @@ using namespace std;
 using namespace gen;
 using namespace util;
 
-void AssignSchools(
+unsigned int AssignSchools(
         vector<vector<shared_ptr<GenStruct>>> &schools, const shared_ptr<Population> population,
-        const GenConfiguration &config, const GeoGrid &grid) {
+        const GenConfiguration &config, const GeoGrid &grid, unsigned int start_cp_id) {
     const unsigned int school_size = config.GetTree().get<unsigned int>("school_size");
     const unsigned int school_cp_size = config.GetTree().get<unsigned int>("school_cp_size");
     // Create the contactpools for every school
-    unsigned int cp_id = 0;
+    unsigned int cp_id = start_cp_id;
     for (const auto &band : schools) {
         for (const auto &g_struct : band) {
             auto school = std::static_pointer_cast<School>(g_struct);
@@ -54,6 +54,7 @@ void AssignSchools(
             pool->AddMember(&person);
         }
     }
+    return cp_id;
 }
 
 } // assigner

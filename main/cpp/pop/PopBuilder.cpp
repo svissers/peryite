@@ -117,7 +117,7 @@ shared_ptr<Population> PopBuilder::MakePersons(std::shared_ptr<Population> pop)
                 const auto secondary_community_id = FromString<unsigned int>(values[5]);
                 auto latitude = 0.0;
                 auto longitude = 0.0;
-                if (values.size() == 8) {
+                if (values.size() >= 8) {
                         latitude = FromString<double>(values[6]);
                         longitude = FromString<double>(values[7]);
                 }
@@ -143,7 +143,7 @@ shared_ptr<Population> PopBuilder::Build(std::shared_ptr<Population> pop)
         // Add persons & fill pools & surveyseeding.
         //------------------------------------------------
         auto prefix = m_config_pt.get<string>("run.output_prefix");
-        auto pop_config_pt = m_config_pt.get_child_optional("run.pop_config");
+        auto pop_config_pt = m_config_pt.get_child_optional("run.pop_config1");
 
         if (pop_config_pt) {
             gen::files::GenDirectory dir(m_config_pt, m_rn_manager, prefix);
