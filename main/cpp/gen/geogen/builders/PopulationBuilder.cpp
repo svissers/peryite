@@ -9,7 +9,7 @@ namespace builder {
 
 using namespace std;
 
-std::tuple<unsigned int, unsigned int> BuildPopulation(const GenConfiguration& config, const boost::property_tree::ptree& belief_pt, shared_ptr<Population>& population, unsigned int start_person_id, unsigned int start_hh_id)
+std::tuple<unsigned int, unsigned int> BuildPopulation(const GenConfiguration& config, shared_ptr<Population>& population, unsigned int start_person_id, unsigned int start_hh_id)
 {
     auto hh_reference           = files::GetReferenceHouseholds(config);
     unsigned int current_hh_id  = start_hh_id;
