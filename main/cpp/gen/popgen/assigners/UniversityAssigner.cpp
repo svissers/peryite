@@ -12,15 +12,15 @@ using namespace std;
 using namespace gen;
 using namespace util;
 
-unsigned int AssignUniversities(
+std::tuple<unsigned int, unsigned int> AssignUniversities(
         vector<vector<shared_ptr<GenStruct>>> &universities, const shared_ptr<Population> population,
-        const GenConfiguration &config, const GeoGrid &grid) {
+        const GenConfiguration &config, const GeoGrid &grid,unsigned int start_cp_id) {
     // -------------
     // Contactpools
     // -------------
     const unsigned int university_size = config.GetTree().get<unsigned int>("university_size");
     const unsigned int university_cp_size = config.GetTree().get<unsigned int>("university_cp_size");
-    unsigned int cp_id = 0;
+    unsigned int cp_id = start_cp_id;
     map<unsigned int, vector<shared_ptr<University>>> cities;
     for (const auto &band : universities) {
         for (const auto &g_struct : band) {
@@ -138,7 +138,7 @@ unsigned int AssignUniversities(
             pool->AddMember(&person);
         }
     }
-    return total_commuting_students;
+    return std::tuple<unsigned int, unsigned int>(total_commuting_students,cp_id);
 }
 
 } // assigner

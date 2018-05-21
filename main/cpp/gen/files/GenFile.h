@@ -34,6 +34,8 @@ public:
     /// @return                 The genstructs that the file contains.
     virtual std::vector<std::vector<std::shared_ptr<GenStruct>>> Read();
 
+    void SetFileName(std::string newfilename);
+
 protected:
     /// The labels for the first line in a csv file.
     std::vector<std::string> m_labels;

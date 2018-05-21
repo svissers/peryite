@@ -34,7 +34,8 @@
     <vaccine_link_probability>0</vaccine_link_probability>
     <vaccine_profile>Random</vaccine_profile>
     <vaccine_rate>0.8</vaccine_rate>
-    <pop_config>
+    <amount_regions>1</amount_regions>
+    <pop_config1>
         <write_geogrid>false</write_geogrid>
         <write_population>false</write_population>
         <fragment_centers>true</fragment_centers>
@@ -67,5 +68,5 @@
 		    <!-- Among the active population, a fraction commutes -->
 		    <commute_fraction>0.50</commute_fraction>
 	    </work>
-    </pop_config>
+    </pop_config1>
 </run>

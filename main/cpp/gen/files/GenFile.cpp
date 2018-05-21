@@ -103,6 +103,10 @@ void GenFile::insertStructs(vector<shared_ptr<GenStruct>>& structs, GeoGrid& geo
     m_sorted_structs = sorted;
 }
 
+    void GenFile::SetFileName(std::string newfilename){
+        m_file_name = newfilename;
+    }
+
 } // namespace files
 } // namespace gen
 } // namespace stride

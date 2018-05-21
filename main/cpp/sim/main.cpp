@@ -124,7 +124,8 @@ int main(int argc, char** argv)
                 // -----------------------------------------------------------------------------------------
                 else if (execArg.getValue() == "geopop") {
                         // Only generate the population, don't run the simulation
-                        auto pop_config_pt = configPt.get_child_optional("run.pop_config");
+
+                        auto pop_config_pt = configPt.get_child_optional("run.pop_config1");
                         if (pop_config_pt) {
                             // Configure output
                             if (configPt.get<string>("run.output_prefix", "").empty()) {
