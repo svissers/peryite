@@ -21,6 +21,7 @@ MapViewerWindow::MapViewerWindow(QWidget *parent) :
     ui->setupUi(this);
 
     this->setFixedSize(QSize(1000, 600));
+    loadIcon();
 
     // Background color
     setStyleSheet("QWidget { background-color: #eaeaea; }");
@@ -240,4 +241,10 @@ VisualizationCircle* MapViewerWindow::getClosestCircle(QPointF mousePos) {
     }
 
     return closest;
+}
+
+
+void MapViewerWindow::loadIcon()
+{
+    setWindowIcon(QIcon("./ui/logo.png"));
 }

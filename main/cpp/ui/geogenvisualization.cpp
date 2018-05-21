@@ -17,6 +17,7 @@ GeoGenVisualization::GeoGenVisualization(QWidget *parent) :
     ui->setupUi(this);
 
     this->setFixedSize(QSize(1000, 600));
+    loadIcon();
 
     // Background color
     setStyleSheet("QWidget { background-color: #eaeaea; }");
@@ -325,4 +326,10 @@ void GeoGenVisualization::parseWorkplaces(GeoGenData *data) {
     }
 
     workplacesFile.close();
+}
+
+
+void GeoGenVisualization::loadIcon()
+{
+    setWindowIcon(QIcon("./ui/logo.png"));
 }

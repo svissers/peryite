@@ -13,6 +13,7 @@ StrideScatterGraph::StrideScatterGraph(QWidget *parent) :
     ui->setupUi(this);
 
     this->setFixedSize(QSize(1280, 720));
+    loadIcon();
 }
 
 StrideScatterGraph::~StrideScatterGraph()
@@ -34,4 +35,9 @@ void StrideScatterGraph::createGraph(QScatterSeries *series) {
     chartView->setRenderHint(QPainter::Antialiasing);
     chart->setDropShadowEnabled(false);
     chart->createDefaultAxes();
+}
+
+void StrideScatterGraph::loadIcon()
+{
+    setWindowIcon(QIcon("./ui/logo.png"));
 }
