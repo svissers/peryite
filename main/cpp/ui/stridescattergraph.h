@@ -21,7 +21,7 @@ public:
 private:
     Ui::StrideScatterGraph *ui;
 
-    void loadIcon()
+    void loadIcon();
 };
 
 #endif // STRIDESCATTERGRAPH_H

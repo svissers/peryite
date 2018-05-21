@@ -138,7 +138,7 @@ void StrideWindow::on_runButton_batch_clicked() {
     // -----------------------------------------------------------------------------------------
     // Warn users against running this with mapviewer on. Because that's insane.
     // -----------------------------------------------------------------------------------------
-    if (ui->mapViewerInput->isChecked()) {
+    if (ui->mapViewerInput->isChecked() && ui->runsInput->value() > 1) {
         QMessageBox::StandardButton reply;
         QString text = "You are trying to execute a full batch with MapViewer enabled.\n";
         text += "This will open up a mapviewer for every run and probably freeze your pc.\n";

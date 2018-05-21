@@ -33,7 +33,7 @@ private:
     QGraphicsPixmapItem *gfxItem;
 
     void closeEvent(QCloseEvent *event);
-    void loadIcon()
+    void loadIcon();
 
     // Update and drawing
     void update();
