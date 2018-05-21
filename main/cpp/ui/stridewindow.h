@@ -61,6 +61,7 @@ private:
     void endOfRun(bool continueBatch);
     void setRunButtonsEnabled(bool enabled);
     void setTooltips();
+    void loadIcon();
 };
 
 #endif // STRIDEWINDOW_H

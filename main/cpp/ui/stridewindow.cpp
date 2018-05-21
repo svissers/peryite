@@ -33,6 +33,7 @@ StrideWindow::StrideWindow(GuiController *guiCtrl, QWidget *parent) :
 
     setInitialParameters();
     setTooltips();
+    loadIcon();
 
     this->setFixedSize(QSize(480, 384));
 }
@@ -69,7 +70,7 @@ bool StrideWindow::setupRun() {
     // Set our running status and process events so buttons get disabled
     // -----------------------------------------------------------------------------------------
     setRunning(true);
-    setStatus("Setup");
+    setStatus("Setup... Run " + QString::number(m_currentRun) + " / " + QString::number(m_runs));
     QCoreApplication::processEvents();
 
     // -----------------------------------------------------------------------------------------
@@ -459,4 +460,9 @@ void StrideWindow::endOfRun(bool continueBatch) {
             setStatus("Done with run " + Util::formatInt(m_currentRun) + "/" + Util::formatInt(m_runs));
         }
     }
+}
+
+void StrideWindow::loadIcon()
+{
+    setWindowIcon(QIcon("./ui/logo.png"));
 }
