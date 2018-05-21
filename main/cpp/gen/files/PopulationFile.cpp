@@ -20,10 +20,10 @@ PopulationFile::PopulationFile(GenConfiguration& config)
     m_labels = {"age", "household_id", "school_id", "work_id", "primary_community", "secondary_community", "latitude", "longitude"};
 
     // Get the output directory for this configuration.
-    string output_prefix = config.GetOutputPrefix();
-    m_file_path = FileSys::BuildPath(output_prefix, m_file_name);
+    m_output_prefix = config.GetOutputPrefix();
+    m_file_path = FileSys::BuildPath(m_output_prefix, m_file_name);
     try {
-        create_directories(output_prefix);
+        create_directories(m_output_prefix);
     } catch (exception& e) {
         cout << "GeoGenerator::generate> Exception while creating output directory:  {}", e.what();
         throw;
@@ -127,6 +127,7 @@ std::vector<std::string> PopulationFile::GetValues(const Person& person)
 
 void PopulationFile::SetFileName(std::string newname){
     m_file_name = newname;
+    m_file_path = FileSys::BuildPath(m_output_prefix, m_file_name);
 }
 
 } // namespace files

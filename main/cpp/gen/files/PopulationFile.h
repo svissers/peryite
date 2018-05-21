@@ -43,6 +43,8 @@ private:
     /// The population that the file contains.
     std::shared_ptr<Population> m_population;
 
+    std::string m_output_prefix;
+
     /// Returns the values of a person in string format.
     /// @param person           The person that contains the values.
     /// @return                 Vector of the values of the person in string format.

@@ -45,47 +45,57 @@ public:
 
     /// Returns the configuration for the geopop module.
     /// @return The configuration.
-    GenConfiguration GetConfig() { return m_config; }
+    std::vector<GenConfiguration> GetConfig() { return m_config; }
 
     /// Returns the file containing persons.
     /// @return The file containing persons.
-    PopulationFilePtr GetPopulationFile();
+    std::vector<PopulationFilePtr> GetPopulationFile(unsigned int region_nr);
 
     /// Returns the file containing the geogrid.
     /// @return The file containing the geogrid.
-    GeoGridFilePtr GetGeoGridFile();
+    std::vector<GeoGridFilePtr> GetGeoGridFile(unsigned int region_nr);
 
     /// Returns the file containing schools.
     /// @return The file containing schools.
-    SchoolFilePtr GetSchoolFile();
+    std::vector<SchoolFilePtr> GetSchoolFile(unsigned int region_nr);
 
     /// Returns the file containing universities.
     /// @return The file containing universities.
-    UniversityFilePtr GetUniversityFile();
+    std::vector<UniversityFilePtr> GetUniversityFile(unsigned int region_nr);
 
     /// Returns the file containing workplaces.
     /// @return The file containing workplaces.
-    WorkplaceFilePtr GetWorkplaceFile();
+    std::vector<WorkplaceFilePtr> GetWorkplaceFile(unsigned int region_nr);
 
     /// Returns the file containing communities.
     /// @return The file containing communities.
-    CommunityFilePtr GetCommunityFile();
+    std::vector<CommunityFilePtr> GetCommunityFile(unsigned int region_nr);
+
+    unsigned int GetFirstInRegion(unsigned int region_nr);
+
+    void AddFirstInRegion(unsigned int person_id);
+
+    unsigned int GetAmountOfRegions();
 
 private:
     /// The configuration for the geopop module.
-    GenConfiguration m_config;
+    std::vector<GenConfiguration> m_config;
     /// The file containing persons.
-    PopulationFilePtr m_pop_file;
+    std::vector<PopulationFilePtr> m_pop_file;
     /// The file containing the geogrid.
-    GeoGridFilePtr m_geo_file;
+    std::vector<GeoGridFilePtr> m_geo_file;
     /// The file containing schools.
-    SchoolFilePtr m_school_file;
+    std::vector<SchoolFilePtr> m_school_file;
     /// The file containing universities.
-    UniversityFilePtr m_university_file;
+    std::vector<UniversityFilePtr> m_university_file;
     /// The file containing workplaces.
-    WorkplaceFilePtr m_workplace_file;
+    std::vector<WorkplaceFilePtr> m_workplace_file;
     /// The file containing communities.
-    CommunityFilePtr m_community_file;
+    std::vector<CommunityFilePtr> m_community_file;
+    /// The vector containing the id of every first person in a new region.
+    std::vector<unsigned int> m_first_id_in_region;
+    /// The total amount of regions.
+    unsigned int m_amount_of_regions;
 };
 
 } // namespace files
