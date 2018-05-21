@@ -17,9 +17,17 @@ using namespace gen;
 void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
 {
     auto& pool_sys    = population->GetContactPoolSys();
+
+    unsigned int next_cp_id_communities = 0; //TODO: put in loops
+    unsigned int next_cp_id_schools = 0;
+    unsigned int next_cp_id_universities = 0;
+    unsigned int next_cp_id_workplaces = 0;
+
+    unsigned int current_region_nr = 0;
     // --------------------------------------------------
     // Get the population and structs (by file or memory)
     // --------------------------------------------------
+    //TODO change to use vectors, use index region nr
     auto config         = dir.GetConfig();
     dir.GetPopulationFile()->Read(population);
     auto grid           = dir.GetGeoGridFile()->ReadGrid();
@@ -31,10 +39,7 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
     // -------------------
     // Assign ContactPools
     // -------------------
-    unsigned int next_cp_id_communities = 0; //TODO: put in loops
-    unsigned int next_cp_id_schools = 0;
-    unsigned int next_cp_id_universities = 0;
-    unsigned int next_cp_id_workplaces = 0;
+
 
     assigner::AssignHouseholds(population, grid, config);
     next_cp_id_schools = assigner::AssignSchools(schools, population, config, grid, next_cp_id_schools);

@@ -125,6 +125,10 @@ std::vector<std::string> PopulationFile::GetValues(const Person& person)
     return values;
 }
 
+void PopulationFile::SetFileName(std::string newname){
+    m_file_name = newname;
+}
+
 } // namespace files
 } // namespace gen
 } // namespace stride

@@ -31,6 +31,8 @@ public:
     /// @param population        The population to be seeded or replaced.
     void Read(std::shared_ptr<Population>& population);
 
+    void SetFileName(std::string newname);
+
 private:
     /// The labels for the first line in a csv file.
     std::vector<std::string> m_labels;
