@@ -14,6 +14,9 @@ PopGenVisualization::PopGenVisualization(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->setFixedSize(QSize(1000, 600));
+    loadIcon();
+
     // Background color
     setStyleSheet("QWidget { background-color: #eaeaea; } Q");
 
@@ -200,4 +203,9 @@ void PopGenVisualization::createAgeDistributionGraph() {
 
         addBar(new VisualizationGraphBar(pos, width, height, i, ageDistribution[i]));
     }
+}
+
+void PopGenVisualization::loadIcon()
+{
+    setWindowIcon(QIcon("./ui/logo.png"));
 }

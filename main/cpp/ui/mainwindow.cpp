@@ -22,6 +22,12 @@ MainWindow::MainWindow(QWidget *parent) :
     guiController(new GuiController())
 {
     ui->setupUi(this);
+
+    loadLogo();
+    loadIcon();
+    setTooltips();
+
+    this->setFixedSize(QSize(1013, 360));
 }
 
 MainWindow::~MainWindow()
@@ -44,6 +50,46 @@ void MainWindow::setConfigFile(QString path)
 {
     ui->General_configFileLabel->setText(path);
     data->configFile = path;
+}
+
+void MainWindow::loadLogo()
+{
+    // Load background image into image
+    QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("./ui/logo.png");
+    QImage *image = new QImage(filename);
+
+    // Setup GraphicsScene
+    QGraphicsScene *gfxScene = new QGraphicsScene();
+    QGraphicsPixmapItem *gfxItem = new QGraphicsPixmapItem();
+    gfxScene->addItem(gfxItem);
+
+    // Load pixmap from image
+    QPixmap pixmap = QPixmap::fromImage(*image);
+
+    // Set pixmap pixmap
+    gfxItem->setPixmap(pixmap.scaledToWidth(300, Qt::SmoothTransformation));
+
+    // Display the scene
+    ui->logo->setScene(gfxScene);
+}
+
+void MainWindow::loadIcon()
+{
+    setWindowIcon(QIcon("./ui/logo.png"));
+}
+
+void MainWindow::setTooltips()
+{
+    ui->General_configFileLabel->setToolTip("The generator file that will be used by geopop.");
+    ui->General_configFileSelect->setToolTip("Click to select the file that will be used by geopop.");
+    ui->General_outputFolderLabel->setToolTip("The output folder that will be used by geopop.");
+    ui->General_outputFolderSelect->setToolTip("Click to select the output folder that will be used by geopop.");
+    ui->Geo_generateGeoGen->setToolTip("Run GeoGen.");
+    ui->Geo_visualizeGeoGen->setToolTip("Visualize GeoGen (after running).");
+    ui->Pop_generatePopGen->setToolTip("Run PopGen.");
+    ui->Pop_visualizePopGen->setToolTip("Visualize PopGen (after running).");
+    ui->openStrideWindow->setToolTip("Open the Stride Window where you can run the simulator.");
+    ui->logo->setToolTip("Hey! Don't block our logo with your mouse :(");
 }
 
 /*

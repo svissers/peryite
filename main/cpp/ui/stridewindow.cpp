@@ -30,7 +30,12 @@ StrideWindow::StrideWindow(GuiController *guiCtrl, QWidget *parent) :
     guiController(guiCtrl)
 {
     ui->setupUi(this);
+
     setInitialParameters();
+    setTooltips();
+    loadIcon();
+
+    this->setFixedSize(QSize(480, 384));
 }
 
 StrideWindow::~StrideWindow()
@@ -65,7 +70,7 @@ bool StrideWindow::setupRun() {
     // Set our running status and process events so buttons get disabled
     // -----------------------------------------------------------------------------------------
     setRunning(true);
-    setStatus("Setup");
+    setStatus("Setup... Run " + QString::number(m_currentRun) + " / " + QString::number(m_runs));
     QCoreApplication::processEvents();
 
     // -----------------------------------------------------------------------------------------
@@ -133,14 +138,17 @@ void StrideWindow::on_runButton_batch_clicked() {
     // -----------------------------------------------------------------------------------------
     // Warn users against running this with mapviewer on. Because that's insane.
     // -----------------------------------------------------------------------------------------
-    if (ui->mapViewerInput->isChecked()) {
+    if (ui->mapViewerInput->isChecked() && ui->runsInput->value() > 1) {
         QMessageBox::StandardButton reply;
         QString text = "You are trying to execute a full batch with MapViewer enabled.\n";
         text += "This will open up a mapviewer for every run and probably freeze your pc.\n";
-        text += "Continue? (Not recommended)";
+        text += "Disable MapViewer before running? (strongly recommended)";
 
-        reply = QMessageBox::question(this, "You might not want this...", text, QMessageBox::Yes|QMessageBox::No);
+        reply = QMessageBox::question(this, "Are you sure?", text, QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
         if (reply == QMessageBox::Yes) {
+            ui->mapViewerInput->setChecked(false);
+            runAll(true);
+        } else if (reply == QMessageBox::No){
             runAll(true);
         }
     } else {
@@ -350,6 +358,40 @@ void StrideWindow::setInitialParameters() {
     ui->editConfigButton->setEnabled(false);
 }
 
+void StrideWindow::setTooltips() {
+    // Main Config
+    ui->configInput->setToolTip("The Config file that will be used by Stride.");
+    ui->configLabel->setToolTip("The Config file that will be used by Stride.");
+    ui->editConfigButton->setToolTip("Edit the current config file.");
+    ui->runsInput->setToolTip("The amount of runs in this batch. >1 runs is used for testing, mainly.");
+    ui->runsLabel->setToolTip("The amount of runs in this batch. >1 runs is used for testing, mainly.");
+
+    // Options
+    ui->logInput->setToolTip("Should Stride log to the command line?");
+    ui->logLabel->setToolTip("Should Stride log to the command line?");
+    ui->mapViewerInput->setToolTip("Enable to show a live map with epidemiologic info during the simulation.");
+    ui->mapViewerLabel->setToolTip("Enable to show a live map with epidemiologic info during the simulation.");
+    ui->scatterGraphInput->setToolTip("Enable to show a scatter graph with results for all runs after completion of the batch.\nMainly used for testing.");
+    ui->scatterGraphLabel->setToolTip("Enable to show a scatter graph with results for all runs after completion of the batch.\nMainly used for testing.");
+
+    // RNG
+    ui->engineInput->setToolTip("The RNG engine that will be used by Stride.");
+    ui->engineLabel->setToolTip("The RNG engine that will be used by Stride.");
+    ui->seedInput->setToolTip("The RNG seed that will be used by Stride.");
+    ui->seedLabel->setToolTip("The RNG seed that will be used by Stride.");
+    ui->varyEngineInput->setToolTip("If enabled, a random RNG engine will be used every run.");
+    ui->varyEngineLabel->setToolTip("If enabled, a random RNG engine will be used every run.");
+    ui->varySeedInput->setToolTip("If enabled, a random RNG seed will be used every run.");
+    ui->varySeedLabel->setToolTip("If enabled, a random RNG seed will be used every run.");
+
+    // Running
+    ui->runButton_all->setToolTip("Run all (remaining) steps of the current simulation run.");
+    ui->runButton_batch->setToolTip("Run all (remaining) runs in this batch.");
+    ui->runButton_multi->setToolTip("Run X steps of the current simulation run. (Input X to the right)");
+    ui->runButton_one->setToolTip("Run 1 step of the current simulation run.");
+    ui->runMultiInput->setToolTip("The amount of steps that 'Run Multi' runs.");
+}
+
 void StrideWindow::recordResults() {
     if (m_run_showGraph) {
         int result = guiController->GetRunner()->GetSim()->GetPopulation()->GetInfectedCount();
@@ -418,4 +460,9 @@ void StrideWindow::endOfRun(bool continueBatch) {
             setStatus("Done with run " + Util::formatInt(m_currentRun) + "/" + Util::formatInt(m_runs));
         }
     }
+}
+
+void StrideWindow::loadIcon()
+{
+    setWindowIcon(QIcon("./ui/logo.png"));
 }

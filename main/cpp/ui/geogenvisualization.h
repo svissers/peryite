@@ -33,12 +33,13 @@ private:
     QGraphicsPixmapItem *gfxItem;
 
     void closeEvent(QCloseEvent *event);
+    void loadIcon();
 
     // Update and drawing
     void update();
     void updateSelection(QPointF mousePos);
     void draw();
-    void drawCircle(QPixmap *pm, VisualizationCircle *c);    
+    void drawCircle(QPixmap *pm, VisualizationCircle *c);
     void hoverCircle(VisualizationCircle *c);
     void noHover();
 
