@@ -14,7 +14,7 @@ std::tuple<unsigned int, unsigned int> BuildPopulation(const GenConfiguration& c
     auto hh_reference           = files::GetReferenceHouseholds(config);
     unsigned int current_hh_id  = start_hh_id;
     unsigned int current_p_id   = start_person_id;
-    auto pop_size = config.GetTree().get<unsigned int>("population_size");
+    auto pop_size = config.GetTree().get<unsigned int>("population_size") + current_p_id-1;
 
     // Create a uniform distribution for the household reference set.
     auto rn_manager = config.GetRNManager();

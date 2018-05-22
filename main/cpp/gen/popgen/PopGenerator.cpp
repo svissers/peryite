@@ -26,8 +26,14 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
 
     unsigned int cp_id = 1;
     for(unsigned int current_region_nr = 0;current_region_nr < amount_regions; current_region_nr++) {
+        std::cout << "current region: " << current_region_nr << std::endl;
         unsigned int first_person_id = dir.GetFirstInRegion(current_region_nr);
-        unsigned int next_first_person_id = dir.GetFirstInRegion(current_region_nr + 1);
+        int next_first_person_id = dir.GetFirstInRegion(current_region_nr + 1);
+        if(next_first_person_id == -1){
+            next_first_person_id = population->size();
+        }
+        std::cout << "first in region: " << first_person_id <<std::endl;
+        std::cout << "next region: " << next_first_person_id <<std::endl;
         // --------------------------------------------------
         // Get the population and structs (by file or memory)
         // --------------------------------------------------
@@ -128,6 +134,7 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
             output_file.Write();
         }
     }
+    std::cout<< "popsize: " <<population->size() << std::endl;
 }
 
 vector<shared_ptr<GenStruct>> GetClosestStructs(const util::spherical_point& home_coord, const vector<vector<shared_ptr<GenStruct>>>& structs, const GeoGrid& grid)

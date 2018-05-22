@@ -15,8 +15,13 @@ void Generate(GenDirectory& dir, shared_ptr<Population>& population)
 
 
     unsigned int next_person_id = 0;
+    unsigned int start_person_id = 0;
     unsigned int next_hh_id = 0;
     unsigned int amount_of_regions = dir.GetAmountOfRegions();
+    unsigned int nextIdCommunity = 0;
+    unsigned int nextIdWorkplace = 0;
+    unsigned int nextIdUniversity = 0;
+    unsigned int nextIdSchool = 0;
     for(unsigned int current_region_nr = 0; current_region_nr < amount_of_regions; current_region_nr++) {
         dir.AddFirstInRegion(next_person_id);
         auto config = dir.GetConfig()[current_region_nr];
@@ -27,20 +32,32 @@ void Generate(GenDirectory& dir, shared_ptr<Population>& population)
         next_person_id = std::get<0>(PopulationReturnVal);
         next_hh_id = std::get<1>(PopulationReturnVal);
         GeoGrid geogrid = builder::BuildGeoGrid(config);
-        vector<shared_ptr<School>> schools = builder::BuildSchools(config, geogrid, population);
-        vector<shared_ptr<University>> universities = builder::BuildUniversities(config, geogrid, schools.size());
-        vector<shared_ptr<WorkPlace>> workplaces = builder::BuildWorkplaces(config, geogrid, population);
-        vector<shared_ptr<Community>> communities = builder::BuildCommunities(config, geogrid, population);
+        std::tuple<vector<shared_ptr<School>>, unsigned int> schoolReturnVal = builder::BuildSchools(config, geogrid, population, nextIdSchool);
+        vector<shared_ptr<School>> schools = get<0>(schoolReturnVal);
+        nextIdUniversity = get<1>(schoolReturnVal);
+        std::tuple<vector<shared_ptr<University>>, unsigned int> uniReturnVal = builder::BuildUniversities(config, geogrid,  nextIdUniversity);
+        vector<shared_ptr<University>> universities = get<0>(uniReturnVal);
+        nextIdSchool = get<1>(uniReturnVal);
+        tuple<vector<shared_ptr<WorkPlace>>, unsigned int> workReturnVal = builder::BuildWorkplaces(config, geogrid, population, nextIdWorkplace, start_person_id, next_person_id);
+        vector<shared_ptr<WorkPlace>> workplaces = get<0>(workReturnVal);
+        nextIdWorkplace = get<1>(workReturnVal);
+        tuple<vector<shared_ptr<Community>>, unsigned int> commieReturnVal = builder::BuildCommunities(config, geogrid, population, nextIdCommunity);
+        vector<shared_ptr<Community>> communities = get<0>(commieReturnVal);
+        nextIdCommunity = get<1>(commieReturnVal);
+
+        start_person_id = next_person_id;
 
         // Write
         auto population_file = make_shared<PopulationFile>(
                 config,
                 population
         );
+
         std::string popfilename = "pop";
         popfilename.append(std::to_string(current_region_nr));
         popfilename.append(".csv");
         population_file->SetFileName(popfilename);
+
 
         auto geo_grid_file = make_shared<GeoGridFile>(
                 config,
@@ -92,8 +109,8 @@ void Generate(GenDirectory& dir, shared_ptr<Population>& population)
         community_file->SetFileName(commiefilename);
 
         // Initialize
-        // TODO change to vectors; push back
         dir.Initialize(population_file, geo_grid_file, school_file, university_file, workplace_file, community_file);
+        std::cout << "going to write" << std::endl;
 
         auto write = config.GetTree().get<bool>("write_geogrid");
         if (write) {
@@ -104,6 +121,7 @@ void Generate(GenDirectory& dir, shared_ptr<Population>& population)
             workplace_file->Write();
             community_file->Write();
         }
+        std::cout << "completed building region: " << current_region_nr << std::endl;
     }
 }
 

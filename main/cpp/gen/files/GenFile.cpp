@@ -16,8 +16,9 @@ GenFile::GenFile(GenConfiguration& config)
     try {
         create_directories(m_output_prefix);
     } catch (exception& e) {
-        cout << "GeoGenerator::generate> Exception while creating output directory:  {}", e.what();
-        throw;
+        // TODO same as in population file
+        //cout << "GeoGenerator::generate> Exception while creating output directory:  {}", e.what();
+        //throw;
     }
 }
 
@@ -30,8 +31,8 @@ GenFile::GenFile(GenConfiguration& config, vector<shared_ptr<GenStruct>> structs
     try {
         create_directories(m_output_prefix);
     } catch (exception& e) {
-        cout << "GeoGenerator::generate> Exception while creating output directory:  {}", e.what();
-        throw;
+        //cout << "GeoGenerator::generate> Exception while creating output directory:  {}", e.what();
+        //throw;
     }
     insertStructs(structs, geo);
 }

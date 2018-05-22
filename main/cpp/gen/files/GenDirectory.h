@@ -71,7 +71,7 @@ public:
     /// @return The file containing communities.
     std::vector<CommunityFilePtr> GetCommunityFile(unsigned int region_nr);
 
-    unsigned int GetFirstInRegion(unsigned int region_nr);
+    int GetFirstInRegion(unsigned int region_nr);
 
     void AddFirstInRegion(unsigned int person_id);
 

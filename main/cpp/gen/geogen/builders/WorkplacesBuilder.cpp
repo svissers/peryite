@@ -11,7 +11,7 @@ namespace builder {
 using namespace std;
 using namespace util;
 
-vector<shared_ptr<WorkPlace>> BuildWorkplaces(GenConfiguration& config, GeoGrid& grid, std::shared_ptr<Population> pop)
+std::tuple<vector<shared_ptr<WorkPlace>>, unsigned int> BuildWorkplaces(GenConfiguration& config, GeoGrid& grid, std::shared_ptr<Population> pop, unsigned int nextWorkplaceId, unsigned int start_person_id, unsigned int next_person_id)
 {
     auto workplaces         = vector<shared_ptr<WorkPlace>>();
     //auto total_population   = config.GetTree().get<unsigned int>("population_size");
@@ -52,7 +52,7 @@ vector<shared_ptr<WorkPlace>> BuildWorkplaces(GenConfiguration& config, GeoGrid&
         }
     }
     unsigned int working_age_people = 0;
-    for(size_t i = 0; i < pop->size(); i++){
+    for(size_t i = start_person_id; i < next_person_id; i++){
         if(pop->at(i).GetAge() >=18 && pop->at(i).GetAge() <= 65)
             working_age_people++;
     }
@@ -71,7 +71,7 @@ vector<shared_ptr<WorkPlace>> BuildWorkplaces(GenConfiguration& config, GeoGrid&
         fractions.push_back(double(local_workforce) / double(total_active_population));
     }
     if (fractions.empty()) {
-        return workplaces;
+        return std::tuple<vector<shared_ptr<WorkPlace>>, unsigned int>(workplaces, nextWorkplaceId);;
     }
 
     // The RNManager allows for parallelization.
@@ -80,11 +80,11 @@ vector<shared_ptr<WorkPlace>> BuildWorkplaces(GenConfiguration& config, GeoGrid&
 
     // Create and map the workplaces to their samples.
     for (unsigned int i = 0; i < workplace_count; i++) {
-        auto workplace = make_shared<WorkPlace>(WorkPlace(i, grid.at(generator())->coordinate));
+        auto workplace = make_shared<WorkPlace>(WorkPlace(nextWorkplaceId + i, grid.at(generator())->coordinate));
         workplaces.push_back(workplace);
     }
 
-    return workplaces;
+    return std::tuple<vector<shared_ptr<WorkPlace>>, unsigned int>(workplaces, nextWorkplaceId + workplace_count);
 }
 
 } // namespace builder

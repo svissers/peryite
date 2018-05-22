@@ -10,7 +10,7 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
-vector<shared_ptr<School>> BuildSchools(const GenConfiguration& config, GeoGrid& grid, std::shared_ptr<Population> pop)
+tuple<vector<shared_ptr<School>>, unsigned int> BuildSchools(const GenConfiguration& config, GeoGrid& grid, std::shared_ptr<Population> pop, unsigned int start_school_id)
 {
     auto schools = vector<shared_ptr<School>>();
     auto total_population = config.GetTree().get<unsigned int>("population_size");
@@ -32,7 +32,7 @@ vector<shared_ptr<School>> BuildSchools(const GenConfiguration& config, GeoGrid&
             fractions.push_back(double(center->population) / double(total_population));
     }
     if (fractions.empty()) {
-        return schools;
+        return tuple<vector<shared_ptr<School>>, unsigned int> (schools, start_school_id+school_count);
     }
 
     // The RNManager allows for parallelization.
@@ -51,11 +51,11 @@ vector<shared_ptr<School>> BuildSchools(const GenConfiguration& config, GeoGrid&
             auto frag_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(f_fractions.begin(), f_fractions.end()));
             coords = center->fragmented_coords.at(frag_gen());
         }
-        auto school = make_shared<School>(School(i, coords));
+        auto school = make_shared<School>(School(start_school_id + i, coords));
         schools.push_back(school);
     }
 
-    return schools;
+    return tuple<vector<shared_ptr<School>>, unsigned int> (schools, start_school_id+school_count);
 }
 
 } // namespace builder

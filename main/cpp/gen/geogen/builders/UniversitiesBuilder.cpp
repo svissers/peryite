@@ -8,7 +8,7 @@ namespace builder {
 
 using namespace std;
 
-vector<shared_ptr<University>> BuildUniversities(GenConfiguration& config, GeoGrid& grid, unsigned int nrSchools)
+std::tuple<vector<shared_ptr<University>>, unsigned int> BuildUniversities(GenConfiguration& config, GeoGrid& grid, unsigned int start_uni_id)
 {
     auto universities = vector<shared_ptr<University>>();
     auto total_population = config.GetTree().get<unsigned int>("population_size");
@@ -31,7 +31,7 @@ vector<shared_ptr<University>> BuildUniversities(GenConfiguration& config, GeoGr
     auto smallest = grid.begin() + city_count;
     vector<shared_ptr<UrbanCenter>> big_cities(biggest, smallest);
     if (big_cities.empty())
-        return universities;
+        return std::tuple<vector<shared_ptr<University>>, unsigned int>(universities, start_uni_id+uni_count);
 
 
     // The distribution will be relative to the top ten city population (not total).
@@ -54,11 +54,11 @@ vector<shared_ptr<University>> BuildUniversities(GenConfiguration& config, GeoGr
     for (unsigned int i = 0; i < uni_count; i++) {
             auto index      = generator();
             auto center     = grid.at(index);
-            auto university = make_shared<University>(University(i+nrSchools, center->id, center->coordinate));
+            auto university = make_shared<University>(University(i+start_uni_id, center->id, center->coordinate));
             universities.push_back(university);
     }
 
-    return universities;
+    return std::tuple<vector<shared_ptr<University>>, unsigned int>(universities, start_uni_id+uni_count);
 }
 
 } // namespace builder

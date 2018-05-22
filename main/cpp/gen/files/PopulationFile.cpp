@@ -25,8 +25,10 @@ PopulationFile::PopulationFile(GenConfiguration& config)
     try {
         create_directories(m_output_prefix);
     } catch (exception& e) {
-        cout << "GeoGenerator::generate> Exception while creating output directory:  {}", e.what();
-        throw;
+        // TODO if directory can't be created and doesn't exist, throw
+        // previous throw is faulty when we create a second file with the same output prefix
+        //cout << "GeoGenerator::generate> Exception while creating output directory:  {}", e.what();
+        //throw;
     }
 }
 

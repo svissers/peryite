@@ -9,14 +9,14 @@ using namespace gen;
 
 GenDirectory::GenDirectory(const boost::property_tree::ptree& config_pt, unsigned int thread_count, string output_prefix)
 {
-    auto multi_regions = config_pt.get_child_optional("amount_regions");
+    auto multi_regions = config_pt.get_child_optional("run.amount_regions");
     unsigned int amount_regions= 1;
     if(multi_regions){
-        amount_regions = config_pt.get<unsigned int>("amount_regions");
+        amount_regions = config_pt.get<unsigned int>("run.amount_regions");
     }
     m_amount_of_regions = amount_regions;
-    string pop_config = "run.pop_config";
     for(unsigned int i; i < amount_regions; i++) {
+        string pop_config = "run.pop_config";
         pop_config.append(to_string(i+1));
         m_config.push_back(GenConfiguration(config_pt.get_child(pop_config), thread_count, std::move(output_prefix)));
     }
@@ -26,14 +26,15 @@ GenDirectory::GenDirectory(const boost::property_tree::ptree& config_pt, util::R
 {
     // Make a pointer to the rn_manager without it being automatically deleted.
     auto manager    = std::shared_ptr<util::RNManager>(&rn_manager, [](util::RNManager*){});
-    auto multi_regions = config_pt.get_child_optional("amount_regions");
+    auto multi_regions = config_pt.get_child_optional("run.amount_regions");
     unsigned int amount_regions= 1;
     if(multi_regions){
-        amount_regions = config_pt.get<unsigned int>("amount_regions");
+        amount_regions = config_pt.get<unsigned int>("run.amount_regions");
     }
     m_amount_of_regions = amount_regions;
-    string pop_config = "run.pop_config";
+
     for(unsigned int i; i < amount_regions; i++) {
+        string pop_config = "run.pop_config";
         pop_config.append(to_string(i+1));
         m_config.push_back(GenConfiguration(config_pt.get_child(pop_config), manager, std::move(output_prefix)));
     }
@@ -99,11 +100,11 @@ std::vector<CommunityFilePtr> GenDirectory::GetCommunityFile(unsigned int region
     return m_community_file;
 }
 
-unsigned int GenDirectory::GetFirstInRegion(unsigned int region_nr) {
+int GenDirectory::GetFirstInRegion(unsigned int region_nr) {
     if(region_nr < m_first_id_in_region.size())
         return m_first_id_in_region[region_nr];
     else
-        return m_first_id_in_region.size();
+        return -1;
 }
 
 void GenDirectory::AddFirstInRegion(unsigned int person_id) {
