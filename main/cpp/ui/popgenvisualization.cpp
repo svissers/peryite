@@ -92,12 +92,12 @@ void PopGenVisualization::parseData(PopGenData *data) {
 
 void PopGenVisualization::addAge(int age) {
     if (age > maxAge) {
-        qDebug() << "age too large: " + age;
+        qDebug() << "age too large: " + QString::number(age);
         return;
     }
 
     if (age < 0) {
-        qDebug() << "age too small " + age;
+        qDebug() << "age too small: " + QString::number(age);
         return;
     }
 
