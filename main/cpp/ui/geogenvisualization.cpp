@@ -9,6 +9,7 @@
 #include <QTimer>
 #include <QCloseEvent>
 #include <QFile>
+#include <QIcon>
 
 GeoGenVisualization::GeoGenVisualization(QWidget *parent) :
     QWidget(parent),
