@@ -10,6 +10,7 @@
 #include <QTimer>
 #include <QtDebug>
 #include <QCloseEvent>
+#include <QIcon>
 
 using namespace stride;
 using namespace std;
