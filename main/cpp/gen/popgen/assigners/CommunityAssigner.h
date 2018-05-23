@@ -16,7 +16,7 @@ namespace assigner {
 unsigned int AssignCommunities
         (std::vector<std::vector<std::shared_ptr<GenStruct>>> communities,
          const std::shared_ptr<Population> population,
-         const GenConfiguration &config, const GeoGrid &grid, unsigned int start_cp_id);
+         const GenConfiguration &config, const GeoGrid &grid, unsigned int start_cp_id, unsigned int first_person_id, unsigned int next_first_person_id);
 
 } // assigner
 } // popgen

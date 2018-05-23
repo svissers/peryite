@@ -110,7 +110,6 @@ void Generate(GenDirectory& dir, shared_ptr<Population>& population)
 
         // Initialize
         dir.Initialize(population_file, geo_grid_file, school_file, university_file, workplace_file, community_file);
-        std::cout << "going to write" << std::endl;
 
         auto write = config.GetTree().get<bool>("write_geogrid");
         if (write) {
@@ -121,7 +120,6 @@ void Generate(GenDirectory& dir, shared_ptr<Population>& population)
             workplace_file->Write();
             community_file->Write();
         }
-        std::cout << "completed building region: " << current_region_nr << std::endl;
     }
 }
 

@@ -14,7 +14,7 @@ using namespace util;
 
 unsigned int AssignCommunities(
         vector<vector<shared_ptr<GenStruct>>> communities, const shared_ptr<Population> population,
-        const GenConfiguration &config, const GeoGrid &grid, unsigned int start_cp_id) {
+        const GenConfiguration &config, const GeoGrid &grid, unsigned int start_cp_id, unsigned int first_person_id , unsigned int next_first_person_id) {
     // -------------
     // Contactpools
     // -------------
@@ -38,7 +38,7 @@ unsigned int AssignCommunities(
     // ------------------------------
     // Assign persons to communities
     // ------------------------------
-    for (std::size_t i = 0; i < population->size(); i++) {
+    for (std::size_t i = first_person_id; i < next_first_person_id; i++) {
         auto hh_id = population->at(i).GetPoolId(ContactPoolType::Id::Household);
         auto home_coord = population->at(i).GetCoordinate();
         auto closest_communities = GetClosestStructs(home_coord, communities, grid);

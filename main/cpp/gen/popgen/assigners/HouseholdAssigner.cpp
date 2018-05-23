@@ -11,7 +11,7 @@ using namespace gen;
 using namespace util;
 
 void AssignHouseholds(
-        shared_ptr<Population> population, const GeoGrid &grid, const GenConfiguration &config) {
+        shared_ptr<Population> population, const GeoGrid &grid, const GenConfiguration &config, unsigned int first_person_id, unsigned int next_first_person_id) {
     auto total_population = config.GetTree().get<unsigned int>("population_size");
 
     // Create the discrete distribution to sample from.
@@ -29,7 +29,7 @@ void AssignHouseholds(
             trng::fast_discrete_dist(fractions.begin(), fractions.end()));
 
     // Map the households to their samples.
-    for (std::size_t i = 0; i < population->size(); i++) {
+    for (std::size_t i = first_person_id; i < next_first_person_id; i++) {
         auto hh_id = population->at(i).GetPoolId(ContactPoolType::Id::Household);
         auto index = grid.at(generator());
         auto center = index;

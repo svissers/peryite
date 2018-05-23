@@ -14,7 +14,7 @@ using namespace util;
 
 unsigned int AssignSchools(
         vector<vector<shared_ptr<GenStruct>>> &schools, const shared_ptr<Population> population,
-        const GenConfiguration &config, const GeoGrid &grid, unsigned int start_cp_id) {
+        const GenConfiguration &config, const GeoGrid &grid, unsigned int start_cp_id, unsigned int first_person_id, unsigned int next_person_id) {
     const unsigned int school_size = config.GetTree().get<unsigned int>("school_size");
     const unsigned int school_cp_size = config.GetTree().get<unsigned int>("school_cp_size");
     // Create the contactpools for every school
@@ -31,7 +31,9 @@ unsigned int AssignSchools(
     }
 
     // Assign young students to schools
-    for (auto &person : *population) {
+    for (unsigned int i = first_person_id; i < next_person_id; i++/*auto &person : *population*/) {
+
+        auto &person = population->at(i);
         auto age = person.GetAge();
         if (age >= 3 && age < 18) {
             auto home_coord = person.GetCoordinate();

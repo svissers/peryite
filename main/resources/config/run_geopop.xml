@@ -34,10 +34,10 @@
     <vaccine_link_probability>0</vaccine_link_probability>
     <vaccine_profile>Random</vaccine_profile>
     <vaccine_rate>0.8</vaccine_rate>
-    <amount_regions>1</amount_regions>
+    <amount_regions>2</amount_regions>
     <pop_config1>
-        <write_geogrid>false</write_geogrid>
-        <write_population>false</write_population>
+        <write_geogrid>true</write_geogrid>
+        <write_population>true</write_population>
         <fragment_centers>true</fragment_centers>
         <rng>
             <engine>mrg2</engine>
@@ -69,4 +69,38 @@
 		    <commute_fraction>0.50</commute_fraction>
 	    </work>
     </pop_config1>
+    <pop_config2>
+        <write_geogrid>true</write_geogrid>
+        <write_population>true</write_population>
+        <fragment_centers>true</fragment_centers>
+        <rng>
+            <engine>mrg2</engine>
+            <seed>25646</seed>
+        </rng>
+        <!-- The amount of persons to generate -->
+        <population_size>120000</population_size>
+        <!-- The household reference set to sample from -->
+        <household_profile>households_flanders.xml</household_profile>
+        <geoprofile>
+            <cities>data/flanders_cities2.csv</cities>
+            <commuters>data/flanders_commuting.csv</commuters>
+        </geoprofile>
+        <school_size>500</school_size>
+        <school_cp_size>20</school_cp_size>
+        <university_size>3000</university_size>
+        <university_cp_size>20</university_cp_size>
+        <workplace_size>20</workplace_size>
+        <university>
+            <!-- Among the 18-26 year olds, a fraction is a student -->
+            <student_fraction>0.50</student_fraction>
+            <!-- Among the students, a fraction commutes -->
+            <commute_fraction>0.50</commute_fraction>
+        </university>
+        <work>
+            <!-- Among the employable population (excluding students), a fraction is active -->
+            <work_fraction>0.70</work_fraction>
+            <!-- Among the active population, a fraction commutes -->
+            <commute_fraction>0.50</commute_fraction>
+        </work>
+    </pop_config2>
 </run>

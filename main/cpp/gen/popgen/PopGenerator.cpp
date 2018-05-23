@@ -26,14 +26,12 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
 
     unsigned int cp_id = 1;
     for(unsigned int current_region_nr = 0;current_region_nr < amount_regions; current_region_nr++) {
-        std::cout << "current region: " << current_region_nr << std::endl;
-        unsigned int first_person_id = dir.GetFirstInRegion(current_region_nr);
+        int first_person_id = dir.GetFirstInRegion(current_region_nr);
         int next_first_person_id = dir.GetFirstInRegion(current_region_nr + 1);
         if(next_first_person_id == -1){
             next_first_person_id = population->size();
         }
-        std::cout << "first in region: " << first_person_id <<std::endl;
-        std::cout << "next region: " << next_first_person_id <<std::endl;
+
         // --------------------------------------------------
         // Get the population and structs (by file or memory)
         // --------------------------------------------------
@@ -50,18 +48,21 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
         // -------------------
 
 
-        assigner::AssignHouseholds(population, grid, config);
-        next_cp_id_schools = assigner::AssignSchools(schools, population, config, grid, next_cp_id_schools);
+        assigner::AssignHouseholds(population, grid, config, first_person_id,next_first_person_id);
+        next_cp_id_schools = assigner::AssignSchools(schools, population, config, grid, next_cp_id_schools,first_person_id,next_first_person_id);
+
         std::tuple<unsigned int, unsigned int> assignUniReturnVal = assigner::AssignUniversities(universities,
                                                                                                  population, config,
                                                                                                  grid,
-                                                                                                 next_cp_id_universities);
+                                                                                                 next_cp_id_universities,first_person_id,next_first_person_id);
         unsigned int total_commuting_students = std::get<0>(assignUniReturnVal);
         next_cp_id_universities = std::get<1>(assignUniReturnVal);
+
         next_cp_id_workplaces = assigner::AssignWorkplaces(workplaces, population, config, grid,
-                                                           total_commuting_students, next_cp_id_workplaces);
+                                                           total_commuting_students, next_cp_id_workplaces,first_person_id,next_first_person_id);
+
         next_cp_id_communities = assigner::AssignCommunities(communities, population, config, grid,
-                                                             next_cp_id_communities);
+                                                             next_cp_id_communities,first_person_id,next_first_person_id);
 
         // -------------------
         // Fill ContactPoolSys
@@ -134,7 +135,6 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
             output_file.Write();
         }
     }
-    std::cout<< "popsize: " <<population->size() << std::endl;
 }
 
 vector<shared_ptr<GenStruct>> GetClosestStructs(const util::spherical_point& home_coord, const vector<vector<shared_ptr<GenStruct>>>& structs, const GeoGrid& grid)

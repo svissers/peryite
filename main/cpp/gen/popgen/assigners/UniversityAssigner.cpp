@@ -14,7 +14,7 @@ using namespace util;
 
 std::tuple<unsigned int, unsigned int> AssignUniversities(
         vector<vector<shared_ptr<GenStruct>>> &universities, const shared_ptr<Population> population,
-        const GenConfiguration &config, const GeoGrid &grid,unsigned int start_cp_id) {
+        const GenConfiguration &config, const GeoGrid &grid,unsigned int start_cp_id, unsigned int first_person_id, unsigned int next_first_person_id) {
     // -------------
     // Contactpools
     // -------------
@@ -101,7 +101,8 @@ std::tuple<unsigned int, unsigned int> AssignUniversities(
     // Assign students to universities.
     // --------------------------------
     unsigned int total_commuting_students = 0;
-    for (auto &person : *population) {
+    for (unsigned int i = first_person_id; i < next_first_person_id; i++) {
+        auto &person = population->at(i);
         auto age = person.GetAge();
         if (age >= 18 && age < 26 && student_gen() == 0) {
             shared_ptr<ContactPool> pool;

@@ -14,7 +14,7 @@ using namespace util;
 
 unsigned int AssignWorkplaces(
         vector<vector<shared_ptr<GenStruct>>> &workplaces, const shared_ptr<Population> population,
-        const GenConfiguration &config, const GeoGrid &grid, unsigned int total_commuting_students, unsigned int start_cp_id) {
+        const GenConfiguration &config, const GeoGrid &grid, unsigned int total_commuting_students, unsigned int start_cp_id, unsigned int first_person_id, unsigned int next_first_person_id) {
     // -------------
     // Contactpools
     // -------------
@@ -48,7 +48,7 @@ unsigned int AssignWorkplaces(
 
     // Commuting distributions
     unsigned int working_age_people = 0;
-    for(size_t i = 0; i < population->size(); i++){
+    for(size_t i = first_person_id; i < next_first_person_id; i++){
         if(population->at(i).GetAge() >=18 && population->at(i).GetAge() <= 65)
             working_age_people++;
     }
@@ -90,7 +90,8 @@ unsigned int AssignWorkplaces(
     // --------------------------------
     // Assign employables to workplaces.
     // --------------------------------
-    for (auto &person : *population) {
+    for (unsigned int i = first_person_id; i < next_first_person_id; i++) {
+        auto &person = population->at(i);
         auto age = person.GetAge();
         if (age >= 18 && age < 26 && person.GetPoolId(ContactPoolType::Id::School) != 0) {
             // Students are not employable
