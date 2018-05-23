@@ -3,6 +3,7 @@
 
 #include <QtCharts/QChartView>
 #include <QtCharts/QValueAxis>
+#include <QIcon>
 
 using namespace QtCharts;
 

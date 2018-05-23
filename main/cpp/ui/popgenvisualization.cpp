@@ -7,6 +7,7 @@
 #include <QFile>
 #include <QTimer>
 #include <QCloseEvent>
+#include <QIcon>
 
 PopGenVisualization::PopGenVisualization(QWidget *parent) :
     QWidget(parent),
