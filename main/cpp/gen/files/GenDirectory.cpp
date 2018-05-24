@@ -15,7 +15,7 @@ GenDirectory::GenDirectory(const boost::property_tree::ptree& config_pt, unsigne
         amount_regions = config_pt.get<unsigned int>("run.amount_regions");
     }
     m_amount_of_regions = amount_regions;
-    for(unsigned int i; i < amount_regions; i++) {
+    for(unsigned int i = 0; i < amount_regions; i++) {
         string pop_config = "run.pop_config";
         pop_config.append(to_string(i+1));
         m_config.push_back(GenConfiguration(config_pt.get_child(pop_config), thread_count, std::move(output_prefix)));
