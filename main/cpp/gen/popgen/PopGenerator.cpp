@@ -46,8 +46,6 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
         // -------------------
         // Assign ContactPools
         // -------------------
-
-
         assigner::AssignHouseholds(population, grid, config, first_person_id,next_first_person_id);
         next_cp_id_schools = assigner::AssignSchools(schools, population, config, grid, next_cp_id_schools,first_person_id,next_first_person_id);
 
@@ -67,9 +65,8 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
         // -------------------
         // Fill ContactPoolSys
         // -------------------
-
         // Households
-        for (std::size_t i = first_person_id; i < next_first_person_id; ++i) {
+        for (int i = first_person_id; i < next_first_person_id; ++i) {
             auto &person = population->at(i);
             auto hh_id = person.GetPoolId(ContactPoolType::Id::Household);
             auto pool = ContactPool(cp_id, ContactPoolType::Id::Household);

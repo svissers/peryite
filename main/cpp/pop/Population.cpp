@@ -75,6 +75,28 @@ std::shared_ptr<Population> Population::Create(const string& configString)
         return Create(RunConfigManager::FromString(configString));
 }
 
+std::shared_ptr<Population> Population::CreateEmpty(const boost::property_tree::ptree& configPt)
+{
+        // --------------------------------------------------------------
+        // Create (empty) population & and give it a ContactLogger.
+        // --------------------------------------------------------------
+        struct make_shared_enabler : public Population
+        {
+        };
+        auto pop = make_shared<make_shared_enabler>();
+        if (configPt.get<bool>("run.contact_output_file", true)) {
+                const auto prefix       = configPt.get<string>("run.output_prefix");
+                const auto logPath      = FileSys::BuildPath(prefix, "contact_log.txt");
+                pop->GetContactLogger() = LogUtils::CreateRotatingLogger("contact_logger", logPath.string());
+                pop->GetContactLogger()->set_pattern("%v");
+        } else {
+                pop->GetContactLogger() = LogUtils::CreateNullLogger("contact_logger");
+        }
+
+        return pop;
+}
+
+
 unsigned int Population::GetAdoptedCount() const
 {
         unsigned int total{0U};
