@@ -16,20 +16,11 @@ using namespace boost::property_tree;
 
 PopulationFile::PopulationFile(GenConfiguration& config)
 {
-    m_file_name = "Pop.csv";
-    m_labels = {"age", "household_id", "school_id", "work_id", "primary_community", "secondary_community", "latitude", "longitude"};
-
+    m_file_name     = "Pop.csv";
+    m_labels        = {"age", "household_id", "school_id", "work_id", "primary_community", "secondary_community", "latitude", "longitude"};
     // Get the output directory for this configuration.
     m_output_prefix = config.GetOutputPrefix();
-    m_file_path = FileSys::BuildPath(m_output_prefix, m_file_name);
-    try {
-        create_directories(m_output_prefix);
-    } catch (exception& e) {
-        // TODO if directory can't be created and doesn't exist, throw
-        // previous throw is faulty when we create a second file with the same output prefix
-        //cout << "GeoGenerator::generate> Exception while creating output directory:  {}", e.what();
-        //throw;
-    }
+    m_file_path     = FileSys::BuildPath(m_output_prefix, m_file_name);
 }
 
 PopulationFile::PopulationFile(GenConfiguration& config, std::shared_ptr<Population> population)
@@ -125,11 +116,6 @@ std::vector<std::string> PopulationFile::GetValues(const Person& person)
         to_string(person.GetCoordinate().get<1>())
     };
     return values;
-}
-
-void PopulationFile::SetFileName(std::string newname){
-    m_file_name = newname;
-    m_file_path = FileSys::BuildPath(m_output_prefix, m_file_name);
 }
 
 } // namespace files

@@ -1,6 +1,7 @@
 #include "WorkplaceAssigner.h"
 #include "../../structs/Workplace.h"
 #include "../PopGenerator.h"
+#include "pool/ContactPoolType.h"
 #include "trng/fast_discrete_dist.hpp"
 
 namespace stride {
@@ -12,13 +13,13 @@ using namespace std;
 using namespace gen;
 using namespace util;
 
-unsigned int AssignWorkplaces(
+void AssignWorkplaces(
         vector<vector<shared_ptr<GenStruct>>> &workplaces, const shared_ptr<Population> population,
-        const GenConfiguration &config, const GeoGrid &grid, unsigned int total_commuting_students, unsigned int start_cp_id, unsigned int first_person_id, unsigned int next_first_person_id) {
+        shared_ptr<Region> region, const GeoGrid &grid, unsigned int total_commuting_students) {
     // -------------
     // Contactpools
     // -------------
-    unsigned int cp_id = start_cp_id;
+    unsigned int cp_id = region->first_cps[ContactPoolType::Id::Work];
     for (auto &band : workplaces) {
         for (auto &g_struct : band) {
             auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
@@ -27,9 +28,12 @@ unsigned int AssignWorkplaces(
             cp_id++;
         }
     }
+    region->last_cps[ContactPoolType::Id::Work] = cp_id-1;
+
     // -------------
     // Distributions
     // -------------
+    auto config = region->config;
     auto rn_manager = config.GetRNManager();
 
     //auto total_population   = config.GetTree().get<unsigned int>("population_size");
@@ -48,7 +52,7 @@ unsigned int AssignWorkplaces(
 
     // Commuting distributions
     unsigned int working_age_people = 0;
-    for(size_t i = first_person_id; i < next_first_person_id; i++){
+    for(size_t i = region->first_person_id; i <= region->last_person_id; i++){
         if(population->at(i).GetAge() >=18 && population->at(i).GetAge() <= 65)
             working_age_people++;
     }
@@ -90,7 +94,7 @@ unsigned int AssignWorkplaces(
     // --------------------------------
     // Assign employables to workplaces.
     // --------------------------------
-    for (unsigned int i = first_person_id; i < next_first_person_id; i++) {
+    for (unsigned int i = region->first_person_id; i <= region->last_person_id; i++) {
         auto &person = population->at(i);
         auto age = person.GetAge();
         if (age >= 18 && age < 26 && person.GetPoolId(ContactPoolType::Id::School) != 0) {
@@ -144,7 +148,6 @@ unsigned int AssignWorkplaces(
             pool->AddMember(&person);
         }
     }
-    return cp_id;
 }
 } // assigner
 } // popgen

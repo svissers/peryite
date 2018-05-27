@@ -12,9 +12,9 @@ namespace geogen {
 namespace builder {
 
 /// Builds a set of households for the population.
-/// @param config     The configuration file that specifies parameters used in building households.
-/// @param population The population that will be seeded.
-std::tuple<unsigned int, unsigned int> BuildPopulation(const GenConfiguration& config, std::shared_ptr<Population>& population, unsigned int start_person_id, unsigned int start_hh_id);
+/// @param region       The region that the population will be created in.
+/// @param population   The population that will be seeded.
+void BuildPopulation(std::shared_ptr<util::Region> region, std::shared_ptr<Population>& population);
 
 } // namespace builder
 } // namespace geogen

@@ -14,16 +14,18 @@ class WorkplaceFile : public GenFile
 public:
     /// Constructor. Constructs the WorkplaceFile object using the config.
     /// @param config           The geopop configuration to be used.
-    WorkplaceFile(GenConfiguration& config) : GenFile(config) {}
+    /// @param suffix           The suffix to use for the file name.
+    WorkplaceFile(GenConfiguration& config, std::string suffix) : GenFile(config, suffix) {}
 
     /// Constructor. Constructs the WorkplaceFile object with an existing vector of workplaces.
     /// @param config           The geopop configuration to be used.
     /// @param structs          The workplaces that the file will contain.
     /// @param geo              The geogrid that was used to build the workplaces.
-    WorkplaceFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, GeoGrid& geo)
-    : GenFile(config, structs, geo)
+    /// @param suffix           The suffix to use for the file name.
+    WorkplaceFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, GeoGrid& geo, std::string suffix)
+    : GenFile(config, structs, geo, suffix)
     {
-        m_file_name = "Workplaces.csv";
+        m_file_name = "Workplaces";
         m_labels = {"id","latitude","longitude","band"};
     }
 

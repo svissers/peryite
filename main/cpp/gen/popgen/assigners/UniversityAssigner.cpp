@@ -1,6 +1,7 @@
 #include "UniversityAssigner.h"
 #include "../../structs/University.h"
 #include "../PopGenerator.h"
+#include "pool/ContactPoolType.h"
 #include "trng/fast_discrete_dist.hpp"
 
 namespace stride {
@@ -12,15 +13,16 @@ using namespace std;
 using namespace gen;
 using namespace util;
 
-std::tuple<unsigned int, unsigned int> AssignUniversities(
+unsigned int AssignUniversities(
         vector<vector<shared_ptr<GenStruct>>> &universities, const shared_ptr<Population> population,
-        const GenConfiguration &config, const GeoGrid &grid,unsigned int start_cp_id, unsigned int first_person_id, unsigned int next_first_person_id) {
+        shared_ptr<Region> region, const GeoGrid &grid) {
     // -------------
     // Contactpools
     // -------------
-    const unsigned int university_size = config.GetTree().get<unsigned int>("university_size");
-    const unsigned int university_cp_size = config.GetTree().get<unsigned int>("university_cp_size");
-    unsigned int cp_id = start_cp_id;
+    auto config                             = region->config;
+    const unsigned int university_size      = config.GetTree().get<unsigned int>("university_size");
+    const unsigned int university_cp_size   = config.GetTree().get<unsigned int>("university_cp_size");
+    unsigned int cp_id                      = region->last_cps[ContactPoolType::Id::School];
     map<unsigned int, vector<shared_ptr<University>>> cities;
     for (const auto &band : universities) {
         for (const auto &g_struct : band) {
@@ -39,6 +41,7 @@ std::tuple<unsigned int, unsigned int> AssignUniversities(
             }
         }
     }
+    region->last_cps[ContactPoolType::Id::School] = cp_id-1;
 
     // -------------
     // Distributions
@@ -70,7 +73,7 @@ std::tuple<unsigned int, unsigned int> AssignUniversities(
             std::stringstream templabel;
             templabel << "id_" << city.first;
             string label = templabel.str();
-                  // For every university city, calculate the fraction commuting towards it.
+            // For every university city, calculate the fraction commuting towards it.
             auto row = *(commuting_data.begin() + commuting_data.GetIndexForLabel(label));
             unsigned int city_total = 0;
             for (unsigned int col_index = 0; col_index < commuting_data.GetColumnCount(); col_index++) {
@@ -101,7 +104,7 @@ std::tuple<unsigned int, unsigned int> AssignUniversities(
     // Assign students to universities.
     // --------------------------------
     unsigned int total_commuting_students = 0;
-    for (unsigned int i = first_person_id; i < next_first_person_id; i++) {
+    for (unsigned int i = region->first_person_id; i <= region->last_person_id; i++) {
         auto &person = population->at(i);
         auto age = person.GetAge();
         if (age >= 18 && age < 26 && student_gen() == 0) {
@@ -139,7 +142,7 @@ std::tuple<unsigned int, unsigned int> AssignUniversities(
             pool->AddMember(&person);
         }
     }
-    return std::tuple<unsigned int, unsigned int>(total_commuting_students,cp_id);
+    return total_commuting_students;
 }
 
 } // assigner

@@ -13,77 +13,69 @@ namespace popgen {
 
 using namespace std;
 using namespace gen;
+using namespace util;
 
 void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
 {
     auto& pool_sys    = population->GetContactPoolSys();
+    dir.GetPopulationFile()->Read(population);
+    population->SetRegions(dir.GetRegions());
 
-    unsigned int next_cp_id_communities = 0;
-    unsigned int next_cp_id_schools = 0;
-    unsigned int next_cp_id_universities = 0;
-    unsigned int next_cp_id_workplaces = 0;
-    unsigned int amount_regions = dir.GetAmountOfRegions();
-
-    unsigned int cp_id = 1;
-    for(unsigned int current_region_nr = 0;current_region_nr < amount_regions; current_region_nr++) {
-        int first_person_id = dir.GetFirstInRegion(current_region_nr);
-        int next_first_person_id = dir.GetFirstInRegion(current_region_nr + 1);
-        if(next_first_person_id == -1){
-            next_first_person_id = population->size();
+    // Assign contactpools per region.
+    shared_ptr<Region> prev_region = nullptr;
+    for(auto & region : dir.GetRegions()) {
+        if (prev_region) {
+            for(auto typ : ContactPoolType::IdList)
+                region->first_cps[typ] = prev_region->last_cps[typ] + 1;
         }
 
+        auto config = region->config;
         // --------------------------------------------------
         // Get the population and structs (by file or memory)
         // --------------------------------------------------
-        auto config = dir.GetConfig()[current_region_nr];
-        dir.GetPopulationFile(current_region_nr)[current_region_nr]->Read(population);
-        auto grid = dir.GetGeoGridFile(current_region_nr)[current_region_nr]->ReadGrid();
-        auto schools = dir.GetSchoolFile(current_region_nr)[current_region_nr]->Read();
-        auto universities = dir.GetUniversityFile(current_region_nr)[current_region_nr]->Read();
-        auto workplaces = dir.GetWorkplaceFile(current_region_nr)[current_region_nr]->Read();
-        auto communities = dir.GetCommunityFile(current_region_nr)[current_region_nr]->Read();
+        auto grid           = dir.GetGeoGridFile(region->id)->ReadGrid();
+        auto schools        = dir.GetSchoolFile(region->id)->Read();
+        auto universities   = dir.GetUniversityFile(region->id)->Read();
+        auto workplaces     = dir.GetWorkplaceFile(region->id)->Read();
+        auto communities    = dir.GetCommunityFile(region->id)->Read();
 
         // -------------------
         // Assign ContactPools
         // -------------------
-        assigner::AssignHouseholds(population, grid, config, first_person_id,next_first_person_id);
-        next_cp_id_schools = assigner::AssignSchools(schools, population, config, grid, next_cp_id_schools,first_person_id,next_first_person_id);
+        assigner::AssignHouseholds(population, grid, region);
 
-        std::tuple<unsigned int, unsigned int> assignUniReturnVal = assigner::AssignUniversities(universities,
-                                                                                                 population, config,
-                                                                                                 grid,
-                                                                                                 next_cp_id_universities,first_person_id,next_first_person_id);
-        unsigned int total_commuting_students = std::get<0>(assignUniReturnVal);
-        next_cp_id_universities = std::get<1>(assignUniReturnVal);
+        assigner::AssignSchools(schools, population, region, grid);
 
-        next_cp_id_workplaces = assigner::AssignWorkplaces(workplaces, population, config, grid,
-                                                           total_commuting_students, next_cp_id_workplaces,first_person_id,next_first_person_id);
+        auto total_commuting_students = assigner::AssignUniversities(universities, population, region, grid);
 
-        next_cp_id_communities = assigner::AssignCommunities(communities, population, config, grid,
-                                                             next_cp_id_communities,first_person_id,next_first_person_id);
+        assigner::AssignWorkplaces(workplaces, population, region, grid, total_commuting_students);
+
+        assigner::AssignCommunities(communities, population, region, grid);
 
         // -------------------
         // Fill ContactPoolSys
         // -------------------
         // Households
-        for (int i = first_person_id; i < next_first_person_id; ++i) {
+        auto cp_id = region->first_cps[ContactPoolType::Id::Household];
+        for (auto i = region->first_person_id; i <= region->last_person_id; ++i) {
             auto &person = population->at(i);
-            auto hh_id = person.GetPoolId(ContactPoolType::Id::Household);
-            auto pool = ContactPool(cp_id, ContactPoolType::Id::Household);
+            auto hh_id   = person.GetPoolId(ContactPoolType::Id::Household);
+            auto pool    = ContactPool(cp_id, ContactPoolType::Id::Household);
             pool_sys[ContactPoolType::Id::Household].emplace_back(pool);
             while (person.GetPoolId(ContactPoolType::Id::Household) == hh_id) {
-                if (++i >= next_first_person_id)
+                if (++i > region->last_person_id)
                     break;
             }
             cp_id++;
         }
+        region->last_cps[ContactPoolType::Id::Household] = cp_id - 1;
+
         // Schools
         for (const auto &band : schools) {
             for (const auto &g_struct : band) {
                 auto school = std::static_pointer_cast<School>(g_struct);
                 for (const auto &pool : school->pools) {
                     pool_sys[ContactPoolType::Id::School].emplace_back(*pool);
-                    cp_id++;
                 }
             }
         }
@@ -94,7 +86,6 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
                 // Create the contactpools for every university
                 for (const auto &pool : university->pools) {
                     pool_sys[ContactPoolType::Id::School].emplace_back(*pool);
-                    cp_id++;
                 }
             }
         }
@@ -103,7 +94,6 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
             for (auto &g_struct : band) {
                 auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
                 pool_sys[ContactPoolType::Id::Work].emplace_back(*(workplace->pool));
-                cp_id++;
             }
         }
         // Communities
@@ -115,22 +105,22 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
                     com_id = ContactPoolType::Id::SecondaryCommunity;
                 for (const auto &pool : community->pools) {
                     pool_sys[com_id].emplace_back(*pool);
-                    cp_id++;
                 }
             }
         }
+        prev_region = region;
+    }
 
-        // -------------
-        // Write persons
-        // -------------
-        auto write = config.GetTree().get<bool>("write_population");
-        if (write) {
-            auto output_file = files::PopulationFile(
-                    config,
-                    population
-            );
-            output_file.Write();
-        }
+    // -------------
+    // Write persons
+    // -------------
+    auto write = dir.GetConfig().GetTree().get<bool>("write_population");
+    if (write) {
+        auto output_file = files::PopulationFile(
+                dir.GetConfig(),
+                population
+        );
+        output_file.Write();
     }
 }
 

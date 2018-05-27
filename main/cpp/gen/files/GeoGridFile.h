@@ -18,16 +18,18 @@ private:
 public:
     /// Constructor. Constructs the GeoGridFile object using the config.
     /// @param config           The geopop configuration to be used.
-    GeoGridFile(GenConfiguration& config) : GenFile(config) {}
+    /// @param suffix           The suffix to use for the file name.
+    GeoGridFile(GenConfiguration& config, std::string suffix) : GenFile(config, suffix) {}
 
     /// Constructor. Constructs the GeoGridFile object with an existing grid.
     /// @param config           The geopop configuration to be used.
     /// @param grid             The geogrid that the file will contain.
-    GeoGridFile(GenConfiguration& config, GeoGrid grid)
-    : GenFile(config)
+    /// @param suffix           The suffix to use for the file name.
+    GeoGridFile(GenConfiguration& config, GeoGrid grid, std::string suffix)
+    : GenFile(config, suffix)
     {
         m_grid = grid;
-        m_file_name = "Geogrid.csv";
+        m_file_name = "Geogrid";
         m_labels = {"id","latitude","longitude","name","province","population", "is_fragmented", "fragmented_populations", "fragmented_lats", "fragmented_longs"};
     }
 

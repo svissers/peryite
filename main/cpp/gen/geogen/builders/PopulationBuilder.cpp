@@ -8,19 +8,21 @@ namespace geogen {
 namespace builder {
 
 using namespace std;
+using namespace util;
 
-std::tuple<unsigned int, unsigned int> BuildPopulation(const GenConfiguration& config, shared_ptr<Population>& population, unsigned int start_person_id, unsigned int start_hh_id)
+void BuildPopulation(shared_ptr<Region> region, shared_ptr<Population>& population)
 {
+    auto config                 = region->config;
     auto hh_reference           = files::GetReferenceHouseholds(config);
-    unsigned int current_hh_id  = start_hh_id;
-    unsigned int current_p_id   = start_person_id;
-    auto pop_size = config.GetTree().get<unsigned int>("population_size") + current_p_id-1;
+    unsigned int current_p_id   = region->first_person_id;
+    auto pop_size = config.GetTree().get<unsigned int>("population_size");
 
     // Create a uniform distribution for the household reference set.
     auto rn_manager = config.GetRNManager();
     auto generator  = rn_manager->GetGenerator(trng::fast_discrete_dist(hh_reference.size()));
 
     // Build the households
+    unsigned int current_hh_id  = 0;
     while (current_p_id < pop_size) {
             // Select a household from the reference set
             int index           = generator();
@@ -37,7 +39,7 @@ std::tuple<unsigned int, unsigned int> BuildPopulation(const GenConfiguration& c
             }
             current_hh_id++;
     }
-    return std::tuple<unsigned int, unsigned int>(current_p_id, current_hh_id);
+    region->last_person_id = current_p_id - 1;
 }
 
 } // namespace builder

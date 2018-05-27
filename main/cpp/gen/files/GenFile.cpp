@@ -9,31 +9,16 @@ using namespace std;
 using namespace util;
 using namespace boost::filesystem;
 
-GenFile::GenFile(GenConfiguration& config)
+GenFile::GenFile(GenConfiguration& config, std::string suffix)
 {
     // Get the output directory for this configuration.
     m_output_prefix = config.GetOutputPrefix();
-    try {
-        create_directories(m_output_prefix);
-    } catch (exception& e) {
-        // TODO same as in population file
-        //cout << "GeoGenerator::generate> Exception while creating output directory:  {}", e.what();
-        //throw;
-    }
+    m_file_path = FileSys::BuildPath(m_output_prefix, m_file_name + suffix + ".csv");
 }
 
-GenFile::GenFile(GenConfiguration& config, vector<shared_ptr<GenStruct>> structs, GeoGrid& geo)
-: GenFile(config)
+GenFile::GenFile(GenConfiguration& config, vector<shared_ptr<GenStruct>> structs, GeoGrid& geo, std::string suffix)
+: GenFile(config, suffix)
 {
-    // Get the output directory for this configuration.
-    m_output_prefix = config.GetOutputPrefix();
-    m_file_path = FileSys::BuildPath(m_output_prefix, m_file_name);
-    try {
-        create_directories(m_output_prefix);
-    } catch (exception& e) {
-        //cout << "GeoGenerator::generate> Exception while creating output directory:  {}", e.what();
-        //throw;
-    }
     insertStructs(structs, geo);
 }
 
@@ -43,7 +28,6 @@ void GenFile::Write()
 {
     if (m_sorted_structs.empty())
         return;
-    m_file_path = FileSys::BuildPath(m_output_prefix, m_file_name);
     std::ofstream my_file{m_file_path.string()};
     if(my_file.is_open()) {
         my_file << boost::algorithm::join(m_labels,",") << "\n";
@@ -63,7 +47,6 @@ vector<vector<shared_ptr<GenStruct>>> GenFile::Read()
         return m_sorted_structs;
     // Populate the struct vector and return it.
     m_sorted_structs = vector<vector<shared_ptr<GenStruct>>>(AMOUNTOFBANDS);
-    m_file_path = FileSys::BuildPath(m_output_prefix, m_file_name);
     CSV struct_data(m_file_path.string());
     for (CSVRow const & row : struct_data) {
         auto g_struct = GetStruct(row);
@@ -104,9 +87,6 @@ void GenFile::insertStructs(vector<shared_ptr<GenStruct>>& structs, GeoGrid& geo
     m_sorted_structs = sorted;
 }
 
-    void GenFile::SetFileName(std::string newfilename){
-        m_file_name = newfilename;
-    }
 
 } // namespace files
 } // namespace gen
