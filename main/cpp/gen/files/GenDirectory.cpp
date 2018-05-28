@@ -14,22 +14,26 @@ GenDirectory::GenDirectory(const boost::property_tree::ptree& config_pt)
     auto rn_manager        = make_shared<util::RNManager>();
     const auto rng_type = config_pt.get<string>("run.rng.engine");
     const auto rng_seed = config_pt.get<unsigned long>("run.rng.seed");
-    auto thread_count   = config_pt.get<unsigned int>("num_threads");
+    auto thread_count   = config_pt.get<unsigned int>("run.num_threads");
     const util::RNManager::Info info{rng_type, rng_seed, "", thread_count};
     rn_manager->Initialize(info);
-    m_regions = Regions(config_pt, rn_manager);
+    // Define the general geopop config.
     auto output_prefix = config_pt.get<string>("run.output_prefix");
     m_config = GenConfiguration(config_pt.get_child("run.pop_config"), thread_count, std::move(output_prefix), rn_manager);
+    // Define every region using their respective region configuration.
+    m_regions = Regions(config_pt, rn_manager);
 }
 
 GenDirectory::GenDirectory(const boost::property_tree::ptree& config_pt, util::RNManager& rn_manager)
 {
     // Make a pointer to the rn_manager without it being automatically deleted.
     auto manager = std::shared_ptr<util::RNManager>(&rn_manager, [](util::RNManager*){});
-    m_regions = Regions(config_pt, manager);
-    auto thread_count   = config_pt.get<unsigned int>("num_threads");
+    // Define the general geopop config.
+    auto thread_count   = config_pt.get<unsigned int>("run.num_threads");
     auto output_prefix = config_pt.get<string>("run.output_prefix");
     m_config = GenConfiguration(config_pt.get_child("run.pop_config"), thread_count, std::move(output_prefix), manager);
+    // Define every region using their respective region configuration.
+    m_regions = Regions(config_pt, manager);
 }
 
 void GenDirectory::InitializeRegion(

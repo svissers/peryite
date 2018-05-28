@@ -17,8 +17,11 @@ void Generate(GenDirectory& dir, shared_ptr<Population>& population)
     // Build and write each region.
     shared_ptr<Region> prev_region = nullptr;
     for(auto & region : dir.GetRegions()) {
-        if (prev_region)
+        if (prev_region) {
             region->first_person_id = prev_region->last_person_id+1;
+            auto type = ContactPoolType::Id::Household;
+            region->first_cps[type] = prev_region->last_cps[type] + 1;
+        }
 
         // Build
         builder::BuildPopulation(region, population);
@@ -31,7 +34,7 @@ void Generate(GenDirectory& dir, shared_ptr<Population>& population)
         // Write
         auto config     = region->config;
         string suffix   = to_string(region->id);
-        auto geo_grid_file = make_shared<GeoGridFile>(
+        shared_ptr<GeoGridFile> geo_grid_file = make_shared<GeoGridFile>(
                 config,
                 geogrid,
                 suffix

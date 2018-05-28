@@ -43,6 +43,8 @@ protected:
     boost::filesystem::path m_file_path;
     /// The prefix (directory name or prefix to filename) used in the file path.
     std::string m_output_prefix;
+    // The suffix used in the file path (before the file type specifier).
+    std::string m_suffix;
     /// The name of the file
     std::string m_file_name;
     /// The struct data the file contains.

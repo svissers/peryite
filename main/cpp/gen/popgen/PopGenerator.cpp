@@ -56,19 +56,16 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
         // Fill ContactPoolSys
         // -------------------
         // Households
-        auto cp_id = region->first_cps[ContactPoolType::Id::Household];
         for (auto i = region->first_person_id; i <= region->last_person_id; ++i) {
             auto &person = population->at(i);
             auto hh_id   = person.GetPoolId(ContactPoolType::Id::Household);
-            auto pool    = ContactPool(cp_id, ContactPoolType::Id::Household);
+            auto pool    = ContactPool(hh_id, ContactPoolType::Id::Household);
             pool_sys[ContactPoolType::Id::Household].emplace_back(pool);
-            while (person.GetPoolId(ContactPoolType::Id::Household) == hh_id) {
+            while (population->at(i).GetPoolId(ContactPoolType::Id::Household) == hh_id) {
                 if (++i > region->last_person_id)
                     break;
             }
-            cp_id++;
         }
-        region->last_cps[ContactPoolType::Id::Household] = cp_id - 1;
 
         // Schools
         for (const auto &band : schools) {
@@ -111,9 +108,9 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
         prev_region = region;
     }
 
-    // -------------
-    // Write persons
-    // -------------
+    // ---------------------------------------
+    // Write personsFile combining all regions
+    // ---------------------------------------
     auto write = dir.GetConfig().GetTree().get<bool>("write_population");
     if (write) {
         auto output_file = files::PopulationFile(

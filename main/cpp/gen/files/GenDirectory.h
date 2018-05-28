@@ -52,6 +52,7 @@ public:
     GenConfiguration& GetConfig() { return m_config; }
 
     /// Returns the file containing persons.
+    /// There is only one population file combining all regions.
     /// @return The file containing persons.
     PopulationFilePtr GetPopulationFile();
 
@@ -75,7 +76,7 @@ public:
     /// @return The file containing communities.
     CommunityFilePtr GetCommunityFile(unsigned int region_id);
 
-    /// Returns the regions in this directory.
+    /// Returns the regions used in this directory.
     /// @return The regions.
     util::Regions& GetRegions();
 

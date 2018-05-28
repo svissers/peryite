@@ -142,7 +142,7 @@ shared_ptr<Population> PopBuilder::Build(std::shared_ptr<Population> pop)
         //------------------------------------------------
         // Add persons & fill pools & surveyseeding.
         //------------------------------------------------
-        auto pop_config_pt = m_config_pt.get_child_optional("run.pop_config1");
+        auto pop_config_pt = m_config_pt.get_child_optional("run.pop_config");
         if (pop_config_pt) {
             gen::files::GenDirectory dir(m_config_pt, m_rn_manager);
             gen::geogen::Generate(dir, pop);
