@@ -119,6 +119,7 @@ set(LIB_SRC
     util/GeometryGeoCoord.cpp
     util/GeoCoordinate.cpp
     util/GeoCoordCalculator.cpp
+    util/Regions.cpp
 #---
     ui/geogendata.cpp
     ui/geogenvisualization.cpp
@@ -165,15 +166,6 @@ set_target_properties(libstride PROPERTIES PREFIX "")
 add_executable(stride sim/main.cpp ${UIS_HDRS})
 target_link_libraries(stride ${LIBS} libstride Qt5::Core Qt5::Widgets Qt5::Charts)
 install(TARGETS stride  DESTINATION   ${BIN_INSTALL_LOCATION})
-
-#============================================================================
-# Build and install the geogen executable.
-#============================================================================
-add_executable(geogen gen/main.cpp)
-target_include_directories(geogen PUBLIC SYSTEM
-	${CMAKE_HOME_DIRECTORY}/main/resources/lib/tclap/include)
-target_link_libraries(geogen ${LIBS} libstride)
-install(TARGETS geogen  DESTINATION   ${BIN_INSTALL_LOCATION})
 
 #============================================================================
 # Clean up.

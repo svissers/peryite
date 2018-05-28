@@ -1,6 +1,7 @@
 #pragma once
 #include "../GenConfiguration.h"
 #include "pop/Population.h"
+#include "util/Regions.h"
 #include <boost/property_tree/ptree.hpp>
 #include <vector>
 
@@ -27,6 +28,16 @@ public:
     /// Writes the population that the file contains to a file.
     void Write();
 
+    /// Writes the regions of the population to a file.
+    /// @param output_prefix    The prefix used by the region file.
+    /// @param regions          The regions to be written to a file.
+    static void WriteRegions(std::string output_prefix, util::Regions& regions);
+
+    /// Read the regions of the population from a file.
+    /// @param config_pt        Property_tree with general configuration settings.
+    /// @return                 The regions contained in the file.
+    static util::Regions ReadRegions(const boost::property_tree::ptree& config_pt);
+
     /// Reads the population from a file or returns it if it already exists
     /// @param population        The population to be seeded or replaced.
     void Read(std::shared_ptr<Population>& population);
@@ -47,6 +58,11 @@ private:
     /// @param person           The person that contains the values.
     /// @return                 Vector of the values of the person in string format.
     std::vector<std::string> GetValues(const Person& person);
+
+    /// Returns the values of a region in string format.
+    /// @param region           The region that contains the values.
+    /// @return                 Vector of the values of the region in string format.
+    static std::vector<std::string> GetValues(const std::shared_ptr<util::Region> region);
 };
 
 /// Returns the reference households from the file defined in the configuration.

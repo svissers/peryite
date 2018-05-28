@@ -43,6 +43,58 @@ void PopulationFile::Write()
     }
 }
 
+void PopulationFile::WriteRegions(string output_prefix, Regions& regions)
+{
+    if (regions.empty())
+        return;
+    std::vector<std::string> labels =
+    {
+        "id","name","first_person_id", "last_person_id",
+        "first_household_cp", "last_household_cp",
+        "first_school_id", "last_school_id",
+        "first_workplace_id", "last_workplace_id",
+        "first_prim_comm_id", "last_prim_comm_id",
+        "first_sec_comm_id", "last_sec_comm_id"
+    };
+    auto file_path = FileSys::BuildPath(output_prefix, "Regions.csv");
+    std::ofstream my_file{file_path.string()};
+    if(my_file.is_open()) {
+        my_file << boost::algorithm::join(labels,",") << "\n";
+        for (const auto& region : regions)
+            my_file << boost::algorithm::join(GetValues(region),",") << "\n";
+        my_file.close();
+    }
+}
+
+Regions ReadRegions(const boost::property_tree::ptree& config_pt)
+{
+    // Locate the file
+    const auto file_name        = config_pt.get<string>("run.population_file");
+    const auto use_install_dirs = config_pt.get<bool>("run.use_install_dirs");
+    const auto file_path        = (use_install_dirs) ? FileSys::GetDataDir() /= file_name : file_name;
+    if (!is_regular_file(file_path)) {
+            throw runtime_error(string(__func__) + "> Region file " + file_path.string() + " not present.");
+    }
+    // Read from the file
+    Regions regions;
+    CSV reg_data(file_path.string());
+    for (CSVRow const & row : reg_data) {
+        std::shared_ptr<Region> region = make_shared<Region>(
+            row.GetValue<unsigned int>(0),
+            to_string(row.GetValue<unsigned int>(1))
+        );
+        region->first_person_id = row.GetValue<unsigned int>(2);
+        region->last_person_id  = row.GetValue<unsigned int>(3);
+        unsigned int row_value = 4;
+        for (auto typ : ContactPoolType::IdList) {
+            region->first_cps[typ] = row.GetValue<unsigned int>(row_value++);
+            region->last_cps[typ]  = row.GetValue<unsigned int>(row_value++);
+        }
+        regions.push_back(region);
+    }
+    return regions;
+}
+
 void PopulationFile::Read(shared_ptr<Population>& population)
 {
     // Read the population from memory
@@ -115,6 +167,22 @@ std::vector<std::string> PopulationFile::GetValues(const Person& person)
         to_string(person.GetCoordinate().get<0>()),
         to_string(person.GetCoordinate().get<1>())
     };
+    return values;
+}
+
+std::vector<std::string> PopulationFile::GetValues(const shared_ptr<Region> region)
+{
+    vector<string> values =
+    {
+        to_string(region->id),
+        region->name,
+        to_string(region->first_person_id),
+        to_string(region->last_person_id)
+    };
+    for (auto typ : ContactPoolType::IdList) {
+        values.push_back(to_string(region->first_cps[typ]));
+        values.push_back(to_string(region->last_cps[typ]));
+    }
     return values;
 }
 

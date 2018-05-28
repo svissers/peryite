@@ -18,9 +18,8 @@ public:
         /// Initialize the region with a name.
         /// @param region_id        The id for the region.
         /// @param region_name      The name for the region.
-        /// @param region_config    The geopop configuration for the region.
-        Region(unsigned int region_id, std::string region_name, gen::GenConfiguration region_config)
-        : id(region_id), name(region_name), config(region_config)
+        Region(unsigned int region_id, std::string region_name)
+        : id(region_id), name(region_name)
         {
             first_cps = ContactPoolType::IdSubscriptArray<unsigned int>(0);
             last_cps = ContactPoolType::IdSubscriptArray<unsigned int>(0);
@@ -28,11 +27,11 @@ public:
 
         unsigned int id                 = -1;
         std::string name                = "";
-        gen::GenConfiguration config;
-        unsigned int first_person_id    = 0;
-        unsigned int last_person_id     = 0;
-        ContactPoolType::IdSubscriptArray<unsigned int> first_cps;
-        ContactPoolType::IdSubscriptArray<unsigned int> last_cps;
+        gen::GenConfiguration config;                               ///< Only used when generating with the geopop component.
+        unsigned int first_person_id    = 0;                        ///< The first person id in the population that is in this region.
+        unsigned int last_person_id     = 0;                        ///< The last person id in the population that is in this region.
+        ContactPoolType::IdSubscriptArray<unsigned int> first_cps;  ///< The first contactpool id in this region for every type.
+        ContactPoolType::IdSubscriptArray<unsigned int> last_cps;   ///< The last contactpool id in this region for every type.
 };
 
 
@@ -46,9 +45,11 @@ public:
         using std::vector<std::shared_ptr<Region>>::end;
         using std::vector<std::shared_ptr<Region>>::size;
 public:
+        /// Default constructor.
+        /// Used when not utilizing the geopop component.
         Regions() {}
 
-        /// Initialize the regions using the configuration file.
+        /// Initialize the regions to be used by the geopop component.
         /// @param config_pt       The configuration to use.
         /// @param rn_manager      The random number manager to be used by the geopop module.
         Regions(

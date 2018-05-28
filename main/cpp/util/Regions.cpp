@@ -22,13 +22,13 @@ Regions::Regions(const boost::property_tree::ptree& config_pt, shared_ptr<RNMana
         if (region_node.first == "region") {
             auto region = make_shared<Region>(
                 region_id++,
-                region_node.second.get<string>("region_name"),
-                GenConfiguration(
-                    region_node.second,
-                    num_threads,
-                    prefix,
-                    rn_manager
-                )
+                region_node.second.get<string>("region_name")
+            );
+            region->config = GenConfiguration(
+                region_node.second,
+                num_threads,
+                prefix,
+                rn_manager
             );
             this->push_back(region);
         }
