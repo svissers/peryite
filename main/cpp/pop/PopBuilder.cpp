@@ -28,6 +28,7 @@
 #include "gen/geogen/GeoGenerator.h"
 #include "gen/popgen/PopGenerator.h"
 #include "gen/files/GenDirectory.h"
+#include "gen/files/PopulationFile.h"
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
@@ -127,6 +128,12 @@ shared_ptr<Population> PopBuilder::MakePersons(std::shared_ptr<Population> pop)
         }
 
         pop_file.close();
+
+        //------------------------------------------------
+        // Read regions from file.
+        //------------------------------------------------
+        pop->SetRegions(gen::files::PopulationFile::ReadRegions(m_config_pt));
+
         return pop;
 }
 

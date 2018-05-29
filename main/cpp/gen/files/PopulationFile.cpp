@@ -66,10 +66,10 @@ void PopulationFile::WriteRegions(string output_prefix, Regions& regions)
     }
 }
 
-Regions ReadRegions(const boost::property_tree::ptree& config_pt)
+Regions PopulationFile::ReadRegions(const boost::property_tree::ptree& config_pt)
 {
     // Locate the file
-    const auto file_name        = config_pt.get<string>("run.population_file");
+    const auto file_name        = config_pt.get<string>("run.region_file");
     const auto use_install_dirs = config_pt.get<bool>("run.use_install_dirs");
     const auto file_path        = (use_install_dirs) ? FileSys::GetDataDir() /= file_name : file_name;
     if (!is_regular_file(file_path)) {
