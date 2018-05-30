@@ -47,7 +47,6 @@ set(LIB_SRC
 	contact/Infector.cpp
 	contact/InfectorExec.h
 	contact/InfectorMap.h
-	contact/LogPolicy.h
     contact/TransmissionProfile.cpp
 #---
     disease/DiseaseSeeder.cpp
@@ -106,7 +105,6 @@ set(LIB_SRC
     util/RNEngineType.cpp
     util/RNManager.cpp
     util/RunConfigManager.cpp
-
     util/SegmentedVector.h
     util/Stopwatch.h
     util/StringUtils.h
@@ -114,11 +112,9 @@ set(LIB_SRC
     util/SVIterator.h
     util/TimeStamp.h
     util/TimeToString.h
-    util/RunConfigString.cpp
+
     util/InstallDirs.cpp
     util/GeometryGeoCoord.cpp
-    util/GeoCoordinate.cpp
-    util/GeoCoordCalculator.cpp
     util/Regions.cpp
 #---
     ui/geogendata.cpp
@@ -152,18 +148,16 @@ SET(CMAKE_AUTOUIC ON)
 # Build the Stride library.
 #============================================================================
 add_library(libstride ${LIB_SRC})
+set_source_files_properties(BeliefSeeder.cpp PROPERTIES COMPILE_FLAGS "-Wno-unused-variable")
 target_link_libraries(libstride ${LIBS})
 target_compile_options(libstride PUBLIC "-fPIC")
 target_compile_definitions(libstride PUBLIC "-DSTRIDE_GIT_HASH=${STRIDE_WC_REVISION_HASH}")
-include(ProcessorCount)
-ProcessorCount(PROCCOUNT)
-target_compile_definitions(libstride PUBLIC "-DPROCCOUNT=${PROCCOUNT}")
 set_target_properties(libstride PROPERTIES PREFIX "")
 
 #============================================================================
 # Build and install the stride executable.
 #============================================================================
-add_executable(stride sim/main.cpp ${UIS_HDRS})
+add_executable(stride sim/main.cpp)
 target_link_libraries(stride ${LIBS} libstride Qt5::Core Qt5::Widgets Qt5::Charts)
 install(TARGETS stride  DESTINATION   ${BIN_INSTALL_LOCATION})
 

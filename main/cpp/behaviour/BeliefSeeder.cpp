@@ -15,7 +15,7 @@
 
 /**
  * @file
- * Implementation for HelthSeeder class.
+ * Implementation for BeliefSeeder class.
  */
 
 #include "BeliefSeeder.h"
@@ -30,28 +30,38 @@ using namespace boost::property_tree;
 using namespace stride::util;
 using namespace std;
 
+#pragma clang diagnostic ignored "-Wunused-variable"
+#pragma gcc   diagnostic ignored "-Wunused-variable"
+
 namespace stride {
 
 BeliefSeeder::BeliefSeeder(const boost::property_tree::ptree& configPt, util::RNManager& rnManager)
-: m_config_pt(configPt)
+    : m_config_pt(configPt)
 {
 }
 
 void BeliefSeeder::Seed(std::shared_ptr<stride::Population> pop)
 {
-        const auto policy = m_config_pt.get<string>("run.belief_policy.name");
+        const auto  policy     = m_config_pt.get<string>("run.belief_policy.name");
+        const auto  num_thrds  = m_config_pt.get<unsigned int>("run.num_threads");
+        Population& population = *pop;
 
         // This gets extended as we add belief policies.
         if (policy == "NoBelief") {
+                pop->InitBeliefPolicy<NoBelief>();
+                const NoBelief nob;
                 // some randomness in actual seeding; for later on
-                for (auto& p : *pop) {
-                        pop->SetBeliefPolicy<NoBelief>(NoBelief(), p);
+#pragma omp parallel for num_threads(num_thrds)
+                for (size_t i = 0; i < population.size(); ++i) {
+                        pop->SetBeliefPolicy<NoBelief>(i, nob);
                 }
         } else if (policy == "Imitation") {
+                pop->InitBeliefPolicy<Imitation>();
                 // some randomness in actual seeding; for later on
                 const Imitation imi(m_config_pt);
-                for (auto& p : *pop) {
-                        pop->SetBeliefPolicy<Imitation>(imi, p);
+#pragma omp parallel for num_threads(num_thrds)
+                for (size_t i = 0; i < population.size(); ++i) {
+                        pop->SetBeliefPolicy<Imitation>(i, imi);
                 }
         } else {
                 throw runtime_error(string(__func__) + "Not a valid belief policy!");

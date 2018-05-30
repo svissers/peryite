@@ -1,5 +1,4 @@
 #pragma once
-#include "util/GeoCoordinate.h"
 #include "util/GeometryGeoCoord.h"
 #include <memory>
 #include <boost/geometry.hpp>
@@ -27,8 +26,6 @@ struct GenStruct
 
     /// The identification number for the genstruct.
     unsigned int id = -1;
-    /// The coordinates that the genstruct has been assigned to.
-    util::GeoCoordinate coordinateDeprecated = util::GeoCoordinate();
 
     /// The coordinate of the genstruct in boost geometry spherical coordinates
     util::spherical_point coordinate;

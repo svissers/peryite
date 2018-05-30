@@ -84,24 +84,25 @@ public:
         void SetCoordinate(util::spherical_point coord) { m_coord = coord; }
 
         /// Check if a person is present today in a given contactpool
-        bool IsInPool(const ContactPoolType::Id& pool_type) const { return m_in_pools[pool_type]; }
+        bool IsInPool(const ContactPoolType::Id& poolType) const { return m_in_pools[poolType]; }
 
         /// Does this person participates in the social contact study?
-        bool IsParticipatingInSurvey() const { return m_is_participant; }
+        bool IsSurveyParticipant() const { return m_is_participant; }
 
         /// Participate in social contact study and log person details
         void ParticipateInSurvey() { m_is_participant = true; }
 
+        /// Set the beliefs. Pointer into Population's beliefcontainer.
+        void SetBelief(Belief* belief) { m_belief = belief; };
+
         /// Update the health status and presence in contactpools.
-        void Update(bool is_work_off, bool is_school_off);
+        void Update(bool isWorkOff, bool isSchoolOff);
 
         ///
         void Update(Person* p);
 
         /// Set ID of contactpool_type
         void setPoolId(const ContactPoolType::Id& pool_type, unsigned int id) { m_pool_ids[pool_type] = id; }
-
-        void SetBelief(Belief* belief){m_belief = belief;}
 
 private:
         double       m_age;            ///< The age.

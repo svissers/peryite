@@ -1,0 +1,16 @@
+[==========] BenchmarkRunner running.
+[ RUN      ] Geopop.Fragment centers (5 runs)
+[     DONE ] Geopop.Fragment centers (total: 00:05:26 ) 
+[   RUNS   ]        Median time: 00:01:05
+       Fastest time: 00:01:02
+       Slowest time: 00:01:09
+       1st quartile: 00:01:02
+       3rd quartile: 00:01:05
+[ RUN      ] Geopop.No fragment centers (5 runs)
+[     DONE ] Geopop.No fragment centers (total: 00:05:31 ) 
+[   RUNS   ]        Median time: 00:01:06
+       Fastest time: 00:01:05
+       Slowest time: 00:01:06
+       1st quartile: 00:01:05
+       3rd quartile: 00:01:06
+

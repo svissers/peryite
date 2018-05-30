@@ -28,16 +28,20 @@ namespace stride {
 class Imitation : public Belief
 {
 public:
+        /// Required for SegmentedVector.
+        Imitation()
+                : m_accept(false), m_accept_threshold(0.0), m_no_accept_threshold(0.0) {}
+
         /// Initializing constructor, for now with ptree.
-        Imitation(const boost::property_tree::ptree& pt)
-            : Belief(), m_accept(false), m_accept_threshold(pt.get<double>("accept_threshold")),
-              m_no_accept_threshold(pt.get<double>("no_accept_threshold"))
+        explicit Imitation(const boost::property_tree::ptree& pt)
+            : Belief(), m_accept(false), m_accept_threshold(pt.get<double>("run.accept_threshold")),
+              m_no_accept_threshold(pt.get<double>("run.no_accept_threshold"))
         {
                 // TODO belief strength
                 // TODO stickiness
         }
 
-        bool HasAdopted() const { return m_accept; }
+        bool HasAdopted() const override { return m_accept; }
 
         // TODO update
 

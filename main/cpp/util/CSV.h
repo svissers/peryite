@@ -31,7 +31,7 @@ namespace stride {
 namespace util {
 
 /**
- * @class Collection of CSVRow's. Iterate with begin and end like STL containers.
+ * A collection of CSVRow elements. Iterate with begin and end like STL containers.
  */
 class CSV : protected std::vector<CSVRow>
 {

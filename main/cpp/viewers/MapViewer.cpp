@@ -85,3 +85,4 @@ void MapViewer::Update(sim_event::Id id)
 
 } // namespace viewers
 } // namespace stride
+

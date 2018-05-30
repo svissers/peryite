@@ -229,3 +229,4 @@ void CliController::Shuffle(vector<string>& names) const
 }
 
 } // namespace myhayai
+

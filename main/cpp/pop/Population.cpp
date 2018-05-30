@@ -10,7 +10,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with the software. If not, see <http://www.gnu.org/licenses/>.
  *
- *  Copyright 2017, Kuylen E, Willem L, Broeckhove J
+ *  Copyright 2017, 2018, Kuylen E, Willem L, Broeckhove J
  */
 
 /**
@@ -61,7 +61,7 @@ std::shared_ptr<Population> Population::Create(const boost::property_tree::ptree
         // Setup RNManager.
         // ------------------------------------------------
         RNManager rnManager(RNManager::Info{configPt.get<string>("pop.rng_type", "lcg64"),
-                                            configPt.get<unsigned long>("run.rng_seed", 101UL), "",
+                                            configPt.get<unsigned long>("pop.rng_seed", 101UL), "",
                                             configPt.get<unsigned int>("run.num_threads")});
 
         // -----------------------------------------------------------------------------------------

@@ -11,7 +11,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with the software. If not, see <http://www.gnu.org/licenses/>.
  *
- *  Copyright 2017, Kuylen E, Willem L, Broeckhove J
+ *  Copyright 2017, 2018, Kuylen E, Willem L, Broeckhove J
  */
 
 /**
@@ -31,9 +31,8 @@ namespace stride {
 class SimRunner;
 
 /**
- * The CliController controls execution of a simulation run (@see SimRunner) from the
- * command line interface (cli).
- * The CliController setup
+ * Controls a simulation run initiated with the command line interface (cli).
+ * CliController functions include:
  * \li accepts the commandline arguments
  * \li checks the OpenMP environment
  * \li checks the file system environment
@@ -57,7 +56,7 @@ public:
         void Control();
 
 private:
-        /// Empty controller: used as taget for delegation.
+        /// Empty controller: used as target for delegation.
         explicit CliController();
 
         /// Check install environment.

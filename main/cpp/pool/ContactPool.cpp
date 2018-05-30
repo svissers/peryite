@@ -74,3 +74,4 @@ std::tuple<bool, size_t> ContactPool::SortMembers()
 }
 
 } // namespace stride
+

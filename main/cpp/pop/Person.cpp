@@ -19,7 +19,7 @@
  */
 
 #include "Person.h"
-
+#include "pool/ContactPoolType.h"
 #include "pop/Age.h"
 
 namespace stride {

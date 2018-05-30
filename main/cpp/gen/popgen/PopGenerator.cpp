@@ -5,8 +5,6 @@
 #include "assigners/WorkplaceAssigner.h"
 #include "assigners/CommunityAssigner.h"
 #include "pool/ContactPoolSys.h"
-#include "util/GeoCoordCalculator.h"
-
 
 namespace stride {
 namespace gen {
