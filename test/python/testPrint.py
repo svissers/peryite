@@ -11,7 +11,7 @@ def printInfected(simulator, event):
 
 # Configure Simulation
 controller = PyController(config_path="../config/run_default.xml")
-controller.runConfig.setParameter("population_file", "pop_antwerp.csv")
+#controller.runConfig.setParameter("population_file", "pop_antwerp.csv")
 controller.runConfig.setParameter("num_days", 10)
 controller.runConfig.setParameter("output_prefix", "testPrint")
 

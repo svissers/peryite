@@ -43,6 +43,8 @@ class PyController:
     def linkData(self):
         file_params = [
             "population_file",
+            "region_file",
+            "poolsys_file",
             "holidays_file",
             "age_contact_matrix_file",
             "disease_config_file",
