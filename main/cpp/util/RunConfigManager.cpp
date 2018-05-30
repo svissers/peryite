@@ -83,7 +83,8 @@ ptree RunConfigManager::CreateBenchInfluenza()
         pt.put("run.num_participants_survey", 10);
         pt.put("run.num_threads", 1);
         pt.put("run.output_prefix", "BatchRuns");
-        pt.put("run.population_file", "pop_flanders600.csv");
+        pt.put("run.population_file", "pop_double_flanders.csv");
+        pt.put("run.region_file", "region_double_flanders.csv");
         pt.put("run.rng_seed", 2015);
         pt.put("run.rng_type", "mrg2");
         pt.put("run.r0", 3.0);
@@ -122,8 +123,8 @@ ptree RunConfigManager::CreateBenchMeasles()
         pt.put("run.num_participants_survey", 10);
         pt.put("run.num_threads", 1U);
         pt.put("run.output_prefix", "bench");
-        // pt.put("run.population_file", "pop_flanders1600.csv");
-        pt.put("run.population_file", "pop_flanders600.csv");
+        pt.put("run.population_file", "pop_double_flanders.csv");
+        pt.put("run.region_file", "region_double_flanders.csv");
         pt.put("run.rng_seed", 1U);
         pt.put("run.rng_type", "mrg2");
         pt.put("run.r0", 15U);
@@ -188,7 +189,8 @@ ptree RunConfigManager::CreateTestsInfluenza()
         pt.put("run.num_participants_survey", 10);
         pt.put("run.num_threads", 1);
         pt.put("run.output_prefix", "BenchRuns");
-        pt.put("run.population_file", "pop_flanders600.csv");
+        pt.put("run.population_file", "pop_double_flanders.csv");
+        pt.put("run.region_file", "region_double_flanders.csv");
         pt.put("run.rng_seed", 2015);
         pt.put("run.rng_type", "mrg2");
         pt.put("run.r0", 3.0);
@@ -226,7 +228,8 @@ ptree RunConfigManager::CreateTestsMeasles()
         pt.put("run.num_participants_survey", 10);
         pt.put("run.num_threads", 1);
         pt.put("run.output_prefix", "BenchRuns");
-        pt.put("run.population_file", "pop_flanders600.csv");
+        pt.put("run.population_file", "pop_double_flanders.csv");
+        pt.put("run.region_file", "region_double_flanders.csv");
         pt.put("run.rng_seed", 1);
         pt.put("run.rng_type", "mrg2");
         pt.put("run.seeding_age_max", 99);
