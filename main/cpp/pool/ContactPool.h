@@ -21,6 +21,7 @@
 
 #include "contact/ContactLogMode.h"
 #include "pool/ContactPoolType.h"
+#include "util/GeometryGeoCoord.h"
 
 #include <tuple>
 #include <vector>
@@ -36,7 +37,7 @@ class ContactPool
 {
 public:
         /// Initializing constructor.
-        ContactPool(std::size_t pool_id, ContactPoolType::Id type);
+        ContactPool(std::size_t pool_id, ContactPoolType::Id type, util::spherical_point coord);
 
         /// Add the given Person.
         void AddMember(const Person* p);
@@ -53,6 +54,12 @@ public:
         // Get identifier
         std::size_t GetId() const { return m_pool_id;}
 
+        // Get the coordinate of this contactpool
+        util::spherical_point GetCoordinate() const { return m_coord; }
+
+        // Set the coordinate of this contactpool
+        //void SetCoordinate(util::spherical_point coord) { m_coord = coord; }
+
 private:
         /// Sort w.r.t. health status: order: exposed/infected/recovered, susceptible, immune.
         std::tuple<bool, size_t> SortMembers();
@@ -66,6 +73,7 @@ private:
         ContactPoolType::Id  m_pool_type;    ///< The type of the ContactPool (for logging purposes).
         std::size_t          m_index_immune; ///< Index of the first immune member in the ContactPool.
         std::vector<Person*> m_members;      ///< Pointers to contactpool members (raw pointers intentional).
+        util::spherical_point m_coord; ///< The household coordinates
 };
 
 } // namespace stride

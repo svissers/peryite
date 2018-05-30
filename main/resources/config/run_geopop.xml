@@ -21,8 +21,9 @@
     <output_persons>false</output_persons>
     <output_prefix></output_prefix>
     <output_summary>false</output_summary>
-    <population_file>pop_flanders600.csv</population_file>
-    <region_file>pop_flanders600_region.csv</region_file>
+    <population_file>pop_double_flanders.csv</population_file>
+    <region_file>region_double_flanders.csv</region_file>
+    <poolsys_file>poolsys_double_flanders.csv</poolsys_file>
     <rng_seed>1</rng_seed>
     <r0>11</r0>
     <seeding_age_max>99</seeding_age_max>

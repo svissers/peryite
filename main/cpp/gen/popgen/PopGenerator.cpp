@@ -4,6 +4,7 @@
 #include "assigners/UniversityAssigner.h"
 #include "assigners/WorkplaceAssigner.h"
 #include "assigners/CommunityAssigner.h"
+#include "pool/ContactPoolSys.h"
 #include "util/GeoCoordCalculator.h"
 
 
@@ -17,7 +18,7 @@ using namespace util;
 
 void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
 {
-    auto& pool_sys    = population->GetContactPoolSys();
+    auto& pool_sys = population->GetContactPoolSys();
     dir.GetPopulationFile()->Read(population);
     population->SetRegions(dir.GetRegions());
 
@@ -58,9 +59,10 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
         // Households
         unsigned int hh_id = 0;
         for (auto i = region->first_person_id; i <= region->last_person_id; ++i) {
-            auto &person = population->at(i);
-            hh_id   = person.GetPoolId(ContactPoolType::Id::Household);
-            auto pool    = ContactPool(hh_id, ContactPoolType::Id::Household);
+            auto &person    = population->at(i);
+            hh_id           = person.GetPoolId(ContactPoolType::Id::Household);
+            auto coord      = person.GetCoordinate();
+            auto pool       = ContactPool(hh_id, ContactPoolType::Id::Household, coord);
             pool_sys[ContactPoolType::Id::Household].emplace_back(pool);
             while (population->at(i).GetPoolId(ContactPoolType::Id::Household) == hh_id) {
                 if (++i > region->last_person_id)
@@ -98,8 +100,8 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
         // Communities
         for (auto &band : communities) {
             for (auto &g_struct : band) {
-                auto community = std::static_pointer_cast<Community>(g_struct);
-                auto com_id = ContactPoolType::Id::PrimaryCommunity;
+                auto community  = std::static_pointer_cast<Community>(g_struct);
+                auto com_id     = ContactPoolType::Id::PrimaryCommunity;
                 if (!community->is_primary)
                     com_id = ContactPoolType::Id::SecondaryCommunity;
                 for (const auto &pool : community->pools) {
@@ -121,6 +123,7 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
         );
         output_file.Write();
         output_file.WriteRegions(dir.GetConfig().GetOutputPrefix(), dir.GetRegions());
+        output_file.WritePoolSys(dir.GetConfig().GetOutputPrefix(), pool_sys);
     }
 }
 

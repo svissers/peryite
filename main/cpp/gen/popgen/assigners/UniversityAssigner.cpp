@@ -27,9 +27,10 @@ unsigned int AssignUniversities(
     for (const auto &band : universities) {
         for (const auto &g_struct : band) {
             auto university = std::static_pointer_cast<University>(g_struct);
+            auto coord      = university->coordinate;
             // Create the contactpools for every university
             for (unsigned int size = 0; size < university_size; size += university_cp_size) {
-                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::School);
+                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::School, coord);
                 university->pools.push_back(pool);
                 cp_id++;
             }
@@ -49,13 +50,13 @@ unsigned int AssignUniversities(
     auto rn_manager = config.GetRNManager();
 
     // Create two distributions, one to select if the person is a student and one to select if the student commutes.
-    auto student_fraction = config.GetTree().get<double>("university.student_fraction");
-    auto commute_fraction = config.GetTree().get<double>("university.commute_fraction");
-    auto student_fractions = vector<double>{student_fraction, 1.0 - student_fraction};
-    auto commute_fractions = vector<double>{commute_fraction, 1.0 - commute_fraction};
-    auto student_gen = rn_manager->GetGenerator(
+    auto student_fraction   = config.GetTree().get<double>("university.student_fraction");
+    auto commute_fraction   = config.GetTree().get<double>("university.commute_fraction");
+    auto student_fractions  = vector<double>{student_fraction, 1.0 - student_fraction};
+    auto commute_fractions  = vector<double>{commute_fraction, 1.0 - commute_fraction};
+    auto student_gen        = rn_manager->GetGenerator(
             trng::fast_discrete_dist(student_fractions.begin(), student_fractions.end()));
-    auto commute_gen = rn_manager->GetGenerator(
+    auto commute_gen        = rn_manager->GetGenerator(
             trng::fast_discrete_dist(commute_fractions.begin(), commute_fractions.end()));
 
     // create a uniform distribution to select a contactpool from a university

@@ -1,6 +1,7 @@
 #pragma once
 #include "../GenConfiguration.h"
 #include "pop/Population.h"
+#include "pool/ContactPoolSys.h"
 #include "util/Regions.h"
 #include <boost/property_tree/ptree.hpp>
 #include <vector>
@@ -28,6 +29,10 @@ public:
     /// Writes the population that the file contains to a file.
     void Write();
 
+    /// Reads the population from a file or returns it if it already exists
+    /// @param population        The population to be seeded or replaced.
+    void Read(std::shared_ptr<Population>& population);
+
     /// Writes the regions of the population to a file.
     /// @param output_prefix    The prefix used by the region file.
     /// @param regions          The regions to be written to a file.
@@ -38,9 +43,16 @@ public:
     /// @return                 The regions contained in the file.
     static util::Regions ReadRegions(const boost::property_tree::ptree& config_pt);
 
-    /// Reads the population from a file or returns it if it already exists
-    /// @param population        The population to be seeded or replaced.
-    void Read(std::shared_ptr<Population>& population);
+    /// Writes the Contactpoolsys to a file.
+    /// @param output_prefix    The prefix used by the region file.
+    /// @param pool_sys         The poolsys to be written to a file.
+    static void WritePoolSys(std::string output_prefix, const ContactPoolSys& pool_sys);
+
+    /// Reads the Contactpoolsys from a file.
+    /// @param config_pt        Property_tree with general configuration settings.
+    /// @param pool_sys         The poolsys to be seeded.
+    /// @return                 The poolsys contained in the file.
+    static void ReadPoolSys(const boost::property_tree::ptree& config_pt, ContactPoolSys& pool_sys);
 
 private:
     /// The labels for the first line in a csv file.
@@ -63,6 +75,11 @@ private:
     /// @param region           The region that contains the values.
     /// @return                 Vector of the values of the region in string format.
     static std::vector<std::string> GetValues(const std::shared_ptr<util::Region> region);
+
+    /// Returns the values of a contactpool in string format.
+    /// @param pool             The contactpool that contains the values.
+    /// @return                 Vector of the values of the contactpool in string format.
+    static std::vector<std::string> GetValues(const ContactPool& pool);
 };
 
 /// Returns the reference households from the file defined in the configuration.

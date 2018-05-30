@@ -1,6 +1,5 @@
 #pragma once
 #include "../files/GenDirectory.h"
-#include "pool/ContactPoolSys.h"
 #include "util/GeoCoordinate.h"
 
 namespace stride {

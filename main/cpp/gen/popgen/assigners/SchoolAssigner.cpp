@@ -28,8 +28,9 @@ void AssignSchools(
     for (const auto &band : schools) {
         for (const auto &g_struct : band) {
             auto school = std::static_pointer_cast<School>(g_struct);
+            auto coord  = school->coordinate;
             for (unsigned int size = 0; size < school_size; size += school_cp_size) {
-                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::School);
+                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::School, coord);
                 school->pools.push_back(pool);
                 cp_id++;
             }

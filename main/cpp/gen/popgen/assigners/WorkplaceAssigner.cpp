@@ -22,8 +22,9 @@ void AssignWorkplaces(
     unsigned int cp_id = region->first_cps[ContactPoolType::Id::Work];
     for (auto &band : workplaces) {
         for (auto &g_struct : band) {
-            auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
-            auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Work);
+            auto workplace  = std::static_pointer_cast<WorkPlace>(g_struct);
+            auto coord      = workplace->coordinate;
+            auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Work, coord);
             workplace->pool = pool;
             cp_id++;
         }

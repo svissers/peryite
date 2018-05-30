@@ -20,18 +20,15 @@ public:
         /// @param region_name      The name for the region.
         Region(unsigned int region_id, std::string region_name)
         : id(region_id), name(region_name)
-        {
-            first_cps = ContactPoolType::IdSubscriptArray<unsigned int>(0);
-            last_cps = ContactPoolType::IdSubscriptArray<unsigned int>(0);
-        }
+        {}
 
         unsigned int id                 = -1;
         std::string name                = "";
         gen::GenConfiguration config;                               ///< Only used when generating with the geopop component.
         unsigned int first_person_id    = 0;                        ///< The first person id in the population that is in this region.
         unsigned int last_person_id     = 0;                        ///< The last person id in the population that is in this region.
-        ContactPoolType::IdSubscriptArray<unsigned int> first_cps;  ///< The first contactpool id in this region for every type.
-        ContactPoolType::IdSubscriptArray<unsigned int> last_cps;   ///< The last contactpool id in this region for every type.
+        ContactPoolType::IdSubscriptArray<unsigned int> first_cps{0U};;  ///< The first contactpool id in this region for every type.
+        ContactPoolType::IdSubscriptArray<unsigned int> last_cps{0U};;   ///< The last contactpool id in this region for every type.
 };
 
 

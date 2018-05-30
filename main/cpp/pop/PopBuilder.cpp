@@ -46,24 +46,10 @@ shared_ptr<Population> PopBuilder::MakePoolSys(std::shared_ptr<Population> pop)
         using namespace ContactPoolType;
         auto& population = *pop;
         auto& poolSys    = population.GetContactPoolSys();
-
         // --------------------------------------------------------------
-        // Determine maximum pool ids in population.
+        // Read the ContactPoolSys from a file.
         // --------------------------------------------------------------
-        IdSubscriptArray<unsigned int> max_ids{0U};
-        for (const auto& p : population) {
-                for (Id typ : IdList) {
-                        max_ids[typ] = max(max_ids[typ], p.GetPoolId(typ));
-                }
-        }
-        // --------------------------------------------------------------
-        // Initialize poolSys with empty ContactPools (even for Id=0).
-        // --------------------------------------------------------------
-        for (Id typ : IdList) {
-                for (size_t i = 0; i < max_ids[typ] + 1; i++) {
-                        poolSys[typ].emplace_back(ContactPool(i, typ));
-                }
-        }
+        gen::files::PopulationFile::ReadPoolSys(m_config_pt, poolSys);
 
         // --------------------------------------------------------------
         // Insert persons (pointers) in their contactpools. Having Id 0
@@ -94,6 +80,7 @@ shared_ptr<Population> PopBuilder::MakePersons(std::shared_ptr<Population> pop)
         const auto file_name        = m_config_pt.get<string>("run.population_file");
         const auto use_install_dirs = m_config_pt.get<bool>("run.use_install_dirs");
         const auto file_path        = (use_install_dirs) ? FileSys::GetDataDir() /= file_name : file_name;
+        std::cout << "POPULATIONFILE FILE PATH: " << file_path.string() << std::endl;
         if (!is_regular_file(file_path)) {
                 throw runtime_error(string(__func__) + "> Population file " + file_path.string() + " not present.");
         }
@@ -132,6 +119,7 @@ shared_ptr<Population> PopBuilder::MakePersons(std::shared_ptr<Population> pop)
         //------------------------------------------------
         // Read regions from file.
         //------------------------------------------------
+        std::cout << "REGIONS: " << std::endl;
         pop->SetRegions(gen::files::PopulationFile::ReadRegions(m_config_pt));
 
         return pop;

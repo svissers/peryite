@@ -43,6 +43,33 @@ void PopulationFile::Write()
     }
 }
 
+void PopulationFile::Read(shared_ptr<Population>& population)
+{
+    // Read the population from memory
+    if (!m_population->empty()) {
+        population = m_population;
+        return;
+    }
+    // Read the population from file
+    m_population = population;
+    CSV pop_data(m_file_path.string());
+    unsigned int person_id = 0U;
+    for (CSVRow const & row : pop_data) {
+        m_population->CreatePerson(
+            person_id,
+            row.GetValue<unsigned int>(0),
+            row.GetValue<unsigned int>(1),
+            row.GetValue<unsigned int>(2),
+            row.GetValue<unsigned int>(3),
+            row.GetValue<unsigned int>(4),
+            row.GetValue<unsigned int>(5),
+            row.GetValue<double>(6),
+            row.GetValue<double>(7)
+        );
+       ++person_id;
+    }
+}
+
 void PopulationFile::WriteRegions(string output_prefix, Regions& regions)
 {
     if (regions.empty())
@@ -72,6 +99,7 @@ Regions PopulationFile::ReadRegions(const boost::property_tree::ptree& config_pt
     const auto file_name        = config_pt.get<string>("run.region_file");
     const auto use_install_dirs = config_pt.get<bool>("run.use_install_dirs");
     const auto file_path        = (use_install_dirs) ? FileSys::GetDataDir() /= file_name : file_name;
+    std::cout << "REGIONSFILE FILE PATH: " << file_path.string() << std::endl;
     if (!is_regular_file(file_path)) {
             throw runtime_error(string(__func__) + "> Region file " + file_path.string() + " not present.");
     }
@@ -95,32 +123,49 @@ Regions PopulationFile::ReadRegions(const boost::property_tree::ptree& config_pt
     return regions;
 }
 
-void PopulationFile::Read(shared_ptr<Population>& population)
+
+void PopulationFile::WritePoolSys(std::string output_prefix, const ContactPoolSys& pool_sys)
 {
-    // Read the population from memory
-    if (!m_population->empty()) {
-        population = m_population;
+    if (pool_sys.empty())
         return;
-    }
-    // Read the population from file
-    m_population = population;
-    CSV pop_data(m_file_path.string());
-    unsigned int person_id = 0U;
-    for (CSVRow const & row : pop_data) {
-        m_population->CreatePerson(
-            person_id,
-            row.GetValue<unsigned int>(0),
-            row.GetValue<unsigned int>(1),
-            row.GetValue<unsigned int>(2),
-            row.GetValue<unsigned int>(3),
-            row.GetValue<unsigned int>(4),
-            row.GetValue<unsigned int>(5),
-            row.GetValue<double>(6),
-            row.GetValue<double>(7)
-        );
-       ++person_id;
+    std::vector<std::string> labels = {"type","id","lat", "lon"};
+    auto file_path = FileSys::BuildPath(output_prefix, "PoolSys.csv");
+    std::ofstream my_file{file_path.string()};
+    if(my_file.is_open()) {
+        my_file << boost::algorithm::join(labels,",") << "\n";
+        for (const auto& typ : ContactPoolType::IdList) {
+            auto type_str = ContactPoolType::ToString(typ);
+            for (const auto& pool : pool_sys[typ]) {
+                my_file << type_str << "," << boost::algorithm::join(GetValues(pool),",") << "\n";
+            }
+        }
+        my_file.close();
     }
 }
+
+void PopulationFile::ReadPoolSys(const boost::property_tree::ptree& config_pt, ContactPoolSys& pool_sys)
+{
+    // Locate the file
+    const auto file_name        = config_pt.get<string>("run.poolsys_file");
+    const auto use_install_dirs = config_pt.get<bool>("run.use_install_dirs");
+    const auto file_path        = (use_install_dirs) ? FileSys::GetDataDir() /= file_name : file_name;
+    if (!is_regular_file(file_path)) {
+            throw runtime_error(string(__func__) + "> Poolsys file " + file_path.string() + " not present.");
+    }
+    // Read from the file
+    CSV reg_data(file_path.string());
+    for (CSVRow const & row : reg_data) {
+        auto type   = ContactPoolType::ToType(row.GetValue<string>(0));
+        auto id     = row.GetValue<unsigned int>(1);
+        auto lat    = row.GetValue<double>(2);
+        auto lon    = row.GetValue<double>(3);
+        auto coord  = util::spherical_point(lat, lon);
+        ContactPool pool(id, type, coord);
+        //std::cout << row.GetValue<string>(0) << "," << to_string(id) << "," << to_string(lat) << "," << to_string(lon) << std::endl;
+        pool_sys[type].emplace_back(pool);
+    }
+}
+
 
 vector<vector<unsigned int>> GetReferenceHouseholds(const GenConfiguration& config)
 {
@@ -183,6 +228,18 @@ std::vector<std::string> PopulationFile::GetValues(const shared_ptr<Region> regi
         values.push_back(to_string(region->first_cps[typ]));
         values.push_back(to_string(region->last_cps[typ]));
     }
+    return values;
+}
+
+
+std::vector<std::string> PopulationFile::GetValues(const ContactPool& pool)
+{
+    vector<string> values =
+    {
+        to_string(pool.GetId()),
+        to_string(pool.GetCoordinate().get<0>()),
+        to_string(pool.GetCoordinate().get<1>())
+    };
     return values;
 }
 

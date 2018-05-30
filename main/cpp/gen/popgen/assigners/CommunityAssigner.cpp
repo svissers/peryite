@@ -29,8 +29,9 @@ void AssignCommunities(
             if (!community->is_primary)
                 continue;
             auto com_id = ContactPoolType::Id::PrimaryCommunity;
+            auto coord  = community->coordinate;
             for (unsigned int size = 0; size < community_size; size += community_cp_size) {
-                auto pool = make_shared<ContactPool>(prim_cp_id, com_id);
+                auto pool = make_shared<ContactPool>(prim_cp_id, com_id, coord);
                 community->pools.push_back(pool);
                 prim_cp_id++;
             }
@@ -45,8 +46,9 @@ void AssignCommunities(
             if (community->is_primary)
                 continue;
             auto com_id = ContactPoolType::Id::SecondaryCommunity;
+            auto coord  = community->coordinate;
             for (unsigned int size = 0; size < community_size; size += community_cp_size) {
-                auto pool = make_shared<ContactPool>(sec_cp_id, com_id);
+                auto pool = make_shared<ContactPool>(sec_cp_id, com_id, coord);
                 community->pools.push_back(pool);
                 sec_cp_id++;
             }
