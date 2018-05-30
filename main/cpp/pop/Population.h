@@ -23,6 +23,7 @@
 #include "pop/Person.h"
 #include "util/Any.h"
 #include "util/SegmentedVector.h"
+#include "util/Regions.h"
 
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <memory>
@@ -60,6 +61,10 @@ public:
         /// The ContactPoolSys of the simulator.
         const ContactPoolSys& GetContactPoolSys() const { return m_pool_sys; }
 
+        /// The region of the population
+        void SetRegions(util::Regions regions) { m_regions = regions; }
+        const util::Regions& GetRegions() const { return m_regions; }
+
         ///
         Population() = default;
 
@@ -90,6 +95,7 @@ private:
 private:
         util::Any                       m_beliefs_container; ///< Holds belief data for the persons.
         ContactPoolSys                  m_pool_sys;          ///< Holds vector of ContactPools of different types.
+        util::Regions                   m_regions;           ///< The regions that the population is located in.
         std::shared_ptr<spdlog::logger> m_contact_logger;    ///< Logger for contact/transmission.
 };
 

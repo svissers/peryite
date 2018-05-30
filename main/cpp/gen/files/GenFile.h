@@ -16,13 +16,15 @@ class GenFile
 public:
     /// Constructor. Constructs the GenFile object using the config.
     /// @param config           The geopop configuration to use.
-    GenFile(GenConfiguration& config);
+    /// @param suffix           The suffix to use for the file name.
+    GenFile(GenConfiguration& config, std::string suffix);
 
     /// Constructor. Initializes the GenFile object with a vector of communities.
     /// @param config           The geopop configuration to use.
     /// @param structs          The genstructs that the file will contain.
     /// @param geo              The geogrid that was used to build the genstructs.
-    GenFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, GeoGrid& geo);
+    /// @param suffix           The suffix to use for the file name.
+    GenFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, GeoGrid& geo, std::string suffix);
 
     // Virtual destructor
     virtual ~GenFile() = 0;
@@ -34,8 +36,6 @@ public:
     /// @return                 The genstructs that the file contains.
     virtual std::vector<std::vector<std::shared_ptr<GenStruct>>> Read();
 
-    void SetFileName(std::string newfilename);
-
 protected:
     /// The labels for the first line in a csv file.
     std::vector<std::string> m_labels;
@@ -43,6 +43,8 @@ protected:
     boost::filesystem::path m_file_path;
     /// The prefix (directory name or prefix to filename) used in the file path.
     std::string m_output_prefix;
+    // The suffix used in the file path (before the file type specifier).
+    std::string m_suffix;
     /// The name of the file
     std::string m_file_name;
     /// The struct data the file contains.

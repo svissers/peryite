@@ -1,6 +1,7 @@
 #pragma once
 #include "GenFile.h"
 #include "../GeoGrid.h"
+#include "util/FileSys.h"
 #include <string>
 #include <boost/algorithm/string.hpp>
 
@@ -18,29 +19,33 @@ private:
 public:
     /// Constructor. Constructs the GeoGridFile object using the config.
     /// @param config           The geopop configuration to be used.
-    GeoGridFile(GenConfiguration& config) : GenFile(config) {}
+    /// @param suffix           The suffix to use for the file name.
+    GeoGridFile(GenConfiguration& config, std::string suffix) : GenFile(config, suffix) {
+        m_file_name = "Geogrid";
+        m_labels = {"id","latitude","longitude","name","province","population", "is_fragmented", "fragmented_populations", "fragmented_lats", "fragmented_longs"};
+    }
 
     /// Constructor. Constructs the GeoGridFile object with an existing grid.
     /// @param config           The geopop configuration to be used.
     /// @param grid             The geogrid that the file will contain.
-    GeoGridFile(GenConfiguration& config, GeoGrid grid)
-    : GenFile(config)
+    /// @param suffix           The suffix to use for the file name.
+    GeoGridFile(GenConfiguration& config, GeoGrid grid, std::string suffix)
+    : GeoGridFile(config, suffix)
     {
         m_grid = grid;
-        m_file_name = "Geogrid.csv";
-        m_labels = {"id","latitude","longitude","name","province","population", "is_fragmented", "fragmented_populations", "fragmented_lats", "fragmented_longs"};
     }
 
     /// Read should not be used, use ReadGrid instead.
     /// @return     A brand new vector of genstructs.
-    std::vector<std::vector<std::shared_ptr<GenStruct>>> Read()
+    std::vector<std::vector<std::shared_ptr<GenStruct>>> Read() override
     { return std::vector<std::vector<std::shared_ptr<GenStruct>>>(); }
 
     /// Writes the geogrid that the file contains to a file.
-    void write()
+    void Write() override
     {
         if (m_grid.size() == 0)
             return;
+        m_file_path = util::FileSys::BuildPath(m_output_prefix, m_file_name + m_suffix + ".csv");
         std::ofstream my_file{m_file_path.string()};
         if(my_file.is_open()) {
             my_file << boost::algorithm::join(m_labels,",") << "\n";
@@ -60,6 +65,7 @@ public:
         // Populate the geogrid and return it.
         m_grid.m_min_long = 90;
         m_grid.m_max_long = 0;
+        m_file_path = util::FileSys::BuildPath(m_output_prefix, m_file_name + m_suffix + ".csv");
         util::CSV struct_data(m_file_path.string());
         for (util::CSVRow const & row : struct_data) {
             double longitude = row.GetValue<double>("longitude");
@@ -112,7 +118,7 @@ private:
 
     /// GetStruct should not be used.
     /// @return     A brand new empty genstruct.
-    std::shared_ptr<GenStruct> GetStruct(util::CSVRow const & row)
+    std::shared_ptr<GenStruct> GetStruct(util::CSVRow const & row) override
     {
         return std::shared_ptr<GenStruct>();
     }
@@ -120,7 +126,7 @@ private:
     /// Returns the values of a urban center in string format.
     /// @param g_struct         The urban center that contains the values.
     /// @return                 Vector of the values of the urban center in string format.
-    std::vector<std::string> GetValues(std::shared_ptr<GenStruct> g_struct)
+    std::vector<std::string> GetValues(std::shared_ptr<GenStruct> g_struct) override
     {
         std::shared_ptr<UrbanCenter> center = std::static_pointer_cast<UrbanCenter>(g_struct);
         std::vector<std::string> populations;

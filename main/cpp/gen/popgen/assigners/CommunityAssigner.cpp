@@ -1,6 +1,7 @@
 #include "CommunityAssigner.h"
 #include "../../structs/Community.h"
 #include "../PopGenerator.h"
+#include "pool/ContactPoolType.h"
 #include "trng/fast_discrete_dist.hpp"
 
 namespace stride {
@@ -12,41 +13,58 @@ using namespace std;
 using namespace gen;
 using namespace util;
 
-unsigned int AssignCommunities(
+void AssignCommunities(
         vector<vector<shared_ptr<GenStruct>>> communities, const shared_ptr<Population> population,
-        const GenConfiguration &config, const GeoGrid &grid, unsigned int start_cp_id, unsigned int first_person_id , unsigned int next_first_person_id) {
+        shared_ptr<Region> region, const GeoGrid &grid) {
     // -------------
     // Contactpools
     // -------------
     const unsigned int community_size = 2000;
     const unsigned int community_cp_size = 20;
-    // Create the contactpools for every community
-    unsigned int cp_id = start_cp_id;
+    // Create the contactpools for every primary community
+    unsigned int prim_cp_id = region->first_cps[ContactPoolType::Id::PrimaryCommunity];
     for (auto &band : communities) {
         for (auto &g_struct : band) {
             auto community = std::static_pointer_cast<Community>(g_struct);
-            auto com_id = ContactPoolType::Id::PrimaryCommunity;
             if (!community->is_primary)
-                com_id = ContactPoolType::Id::SecondaryCommunity;
+                continue;
+            auto com_id = ContactPoolType::Id::PrimaryCommunity;
             for (unsigned int size = 0; size < community_size; size += community_cp_size) {
-                auto pool = make_shared<ContactPool>(cp_id, com_id);
+                auto pool = make_shared<ContactPool>(prim_cp_id, com_id);
                 community->pools.push_back(pool);
-                cp_id++;
+                prim_cp_id++;
             }
         }
     }
+    region->last_cps[ContactPoolType::Id::PrimaryCommunity] = prim_cp_id;
+    // Create the contactpools for every secondary community
+    unsigned int sec_cp_id = region->first_cps[ContactPoolType::Id::SecondaryCommunity];
+    for (auto &band : communities) {
+        for (auto &g_struct : band) {
+            auto community = std::static_pointer_cast<Community>(g_struct);
+            if (community->is_primary)
+                continue;
+            auto com_id = ContactPoolType::Id::SecondaryCommunity;
+            for (unsigned int size = 0; size < community_size; size += community_cp_size) {
+                auto pool = make_shared<ContactPool>(sec_cp_id, com_id);
+                community->pools.push_back(pool);
+                sec_cp_id++;
+            }
+        }
+    }
+    region->last_cps[ContactPoolType::Id::SecondaryCommunity] = sec_cp_id;
+
     // ------------------------------
     // Assign persons to communities
     // ------------------------------
-    for (std::size_t i = first_person_id; i < next_first_person_id; i++) {
+    for (std::size_t i = region->first_person_id; i < region->last_person_id; i++) {
         auto hh_id = population->at(i).GetPoolId(ContactPoolType::Id::Household);
         auto home_coord = population->at(i).GetCoordinate();
         auto closest_communities = GetClosestStructs(home_coord, communities, grid);
-        if (closest_communities.empty()) {
-
+        if (closest_communities.empty())
             continue;
-        }
         // Create a uniform distribution to select a secondary community
+        auto config = region->config;
         auto rn_manager = config.GetRNManager();
         auto community_generator = rn_manager->GetGenerator(
                 trng::fast_discrete_dist(closest_communities.size() - 1));
@@ -109,7 +127,6 @@ unsigned int AssignCommunities(
         i--;
 
     }
-    return cp_id;
 }
 } // assigner
 } // popgen

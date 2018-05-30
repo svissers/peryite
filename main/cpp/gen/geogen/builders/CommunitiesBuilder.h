@@ -4,7 +4,6 @@
 #include "../../GeoGrid.h"
 #include <vector>
 #include <pop/Population.h>
-#include <tuple>
 
 namespace stride {
 namespace gen {
@@ -15,7 +14,7 @@ namespace builder {
 /// @param config       The configuration file that specifies parameters used in building communities.
 /// @param grid         The geogrid that the communities will be mapped to.
 /// @return             A vector of newly created communities.
-std::tuple<std::vector<std::shared_ptr<Community>>, unsigned int> BuildCommunities(const GenConfiguration& config, GeoGrid& grid, std::shared_ptr<Population>& population, unsigned int startId);
+std::vector<std::shared_ptr<Community>> BuildCommunities(const GenConfiguration& config, GeoGrid& grid, std::shared_ptr<Population>& population);
 
 } // namespace builder
 } // namespace geogen

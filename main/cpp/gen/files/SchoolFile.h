@@ -14,16 +14,18 @@ class SchoolFile : public GenFile
 public:
     /// Constructor. Constructs the SchoolFile object using the config.
     /// @param config           The geopop configuration to be used.
-    SchoolFile(GenConfiguration& config) : GenFile(config) {}
+    /// @param suffix           The suffix to use for the file name.
+    SchoolFile(GenConfiguration& config, std::string suffix) : GenFile(config, suffix) {}
 
     /// Constructor. Constructs the SchoolFile object with an existing vector of schools.
     /// @param config           The geopop configuration to be used.
     /// @param structs          The schools that the file will contain.
     /// @param geo              The geogrid that was used to build the schools.
-    SchoolFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, GeoGrid& geo)
-    : GenFile(config, structs, geo)
+    /// @param suffix           The suffix to use for the file name.
+    SchoolFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, GeoGrid& geo, std::string suffix)
+    : GenFile(config, structs, geo, suffix)
     {
-        m_file_name = "Schools.csv";
+        m_file_name = "Schools";
         m_labels = {"id","latitude","longitude","band"};
     }
 

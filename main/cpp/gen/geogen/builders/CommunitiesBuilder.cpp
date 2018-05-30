@@ -10,7 +10,7 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
-std::tuple<vector<shared_ptr<Community>>, unsigned int> BuildCommunities(const GenConfiguration& config, GeoGrid& grid, shared_ptr<Population>& population, unsigned int startId)
+vector<shared_ptr<Community>> BuildCommunities(const GenConfiguration& config, GeoGrid& grid, shared_ptr<Population>& population)
 {
     vector<shared_ptr<Community>> communities = vector<shared_ptr<Community>>();
     auto total_population = config.GetTree().get<unsigned int>("population_size");
@@ -38,13 +38,13 @@ std::tuple<vector<shared_ptr<Community>>, unsigned int> BuildCommunities(const G
             auto frag_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(f_fractions.begin(), f_fractions.end()));
             coords = center->fragmented_coords.at(frag_gen());
         }
-        auto community           = make_shared<Community>(Community(startId + i, true, coords));
-        auto community_secondary = make_shared<Community>(Community(startId + i + community_count, false, coords));
+        auto community           = make_shared<Community>(Community(i, true, coords));
+        auto community_secondary = make_shared<Community>(Community(i+community_count, false, coords));
         communities.push_back(community);
         communities.push_back(community_secondary);
     }
 
-    return std::tuple<vector<shared_ptr<Community>>, unsigned int>(communities, startId + community_count*2 - 1);
+    return communities;
 }
 
 } // namespace builder

@@ -1,6 +1,7 @@
 #include "SchoolAssigner.h"
 #include "../../structs/School.h"
 #include "../PopGenerator.h"
+#include "pool/ContactPoolType.h"
 #include "trng/fast_discrete_dist.hpp"
 
 namespace stride {
@@ -12,13 +13,18 @@ using namespace std;
 using namespace gen;
 using namespace util;
 
-unsigned int AssignSchools(
-        vector<vector<shared_ptr<GenStruct>>> &schools, const shared_ptr<Population> population,
-        const GenConfiguration &config, const GeoGrid &grid, unsigned int start_cp_id, unsigned int first_person_id, unsigned int next_person_id) {
-    const unsigned int school_size = config.GetTree().get<unsigned int>("school_size");
-    const unsigned int school_cp_size = config.GetTree().get<unsigned int>("school_cp_size");
+void AssignSchools(
+        vector<vector<shared_ptr<GenStruct>>> &schools,
+        const shared_ptr<Population> population,
+        shared_ptr<Region> region,
+        const GeoGrid &grid
+        )
+{
+    auto config                         = region->config;
+    const unsigned int school_size      = config.GetTree().get<unsigned int>("school_size");
+    const unsigned int school_cp_size   = config.GetTree().get<unsigned int>("school_cp_size");
     // Create the contactpools for every school
-    unsigned int cp_id = start_cp_id;
+    unsigned int cp_id = region->first_cps[ContactPoolType::Id::School];
     for (const auto &band : schools) {
         for (const auto &g_struct : band) {
             auto school = std::static_pointer_cast<School>(g_struct);
@@ -29,10 +35,10 @@ unsigned int AssignSchools(
             }
         }
     }
+    region->last_cps[ContactPoolType::Id::School] = cp_id-1;
 
-    // Assign young students to schools
-    for (unsigned int i = first_person_id; i < next_person_id; i++/*auto &person : *population*/) {
-
+    // Assign students to schools
+    for (unsigned int i = region->first_person_id; i < region->last_person_id; i++) {
         auto &person = population->at(i);
         auto age = person.GetAge();
         if (age >= 3 && age < 18) {
@@ -56,7 +62,6 @@ unsigned int AssignSchools(
             pool->AddMember(&person);
         }
     }
-    return cp_id;
 }
 
 } // assigner

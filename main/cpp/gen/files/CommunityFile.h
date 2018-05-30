@@ -15,16 +15,18 @@ public:
 
     /// Constructor. Constructs the CommunityFile object using the config.
     /// @param config           The geopop configuration to use.
-    CommunityFile(GenConfiguration& config) : GenFile(config) {}
+    /// @param suffix           The suffix to use for the file name.
+    CommunityFile(GenConfiguration& config, std::string suffix) : GenFile(config, suffix) {}
 
     /// Constructor. Initializes the CommunityFile object with a vector of communities.
     /// @param config           The configuration property tree to use.
     /// @param structs          The communities that the file will contain.
     /// @param geo              The geogrid that was used to build the communities.
-    CommunityFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, GeoGrid& geo)
-    : GenFile(config, structs, geo)
+    /// @param suffix           The suffix to use for the file name.
+    CommunityFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, GeoGrid& geo, std::string suffix)
+    : GenFile(config, structs, geo, suffix)
     {
-        m_file_name = "Communities.csv";
+        m_file_name = "Communities";
         m_labels = {"id","latitude","longitude","primary", "band"};
     }
 
