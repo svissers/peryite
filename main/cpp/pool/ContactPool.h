@@ -63,7 +63,7 @@ public:
 
         void UpdateTravel(unsigned int simDay); /// Checks if an end travel date is reached and removes every person from that date out of the contactpool, it also calls person->ReturnHome()
 
-        void AddTraveller(unsigned int personId, unsigned int EndDate); /// adds a traveller from a different region to the contactpool
+        void AddTraveller(Person* person, unsigned int EndDate); /// adds a traveller from a different region to the contactpool
 
 private:
         /// Sort w.r.t. health status: order: exposed/infected/recovered, susceptible, immune.
