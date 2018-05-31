@@ -26,6 +26,7 @@
 #include <tuple>
 #include <vector>
 
+
 namespace stride {
 
 class Person;
@@ -58,7 +59,11 @@ public:
         util::spherical_point GetCoordinate() const { return m_coord; }
 
         // Set the coordinate of this contactpool
-        //void SetCoordinate(util::spherical_point coord) { m_coord = coord; }
+        void SetCoordinate(util::spherical_point coord) { m_coord = coord; }
+
+        void UpdateTravel(unsigned int simDay); /// Checks if an end travel date is reached and removes every person from that date out of the contactpool, it also calls person->ReturnHome()
+
+        void AddTraveller(unsigned int personId, unsigned int EndDate); /// adds a traveller from a different region to the contactpool
 
 private:
         /// Sort w.r.t. health status: order: exposed/infected/recovered, susceptible, immune.
@@ -74,6 +79,7 @@ private:
         std::size_t          m_index_immune; ///< Index of the first immune member in the ContactPool.
         std::vector<Person*> m_members;      ///< Pointers to contactpool members (raw pointers intentional).
         util::spherical_point m_coord; ///< The household coordinates
+        std::map<size_t, std::vector<unsigned int> > m_end_travel_dates; /// A map of end travel dates containing the person ids for that date (Simdays)
 };
 
 } // namespace stride

@@ -96,13 +96,22 @@ public:
         void SetBelief(Belief* belief) { m_belief = belief; };
 
         /// Update the health status and presence in contactpools.
-        void Update(bool isWorkOff, bool isSchoolOff);
+        void Update(bool isWorkOff, bool isSchoolOff); // Now has a separate section if m_on_vacation is true
 
         ///
         void Update(Person* p);
 
         /// Set ID of contactpool_type
         void setPoolId(const ContactPoolType::Id& pool_type, unsigned int id) { m_pool_ids[pool_type] = id; }
+
+        /// Changes work_id and sets m_in_pools to false for all other contactpools
+        void TravelBusiness(unsigned int work_id);
+
+        /// Changes prim and sec ids and sets m_in_pools to false for all other contactpools
+        void TravelTourism(unsigned int prim_community_id, unsigned int secondary_community_id);
+
+        /// Replaces m_pools with m_backup_pool_ids and sets m_in_pools to true for all contactpools
+        void ReturnHome();
 
 private:
         double       m_age;            ///< The age.
@@ -111,6 +120,8 @@ private:
         Health       m_health;         ///< Health info for this person.
         unsigned int m_id;             ///< The id.
         bool         m_is_participant; ///< Is participating in the social contact study
+        bool m_on_vacation;            ///< Is on vacation
+        bool m_on_work_travel;          ///< Is on a business trip
 
         ///< Ids (school, work, etc) of pools you belong to Id value 0 means you do not belong to any
         ///< pool of that type (e.g. school and work are mutually exclusive.
@@ -119,6 +130,9 @@ private:
         ///< Is person present/absent in pools of each of the types (school, work, etc)?
         ContactPoolType::IdSubscriptArray<bool> m_in_pools;
         util::spherical_point m_coord; ///< The household coordinates
+
+        ContactPoolType::IdSubscriptArray<unsigned int> m_backup_pool_ids;
+
 };
 
 } // namespace stride

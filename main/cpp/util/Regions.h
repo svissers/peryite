@@ -55,6 +55,14 @@ public:
         );
 };
 
+    /*
+
+Config settings:
+* percentage van de werkenden die business verplaatsingen doet
+* percentage kans dat een werkende (die een business verplaatsing kan doen) op deze dag een business verplaatsing doet
+* percentage van gezinnen/personen die toerisme doen
+* percentage van toeristen die naar Frankrijk/Duitsland/Nederland/Belgie gaan
+     * */
 
 } // namespace util
 } // namespace stride

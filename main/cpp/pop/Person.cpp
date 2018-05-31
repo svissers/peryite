@@ -37,11 +37,21 @@ void Person::Update(bool isWorkOff, bool isSchoolOff)
                 m_in_pools[Id::Work]               = false;
                 m_in_pools[Id::PrimaryCommunity]   = false;
                 m_in_pools[Id::SecondaryCommunity] = false;
+        } else if(m_on_work_travel){
+                m_in_pools[Id::School]             = false;
+                m_in_pools[Id::Work]               = true;
+                m_in_pools[Id::PrimaryCommunity]   = false;
+                m_in_pools[Id::SecondaryCommunity] = false;
         } else if (isWorkOff || (m_age <= MinAdultAge() && isSchoolOff)) {
                 m_in_pools[Id::School]             = false;
                 m_in_pools[Id::Work]               = false;
                 m_in_pools[Id::PrimaryCommunity]   = true;
                 m_in_pools[Id::SecondaryCommunity] = false;
+        } else if (m_on_vacation ){
+                m_in_pools[Id::School]             = false;
+                m_in_pools[Id::Work]               = false;
+                m_in_pools[Id::PrimaryCommunity]   = true;
+                m_in_pools[Id::SecondaryCommunity] = true;
         } else {
                 m_in_pools[Id::School]             = true;
                 m_in_pools[Id::Work]               = true;
@@ -54,5 +64,46 @@ void Person::Update(Person*)
 {
         // TODO update beliefs
 }
+void Person::TravelBusiness(unsigned int work_id)
+{
+        m_backup_pool_ids = m_pool_ids;
+
+        m_on_work_travel = true;
+
+        m_pool_ids[Id::Work] = work_id;
+
+        m_in_pools[Id::School]             = false;
+        m_in_pools[Id::PrimaryCommunity]   = false;
+        m_in_pools[Id::SecondaryCommunity] = false;
+
+};
+
+void Person::ReturnHome()
+{
+        m_pool_ids = m_backup_pool_ids;
+
+        m_on_vacation = false;
+        m_on_work_travel = false;
+
+        m_in_pools[Id::School]             = true;
+        m_in_pools[Id::Work]               = true;
+        m_in_pools[Id::PrimaryCommunity]   = true;
+        m_in_pools[Id::SecondaryCommunity] = true;
+
+};
+
+void Person::TravelTourism(unsigned int prim_community_id, unsigned int secondary_community_id)
+{
+        m_backup_pool_ids = m_pool_ids;
+
+        m_on_vacation = true;
+
+        m_pool_ids[Id::PrimaryCommunity] = prim_community_id;
+        m_pool_ids[Id::SecondaryCommunity] = secondary_community_id;
+
+        m_in_pools[Id::School]             = false;
+        m_in_pools[Id::Work]               = false;
+
+};
 
 } // namespace stride
