@@ -113,6 +113,17 @@ public:
         /// Replaces m_pools with m_backup_pool_ids and sets m_in_pools to true for all contactpools
         void ReturnHome();
 
+        void setTravelWorkId(unsigned int travel_work_id){m_travel_work_id = travel_work_id;}
+
+        void setTravelComIds(unsigned int prim_id, unsigned int sec_id){
+                m_travel_prim_com_id = prim_id;
+                m_travel_sec_com_id = sec_id;
+        }
+
+        std::tuple<unsigned int, unsigned int> getTravelComIds() const {return std::tuple<unsigned int, unsigned int>(m_travel_prim_com_id, m_travel_prim_com_id);}
+
+        unsigned int getTravelWorkId() const { return m_travel_work_id; }
+
 private:
         double       m_age;            ///< The age.
         Belief*      m_belief;         ///< Health beliefs related data (raw pointer intentional).
@@ -122,6 +133,9 @@ private:
         bool         m_is_participant; ///< Is participating in the social contact study
         bool m_on_vacation;            ///< Is on vacation
         bool m_on_work_travel;          ///< Is on a business trip
+        unsigned int m_travel_work_id;
+        unsigned int m_travel_prim_com_id;
+        unsigned int m_travel_sec_com_id;
 
         ///< Ids (school, work, etc) of pools you belong to Id value 0 means you do not belong to any
         ///< pool of that type (e.g. school and work are mutually exclusive.

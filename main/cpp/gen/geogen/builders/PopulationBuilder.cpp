@@ -33,7 +33,7 @@ void BuildPopulation(shared_ptr<Region> region, shared_ptr<Population>& populati
             for (unsigned int age : household_ref) {
                 population->CreatePerson(
                     current_p_id++, age, current_hh_id,
-                    0, 0, 0, 0, 0, 0
+                    0, 0, 0, 0, 0, 0, 0, 0, 0
                 );
             }
             current_hh_id++;

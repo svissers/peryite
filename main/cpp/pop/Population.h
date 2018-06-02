@@ -71,7 +71,7 @@ public:
 
         /// Create Person in the population.
         void CreatePerson(unsigned int id, double age, unsigned int householdId, unsigned int schoolId,
-                          unsigned int workId, unsigned int primaryCommunityId, unsigned int secondaryCommunityId, double latitude, double longitude);
+                          unsigned int workId, unsigned int primaryCommunityId, unsigned int secondaryCommunityId, double latitude, double longitude, unsigned int tourismPrimaryCommunity, unsigned int tourismSecondaryCommunity, unsigned int travelWorkId);
 
 private:
         /// Initialize beliefs container (including this in SetBeliefPolicy function slows you down

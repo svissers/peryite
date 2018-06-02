@@ -5,6 +5,7 @@
 #include "assigners/WorkplaceAssigner.h"
 #include "assigners/CommunityAssigner.h"
 #include "pool/ContactPoolSys.h"
+#include "assigners/TravelAssigner.h"
 
 namespace stride {
 namespace gen {
@@ -109,6 +110,8 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
         }
         prev_region = region;
     }
+
+    //TODO : travelAssigner
 
     // ---------------------------------------
     // Write personsFile combining all regions

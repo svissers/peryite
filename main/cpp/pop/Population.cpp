@@ -119,7 +119,8 @@ unsigned int Population::GetInfectedCount() const
 }
 
 void Population::CreatePerson(unsigned int id, double age, unsigned int householdId, unsigned int schoolId,
-                              unsigned int workId, unsigned int primaryCommunityId, unsigned int secondaryCommunityId, double latitude, double longitude)
+                              unsigned int workId, unsigned int primaryCommunityId, unsigned int secondaryCommunityId,
+                              double latitude, double longitude, unsigned int tourismPrimaryCommunity, unsigned int tourismSecondaryCommunity, unsigned int travelWorkId)
 {
         this->emplace_back(Person(id, age, householdId, schoolId, workId, primaryCommunityId, secondaryCommunityId, latitude, longitude));
 }

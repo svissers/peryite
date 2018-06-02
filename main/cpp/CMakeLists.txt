@@ -76,6 +76,7 @@ set(LIB_SRC
     gen/popgen/assigners/UniversityAssigner.cpp
     gen/popgen/assigners/WorkplaceAssigner.cpp
     gen/popgen/assigners/CommunityAssigner.cpp
+	gen/popgen/assigners/TravelAssigner.cpp
     gen/GenConfiguration.cpp
     gen/geogen/GeoGenerator.cpp
     gen/geogen/builders/GeoGridBuilder.cpp

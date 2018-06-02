@@ -17,7 +17,7 @@ using namespace boost::property_tree;
 PopulationFile::PopulationFile(GenConfiguration& config)
 {
     m_file_name     = "Pop.csv";
-    m_labels        = {"age", "household_id", "school_id", "work_id", "primary_community", "secondary_community", "latitude", "longitude"};
+    m_labels        = {"age", "household_id", "school_id", "work_id", "primary_community", "secondary_community", "latitude", "longitude", "tourism_primary_community", "tourism_secondary_community", "travel_work_id"};
     // Get the output directory for this configuration.
     m_output_prefix = config.GetOutputPrefix();
     m_file_path     = FileSys::BuildPath(m_output_prefix, m_file_name);
@@ -64,7 +64,10 @@ void PopulationFile::Read(shared_ptr<Population>& population)
             row.GetValue<unsigned int>(4),
             row.GetValue<unsigned int>(5),
             row.GetValue<double>(6),
-            row.GetValue<double>(7)
+            row.GetValue<double>(7),
+            row.GetValue<unsigned int>(8),
+            row.GetValue<unsigned int>(9),
+            row.GetValue<unsigned int>(10)
         );
        ++person_id;
     }
@@ -210,7 +213,10 @@ std::vector<std::string> PopulationFile::GetValues(const Person& person)
         to_string(person.GetPoolId(ContactPoolType::Id::PrimaryCommunity)),
         to_string(person.GetPoolId(ContactPoolType::Id::SecondaryCommunity)),
         to_string(person.GetCoordinate().get<0>()),
-        to_string(person.GetCoordinate().get<1>())
+        to_string(person.GetCoordinate().get<1>()),
+        to_string(get<0>(person.getTravelComIds())),
+        to_string(get<1>(person.getTravelComIds())),
+        to_string(person.getTravelWorkId())
     };
     return values;
 }
