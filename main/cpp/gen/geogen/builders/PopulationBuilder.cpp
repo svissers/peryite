@@ -16,6 +16,7 @@ void BuildPopulation(shared_ptr<Region> region, shared_ptr<Population>& populati
     auto hh_reference           = files::GetReferenceHouseholds(config);
     auto current_p_id           = region->first_person_id;
     auto pop_size = config.GetTree().get<unsigned int>("population_size");
+    auto end_of_while = current_p_id+pop_size;
 
     // Create a uniform distribution for the household reference set.
     auto rn_manager = config.GetRNManager();
@@ -23,7 +24,7 @@ void BuildPopulation(shared_ptr<Region> region, shared_ptr<Population>& populati
 
     // Build the households
     auto current_hh_id  = region->first_cps[ContactPoolType::Id::Household];
-    while (current_p_id < pop_size) {
+    while (current_p_id < end_of_while) {
             // Select a household from the reference set
             int index           = generator();
             auto household_ref  = hh_reference.at(index);
