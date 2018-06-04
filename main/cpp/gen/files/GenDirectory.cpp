@@ -15,6 +15,7 @@ GenDirectory::GenDirectory(const boost::property_tree::ptree& config_pt)
     const auto rng_type = config_pt.get<string>("run.rng.engine");
     const auto rng_seed = config_pt.get<unsigned long>("run.rng.seed");
     auto thread_count   = config_pt.get<unsigned int>("run.num_threads");
+    m_num_days = config_pt.get<unsigned int>("run.num_days");
     const util::RNManager::Info info{rng_type, rng_seed, "", thread_count};
     rn_manager->Initialize(info);
     // Define the general geopop config.
@@ -30,6 +31,7 @@ GenDirectory::GenDirectory(const boost::property_tree::ptree& config_pt, util::R
     auto manager = std::shared_ptr<util::RNManager>(&rn_manager, [](util::RNManager*){});
     // Define the general geopop config.
     auto thread_count   = config_pt.get<unsigned int>("run.num_threads");
+    m_num_days = config_pt.get<unsigned int>("run.num_days");
     auto output_prefix = config_pt.get<string>("run.output_prefix");
     m_config = GenConfiguration(config_pt.get_child("run.pop_config"), thread_count, std::move(output_prefix), manager);
     // Define every region using their respective region configuration.

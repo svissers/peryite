@@ -3,6 +3,8 @@
 #include "../../GenConfiguration.h"
 #include "util/Regions.h"
 #include <vector>
+#include "../../files/GenDirectory.h"
+
 
 namespace stride {
 namespace gen {
@@ -14,7 +16,7 @@ namespace assigner {
 /// @param regions                   the regions that the simulated area consists of.
     void AssignTravellers(
             const std::shared_ptr<Population> population,
-            std::shared_ptr<util::Regions> regions
+            files::GenDirectory& dir, unsigned int num_days
     );
 
 } // assigner

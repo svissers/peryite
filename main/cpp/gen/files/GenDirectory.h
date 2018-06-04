@@ -80,6 +80,9 @@ public:
     /// @return The regions.
     util::Regions& GetRegions();
 
+    /// Returns the amount of days the simulator will run.
+    /// @return the amount of days the simulator will run.
+
 private:
     /// The geopop regions
     util::Regions m_regions;
@@ -97,6 +100,8 @@ private:
     std::map<unsigned int,CommunityFilePtr> m_community_file;
     /// The configuration for the geopop module.
     GenConfiguration m_config;
+    /// The amount of days the simulator will run.
+    unsigned int m_num_days;
 };
 
 } // namespace files

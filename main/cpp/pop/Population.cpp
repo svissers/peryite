@@ -122,7 +122,7 @@ void Population::CreatePerson(unsigned int id, double age, unsigned int househol
                               unsigned int workId, unsigned int primaryCommunityId, unsigned int secondaryCommunityId,
                               double latitude, double longitude, unsigned int tourismPrimaryCommunity, unsigned int tourismSecondaryCommunity, unsigned int travelWorkId)
 {
-        this->emplace_back(Person(id, age, householdId, schoolId, workId, primaryCommunityId, secondaryCommunityId, latitude, longitude));
+        this->emplace_back(Person(id, age, householdId, schoolId, workId, primaryCommunityId, secondaryCommunityId, latitude, longitude, tourismPrimaryCommunity, tourismSecondaryCommunity, travelWorkId));
 }
 
 } // namespace stride

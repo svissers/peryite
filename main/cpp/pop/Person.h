@@ -38,16 +38,23 @@ class Person
 public:
         /// Default construction (for population vector).
         Person()
-            : m_age(0.0), m_belief(nullptr), m_gender('M'), m_health(), m_id(0), m_is_participant(), m_pool_ids(), m_in_pools(), m_coord(util::spherical_point(0,0))
+            : m_age(0.0), m_belief(nullptr), m_gender('M'), m_health(), m_id(0), m_is_participant(), m_pool_ids(), m_in_pools(), m_coord(util::spherical_point(0,0)/*, m_travel_prim_com_id(0), m_travel_sec_com_id(0), m_travel_work_id(0)  for some reason doesn't work, no idea why */)
         {
+            m_travel_work_id = 0;
+            m_travel_prim_com_id = 0;
+            m_travel_sec_com_id = 0;
+
         }
 
         /// Constructor: set the person data.
         Person(unsigned int id, double age, unsigned int householdId, unsigned int schoolId, unsigned int workId,
-               unsigned int primaryCommunityId, unsigned int secondaryCommunityId, double latitude, double longitude)
+               unsigned int primaryCommunityId, unsigned int secondaryCommunityId, double latitude, double longitude, unsigned int tourismPrimId, unsigned int tourismSecId, unsigned int travelWorkid)
             : m_age(age), m_belief(nullptr), m_gender('M'), m_health(), m_id(id), m_is_participant(false),
-              m_pool_ids{householdId, schoolId, workId, primaryCommunityId, secondaryCommunityId}, m_in_pools(true), m_coord(util::spherical_point(latitude, longitude))
+              m_pool_ids{householdId, schoolId, workId, primaryCommunityId, secondaryCommunityId}, m_in_pools(true), m_coord(util::spherical_point(latitude, longitude)/*,  m_travel_prim_com_id(tourismPrimId), m_travel_sec_com_id(tourismSecId), m_travel_work_id(travelWorkid) same as above "called object is not a function"*/)
         {
+            m_travel_work_id = travelWorkid;
+            m_travel_prim_com_id = tourismPrimId;
+            m_travel_sec_com_id = tourismSecId;
         }
 
         /// Is this person not equal to the given person?
@@ -133,9 +140,7 @@ private:
         bool         m_is_participant; ///< Is participating in the social contact study
         bool m_on_vacation;            ///< Is on vacation
         bool m_on_work_travel;          ///< Is on a business trip
-        unsigned int m_travel_work_id;
-        unsigned int m_travel_prim_com_id;
-        unsigned int m_travel_sec_com_id;
+
 
         ///< Ids (school, work, etc) of pools you belong to Id value 0 means you do not belong to any
         ///< pool of that type (e.g. school and work are mutually exclusive.
@@ -146,6 +151,11 @@ private:
         util::spherical_point m_coord; ///< The household coordinates
 
         ContactPoolType::IdSubscriptArray<unsigned int> m_backup_pool_ids;
+
+        unsigned int m_travel_prim_com_id;
+        unsigned int m_travel_sec_com_id;
+
+        unsigned int m_travel_work_id;  ///< The id of the workplace where the person travels to
 
 };
 
