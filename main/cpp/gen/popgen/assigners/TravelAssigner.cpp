@@ -15,21 +15,30 @@ using namespace util;
 
 void AssignTravellers(
         const std::shared_ptr<Population> population,
-        files::GenDirectory& dir, unsigned int num_days
+        files::GenDirectory& dir
 )
 {
+    std::cout << "aaand start of shit " << std::endl;
+    unsigned int num_days = dir.GetNumDays();
     Regions regions = dir.GetRegions();
-    unsigned int amountRegions = regions.size();
     auto tourist_fraction = regions.at(0)->config.GetTree().get<double>("tourist_fraction");
     auto work_travel_fraction = regions.at(0)->config.GetTree().get<double>("work_travel_fraction");
     auto rn_manager = regions.at(0)->config.GetRNManager();
-    auto work_travel_dist = rn_manager->GetGenerator(trng::fast_discrete_dist(1-work_travel_fraction, work_travel_fraction));
-    auto tourist_dist = rn_manager->GetGenerator(trng::fast_discrete_dist(1-tourist_fraction, tourist_fraction));
+    vector<double> work_travel_fractions;
+    work_travel_fractions.push_back(1-work_travel_fraction);
+    work_travel_fractions.push_back(work_travel_fraction);
+    vector<double> tourist_fractions;
+    tourist_fractions.push_back(1-tourist_fraction);
+    tourist_fractions.push_back(tourist_fraction);
+    auto work_travel_dist = rn_manager->GetGenerator(trng::fast_discrete_dist(work_travel_fractions.begin(), work_travel_fractions.end()));
+    auto tourist_dist = rn_manager->GetGenerator(trng::fast_discrete_dist(tourist_fractions.begin(), tourist_fractions.end()));
+
 
     vector<vector<vector<shared_ptr<GenStruct>>>> travelWorkplaces;
     vector<vector<vector<shared_ptr<GenStruct>>>> travelComs;
     vector<GeoGrid> travelGrids;
     vector<vector<shared_ptr<UrbanCenter>>> travelCities;
+    std::cout << "going over regions " << std::endl;
 
     for(unsigned int i = 0; i < regions.size(); i++){
         auto grid = dir.GetGeoGridFile(regions.at(i)->id)->ReadGrid();
@@ -47,10 +56,11 @@ void AssignTravellers(
         auto communities    = dir.GetCommunityFile(regions.at(i)->id)->Read();
         travelComs.push_back(communities);
         auto travelGrid = dir.GetGeoGridFile(regions.at(i)->id)->ReadGrid();
-
+        travelGrids.push_back(travelGrid);
 
         travelCities.push_back(big_cities);
     }
+    std::cout << "finished, creating generators " << std::endl;
 
     auto region_dist = rn_manager->GetGenerator(trng::fast_discrete_dist(travelCities.size()));
     auto city_dist = rn_manager->GetGenerator(trng::fast_discrete_dist(20));
@@ -71,6 +81,7 @@ void AssignTravellers(
     vector<shared_ptr<GenStruct>> closest_communities;
 
     util::spherical_point travel_coord;
+    std::cout << "finished, going over population (here be monsters) " << std::endl;
 
     for (size_t i = 0; i < population->size(); ++i) {
         Person person = population->at(i);
@@ -78,8 +89,10 @@ void AssignTravellers(
         if(previousHHid != person.GetPoolId(ContactPoolType::Id::Household)){
             previousHHid = person.GetPoolId(ContactPoolType::Id::Household);
             vacationGoers = false;
+
             if(tourist_dist() == 1){
                 vacationGoers = true;
+                std::cout << "yey vacation " << std::endl;
 
 
                 //assign travel_com_id's            // TODO
@@ -91,6 +104,7 @@ void AssignTravellers(
                 auto grid    = travelGrids[tourist_regionNr];
                 closest_communities = GetClosestStructs(travel_coord, communities, grid);
 
+                std::cout << "starting secondary " << std::endl;
 
                 //assigning secondary communities
 
@@ -116,6 +130,7 @@ void AssignTravellers(
                 auto poolID =  pool->GetId();
                 travel_sec_com_id = poolID;
 
+                std::cout << "done, starting primary " << std::endl;
 
                 //assigning primary communities
 
@@ -142,15 +157,49 @@ void AssignTravellers(
                 tourist_dayNr = day_dist();
                 tourist_endDay = tourist_dayNr + endDayTravel_dist() +7;
 
-                person.setTravelComIds(travel_prim_com_id, travel_sec_com_id);
+                population->at(i).setTravelComIds(travel_prim_com_id, travel_sec_com_id);
+                population->at(i).setTravelDates(tourist_dayNr, tourist_endDay);
+                std::cout << "vacation done" << std::endl;
+
+
             }
+
         }
         else if(vacationGoers){
-            unsigned int travel_prim_com_id = 0;
-            person.setTravelComIds(travel_prim_com_id, travel_sec_com_id);
+            //assigning primary communities
+            std::cout << "yey vacation with family" << std::endl;
+
+            auto community_generator = rn_manager->GetGenerator(
+                    trng::fast_discrete_dist(closest_communities.size() - 1));
+            shared_ptr<Community> community = nullptr;
+            unsigned int community_index = 0;
+            unsigned int p_counter = 0;
+            while (p_counter < (closest_communities.size() * 2)) {
+                community_index = community_generator();
+                community = static_pointer_cast<Community>(closest_communities.at(community_index));
+                if (community->is_primary)
+                    break;
+                p_counter++;
+            }
+            if (!community)
+                break;
+            // Create a uniform distribution to select a contactpool in the selected community
+            auto cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(community->pools.size()));
+            unsigned int cp_index = cp_generator();
+            auto pool = community->pools[cp_index];
+            unsigned int poolID =  pool->GetId();
+            unsigned int travel_prim_com_id = poolID;
+            population->at(i).setTravelComIds(travel_prim_com_id, travel_sec_com_id);
+            population->at(i).setTravelDates(tourist_dayNr, tourist_endDay);
+            std::cout << "vacation with family done" << std::endl;
+
+
         }
+
         if(person.GetAge() >= 18 && person.GetAge() < 65 && !vacationGoers) {
             if (work_travel_dist() == 1) {
+                std::cout << "workyworky" << std::endl;
+
                 //assign secondary workplace
                 unsigned int regionNr = region_dist();
                 unsigned int cityNr = city_dist();
@@ -171,7 +220,10 @@ void AssignTravellers(
 
                 unsigned int dayNr = day_dist();
                 unsigned int endDay = dayNr + endDayWork_dist()+1;
-                person.setTravelWorkId(sec_work_id);
+                population->at(i).setTravelWorkId(sec_work_id);
+                population->at(i).setTravelDates(dayNr, endDay);
+                std::cout << "done work: " <<sec_work_id << ", " << dayNr << ", " << endDay << ", person: " << person.GetId() << std::endl;
+
             }
         }
 

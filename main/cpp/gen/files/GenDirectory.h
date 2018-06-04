@@ -82,6 +82,7 @@ public:
 
     /// Returns the amount of days the simulator will run.
     /// @return the amount of days the simulator will run.
+    unsigned int GetNumDays(){ return m_num_days; }
 
 private:
     /// The geopop regions

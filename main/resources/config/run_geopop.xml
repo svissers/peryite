@@ -71,7 +71,7 @@
 		        <!-- Among the active population, a fraction commutes -->
 		        <commute_fraction>0.50</commute_fraction>
 	        </work>
-            <tourist_fraction>0.01</tourist_fraction>
+            <tourist_fraction>0.10</tourist_fraction>
             <work_travel_fraction>0.05</work_travel_fraction>
         </region>
         <region>
@@ -102,7 +102,7 @@
                 <!-- Among the active population, a fraction commutes -->
                 <commute_fraction>0.50</commute_fraction>
             </work>
-            <tourist_fraction>0.01</tourist_fraction>
+            <tourist_fraction>0.10</tourist_fraction>
             <work_travel_fraction>0.05</work_travel_fraction>
         </region>
     </pop_config>

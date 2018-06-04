@@ -16,7 +16,7 @@ namespace assigner {
 /// @param regions                   the regions that the simulated area consists of.
     void AssignTravellers(
             const std::shared_ptr<Population> population,
-            files::GenDirectory& dir, unsigned int num_days
+            files::GenDirectory& dir
     );
 
 } // assigner

@@ -110,8 +110,9 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
         }
         prev_region = region;
     }
-
-    //TODO : travelAssigner
+    std::cout << "perpare for trouble" << std::endl;
+    assigner::AssignTravellers(population, dir);
+    std::cout << "make it... oh, huh?" << std::endl;
 
     // ---------------------------------------
     // Write personsFile combining all regions

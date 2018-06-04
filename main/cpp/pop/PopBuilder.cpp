@@ -106,15 +106,19 @@ shared_ptr<Population> PopBuilder::MakePersons(std::shared_ptr<Population> pop)
                 unsigned int tourismPrimid= 0;
                 unsigned int tourismSecid= 0;
                 unsigned int travelWorkid = 0;
+                unsigned int startDayTravel = 0;
+                unsigned int endDayTravel = 0;
                 if (values.size() >= 8) {
                         latitude = FromString<double>(values[6]);
                         longitude = FromString<double>(values[7]);
                         tourismPrimid = FromString<unsigned int>(values[8]);
                         tourismSecid = FromString<unsigned int>(values[9]);
                         travelWorkid = FromString<unsigned int>(values[10]);
+                        startDayTravel = FromString<unsigned int>(values[11]);
+                        endDayTravel = FromString<unsigned int>(values[12]);
                 }
                 pop->CreatePerson(person_id, age, household_id, school_id, work_id, primary_community_id,
-                                  secondary_community_id, latitude, longitude, tourismPrimid, tourismSecid, travelWorkid);
+                                  secondary_community_id, latitude, longitude, tourismPrimid, tourismSecid, travelWorkid, startDayTravel, endDayTravel);
                 ++person_id;
         }
 

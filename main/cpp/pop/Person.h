@@ -40,21 +40,30 @@ public:
         Person()
             : m_age(0.0), m_belief(nullptr), m_gender('M'), m_health(), m_id(0), m_is_participant(), m_pool_ids(), m_in_pools(), m_coord(util::spherical_point(0,0)/*, m_travel_prim_com_id(0), m_travel_sec_com_id(0), m_travel_work_id(0)  for some reason doesn't work, no idea why */)
         {
-            m_travel_work_id = 0;
-            m_travel_prim_com_id = 0;
-            m_travel_sec_com_id = 0;
+                m_travel_work_id = 0;
+                m_travel_prim_com_id = 0;
+                m_travel_sec_com_id = 0;
+                m_start_day_travel = -1;
+                m_end_day_travel = -1;
+                m_on_vacation = false;
+                m_on_work_travel = false;
 
         }
 
         /// Constructor: set the person data.
         Person(unsigned int id, double age, unsigned int householdId, unsigned int schoolId, unsigned int workId,
-               unsigned int primaryCommunityId, unsigned int secondaryCommunityId, double latitude, double longitude, unsigned int tourismPrimId, unsigned int tourismSecId, unsigned int travelWorkid)
+               unsigned int primaryCommunityId, unsigned int secondaryCommunityId, double latitude, double longitude,
+               unsigned int tourismPrimId, unsigned int tourismSecId, unsigned int travelWorkid, int startDayTravel , int endDayTravel)
             : m_age(age), m_belief(nullptr), m_gender('M'), m_health(), m_id(id), m_is_participant(false),
               m_pool_ids{householdId, schoolId, workId, primaryCommunityId, secondaryCommunityId}, m_in_pools(true), m_coord(util::spherical_point(latitude, longitude)/*,  m_travel_prim_com_id(tourismPrimId), m_travel_sec_com_id(tourismSecId), m_travel_work_id(travelWorkid) same as above "called object is not a function"*/)
         {
-            m_travel_work_id = travelWorkid;
-            m_travel_prim_com_id = tourismPrimId;
-            m_travel_sec_com_id = tourismSecId;
+                m_travel_work_id = travelWorkid;
+                m_travel_prim_com_id = tourismPrimId;
+                m_travel_sec_com_id = tourismSecId;
+                m_start_day_travel = startDayTravel;
+                m_end_day_travel = endDayTravel;
+                m_on_vacation = false;
+                m_on_work_travel = false;
         }
 
         /// Is this person not equal to the given person?
@@ -112,10 +121,10 @@ public:
         void setPoolId(const ContactPoolType::Id& pool_type, unsigned int id) { m_pool_ids[pool_type] = id; }
 
         /// Changes work_id and sets m_in_pools to false for all other contactpools
-        void TravelBusiness(unsigned int work_id);
+        void TravelBusiness();
 
         /// Changes prim and sec ids and sets m_in_pools to false for all other contactpools
-        void TravelTourism(unsigned int prim_community_id, unsigned int secondary_community_id);
+        void TravelTourism();
 
         /// Replaces m_pools with m_backup_pool_ids and sets m_in_pools to true for all contactpools
         void ReturnHome();
@@ -127,19 +136,29 @@ public:
                 m_travel_sec_com_id = sec_id;
         }
 
-        std::tuple<unsigned int, unsigned int> getTravelComIds() const {return std::tuple<unsigned int, unsigned int>(m_travel_prim_com_id, m_travel_prim_com_id);}
+        void setTravelDates(unsigned int startDate, unsigned int endDate){
+                m_end_day_travel = endDate;
+                m_start_day_travel = startDate;
+        }
+
+        std::tuple<unsigned int, unsigned int> getTravelComIds() const {return std::tuple<unsigned int, unsigned int>(m_travel_prim_com_id, m_travel_sec_com_id);}
+
+        std::tuple<int, int> getTravelDates() const {return std::tuple<int, int>(m_start_day_travel, m_end_day_travel);}
+
 
         unsigned int getTravelWorkId() const { return m_travel_work_id; }
 
 private:
-        double       m_age;            ///< The age.
-        Belief*      m_belief;         ///< Health beliefs related data (raw pointer intentional).
+        double       m_age;                 ///< The age.
+        Belief*      m_belief;              ///< Health beliefs related data (raw pointer intentional).
         char         m_gender;
-        Health       m_health;         ///< Health info for this person.
-        unsigned int m_id;             ///< The id.
-        bool         m_is_participant; ///< Is participating in the social contact study
-        bool m_on_vacation;            ///< Is on vacation
-        bool m_on_work_travel;          ///< Is on a business trip
+        Health       m_health;              ///< Health info for this person.
+        unsigned int m_id;                  ///< The id.
+        bool         m_is_participant;      ///< Is participating in the social contact study
+        bool m_on_vacation;                 ///< Is on vacation
+        bool m_on_work_travel;              ///< Is on a business trip
+        int m_start_day_travel;    ///< Start of the persons vacation/business trip
+        int m_end_day_travel;      ///< End of the persons vacation/business trip
 
 
         ///< Ids (school, work, etc) of pools you belong to Id value 0 means you do not belong to any

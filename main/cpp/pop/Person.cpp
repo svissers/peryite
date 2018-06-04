@@ -64,13 +64,13 @@ void Person::Update(Person*)
 {
         // TODO update beliefs
 }
-void Person::TravelBusiness(unsigned int work_id)
+void Person::TravelBusiness()
 {
         m_backup_pool_ids = m_pool_ids;
 
         m_on_work_travel = true;
 
-        m_pool_ids[Id::Work] = work_id;
+        m_pool_ids[Id::Work] = m_travel_work_id;
 
         m_in_pools[Id::School]             = false;
         m_in_pools[Id::PrimaryCommunity]   = false;
@@ -92,14 +92,14 @@ void Person::ReturnHome()
 
 };
 
-void Person::TravelTourism(unsigned int prim_community_id, unsigned int secondary_community_id)
+void Person::TravelTourism()
 {
         m_backup_pool_ids = m_pool_ids;
 
         m_on_vacation = true;
 
-        m_pool_ids[Id::PrimaryCommunity] = prim_community_id;
-        m_pool_ids[Id::SecondaryCommunity] = secondary_community_id;
+        m_pool_ids[Id::PrimaryCommunity] = m_travel_prim_com_id;
+        m_pool_ids[Id::SecondaryCommunity] = m_travel_sec_com_id;
 
         m_in_pools[Id::School]             = false;
         m_in_pools[Id::Work]               = false;
