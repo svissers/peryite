@@ -18,7 +18,6 @@ void AssignTravellers(
         files::GenDirectory& dir
 )
 {
-    std::cout << "aaand start of shit " << std::endl;
     unsigned int num_days = dir.GetNumDays();
     Regions regions = dir.GetRegions();
     auto tourist_fraction = regions.at(0)->config.GetTree().get<double>("tourist_fraction");
@@ -38,7 +37,6 @@ void AssignTravellers(
     vector<vector<vector<shared_ptr<GenStruct>>>> travelComs;
     vector<GeoGrid> travelGrids;
     vector<vector<shared_ptr<UrbanCenter>>> travelCities;
-    std::cout << "going over regions " << std::endl;
 
     for(unsigned int i = 0; i < regions.size(); i++){
         auto grid = dir.GetGeoGridFile(regions.at(i)->id)->ReadGrid();
@@ -60,7 +58,6 @@ void AssignTravellers(
 
         travelCities.push_back(big_cities);
     }
-    std::cout << "finished, creating generators " << std::endl;
 
     auto region_dist = rn_manager->GetGenerator(trng::fast_discrete_dist(travelCities.size()));
     auto city_dist = rn_manager->GetGenerator(trng::fast_discrete_dist(20));
@@ -81,8 +78,6 @@ void AssignTravellers(
     vector<shared_ptr<GenStruct>> closest_communities;
 
     util::spherical_point travel_coord;
-    std::cout << "finished, going over population (here be monsters) " << std::endl;
-
     for (size_t i = 0; i < population->size(); ++i) {
         Person person = population->at(i);
 
@@ -92,8 +87,6 @@ void AssignTravellers(
 
             if(tourist_dist() == 1){
                 vacationGoers = true;
-                std::cout << "yey vacation " << std::endl;
-
 
                 //assign travel_com_id's            // TODO
                 tourist_regionNr = region_dist();  //travel can be in same region
@@ -103,9 +96,6 @@ void AssignTravellers(
                 auto communities    = travelComs[tourist_regionNr];
                 auto grid    = travelGrids[tourist_regionNr];
                 closest_communities = GetClosestStructs(travel_coord, communities, grid);
-
-                std::cout << "starting secondary " << std::endl;
-
                 //assigning secondary communities
 
                 auto community_generator = rn_manager->GetGenerator(
@@ -129,8 +119,6 @@ void AssignTravellers(
                 auto pool = community->pools[cp_index];
                 auto poolID =  pool->GetId();
                 travel_sec_com_id = poolID;
-
-                std::cout << "done, starting primary " << std::endl;
 
                 //assigning primary communities
 
@@ -159,7 +147,6 @@ void AssignTravellers(
 
                 population->at(i).setTravelComIds(travel_prim_com_id, travel_sec_com_id);
                 population->at(i).setTravelDates(tourist_dayNr, tourist_endDay);
-                std::cout << "vacation done" << std::endl;
 
 
             }
@@ -167,7 +154,6 @@ void AssignTravellers(
         }
         else if(vacationGoers){
             //assigning primary communities
-            std::cout << "yey vacation with family" << std::endl;
 
             auto community_generator = rn_manager->GetGenerator(
                     trng::fast_discrete_dist(closest_communities.size() - 1));
@@ -191,14 +177,12 @@ void AssignTravellers(
             unsigned int travel_prim_com_id = poolID;
             population->at(i).setTravelComIds(travel_prim_com_id, travel_sec_com_id);
             population->at(i).setTravelDates(tourist_dayNr, tourist_endDay);
-            std::cout << "vacation with family done" << std::endl;
 
 
         }
 
         if(person.GetAge() >= 18 && person.GetAge() < 65 && !vacationGoers) {
             if (work_travel_dist() == 1) {
-                std::cout << "workyworky" << std::endl;
 
                 //assign secondary workplace
                 unsigned int regionNr = region_dist();
@@ -222,7 +206,6 @@ void AssignTravellers(
                 unsigned int endDay = dayNr + endDayWork_dist()+1;
                 population->at(i).setTravelWorkId(sec_work_id);
                 population->at(i).setTravelDates(dayNr, endDay);
-                std::cout << "done work: " <<sec_work_id << ", " << dayNr << ", " << endDay << ", person: " << person.GetId() << std::endl;
 
             }
         }

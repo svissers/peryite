@@ -79,6 +79,17 @@ void Sim::TimeStep()
                 // depending on health status, work/school day.
 #pragma omp for schedule(static)
                 for (size_t i = 0; i < population.size(); ++i) {
+                        if(get<0>(population[i].getTravelDates()) == simDay){
+                            if(population[i].getTravelWorkId() != 0){
+                                population[i].TravelBusiness();
+                            }
+                            else{
+                                population[i].TravelTourism();
+                            }
+                        }
+                        else if(get<1>(population[i].getTravelDates()) == simDay){
+                            population[i].ReturnHome();
+                        }
                         population[i].Update(isWorkOff, isSchoolOff);
                 }
 
