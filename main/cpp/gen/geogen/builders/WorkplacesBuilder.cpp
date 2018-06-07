@@ -11,7 +11,7 @@ namespace builder {
 using namespace std;
 using namespace util;
 
-vector<shared_ptr<WorkPlace>> BuildWorkplaces(GenConfiguration& config, GeoGrid& grid, std::shared_ptr<Population> pop)
+vector<shared_ptr<WorkPlace>> BuildWorkplaces(GenConfiguration& config, GeoGrid& grid, std::shared_ptr<Population> pop, unsigned int firstPerson)
 {
     auto workplaces         = vector<shared_ptr<WorkPlace>>();
     //auto total_population   = config.GetTree().get<unsigned int>("population_size");
@@ -52,7 +52,7 @@ vector<shared_ptr<WorkPlace>> BuildWorkplaces(GenConfiguration& config, GeoGrid&
         }
     }
     unsigned int working_age_people = 0;
-    for(size_t i = 0; i < pop->size(); i++){
+    for(size_t i = firstPerson; i < pop->size(); i++){
         if(pop->at(i).GetAge() >=18 && pop->at(i).GetAge() <= 65)
             working_age_people++;
     }

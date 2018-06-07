@@ -14,7 +14,7 @@ namespace builder {
 /// @param config       The configuration file that specifies parameters used in building communities.
 /// @param grid         The geogrid that the communities will be mapped to.
 /// @return             A vector of newly created communities.
-std::vector<std::shared_ptr<Community>> BuildCommunities(const GenConfiguration& config, GeoGrid& grid, std::shared_ptr<Population>& population);
+std::vector<std::shared_ptr<Community>> BuildCommunities(const GenConfiguration& config, GeoGrid& grid, std::shared_ptr<Population>& population, unsigned int firstperson);
 
 } // namespace builder
 } // namespace geogen

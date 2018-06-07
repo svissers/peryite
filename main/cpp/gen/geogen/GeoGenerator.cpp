@@ -26,10 +26,10 @@ void Generate(GenDirectory& dir, shared_ptr<Population>& population)
         // Build
         builder::BuildPopulation(region, population);
         auto geogrid        = builder::BuildGeoGrid(region->config);
-        auto schools        = builder::BuildSchools(region->config, geogrid, population);
+        auto schools        = builder::BuildSchools(region->config, geogrid, population, region->first_person_id);
         auto universities   = builder::BuildUniversities(region->config, geogrid);
-        auto workplaces     = builder::BuildWorkplaces(region->config, geogrid, population);
-        auto communities    = builder::BuildCommunities(region->config, geogrid, population);
+        auto workplaces     = builder::BuildWorkplaces(region->config, geogrid, population, region->first_person_id);
+        auto communities    = builder::BuildCommunities(region->config, geogrid, population, region->first_person_id);
 
         // Write
         auto config     = region->config;

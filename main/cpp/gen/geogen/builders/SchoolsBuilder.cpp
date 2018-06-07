@@ -10,14 +10,14 @@ using namespace std;
 using namespace util;
 using namespace trng;
 
-vector<shared_ptr<School>> BuildSchools(const GenConfiguration& config, GeoGrid& grid, std::shared_ptr<Population> pop)
+vector<shared_ptr<School>> BuildSchools(const GenConfiguration& config, GeoGrid& grid, std::shared_ptr<Population> pop, unsigned int firstPerson)
 {
     auto schools = vector<shared_ptr<School>>();
     auto total_population = config.GetTree().get<unsigned int>("population_size");
 
     // We check the amount of mandatory students in the population
     unsigned int mandatory_students_count = 0;
-    for(size_t i = 0; i < pop->size(); i++){
+    for(size_t i = firstPerson; i < pop->size(); i++){
         if(pop->at(i).GetAge() >=3 && pop->at(i).GetAge() <= 18)
             mandatory_students_count++;
     }
