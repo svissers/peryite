@@ -25,11 +25,17 @@ void Generate(GenDirectory& dir, shared_ptr<Population>& population)
 
         // Build
         builder::BuildPopulation(region, population);
+        std::cout << "building region: " << region->name << std::endl;
         auto geogrid        = builder::BuildGeoGrid(region->config);
+        std::cout << "built geogrid" << std::endl;
         auto schools        = builder::BuildSchools(region->config, geogrid, population, region->first_person_id);
+        std::cout << "built schools" << std::endl;
         auto universities   = builder::BuildUniversities(region->config, geogrid);
+        std::cout << "built universities" << std::endl;
         auto workplaces     = builder::BuildWorkplaces(region->config, geogrid, population, region->first_person_id);
+        std::cout << "built workplaces" << std::endl;
         auto communities    = builder::BuildCommunities(region->config, geogrid, population, region->first_person_id);
+        std::cout << "built communities" << std::endl;
 
         // Write
         auto config     = region->config;

@@ -42,15 +42,22 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
         // -------------------
         // Assign ContactPools
         // -------------------
+        std::cout << "assigning population in region: " << region->name << std::endl;
+
         assigner::AssignHouseholds(population, grid, region);
+        std::cout << "assigned to households" << std::endl;
 
         assigner::AssignSchools(schools, population, region, grid);
+        std::cout << "assigned to schools" << std::endl;
 
         auto total_commuting_students = assigner::AssignUniversities(universities, population, region, grid);
+        std::cout << "assigned to universities" << std::endl;
 
         assigner::AssignWorkplaces(workplaces, population, region, grid, total_commuting_students);
+        std::cout << "assigned to workplaces" << std::endl;
 
         assigner::AssignCommunities(communities, population, region, grid);
+        std::cout << "assigned to communities" << std::endl;
 
         // -------------------
         // Fill ContactPoolSys
@@ -110,7 +117,11 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
         }
         prev_region = region;
     }
-    assigner::AssignTravellers(population, dir);
+
+    if(dir.GetRegions().size() > 1) {
+        assigner::AssignTravellers(population, dir);
+        std::cout << "assigned inter regio travellers" << std::endl;
+    }
 
     // ---------------------------------------
     // Write personsFile combining all regions

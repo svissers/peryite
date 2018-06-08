@@ -50,13 +50,13 @@ void AssignWorkplaces(
             trng::fast_discrete_dist(work_fractions.begin(), work_fractions.end()));
     auto commute_gen        = rn_manager->GetGenerator(
             trng::fast_discrete_dist(commute_fractions.begin(), commute_fractions.end()));
-
     // Commuting distributions
     unsigned int working_age_people = 0;
     for(size_t i = region->first_person_id; i <= region->last_person_id; i++){
         if(population->at(i).GetAge() >=18 && population->at(i).GetAge() <= 65)
             working_age_people++;
     }
+
     unsigned int total_commuting_actives    = std::ceil(working_age_people * commute_fraction);
     double commuting_student_active_ratio   = total_commuting_students / total_commuting_actives;
 
@@ -75,7 +75,6 @@ void AssignWorkplaces(
                 auto commute_count  = row.GetValue<unsigned int>(col_index);
                 // Remove commuting students
                 commute_count       = (commuting_student_active_ratio * commute_count);
-                // TODO: ask
                 relative_commute[col_index] -= commute_count;
                 relative_commute[row_index] += commute_count;
                 total_commute[col_index]    += commute_count;
@@ -87,6 +86,7 @@ void AssignWorkplaces(
     vector<double> wpc_fractions;
     for (size_t i = 0; i < relative_commute.size(); i++)
         wpc_fractions.push_back(double(relative_commute[i]) / double(total_commute[i]));
+
     auto city_gen = rn_manager->GetGenerator(
             trng::fast_discrete_dist(wpc_fractions.begin(), wpc_fractions.end()));
 
@@ -98,7 +98,7 @@ void AssignWorkplaces(
     for (unsigned int i = region->first_person_id; i <= region->last_person_id; i++) {
         auto &person = population->at(i);
         auto age = person.GetAge();
-        if (age >= 18 && age < 26 && person.GetPoolId(ContactPoolType::Id::School) != 0) {
+        if (person.GetPoolId(ContactPoolType::Id::School) != 0) {
             // Students are not employable
             continue;
         }
@@ -114,17 +114,26 @@ void AssignWorkplaces(
                 // Commuting
                 auto destination = grid[city_gen()];
                 auto dest_coord = destination->coordinate;
+
+
+                auto band_of_interest = uint( (dest_coord.get<1>() - grid.m_min_long) / grid.m_longitude_band_width );
+                /*if (band_of_interest >= workplaces.size()) {
+                    std::cout << "error: the requested city to commute to was outside of area." << std::endl;
+                    continue;
+                }*/
+
                 vector<shared_ptr<WorkPlace>> dest_workplaces;
-                for (auto &band : workplaces) {
-                    for (auto &g_struct : band) {
-                        auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
-                        if (/*workplace->coordinate == dest_coord*/ util::calculateDistance(workplace->coordinate, dest_coord) == 0) {
-                            dest_workplaces.push_back(workplace);
-                        }
+                for (const auto& gstruct : workplaces[band_of_interest]) {
+                    auto workplace = std::static_pointer_cast<WorkPlace>(gstruct);
+                    if (util::calculateDistance(workplace->coordinate, dest_coord) == 0) {
+                        dest_workplaces.push_back(workplace);
                     }
                 }
-                if (dest_workplaces.empty())
+
+                if (dest_workplaces.empty()) {
+                    std::cout << "error: the requested city to commute to was not found." << std::endl;
                     continue;
+                }
                 // Create a uniform distribution to select a workplace
                 auto wp_generator   = rn_manager->GetGenerator(
                         trng::fast_discrete_dist(dest_workplaces.size()));
