@@ -15,7 +15,7 @@ struct WorkPlace : public GenStruct
     {}
 
     /// The contactpools associated with the workplace.
-    std::shared_ptr<ContactPool> pool;
+    std::vector<std::shared_ptr<ContactPool>> pools;
 };
 
 } // namespace gen

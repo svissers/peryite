@@ -199,7 +199,9 @@ void AssignTravellers(
                 std::function<int()> wp_generator = rn_manager->GetGenerator(
                         trng::fast_discrete_dist(closest_workplaces.size()));
                 auto workplace = static_pointer_cast<WorkPlace>(closest_workplaces.at(wp_generator()));
-                unsigned int sec_work_id = workplace->pool->GetId();
+                auto cp_generator = rn_manager->GetGenerator(
+                        trng::fast_discrete_dist(workplace->pools.size()));
+                unsigned int sec_work_id = workplace->pools.at(cp_generator())->GetId();
 
 
                 unsigned int dayNr = day_dist();

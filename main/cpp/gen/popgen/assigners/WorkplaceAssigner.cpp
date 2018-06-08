@@ -19,14 +19,20 @@ void AssignWorkplaces(
     // -------------
     // Contactpools
     // -------------
+    auto config = region->config;
+    const unsigned int wokrplace_size      = config.GetTree().get<unsigned int>("workplace_size");
+    const unsigned int workplace_cp_size   = config.GetTree().get<unsigned int>("workplace_cp_size");
     unsigned int cp_id = region->first_cps[ContactPoolType::Id::Work];
     for (auto &band : workplaces) {
         for (auto &g_struct : band) {
             auto workplace  = std::static_pointer_cast<WorkPlace>(g_struct);
             auto coord      = workplace->coordinate;
-            auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Work, coord);
-            workplace->pool = pool;
-            cp_id++;
+            //auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Work, coord);
+            for (unsigned int size = 0; size < wokrplace_size; size += workplace_cp_size) {
+                auto pool = make_shared<ContactPool>(cp_id, ContactPoolType::Id::Work, coord);
+                workplace->pools.push_back(pool);
+                cp_id++;
+            }
         }
     }
     region->last_cps[ContactPoolType::Id::Work] = cp_id-1;
@@ -34,7 +40,7 @@ void AssignWorkplaces(
     // -------------
     // Distributions
     // -------------
-    auto config = region->config;
+
     auto rn_manager = config.GetRNManager();
 
     //auto total_population   = config.GetTree().get<unsigned int>("population_size");
@@ -138,7 +144,9 @@ void AssignWorkplaces(
                 auto wp_generator   = rn_manager->GetGenerator(
                         trng::fast_discrete_dist(dest_workplaces.size()));
                 auto workplace      = dest_workplaces[wp_generator()];
-                pool                = workplace->pool;
+                auto cp_generator = rn_manager->GetGenerator(
+                        trng::fast_discrete_dist(workplace->pools.size()));
+                pool                = workplace->pools.at(cp_generator());
             } else {
                 // Non-commuting
                 auto home_coord = person.GetCoordinate();
@@ -152,7 +160,9 @@ void AssignWorkplaces(
                 std::function<int()> wp_generator = rn_manager->GetGenerator(
                         trng::fast_discrete_dist(closest_workplaces.size()));
                 auto workplace = static_pointer_cast<WorkPlace>(closest_workplaces.at(wp_generator()));
-                pool = workplace->pool;
+                auto cp_generator = rn_manager->GetGenerator(
+                        trng::fast_discrete_dist(workplace->pools.size()));
+                pool                = workplace->pools.at(cp_generator());
             }
             person.setPoolId(ContactPoolType::Id::Work, pool->GetId());
             pool->AddMember(&person);

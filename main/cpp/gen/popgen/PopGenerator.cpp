@@ -100,7 +100,9 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
         for (auto &band : workplaces) {
             for (auto &g_struct : band) {
                 auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
-                pool_sys[ContactPoolType::Id::Work].emplace_back(*(workplace->pool));
+                for (const auto &pool : workplace->pools) {
+                    pool_sys[ContactPoolType::Id::Work].emplace_back(*pool);
+                }
             }
         }
         // Communities
