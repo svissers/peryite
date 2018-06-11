@@ -43,21 +43,22 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
         // Assign ContactPools
         // -------------------
         std::cout << "assigning population in region: " << region->name << std::endl;
+        std::cout << "  working: " <<std::flush;
 
         assigner::AssignHouseholds(population, grid, region);
-        std::cout << "assigned to households" << std::endl;
+        std::cout << "-"<< std::flush;
 
         assigner::AssignSchools(schools, population, region, grid);
-        std::cout << "assigned to schools" << std::endl;
+        std::cout << "-"<< std::flush;
 
         auto total_commuting_students = assigner::AssignUniversities(universities, population, region, grid);
-        std::cout << "assigned to universities" << std::endl;
+        std::cout << "-"<< std::flush;
 
         assigner::AssignWorkplaces(workplaces, population, region, grid, total_commuting_students);
-        std::cout << "assigned to workplaces" << std::endl;
+        std::cout << "--"<< std::flush;
 
         assigner::AssignCommunities(communities, population, region, grid);
-        std::cout << "assigned to communities" << std::endl;
+        std::cout << "-"<< std::flush;
 
         // -------------------
         // Fill ContactPoolSys
@@ -76,6 +77,7 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
             }
         }
         region->last_cps[ContactPoolType::Id::Household] = hh_id;
+        std::cout << "-"<< std::flush;
 
         // Schools
         for (const auto &band : schools) {
@@ -86,6 +88,8 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
                 }
             }
         }
+        std::cout << "-"<< std::flush;
+
         // Universities
         for (auto &band : universities) {
             for (auto &g_struct : band) {
@@ -96,6 +100,8 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
                 }
             }
         }
+        std::cout << "-"<< std::flush;
+
         // Workplaces
         for (auto &band : workplaces) {
             for (auto &g_struct : band) {
@@ -105,6 +111,8 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
                 }
             }
         }
+        std::cout << "-"<< std::flush;
+
         // Communities
         for (auto &band : communities) {
             for (auto &g_struct : band) {
@@ -117,12 +125,18 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
                 }
             }
         }
+        std::cout << "-"<< std::flush;
+
         prev_region = region;
+        std::cout << " finished." << std::endl;
+
     }
 
     if(dir.GetRegions().size() > 1) {
+        std::cout << "assigning inter regio travellers... "<< std::flush;
+
         assigner::AssignTravellers(population, dir);
-        std::cout << "assigned inter regio travellers" << std::endl;
+        std::cout << "finished." << std::endl;
     }
 
     // ---------------------------------------
@@ -130,6 +144,8 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
     // ---------------------------------------
     auto write = dir.GetConfig().GetTree().get<bool>("write_population");
     if (write) {
+        std::cout<<"writing population... " << std::flush;
+
         auto output_file = files::PopulationFile(
                 dir.GetConfig(),
                 population
@@ -137,6 +153,7 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
         output_file.Write();
         output_file.WriteRegions(dir.GetConfig().GetOutputPrefix(), dir.GetRegions());
         output_file.WritePoolSys(dir.GetConfig().GetOutputPrefix(), pool_sys);
+        std::cout << "finished." << std::endl;
     }
 }
 
