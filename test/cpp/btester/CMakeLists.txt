@@ -18,8 +18,8 @@
 # Build & install executable.
 #============================================================================
 set(SRC
-    InfluenzaBench.cpp
-    MeaslesBench.cpp
+    #InfluenzaBench.cpp
+    #MeaslesBench.cpp
     main.cpp
     )
 

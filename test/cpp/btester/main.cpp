@@ -38,7 +38,7 @@ int main(int argc, char** argv)
 
         /// Prelim: calling function that registers benchmarks tests
         // InfluenzaBench();
-        MeaslesBench();
+        // MeaslesBench();
 
         /// Go ahead and set them up, run hem.
         try {
