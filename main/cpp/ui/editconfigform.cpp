@@ -21,6 +21,8 @@ EditConfigForm::EditConfigForm(GuiController *guiCtrl, StrideWindow *sw, QWidget
     createPTreeFields(*pt, "");
 
     ui->verticalScrollBar->setMaximum(lineEdits.length() - 8);
+
+    ui->saveButton->setText("Save " + strideWindow->getConfigFileName());
 }
 
 EditConfigForm::~EditConfigForm()
