@@ -26,6 +26,7 @@ private slots:
     void on_runButton_one_clicked();
     void on_runButton_multi_clicked();
     void on_editConfigButton_clicked();
+    void on_configInput_editingFinished();
 
 private:
     Ui::StrideWindow *ui;
@@ -33,6 +34,7 @@ private:
     bool batchRunning;
     stride::GuiController *guiController;
     QList<int> results;
+    boost::property_tree::ptree config_pt;
 
     // Run related parameters
     QString m_run_configFile;

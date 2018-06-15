@@ -1,7 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>EditConfigForm</class>
  <widget class="QWidget" name="EditConfigForm">
   <property name="geometry">
@@ -9,13 +7,69 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>PeryiteUI - Edit Config File</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+	font: 10pt &quot;FreeSans&quot;;
+ 	background-color: #f7f7f7;
+}
+
+QLabel {
+ 	background-color: #f7f7f7;
+ 	color: black;
+  	border: 1px solid #dddddd;
+	border-radius: 4px;
+}
+
+QPushButton {
+	background-color: #78e08f;
+	color: white;
+	border: none;
+	border-radius: 4px;
+}
+
+QPushButton:hover {
+	background-color: #3c6382;
+}
+
+QGroupBox {
+	border: none;
+	background-color: #eaeaea;
+	font-size: 16px;
+	text-align: center;
+	border-radius: 4px;
+}
+
+QGroupBox:title {
+	left: 16;
+	top: 8;
+}
+
+QToolTip {
+	font: 10pt &quot;FreeSans&quot;;
+ 	background-color: #f7f7f7;
+	border-radius: 4px;
+}</string>
+  </property>
+  <widget class="QGroupBox" name="configGroupBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>381</width>
+     <height>581</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Edit Config File</string>
+   </property>
+  </widget>
  </widget>
- <pixmapfunction/>
+ <resources/>
  <connections/>
 </ui>

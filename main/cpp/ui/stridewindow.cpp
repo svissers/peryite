@@ -37,6 +37,10 @@ StrideWindow::StrideWindow(GuiController *guiCtrl, QWidget *parent) :
     loadIcon();
 
     this->setFixedSize(QSize(480, 384));
+    
+    // Config ptree
+    m_run_configFile = ui->configInput->text();
+    config_pt = createConfigPTree(m_run_configFile);
 }
 
 StrideWindow::~StrideWindow()
@@ -106,9 +110,8 @@ bool StrideWindow::setupRun() {
     }
 
     // -----------------------------------------------------------------------------------------
-    // Create config ptree
+    // Override parameters in the config ptree
     // -----------------------------------------------------------------------------------------
-    ptree config_pt = createConfigPTree(m_run_configFile);
     config_pt.put("run.rng_seed", m_run_rngSeed);
     config_pt.put("run.rng_type", m_run_rngType.toStdString());
     config_pt.put("run.output_map", m_run_mapViewer ? 1 : 0);
@@ -170,8 +173,13 @@ void StrideWindow::on_runButton_multi_clicked() {
 }
 
 void StrideWindow::on_editConfigButton_clicked() {
-    EditConfigForm *wdg = new EditConfigForm(guiController);
+    EditConfigForm *wdg = new EditConfigForm(guiController, config_pt);
     wdg->show();
+}
+
+void StrideWindow::on_configInput_editingFinished() {
+    m_run_configFile = ui->configInput->text();
+    config_pt = createConfigPTree(m_run_configFile);
 }
 
 void StrideWindow::run(int steps) {
