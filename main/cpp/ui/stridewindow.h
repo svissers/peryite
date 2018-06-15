@@ -35,6 +35,7 @@ private:
     Ui::StrideWindow *ui;
     bool running;
     bool batchRunning;
+    bool filenameCorrect;
     stride::GuiController *guiController;
     QList<int> results;
     boost::property_tree::ptree config_pt;

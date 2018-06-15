@@ -41,6 +41,7 @@ StrideWindow::StrideWindow(GuiController *guiCtrl, QWidget *parent) :
     // Config ptree
     m_run_configFile = ui->configInput->text();
     config_pt = createConfigPTree(m_run_configFile);
+    filenameCorrect = true;
 }
 
 StrideWindow::~StrideWindow()
@@ -178,8 +179,16 @@ void StrideWindow::on_editConfigButton_clicked() {
 }
 
 void StrideWindow::on_configInput_editingFinished() {
-    m_run_configFile = ui->configInput->text();
-    config_pt = createConfigPTree(m_run_configFile);
+    try {
+        m_run_configFile = ui->configInput->text();
+        config_pt = createConfigPTree(m_run_configFile);
+        ui->editConfigButton->setEnabled(true);
+        filenameCorrect = true;
+    }
+    catch (...) {
+        ui->editConfigButton->setEnabled(false);
+        filenameCorrect = false;
+    }
 }
 
 void StrideWindow::run(int steps) {
@@ -274,6 +283,10 @@ void StrideWindow::runAll(bool batch) {
 bool StrideWindow::checkConfigFile() {
     if (ui->configInput->text() == "") {
         QMessageBox::warning(this, tr("No file selected"), "You have not selected a config file.");
+        return false;
+    }
+    else if (!filenameCorrect) {
+        QMessageBox::warning(this, tr("File issue"), "The file you selected does not exist, or something else is wrong with it.");
         return false;
     } else {
         return true;
