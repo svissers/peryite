@@ -20,6 +20,9 @@ public:
     explicit StrideWindow(stride::GuiController *guiCtrl, QWidget *parent = 0);
     ~StrideWindow();
 
+    QString getConfigFileName();
+    boost::property_tree::ptree* getConfigPTree();
+
 private slots:
     void on_runButton_batch_clicked();
     void on_runButton_all_clicked();

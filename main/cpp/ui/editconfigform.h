@@ -2,6 +2,7 @@
 #define EDITCONFIGFORM_H
 
 #include "sim/GuiController.h"
+#include "ui/stridewindow.h"
 
 #include <boost/property_tree/xml_parser.hpp>
 #include <QWidget>
@@ -19,19 +20,23 @@ class EditConfigForm : public QWidget
     Q_OBJECT
 
 public:
-    explicit EditConfigForm(stride::GuiController *guiCtrl, boost::property_tree::ptree ptr, QWidget *parent = 0);
+    explicit EditConfigForm(stride::GuiController *guiCtrl, StrideWindow *sw, QWidget *parent = 0);
     ~EditConfigForm();
+
+private slots:
+    void on_verticalScrollBar_valueChanged(int position);
 
 private:
     Ui::EditConfigForm *ui;
     stride::GuiController *guiController;
-    boost::property_tree::ptree pt;
+    StrideWindow *strideWindow;
+    boost::property_tree::ptree *pt;
 
     void createField(QString name, QString value);
     void createPTreeFields(boost::property_tree::ptree &ptr, QString key);
 
     QList<QLineEdit*> lineEdits;
-    QList<QString> valueNames;
+    QList<QLabel*> labels;
 };
 
 #endif // EDITCONFIGFORM_H

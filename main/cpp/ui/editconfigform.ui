@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>399</width>
     <height>600</height>
    </rect>
   </property>
@@ -56,17 +56,59 @@ QToolTip {
 	border-radius: 4px;
 }</string>
   </property>
-  <widget class="QGroupBox" name="configGroupBox">
+  <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>381</width>
-     <height>581</height>
+     <width>380</width>
+     <height>544</height>
     </rect>
    </property>
    <property name="title">
-    <string>Edit Config File</string>
+    <string>Edit Config</string>
+   </property>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>4</x>
+      <y>32</y>
+      <width>372</width>
+      <height>508</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QScrollBar" name="verticalScrollBar">
+     <property name="geometry">
+      <rect>
+       <x>354</x>
+       <y>4</y>
+       <width>16</width>
+       <height>496</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>560</y>
+     <width>380</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Save</string>
    </property>
   </widget>
  </widget>

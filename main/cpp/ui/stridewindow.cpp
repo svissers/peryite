@@ -173,7 +173,7 @@ void StrideWindow::on_runButton_multi_clicked() {
 }
 
 void StrideWindow::on_editConfigButton_clicked() {
-    EditConfigForm *wdg = new EditConfigForm(guiController, config_pt);
+    EditConfigForm *wdg = new EditConfigForm(guiController, this);
     wdg->show();
 }
 
@@ -473,4 +473,12 @@ void StrideWindow::endOfRun(bool continueBatch) {
 void StrideWindow::loadIcon()
 {
     setWindowIcon(QIcon("./ui/logo.png"));
+}
+
+QString StrideWindow::getConfigFileName() {
+    return m_run_configFile;
+}
+
+ptree* StrideWindow::getConfigPTree() {
+    return &config_pt;
 }
