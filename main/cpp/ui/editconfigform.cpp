@@ -22,7 +22,7 @@ EditConfigForm::EditConfigForm(GuiController *guiCtrl, StrideWindow *sw, QWidget
 
     ui->verticalScrollBar->setMaximum(lineEdits.length() - 8);
 
-    ui->saveButton->setText("Save " + strideWindow->getConfigFileName());
+    ui->saveButton->setText("Save " + strideWindow->getConfigFileName() + " and close");
 }
 
 EditConfigForm::~EditConfigForm()
@@ -83,4 +83,13 @@ void EditConfigForm::on_verticalScrollBar_valueChanged(int position)
         labels[i]->move(8, y);
         lineEdits[i]->move(8, y + 24);
     }
+}
+
+void EditConfigForm::on_saveButton_clicked() {
+    for (int i = 0; i < labels.length(); i++) {
+        pt->put(labels[i]->text().toStdString(), lineEdits[i]->text().toStdString());
+    }
+
+    write_xml(std::cout, *pt);
+    close();
 }

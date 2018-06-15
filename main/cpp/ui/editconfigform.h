@@ -25,6 +25,7 @@ public:
 
 private slots:
     void on_verticalScrollBar_valueChanged(int position);
+    void on_saveButton_clicked();
 
 private:
     Ui::EditConfigForm *ui;
