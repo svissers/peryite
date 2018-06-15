@@ -6,6 +6,7 @@
 #include "util/FileSys.h"
 #include "util/ConfigInfo.h"
 #include "util/LogUtils.h"
+#include "ui/editconfigform.h"
 #include "ui/stridescattergraph.h"
 #include "ui/util.h"
 
@@ -168,6 +169,10 @@ void StrideWindow::on_runButton_multi_clicked() {
     run(ui->runMultiInput->value());
 }
 
+void StrideWindow::on_editConfigButton_clicked() {
+    EditConfigForm *wdg = new EditConfigForm(guiController);
+    wdg->show();
+}
 
 void StrideWindow::run(int steps) {
     // -----------------------------------------------------------------------------------------
@@ -351,11 +356,6 @@ void StrideWindow::setInitialParameters() {
     setStatus("Idle");
 
     batchRunning = false;
-
-    // -----------------------------------------------------------------------------------------
-    // Disable buttons that are WIP
-    // -----------------------------------------------------------------------------------------
-    ui->editConfigButton->setEnabled(false);
 }
 
 void StrideWindow::setTooltips() {
