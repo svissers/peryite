@@ -20,18 +20,25 @@ public:
     explicit StrideWindow(stride::GuiController *guiCtrl, QWidget *parent = 0);
     ~StrideWindow();
 
+    QString getConfigFileName();
+    boost::property_tree::ptree* getConfigPTree();
+
 private slots:
     void on_runButton_batch_clicked();
     void on_runButton_all_clicked();
     void on_runButton_one_clicked();
     void on_runButton_multi_clicked();
+    void on_editConfigButton_clicked();
+    void on_configInput_editingFinished();
 
 private:
     Ui::StrideWindow *ui;
     bool running;
     bool batchRunning;
+    bool filenameCorrect;
     stride::GuiController *guiController;
     QList<int> results;
+    boost::property_tree::ptree config_pt;
 
     // Run related parameters
     QString m_run_configFile;

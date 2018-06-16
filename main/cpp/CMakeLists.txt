@@ -119,6 +119,7 @@ set(LIB_SRC
     util/GeometryGeoCoord.cpp
     util/Regions.cpp
 #---
+    ui/editconfigform.cpp
     ui/geogendata.cpp
     ui/geogenvisualization.cpp
     ui/geogridlocation.cpp

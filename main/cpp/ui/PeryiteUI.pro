@@ -37,7 +37,8 @@ SOURCES += \
     popgendata.cpp \
     testingwindow.cpp \
     testingscattergraph.cpp \
-    mapviewerwindow.cpp
+    mapviewerwindow.cpp \
+    editconfigform.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -52,7 +53,8 @@ HEADERS += \
     popgendata.h \
     testingwindow.h \
     testingscattergraph.h \
-    mapviewerwindow.h
+    mapviewerwindow.h \
+    editconfigform.h
 
 FORMS += \
         mainwindow.ui \
@@ -60,6 +62,7 @@ FORMS += \
     popgenvisualization.ui \
     testingwindow.ui \
     testingscattergraph.ui \
-    mapviewerwindow.ui
+    mapviewerwindow.ui \
+    editconfigform.ui
 
 DISTFILES +=

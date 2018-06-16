@@ -6,6 +6,7 @@
 #include "util/FileSys.h"
 #include "util/ConfigInfo.h"
 #include "util/LogUtils.h"
+#include "ui/editconfigform.h"
 #include "ui/stridescattergraph.h"
 #include "ui/util.h"
 
@@ -36,6 +37,11 @@ StrideWindow::StrideWindow(GuiController *guiCtrl, QWidget *parent) :
     loadIcon();
 
     this->setFixedSize(QSize(480, 384));
+    
+    // Config ptree
+    m_run_configFile = ui->configInput->text();
+    config_pt = createConfigPTree(m_run_configFile);
+    filenameCorrect = true;
 }
 
 StrideWindow::~StrideWindow()
@@ -105,9 +111,8 @@ bool StrideWindow::setupRun() {
     }
 
     // -----------------------------------------------------------------------------------------
-    // Create config ptree
+    // Override parameters in the config ptree
     // -----------------------------------------------------------------------------------------
-    ptree config_pt = createConfigPTree(m_run_configFile);
     config_pt.put("run.rng_seed", m_run_rngSeed);
     config_pt.put("run.rng_type", m_run_rngType.toStdString());
     config_pt.put("run.output_map", m_run_mapViewer ? 1 : 0);
@@ -168,6 +173,23 @@ void StrideWindow::on_runButton_multi_clicked() {
     run(ui->runMultiInput->value());
 }
 
+void StrideWindow::on_editConfigButton_clicked() {
+    EditConfigForm *wdg = new EditConfigForm(guiController, this);
+    wdg->show();
+}
+
+void StrideWindow::on_configInput_editingFinished() {
+    try {
+        m_run_configFile = ui->configInput->text();
+        config_pt = createConfigPTree(m_run_configFile);
+        ui->editConfigButton->setEnabled(true);
+        filenameCorrect = true;
+    }
+    catch (...) {
+        ui->editConfigButton->setEnabled(false);
+        filenameCorrect = false;
+    }
+}
 
 void StrideWindow::run(int steps) {
     // -----------------------------------------------------------------------------------------
@@ -262,6 +284,10 @@ bool StrideWindow::checkConfigFile() {
     if (ui->configInput->text() == "") {
         QMessageBox::warning(this, tr("No file selected"), "You have not selected a config file.");
         return false;
+    }
+    else if (!filenameCorrect) {
+        QMessageBox::warning(this, tr("File issue"), "The file you selected does not exist, or something else is wrong with it.");
+        return false;
     } else {
         return true;
     }
@@ -351,11 +377,6 @@ void StrideWindow::setInitialParameters() {
     setStatus("Idle");
 
     batchRunning = false;
-
-    // -----------------------------------------------------------------------------------------
-    // Disable buttons that are WIP
-    // -----------------------------------------------------------------------------------------
-    ui->editConfigButton->setEnabled(false);
 }
 
 void StrideWindow::setTooltips() {
@@ -465,4 +486,12 @@ void StrideWindow::endOfRun(bool continueBatch) {
 void StrideWindow::loadIcon()
 {
     setWindowIcon(QIcon("./ui/logo.png"));
+}
+
+QString StrideWindow::getConfigFileName() {
+    return m_run_configFile;
+}
+
+ptree* StrideWindow::getConfigPTree() {
+    return &config_pt;
 }
