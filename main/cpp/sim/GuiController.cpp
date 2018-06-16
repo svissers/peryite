@@ -40,6 +40,7 @@
 
 using namespace std;
 using namespace stride::util;
+using namespace stride::gen::files;
 using namespace boost::filesystem;
 using namespace boost::property_tree;
 using namespace boost::property_tree::xml_parser;
@@ -51,6 +52,7 @@ GuiController::GuiController()
       m_output_prefix(""), m_run_clock("run_clock", true), m_config_path(),
       m_stride_logger(nullptr)
 {
+    state = GuiState::Empty;
 };
 
 
@@ -218,6 +220,12 @@ int GuiController::getTotalDays()
 bool GuiController::simulationDone()
 {
     return getCurrentDay() >= getTotalDays();
+}
+
+void GuiController::setupGenDirectory(ptree &pt)
+{
+    m_gendir = new GenDirectory(pt);
+    m_pop = Population::CreateEmpty(pt);
 }
 
 } // namespace stride
