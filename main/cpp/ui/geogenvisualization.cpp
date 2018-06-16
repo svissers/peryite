@@ -24,7 +24,7 @@ GeoGenVisualization::GeoGenVisualization(QWidget *parent) :
     setStyleSheet("QWidget { background-color: #eaeaea; }");
 
     // Load background image into image
-    QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("./ui/vlaanderen.png");
+    QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("./ui/map.png");
     image = new QImage(filename);
 
     // Setup GraphicsScene
