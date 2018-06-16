@@ -1,10 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
 #include "peryiteuidata.h"
 #include "geogenvisualization.h"
 #include "sim/GuiController.h"
+
+#include <QMainWindow>
+#include <boost/property_tree/ptree.hpp>
 
 namespace Ui {
 class MainWindow;
@@ -43,6 +45,7 @@ private:
     void loadLogo();
     void loadIcon();
     void setTooltips();
+    void updateButtons();
 };
 
 #endif // MAINWINDOW_H

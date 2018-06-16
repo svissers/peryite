@@ -19,6 +19,8 @@
  */
 
 #include "calendar/Calendar.h"
+#include "gen/geogen/GeoGenerator.h"
+#include "gen/popgen/PopGenerator.h"
 #include "pop/Population.h"
 #include "sim/GuiController.h"
 #include "sim/SimRunner.h"
@@ -40,6 +42,7 @@
 
 using namespace std;
 using namespace stride::util;
+using namespace stride::gen;
 using namespace stride::gen::files;
 using namespace boost::filesystem;
 using namespace boost::property_tree;
@@ -226,6 +229,19 @@ void GuiController::setupGenDirectory(ptree &pt)
 {
     m_gendir = new GenDirectory(pt);
     m_pop = Population::CreateEmpty(pt);
+    state = GuiState::ConfigFileSelected;
+}
+
+void GuiController::GeoGen()
+{
+    geogen::Generate(*m_gendir, m_pop);
+    state = GuiState::GeoGenerated;
+}
+
+void GuiController::PopGen()
+{
+    popgen::Generate(*m_gendir, m_pop);
+    state = GuiState::PopGenerated;
 }
 
 } // namespace stride

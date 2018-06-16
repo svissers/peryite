@@ -73,6 +73,10 @@ public:
         /// Setup gendirectory
         void setupGenDirectory(boost::property_tree::ptree &pt);
 
+        /// GeoGen and PopGen functions
+        void GeoGen();
+        void PopGen();
+
         std::shared_ptr<SimRunner> GetRunner() { return m_runner; }
 
 public:
