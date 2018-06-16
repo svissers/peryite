@@ -113,7 +113,8 @@ set(LIB_SRC
     util/SVIterator.h
     util/TimeStamp.h
     util/TimeToString.h
-
+	util/StatisticsRetriever.h
+	util/StatisticsRetriever.cpp
     util/InstallDirs.cpp
     util/GeometryGeoCoord.cpp
     util/Regions.cpp
@@ -138,7 +139,7 @@ set(LIB_SRC
 	viewers/MapViewer.cpp
     viewers/PersonsViewer.cpp
 	viewers/SummaryViewer.cpp
-)
+        )
 
 #============================================================================
 # Automatically generate ui header files for Qt
