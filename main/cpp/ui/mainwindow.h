@@ -21,8 +21,6 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_General_outputFolderSelect_clicked();
-
     void on_General_configFileSelect_clicked();
 
     void on_Geo_generateGeoGen_clicked();

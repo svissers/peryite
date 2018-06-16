@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setTooltips();
     updateButtons();
 
-    this->setFixedSize(QSize(1013, 360));
+    this->setFixedSize(QSize(1013, 328));
 }
 
 MainWindow::~MainWindow()
@@ -45,13 +45,6 @@ MainWindow::~MainWindow()
 /*
  * Main functions (non-slots)
  */
-
-void MainWindow::setOutputFolder(QString path)
-{
-    // Now that we're sure the files exist, we can set them.
-    ui->General_outputFolderLabel->setText(path);
-    data->outputFolder = path;
-}
 
 void MainWindow::setConfigFile(QString path)
 {
@@ -93,8 +86,6 @@ void MainWindow::setTooltips()
 {
     ui->General_configFileLabel->setToolTip("The generator file that will be used by geopop.");
     ui->General_configFileSelect->setToolTip("Click to select the file that will be used by geopop.");
-    ui->General_outputFolderLabel->setToolTip("The output folder that will be used by geopop.");
-    ui->General_outputFolderSelect->setToolTip("Click to select the output folder that will be used by geopop.");
     ui->Geo_generateGeoGen->setToolTip("Run GeoGen.");
     ui->Geo_visualizeGeoGen->setToolTip("Visualize GeoGen (after running).");
     ui->Pop_generatePopGen->setToolTip("Run PopGen.");
@@ -106,22 +97,6 @@ void MainWindow::setTooltips()
 /*
  * Slot functions
  */
-
-void MainWindow::on_General_outputFolderSelect_clicked()
-{
-    QString filename = QFileDialog::getExistingDirectory(
-                this,
-                tr("Select the output folder."),
-                "./output",
-                QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-
-    if (filename == "") {
-        QMessageBox::warning(this, tr("No folder selected"), "You have not selected an output folder.");
-        return;
-    }
-
-    setOutputFolder(filename);
-}
 
 void MainWindow::on_General_configFileSelect_clicked()
 {
@@ -151,7 +126,7 @@ void MainWindow::on_Geo_generateGeoGen_clicked()
 
 void MainWindow::on_Geo_visualizeGeoGen_clicked()
 {
-    // Check if we selected a folder
+    // Check if we selected a folder    void on_General_outputFolderSelect_clicked();
     if (data->outputFolder == "") {
         QMessageBox::warning(this, tr("No folder selected"), "You have not selected an output folder to visualize.");
         return;
@@ -226,7 +201,6 @@ void MainWindow::updateButtons()
 {
     // Disable all
     ui->General_configFileSelect->setEnabled(false);
-    ui->General_outputFolderSelect->setEnabled(false);
     ui->Geo_generateGeoGen->setEnabled(false);
     ui->Geo_visualizeGeoGen->setEnabled(false);
     ui->Pop_generatePopGen->setEnabled(false);
@@ -237,7 +211,6 @@ void MainWindow::updateButtons()
     // Empty
     if (guiController->state >= GuiState::Empty) {
         ui->General_configFileSelect->setEnabled(true);
-        ui->General_outputFolderSelect->setEnabled(true);
     }
 
     // Config file selected
