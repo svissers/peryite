@@ -47,7 +47,7 @@
             <region_name>Flanders1</region_name>
             <fragment_centers>true</fragment_centers>
 	        <!-- The amount of persons to generate -->
-	        <population_size>6000000</population_size>
+	        <population_size>100000</population_size>
 	        <!-- The household reference set to sample from -->
 	        <household_profile>households_flanders.xml</household_profile>
 	        <geoprofile>
@@ -79,7 +79,7 @@
             <region_name>Flanders2</region_name>
             <fragment_centers>true</fragment_centers>
             <!-- The amount of persons to generate -->
-            <population_size>8000000</population_size>
+            <population_size>100000</population_size>
             <!-- The household reference set to sample from -->
             <household_profile>households_flanders.xml</household_profile>
             <geoprofile>

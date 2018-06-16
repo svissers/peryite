@@ -11,6 +11,8 @@
 #include <QtDebug>
 #include <QCloseEvent>
 #include <QIcon>
+#include <QScrollBar>
+#include <iostream>
 
 using namespace stride;
 using namespace std;
@@ -28,7 +30,7 @@ MapViewerWindow::MapViewerWindow(QWidget *parent) :
     setStyleSheet("QWidget { background-color: #eaeaea; }");
 
     // Load background image into image
-    QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("./ui/vlaanderen.png");
+    QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("./ui/map.png");
     image = new QImage(filename);
 
     // Setup GraphicsScene
@@ -98,11 +100,12 @@ void MapViewerWindow::updateInfected(const std::shared_ptr<Population> populatio
 }
 
 void MapViewerWindow::update() {
-    // Get cursor position
+    // Get cursor position and add scrolling offset to it
     QPoint mousePos = mapFromGlobal(QCursor::pos());
+    QPoint offset = QPoint(ui->FlandersMap->horizontalScrollBar()->value(), ui->FlandersMap->verticalScrollBar()->value());
 
     // Check hover selection for circles
-    updateSelection(mousePos);
+    updateSelection(mousePos + offset);
 
     // Draw
     draw();
@@ -248,4 +251,11 @@ VisualizationCircle* MapViewerWindow::getClosestCircle(QPointF mousePos) {
 void MapViewerWindow::loadIcon()
 {
     setWindowIcon(QIcon("./ui/logo.png"));
+}
+
+void MapViewerWindow::focusFlanders()
+{
+    // Set scrollbars starting value to focus on flanders
+    ui->FlandersMap->horizontalScrollBar()->setSliderPosition(781);
+    ui->FlandersMap->verticalScrollBar()->setSliderPosition(809);
 }
