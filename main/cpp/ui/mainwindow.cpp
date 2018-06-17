@@ -3,6 +3,7 @@
 #include "geogenvisualization.h"
 #include "popgenvisualization.h"
 #include "stridewindow.h"
+#include "ui/editconfigform.h"
 #include "util.h"
 #include "util/FileSys.h"
 
@@ -51,8 +52,8 @@ void MainWindow::setConfigFile(QString path)
     ui->General_configFileLabel->setText(path);
     data->configFile = path;
 
-    ptree config_pt = FileSys::ReadPtreeFile(path.toStdString());
-    guiController->setupGenDirectory(config_pt);
+    ptree config_pt = FileSys::ReadPtreeFile(data->configFile.toStdString());
+    guiController->AssignPTree(config_pt);
     updateButtons();
 }
 
@@ -114,9 +115,26 @@ void MainWindow::on_General_configFileSelect_clicked()
     setConfigFile(filename);
 }
 
+void MainWindow::on_General_editConfigFile_clicked()
+{
+    EditConfigForm *wdg = new EditConfigForm(guiController);
+    wdg->show();
+}
+
 void MainWindow::on_Geo_generateGeoGen_clicked()
 {
-    guiController->GeoGen();
+    if (!guiController->setupGenDirectory()) {
+        QMessageBox::warning(this, tr("Incorrect Config File"), "There seems to be something wrong with your config file. Are you sure it's up to date?");
+        updateButtons();
+        return;
+    }
+
+    if (!guiController->GeoGen()) {
+        QMessageBox::warning(this, tr("GeoGen Failed"), "GeoGen failed. This is probably because there is something wrong with the config file.");
+        updateButtons();
+        return;
+    }
+
     updateButtons();
 
     // Message when done
@@ -134,7 +152,12 @@ void MainWindow::on_Geo_visualizeGeoGen_clicked()
 
 void MainWindow::on_Pop_generatePopGen_clicked()
 {
-    guiController->PopGen();
+    if (!guiController->PopGen()) {
+        QMessageBox::warning(this, tr("PopGen Failed"), "PopGen failed. This is probably because there is something wrong with the config file.");
+        updateButtons();
+        return;
+    }
+
     updateButtons();
 
     // Message when done
@@ -145,30 +168,14 @@ void MainWindow::on_Pop_generatePopGen_clicked()
 
 void MainWindow::on_Pop_visualizePopGen_clicked()
 {
-    // Check if we selected a folder
-    if (data->outputFolder == "") {
-        QMessageBox::warning(this, tr("No folder selected"), "You have not selected an output folder to visualize.");
-        return;
-    }
-
-    // Try setting the files in geogendata.
-    // This will return false if unsuccesful (if required files are missing), and missing files will be in missingFiles.
-    QStringList missingFiles;
-
-    if (!data->setPopGenData(data->outputFolder, missingFiles)) {
-        QString s = missingFiles.join("\n");
-        QMessageBox::warning(this, QObject::tr("File(s) not found."), "The following files are missing from the output folder:\n\n" + s);
-        return;
-    }
-
     // Set button text to show user that we're parsing
     ui->Pop_visualizePopGen->setText("Parsing...");
     // Force repaint because otherwise it would happen after this function, rendering the "parsing..." message useless.
     ui->Pop_visualizePopGen->repaint();
 
     // Create new window and parse pop file
-    PopGenVisualization *wdg = new PopGenVisualization;
-    wdg->parseData(data->popgenData);
+    PopGenVisualization *wdg = new PopGenVisualization(guiController);
+    wdg->parseData();
     wdg->show();
 
     // Reset the button text when we're done
@@ -185,6 +192,7 @@ void MainWindow::updateButtons()
 {
     // Disable all
     ui->General_configFileSelect->setEnabled(false);
+    ui->General_editConfigFile->setEnabled(false);
     ui->Geo_generateGeoGen->setEnabled(false);
     ui->Geo_visualizeGeoGen->setEnabled(false);
     ui->Pop_generatePopGen->setEnabled(false);
@@ -199,11 +207,13 @@ void MainWindow::updateButtons()
 
     // Config file selected
     if (guiController->state >= GuiState::ConfigFileSelected) {
+        ui->General_editConfigFile->setEnabled(true);
         ui->Geo_generateGeoGen->setEnabled(true);
     }
 
     // Geo generated
     if (guiController->state >= GuiState::GeoGenerated) {
+        ui->General_editConfigFile->setEnabled(false);
         ui->Geo_generateGeoGen->setEnabled(false);
 
         ui->Geo_visualizeGeoGen->setEnabled(true);

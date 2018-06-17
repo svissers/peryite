@@ -9,20 +9,19 @@ using namespace stride;
 using namespace boost::property_tree;
 using namespace boost::property_tree::xml_parser;
 
-EditConfigForm::EditConfigForm(GuiController *guiCtrl, StrideWindow *sw, QWidget *parent) :
+EditConfigForm::EditConfigForm(GuiController *guiCtrl, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::EditConfigForm),
-    guiController(guiCtrl),
-    strideWindow(sw)
+    guiController(guiCtrl)
 {
     ui->setupUi(this);
 
-    pt = strideWindow->getConfigPTree();
+    pt = guiController->GetPTree();
     createPTreeFields(*pt, "");
 
     ui->verticalScrollBar->setMaximum(lineEdits.length() - 8);
 
-    ui->saveButton->setText("Save " + strideWindow->getConfigFileName() + " and close");
+    ui->saveButton->setText("Save and close");
 }
 
 EditConfigForm::~EditConfigForm()

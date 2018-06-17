@@ -145,19 +145,6 @@ QToolTip {
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="editConfigButton">
-    <property name="geometry">
-     <rect>
-      <x>368</x>
-      <y>32</y>
-      <width>64</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Edit</string>
-    </property>
-   </widget>
   </widget>
   <widget class="QGroupBox" name="RngGroup">
    <property name="geometry">

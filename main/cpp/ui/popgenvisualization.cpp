@@ -9,9 +9,14 @@
 #include <QCloseEvent>
 #include <QIcon>
 
-PopGenVisualization::PopGenVisualization(QWidget *parent) :
+using namespace stride;
+using namespace stride::gen;
+using namespace stride::gen::files;
+
+PopGenVisualization::PopGenVisualization(GuiController *guiCtrl, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::PopGenVisualization)
+    ui(new Ui::PopGenVisualization),
+    guiController(guiCtrl)
 {
     ui->setupUi(this);
 
@@ -51,7 +56,7 @@ void PopGenVisualization::closeEvent(QCloseEvent *event) {
     event->accept();
 }
 
-void PopGenVisualization::parseData(PopGenData *data) {
+void PopGenVisualization::parseData() {
     // Make sure all distribution data is set to 0 first
     for (int i = 0; i <= maxAge; i++) {
         ageDistribution[i] = 0;
@@ -62,32 +67,23 @@ void PopGenVisualization::parseData(PopGenData *data) {
     selected = NULL;
 
     // Parse the popgen file
-    QFile popgenFile(data->popFile);
+    // while (!popgenFile.atEnd()) {
+    //     QString line = popgenFile.readLine();
 
-    if (!popgenFile.open(QIODevice::ReadOnly)) {
-        qDebug() << popgenFile.errorString();
-        return;
-    }
+    //     // Ignore header lines
+    //     if (line.startsWith("\"age\"")) { continue; }
 
-    while (!popgenFile.atEnd()) {
-        QString line = popgenFile.readLine();
+    //     // Get the line
+    //     QStringList list = Util::parseCSVLine(line);
 
-        // Ignore header lines
-        if (line.startsWith("\"age\"")) { continue; }
+    //     if (list[0].contains(".")) {
+    //         addAge(int(list[0].toFloat()));
+    //     } else {
+    //         addAge(list[0].toInt());
+    //     }
+    // }
 
-        // Get the line
-        QStringList list = Util::parseCSVLine(line);
-
-        if (list[0].contains(".")) {
-            addAge(int(list[0].toFloat()));
-        } else {
-            addAge(list[0].toInt());
-        }
-    }
-
-    popgenFile.close();
-
-    createAgeDistributionGraph();
+    // createAgeDistributionGraph();
 }
 
 void PopGenVisualization::addAge(int age) {

@@ -28,7 +28,6 @@ private slots:
     void on_runButton_all_clicked();
     void on_runButton_one_clicked();
     void on_runButton_multi_clicked();
-    void on_editConfigButton_clicked();
     void on_configInput_editingFinished();
 
 private:

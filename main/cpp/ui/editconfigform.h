@@ -20,7 +20,7 @@ class EditConfigForm : public QWidget
     Q_OBJECT
 
 public:
-    explicit EditConfigForm(stride::GuiController *guiCtrl, StrideWindow *sw, QWidget *parent = 0);
+    explicit EditConfigForm(stride::GuiController *guiCtrl, QWidget *parent = 0);
     ~EditConfigForm();
 
 private slots:
@@ -30,7 +30,6 @@ private slots:
 private:
     Ui::EditConfigForm *ui;
     stride::GuiController *guiController;
-    StrideWindow *strideWindow;
     boost::property_tree::ptree *pt;
 
     void createField(QString name, QString value);

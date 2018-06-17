@@ -23,6 +23,8 @@ public:
 private slots:
     void on_General_configFileSelect_clicked();
 
+    void on_General_editConfigFile_clicked();
+
     void on_Geo_generateGeoGen_clicked();
 
     void on_Geo_visualizeGeoGen_clicked();
