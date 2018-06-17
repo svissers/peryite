@@ -1,7 +1,5 @@
 #include "TravelAssigner.h"
-#include "../../structs/School.h"
 #include "../PopGenerator.h"
-#include "pool/ContactPoolType.h"
 #include "trng/fast_discrete_dist.hpp"
 
 namespace stride {
@@ -81,14 +79,13 @@ void AssignTravellers(
     for (size_t i = 0; i < population->size(); ++i) {
         Person person = population->at(i);
 
-        if(previousHHid != person.GetPoolId(ContactPoolType::Id::Household)){
+        if(previousHHid != int(person.GetPoolId(ContactPoolType::Id::Household))){
             previousHHid = person.GetPoolId(ContactPoolType::Id::Household);
             vacationGoers = false;
 
             if(tourist_dist() == 1){
                 vacationGoers = true;
 
-                //assign travel_com_id's            // TODO
                 tourist_regionNr = region_dist();  //travel can be in same region
                 tourist_cityNr = city_dist();
 

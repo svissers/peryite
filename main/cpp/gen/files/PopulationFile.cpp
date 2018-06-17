@@ -3,7 +3,6 @@
 #include "util/FileSys.h"
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/foreach.hpp>
-#include <string>
 
 namespace stride {
 namespace gen {
@@ -131,8 +130,7 @@ Regions PopulationFile::ReadRegions(const boost::property_tree::ptree& config_pt
 
 void PopulationFile::WritePoolSys(std::string output_prefix, const ContactPoolSys& pool_sys)
 {
-    if (pool_sys.empty())
-        return;
+
     std::vector<std::string> labels = {"type","id","lat", "lon"};
     auto file_path = FileSys::BuildPath(output_prefix, "PoolSys.csv");
     std::ofstream my_file{file_path.string()};
@@ -194,7 +192,7 @@ vector<vector<unsigned int>> GetReferenceHouseholds(const GenConfiguration& conf
             BOOST_FOREACH( boost::property_tree::ptree::value_type const& v, age_tree.get_child("") ) {
                 std::string label = v.first;
                 if ( label == "age" ) {
-                    household.push_back(std::stoul(v.second.data()));
+                    household.push_back(uint(std::stoul(v.second.data())));
                 }
             }
             result.push_back(household);

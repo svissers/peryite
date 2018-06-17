@@ -21,9 +21,7 @@
 #include "Sim.h"
 
 #include "behaviour/information_policies/LocalDiscussion.h"
-#include "behaviour/information_policies/NoLocalInformation.h"
 #include "calendar/DaysOffStandard.h"
-#include "pool/ContactPoolType.h"
 #include "pop/Population.h"
 #include "sim/SimBuilder.h"
 #include "util/RunConfigManager.h"

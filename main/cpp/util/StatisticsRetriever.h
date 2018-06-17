@@ -11,7 +11,7 @@ namespace util {
 class StatisticsRetriever{
 public:
 
-    StatisticsRetriever(std::shared_ptr<Population>& pop);
+    explicit StatisticsRetriever(std::shared_ptr<Population>& pop);
 /// Returns a tuple with statistics of the regions inquired about.
 /// @return tuple with: total population of area, number of sick people, number of working people, number of school going people (including university)
     std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int>
