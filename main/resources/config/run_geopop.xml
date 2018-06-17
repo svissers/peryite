@@ -58,7 +58,7 @@
             <school_cp_size>20</school_cp_size>
             <university_size>3000</university_size>
             <university_cp_size>20</university_cp_size>
-            <workplace_size>500</workplace_size>
+            <workplace_size>100</workplace_size>
             <workplace_cp_size>20</workplace_cp_size>
 	        <university>
 		        <!-- Among the 18-26 year olds, a fraction is a student -->
@@ -90,7 +90,7 @@
             <school_cp_size>20</school_cp_size>
             <university_size>3000</university_size>
             <university_cp_size>20</university_cp_size>
-            <workplace_size>500</workplace_size>
+            <workplace_size>100</workplace_size>
             <workplace_cp_size>20</workplace_cp_size>
             <university>
                 <!-- Among the 18-26 year olds, a fraction is a student -->

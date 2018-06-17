@@ -72,12 +72,12 @@ GeoGrid BuildGeoGrid(const GenConfiguration& config)
                     // Fragment center
                     center->is_fragmented = true;
                     int frag_amount = fragment_amounts[frag_amount_gen()];
-                    unsigned int frag_size   = center->population / frag_amount;
+                    int frag_size   = center->population / frag_amount;
                     std::vector<unsigned int> frag_pop;
                     std::vector<util::spherical_point> frag_coords;
 
                     for (int i = 0; i < frag_amount; i++) {
-                        frag_pop.push_back(frag_size);
+                        frag_pop.push_back(uint(frag_size));
                         double lat = center->coordinate.get<0>() + latlon_diff_gen();
                         double lon = center->coordinate.get<1>() + latlon_diff_gen();
                         frag_coords.emplace_back(util::spherical_point(lat, lon));

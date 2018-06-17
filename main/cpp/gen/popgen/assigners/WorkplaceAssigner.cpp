@@ -20,8 +20,8 @@ void AssignWorkplaces(
     // Contactpools
     // -------------
     auto config = region->config;
-    const unsigned int wokrplace_size      = config.GetTree().get<unsigned int>("workplace_size");
-    const unsigned int workplace_cp_size   = config.GetTree().get<unsigned int>("workplace_cp_size");
+    const auto wokrplace_size      = config.GetTree().get<unsigned int>("workplace_size");
+    const auto workplace_cp_size   = config.GetTree().get<unsigned int>("workplace_cp_size");
     unsigned int cp_id = region->first_cps[ContactPoolType::Id::Work];
     for (auto &band : workplaces) {
         for (auto &g_struct : band) {
@@ -63,7 +63,7 @@ void AssignWorkplaces(
             working_age_people++;
     }
 
-    unsigned int total_commuting_actives    = std::ceil(working_age_people * commute_fraction);
+    auto total_commuting_actives    = uint(std::ceil(working_age_people * commute_fraction));
     double commuting_student_active_ratio   = total_commuting_students / total_commuting_actives;
 
     util::CSV commuting_data    = util::CSV(config.GetTree().get<string>("geoprofile.commuters"));
@@ -80,7 +80,7 @@ void AssignWorkplaces(
                 util::CSVRow row    = *(commuting_data.begin() + row_index);
                 auto commute_count  = row.GetValue<unsigned int>(col_index);
                 // Remove commuting students
-                commute_count       = (commuting_student_active_ratio * commute_count);
+                commute_count       = uint(round(commuting_student_active_ratio * commute_count));
                 relative_commute[col_index] -= commute_count;
                 relative_commute[row_index] += commute_count;
                 total_commute[col_index]    += commute_count;
@@ -120,20 +120,34 @@ void AssignWorkplaces(
                 // Commuting
                 auto destination = grid[city_gen()];
                 auto dest_coord = destination->coordinate;
-
-
-                auto band_of_interest = uint( (dest_coord.get<1>() - grid.m_min_long) / grid.m_longitude_band_width );
-                /*if (band_of_interest >= workplaces.size()) {
-                    std::cout << "error: the requested city to commute to was outside of area." << std::endl;
-                    continue;
-                }*/
-
                 vector<shared_ptr<WorkPlace>> dest_workplaces;
-                for (const auto& gstruct : workplaces[band_of_interest]) {
-                    auto workplace = std::static_pointer_cast<WorkPlace>(gstruct);
-                    if (util::calculateDistance(workplace->coordinate, dest_coord) == 0) {
-                        dest_workplaces.push_back(workplace);
+
+                if(!destination->is_fragmented){
+                    auto band_of_interest = uint(round( (dest_coord.get<1>() - grid.m_min_long) / grid.m_longitude_band_width ));
+
+
+                    for (const auto& gstruct : workplaces[band_of_interest]) {
+                        auto workplace = std::static_pointer_cast<WorkPlace>(gstruct);
+
+                        if (util::calculateDistance(workplace->coordinate, dest_coord) == 0) {
+                            dest_workplaces.push_back(workplace);
+                        }
                     }
+                }
+                else{
+                    for(auto fragment : destination->fragmented_coords){
+                        auto band_of_interest = uint(round( (fragment.get<1>() - grid.m_min_long) / grid.m_longitude_band_width ));
+
+
+                        for (const auto& gstruct : workplaces[band_of_interest]) {
+                            auto workplace = std::static_pointer_cast<WorkPlace>(gstruct);
+
+                            if (util::calculateDistance(workplace->coordinate, fragment) == 0) {
+                                dest_workplaces.push_back(workplace);
+                            }
+                        }
+                    }
+
                 }
 
                 if (dest_workplaces.empty()) {
@@ -142,11 +156,11 @@ void AssignWorkplaces(
                 }
                 // Create a uniform distribution to select a workplace
                 auto wp_generator   = rn_manager->GetGenerator(
-                        trng::fast_discrete_dist(dest_workplaces.size()));
+                        trng::fast_discrete_dist(uint(dest_workplaces.size())));
                 auto workplace      = dest_workplaces[wp_generator()];
                 auto cp_generator = rn_manager->GetGenerator(
-                        trng::fast_discrete_dist(workplace->pools.size()));
-                pool                = workplace->pools.at(cp_generator());
+                        trng::fast_discrete_dist(uint(workplace->pools.size())));
+                pool                = workplace->pools.at(uint(cp_generator()));
             } else {
                 // Non-commuting
                 auto home_coord = person.GetCoordinate();
@@ -158,13 +172,13 @@ void AssignWorkplaces(
                 }
                 // Create a uniform distribution to select a workplace
                 std::function<int()> wp_generator = rn_manager->GetGenerator(
-                        trng::fast_discrete_dist(closest_workplaces.size()));
-                auto workplace = static_pointer_cast<WorkPlace>(closest_workplaces.at(wp_generator()));
+                        trng::fast_discrete_dist(uint(closest_workplaces.size())));
+                auto workplace = static_pointer_cast<WorkPlace>(closest_workplaces.at(uint(wp_generator())));
                 auto cp_generator = rn_manager->GetGenerator(
-                        trng::fast_discrete_dist(workplace->pools.size()));
-                pool                = workplace->pools.at(cp_generator());
+                        trng::fast_discrete_dist(uint(workplace->pools.size())));
+                pool                = workplace->pools.at(uint(cp_generator()));
             }
-            person.setPoolId(ContactPoolType::Id::Work, pool->GetId());
+            person.setPoolId(ContactPoolType::Id::Work, uint(pool->GetId()));
             pool->AddMember(&person);
         }
     }
