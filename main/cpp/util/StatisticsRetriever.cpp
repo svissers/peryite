@@ -47,13 +47,16 @@ StatisticsRetriever::StatisticsRetriever(std::shared_ptr<Population>& pop) {
 
 }
 
-std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int> StatisticsRetriever::GetStatisticsOfArea(std::shared_ptr<Population>& pop,
-    util::spherical_point center, double radius) {
+std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int>
+    StatisticsRetriever::GetStatisticsOfArea(std::shared_ptr<Population>& pop, util::spherical_point center, double radius) {
+
+
     std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int> returnVal;
+    
     auto radiusofBands = uint(round(radius/m_bandLength));
     auto band_of_center = uint(round( (center.get<1>() - m_min_long) / m_bandLength ));
     unsigned int beginband = std::max(uint(0), band_of_center+radiusofBands);
-    auto endband = std::min(uint(AMOUNTOFBANDS-1), band_of_center+radiusofBands);
+    auto endband = std::min(uint(AMOUNTOFBANDSPOP-1), band_of_center+radiusofBands);
 
 
     unsigned int popInRadius = 0;
