@@ -72,8 +72,8 @@ std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int,
 
     for(unsigned int i = beginband; i <= endband; i++){
         unsigned int misses = 0;
-        for(unsigned int j = 0; j < m_sortedPopByIndex[i].size(); j++){
-            auto person = pop->at(m_sortedPopByIndex[i][j]);
+        for (unsigned int j : m_sortedPopByIndex[i]) {
+            auto person = pop->at(j);
             auto personCoord = person.GetCoordinate();
             if(calculateDistance(personCoord, center) <= radius){
                 misses = 0;
