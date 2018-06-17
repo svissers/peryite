@@ -41,7 +41,7 @@ vector<shared_ptr<School>> BuildSchools(const GenConfiguration& config, GeoGrid&
 
     // Create and map the schools to their samples.
     for (unsigned int i = 0; i < school_count; i++) {
-        auto center = grid.at(generator());
+        auto center = grid.at(uint(generator()));
         auto coords = center->coordinate;
         if (center->is_fragmented) {
             // Select one of the fragments
@@ -49,7 +49,7 @@ vector<shared_ptr<School>> BuildSchools(const GenConfiguration& config, GeoGrid&
             for(const auto& population : center->fragmented_populations)
                 f_fractions.push_back(double(population) / double(center->population));
             auto frag_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(f_fractions.begin(), f_fractions.end()));
-            coords = center->fragmented_coords.at(frag_gen());
+            coords = center->fragmented_coords.at(uint(frag_gen()));
         }
         auto school = make_shared<School>(School(i, coords));
         schools.push_back(school);

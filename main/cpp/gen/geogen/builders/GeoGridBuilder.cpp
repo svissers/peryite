@@ -47,7 +47,7 @@ GeoGrid BuildGeoGrid(const GenConfiguration& config)
         for (auto& center : geo_grid) {
             double ref_pop          = center->population;
             double relative_pop     = (ref_pop / total_ref_population);
-            unsigned int actual_pop = relative_pop * total_population;
+            auto actual_pop = uint(round(relative_pop * total_population));
             center->population = actual_pop;
         }
 
@@ -60,19 +60,19 @@ GeoGrid BuildGeoGrid(const GenConfiguration& config)
             const unsigned int fragment_amounts[4]  = {2,3,4,5};
             const double lat_lon_diff               = 0.1;
             auto rn_manager         = config.GetRNManager();
-            auto frag_center_gen    = rn_manager->GetGenerator(trng::fast_discrete_dist(geo_grid.size()));
+            auto frag_center_gen    = rn_manager->GetGenerator(trng::fast_discrete_dist(uint(geo_grid.size())));
             auto frag_amount_gen    = rn_manager->GetGenerator(trng::fast_discrete_dist(std::begin(fragment_dist), std::end(fragment_dist)));
             auto latlon_diff_gen    = rn_manager->GetGenerator(trng::uniform_dist<>(-lat_lon_diff, lat_lon_diff));
             unsigned int nr_fragmented = 0;
 
             while(nr_fragmented < nr_to_fragment) {
                 // Uniformly pick center from grid
-                auto center = geo_grid.at(frag_center_gen());
+                auto center = geo_grid.at(uint(frag_center_gen()));
                 if (center->population <= fragmentation_bound) {
                     // Fragment center
                     center->is_fragmented = true;
                     int frag_amount = fragment_amounts[frag_amount_gen()];
-                    int frag_size   = center->population / frag_amount;
+                    unsigned int frag_size   = center->population / frag_amount;
                     std::vector<unsigned int> frag_pop;
                     std::vector<util::spherical_point> frag_coords;
 
