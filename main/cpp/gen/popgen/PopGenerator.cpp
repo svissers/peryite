@@ -4,7 +4,6 @@
 #include "assigners/UniversityAssigner.h"
 #include "assigners/WorkplaceAssigner.h"
 #include "assigners/CommunityAssigner.h"
-#include "pool/ContactPoolSys.h"
 #include "assigners/TravelAssigner.h"
 
 namespace stride {
@@ -178,7 +177,7 @@ vector<shared_ptr<GenStruct>> GetClosestStructs(const util::spherical_point& hom
         if (band_of_hh > band_range)
             firstband = band_of_hh - band_range;
         if (lastband >= structs.size()) {
-            lastband = structs.size() - 1;
+            lastband = uint(structs.size() - 1);
             if (firstband == 0)
                 break;
         }

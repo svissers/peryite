@@ -1,7 +1,6 @@
 #include "WorkplaceAssigner.h"
 #include "../../structs/Workplace.h"
 #include "../PopGenerator.h"
-#include "pool/ContactPoolType.h"
 #include "trng/fast_discrete_dist.hpp"
 
 namespace stride {

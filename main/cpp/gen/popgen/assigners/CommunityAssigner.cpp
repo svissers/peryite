@@ -1,7 +1,6 @@
 #include "CommunityAssigner.h"
 #include "../../structs/Community.h"
 #include "../PopGenerator.h"
-#include "pool/ContactPoolType.h"
 #include "trng/fast_discrete_dist.hpp"
 
 namespace stride {
@@ -69,13 +68,13 @@ void AssignCommunities(
         auto config = region->config;
         auto rn_manager = config.GetRNManager();
         auto community_generator = rn_manager->GetGenerator(
-                trng::fast_discrete_dist(closest_communities.size() - 1));
+                trng::fast_discrete_dist(uint(closest_communities.size() - 1)));
 
         shared_ptr<Community> community = nullptr;
         unsigned int community_index = 0;
         unsigned int p_counter = 0;
         while (p_counter < (closest_communities.size() * 2)) {
-            community_index = community_generator();
+            community_index = uint(community_generator());
             community = static_pointer_cast<Community>(closest_communities.at(community_index));
             if (!community->is_primary)
                 break;
@@ -84,14 +83,14 @@ void AssignCommunities(
         if (!community)
             break;
         // Create a uniform distribution to select a contactpool in the selected community
-        auto cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(community->pools.size()));
+        auto cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(uint(community->pools.size())));
         auto cp_index = cp_generator();
         auto pool = community->pools[cp_index];
         // Iterate over the household in the population
         while (population->at(i).GetPoolId(ContactPoolType::Id::Household) == hh_id) {
             // Add entire household to the same secondary community.
             // ------------------------------
-            population->at(i).setPoolId(ContactPoolType::Id::SecondaryCommunity, pool->GetId());
+            population->at(i).setPoolId(ContactPoolType::Id::SecondaryCommunity, uint(pool->GetId()));
             pool->AddMember(&population->at(i));
 
             // Add Persons from the same household to different primary communities.
@@ -99,28 +98,28 @@ void AssignCommunities(
             // Create a uniform distribution to select a primary community
             auto primary_rn_manager = config.GetRNManager();
             auto primary_community_generator = primary_rn_manager->GetGenerator(
-                    trng::fast_discrete_dist(closest_communities.size()));
+                    trng::fast_discrete_dist(uint(closest_communities.size())));
 
             auto primary_community_index = primary_community_generator();
             auto primary_community = static_pointer_cast<Community>(
-                    closest_communities.at(primary_community_index));
+                    closest_communities.at(uint(primary_community_index)));
             unsigned int s_counter = 0;
             // Search uniformly for a primary community in the vector of closest communities.
             while (s_counter < closest_communities.size() * 2 && primary_community->is_primary) {
                 primary_community_index = primary_community_generator();
                 primary_community = static_pointer_cast<Community>(
-                        closest_communities.at(primary_community_index));
+                        closest_communities.at(uint(primary_community_index)));
                 s_counter++;
             }
             // Create a uniform distribution to select a contactpool within the selected community
             auto primary_cp_generator = primary_rn_manager->GetGenerator(
-                    trng::fast_discrete_dist(primary_community->pools.size()));
+                    trng::fast_discrete_dist(uint(primary_community->pools.size())));
             auto primary_cp_index = primary_cp_generator();
             auto primary_pool = primary_community->pools[primary_cp_index];
 
             // Add person to the selected primary community
             population->at(i).setPoolId(ContactPoolType::Id::PrimaryCommunity,
-                                        primary_pool->GetId());
+                                        uint(primary_pool->GetId()));
             primary_pool->AddMember(&population->at(i));
 
             if (++i >= population->size())

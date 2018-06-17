@@ -32,7 +32,7 @@ void AssignHouseholds(
     for (std::size_t i = region->first_person_id; i <= region->last_person_id; i++) {
         auto hh_id = population->at(i).GetPoolId(ContactPoolType::Id::Household);
         auto index = generator();
-        auto center = grid.at(index);
+        auto center = grid.at(uint(index));
         auto coord = center->coordinate;
         if (coord.get<0>() == 0) {
             std::cout << "lat is 0 " << coord << std::endl;
@@ -46,7 +46,7 @@ void AssignHouseholds(
                 f_fractions.push_back(double(f_pop_size) / double(center->population));
             auto frag_gen = rn_manager->GetGenerator(
                     trng::fast_discrete_dist(f_fractions.begin(), f_fractions.end()));
-            coord = center->fragmented_coords.at(frag_gen());
+            coord = center->fragmented_coords.at(uint(frag_gen()));
         }
         while (population->at(i).GetPoolId(ContactPoolType::Id::Household) == hh_id) {
             population->at(i).SetCoordinate(coord);

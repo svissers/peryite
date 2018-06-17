@@ -1,7 +1,6 @@
 #include "UniversityAssigner.h"
 #include "../../structs/University.h"
 #include "../PopGenerator.h"
-#include "pool/ContactPoolType.h"
 #include "trng/fast_discrete_dist.hpp"
 
 namespace stride {
@@ -20,8 +19,8 @@ unsigned int AssignUniversities(
     // Contactpools
     // -------------
     auto config                             = region->config;
-    const unsigned int university_size      = config.GetTree().get<unsigned int>("university_size");
-    const unsigned int university_cp_size   = config.GetTree().get<unsigned int>("university_cp_size");
+    const auto university_size      = config.GetTree().get<unsigned int>("university_size");
+    const auto university_cp_size   = config.GetTree().get<unsigned int>("university_cp_size");
     unsigned int cp_id                      = region->last_cps[ContactPoolType::Id::School];
     map<unsigned int, vector<shared_ptr<University>>> cities;
     for (const auto &band : universities) {
@@ -61,7 +60,7 @@ unsigned int AssignUniversities(
 
     // create a uniform distribution to select a contactpool from a university
     auto cp_gen = rn_manager->GetGenerator(
-            trng::fast_discrete_dist(floor(university_size / university_cp_size)));
+            trng::fast_discrete_dist(uint(floor(university_size / university_cp_size))));
 
     // Commuting distributions
     util::CSV commuting_data(config.GetTree().get<string>("geoprofile.commuters"));
@@ -89,7 +88,7 @@ unsigned int AssignUniversities(
             }
             commute_towards.push_back(city_total);
             // For every university city, create a uniform distribution to select a university
-            auto uni_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(city.second.size()));
+            auto uni_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(uint(city.second.size())));
             city_generators[city.first] = uni_gen;
         }
     }
@@ -113,7 +112,7 @@ unsigned int AssignUniversities(
             if (commute_gen() == 0) {
                 /// Commuting student
                 total_commuting_students++;
-                unsigned int city_index = city_gen();
+                auto city_index = uint(city_gen());
                 auto it = cities.begin();
                 std::advance(it, city_index);
                 auto city = *it;
@@ -132,14 +131,14 @@ unsigned int AssignUniversities(
                 // Create a uniform distribution to select a university
                 //auto rn_manager = config.GetRNManager();
                 auto uni_gen = rn_manager->GetGenerator(
-                        trng::fast_discrete_dist(closest_universities.size()));
+                        trng::fast_discrete_dist(uint(closest_universities.size())));
                 auto university = static_pointer_cast<University>(closest_universities[uni_gen()]);
                 // Create a uniform distribution to select a contactpool in the selected university
                 auto cp_generator = rn_manager->GetGenerator(
-                        trng::fast_discrete_dist(university->pools.size()));
-                pool = university->pools.at(cp_generator());
+                        trng::fast_discrete_dist(uint(university->pools.size())));
+                pool = university->pools.at(uint(cp_generator()));
             }
-            person.setPoolId(ContactPoolType::Id::School, pool->GetId());
+            person.setPoolId(ContactPoolType::Id::School, uint(pool->GetId()));
             pool->AddMember(&person);
         }
     }
