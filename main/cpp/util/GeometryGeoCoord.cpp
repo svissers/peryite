@@ -1,6 +1,3 @@
-//
-// Created by root on 5/7/18.
-//
 #include "GeometryGeoCoord.h"
 
 using namespace stride;
