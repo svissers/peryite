@@ -11,6 +11,7 @@ public:
     GeoGridLocation();
     GeoGridLocation(QString csvLine);
     GeoGridLocation(stride::util::spherical_point coord);
+    GeoGridLocation(stride::util::spherical_point coord, int pop, std::string ucname);
 
     void increasePop(int amount);
     void resetInfected();

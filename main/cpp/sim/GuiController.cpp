@@ -225,11 +225,18 @@ bool GuiController::simulationDone()
     return getCurrentDay() >= getTotalDays();
 }
 
-void GuiController::setupGenDirectory(ptree &pt)
+bool GuiController::setupGenDirectory(ptree &pt)
 {
-    m_gendir = new GenDirectory(pt);
-    m_pop = Population::CreateEmpty(pt);
-    state = GuiState::ConfigFileSelected;
+    try {
+        m_gendir = new GenDirectory(pt);
+        m_pop = Population::CreateEmpty(pt);
+        state = GuiState::ConfigFileSelected;
+        return true;
+    }
+    catch (...) {
+        state = GuiState::Empty;
+        return false;
+    }
 }
 
 void GuiController::GeoGen()
@@ -242,6 +249,31 @@ void GuiController::PopGen()
 {
     popgen::Generate(*m_gendir, m_pop);
     state = GuiState::PopGenerated;
+}
+
+std::map<unsigned int, GeoGridFilePtr>& GuiController::GetGeoGridFile() {
+    return m_gendir->GetGeoGridFile();
+}
+
+std::map<unsigned int, SchoolFilePtr>& GuiController::GetSchoolFile() {
+    return m_gendir->GetSchoolFile();
+}
+
+std::map<unsigned int, UniversityFilePtr>& GuiController::GetUniversityFile() {
+    return m_gendir->GetUniversityFile();
+}
+
+std::map<unsigned int, WorkplaceFilePtr>& GuiController::GetWorkplaceFile() {
+    return m_gendir->GetWorkplaceFile();
+}
+
+std::map<unsigned int, CommunityFilePtr>& GuiController::GetCommunityFile() {
+    return m_gendir->GetCommunityFile();
+}
+
+int GuiController::GetAmountOfRegions()
+{
+    return m_gendir->GetRegions().size();
 }
 
 } // namespace stride

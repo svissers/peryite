@@ -126,24 +126,8 @@ void MainWindow::on_Geo_generateGeoGen_clicked()
 
 void MainWindow::on_Geo_visualizeGeoGen_clicked()
 {
-    // Check if we selected a folder    void on_General_outputFolderSelect_clicked();
-    if (data->outputFolder == "") {
-        QMessageBox::warning(this, tr("No folder selected"), "You have not selected an output folder to visualize.");
-        return;
-    }
-
-    // Try setting the files in geogendata.
-    // This will return false if unsuccesful (if required files are missing), and missing files will be in missingFiles.
-    QStringList missingFiles;
-
-    if (!data->setGeoGenData(data->outputFolder, missingFiles)) {
-        QString s = missingFiles.join("\n");
-        QMessageBox::warning(this, QObject::tr("File(s) not found."), "The following files are missing from the output folder:\n\n" + s);
-        return;
-    }
-
-    GeoGenVisualization *wdg = new GeoGenVisualization;
-    wdg->parseData(data->geogenData);
+    GeoGenVisualization *wdg = new GeoGenVisualization(guiController);
+    wdg->parseData();
     wdg->show();
 }
 

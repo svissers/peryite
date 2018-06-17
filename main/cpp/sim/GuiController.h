@@ -71,11 +71,21 @@ public:
         bool simulationDone();
 
         /// Setup gendirectory
-        void setupGenDirectory(boost::property_tree::ptree &pt);
+        bool setupGenDirectory(boost::property_tree::ptree &pt);
 
         /// GeoGen and PopGen functions
         void GeoGen();
         void PopGen();
+
+        /// GenDirectory file getters
+        std::map<unsigned int, stride::gen::files::GeoGridFilePtr>& GetGeoGridFile();
+        std::map<unsigned int, stride::gen::files::SchoolFilePtr>& GetSchoolFile();
+        std::map<unsigned int, stride::gen::files::UniversityFilePtr>& GetUniversityFile();
+        std::map<unsigned int, stride::gen::files::WorkplaceFilePtr>& GetWorkplaceFile();
+        std::map<unsigned int, stride::gen::files::CommunityFilePtr>& GetCommunityFile();
+
+        /// Region count
+        int GetAmountOfRegions();
 
         std::shared_ptr<SimRunner> GetRunner() { return m_runner; }
 
