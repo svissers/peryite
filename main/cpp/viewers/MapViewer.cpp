@@ -56,6 +56,7 @@ void MapViewer::Update(sim_event::Id id)
                 const auto pop = m_runner->GetSim()->GetPopulation();
                 mvw->createPopView(pop);
                 mvw->updateDaysLabel(0);
+                mvw->focusFlanders();
 
                 m_qapp->processEvents();
 

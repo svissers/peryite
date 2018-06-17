@@ -36,6 +36,20 @@ GeoGridLocation::GeoGridLocation(util::spherical_point coord) {
     infected = 0;
 }
 
+GeoGridLocation::GeoGridLocation(util::spherical_point coord, int pop, std::string ucname) {
+    latitude = coord.get<0>();
+    longitude = coord.get<1>();
+    population = pop;
+    infected = 0;
+    name = QString::fromStdString(ucname);
+
+    // Init all communities, ... to 0 because we will add them when we read the other files
+    communities = 0;
+    schools = 0;
+    universities = 0;
+    workplaces = 0;
+}
+
 void GeoGridLocation::increasePop(int amount) {
     population += amount;
 }

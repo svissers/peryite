@@ -2,6 +2,7 @@
 #include "ui_geogenvisualization.h"
 #include "geogridlocation.h"
 #include "util.h"
+#include "gen/GeoGrid.h"
 
 #include <QtDebug>
 #include <QDir>
@@ -10,10 +11,16 @@
 #include <QCloseEvent>
 #include <QFile>
 #include <QIcon>
+#include <QScrollBar>
 
-GeoGenVisualization::GeoGenVisualization(QWidget *parent) :
+using namespace stride;
+using namespace stride::gen;
+using namespace stride::gen::files;
+
+GeoGenVisualization::GeoGenVisualization(GuiController *guiCtrl, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::GeoGenVisualization)
+    ui(new Ui::GeoGenVisualization),
+    guiController(guiCtrl)
 {
     ui->setupUi(this);
 
@@ -24,7 +31,7 @@ GeoGenVisualization::GeoGenVisualization(QWidget *parent) :
     setStyleSheet("QWidget { background-color: #eaeaea; }");
 
     // Load background image into image
-    QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("./ui/vlaanderen.png");
+    QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("./ui/map.png");
     image = new QImage(filename);
 
     // Setup GraphicsScene
@@ -48,11 +55,12 @@ GeoGenVisualization::~GeoGenVisualization()
 }
 
 void GeoGenVisualization::update() {
-    // Get cursor position
+    // Get cursor position and add scrolling offset to it
     QPoint mousePos = mapFromGlobal(QCursor::pos());
+    QPoint offset = QPoint(ui->FlandersMap->horizontalScrollBar()->value(), ui->FlandersMap->verticalScrollBar()->value());
 
     // Check hover selection for circles
-    updateSelection(mousePos);
+    updateSelection(mousePos + offset);
 
     // Draw
     draw();
@@ -134,17 +142,25 @@ void GeoGenVisualization::noHover() {
     ui->CircleInfoText->setText("");
 }
 
-void GeoGenVisualization::parseData(GeoGenData *data) {
+void GeoGenVisualization::parseData() {
+    auto geo_file = guiController->GetGeoGridFile();
+    auto community_file = guiController->GetCommunityFile();
+    auto school_file = guiController->GetSchoolFile();
+    auto university_file = guiController->GetUniversityFile();
+    auto workplace_file = guiController->GetWorkplaceFile();
+
+    int amountOfRegions = guiController->GetAmountOfRegions();
+
     // Create list of circles
     circles = new QList<VisualizationCircle *>();
     selected = NULL;
 
     // Parse data
-    parseGeoGrid(data);
-    parseCommunities(data);
-    parseSchools(data);
-    parseUniversities(data);
-    parseWorkplaces(data);
+    parseGeoGrid(geo_file, amountOfRegions);
+    parseCommunities(community_file, amountOfRegions);
+    parseSchools(school_file, amountOfRegions);
+    parseUniversities(university_file, amountOfRegions);
+    parseWorkplaces(workplace_file, amountOfRegions);
 }
 
 VisualizationCircle* GeoGenVisualization::findCircle(float longitude, float latitude) {
@@ -161,12 +177,10 @@ VisualizationCircle* GeoGenVisualization::findCircle(float longitude, float lati
     return NULL;
 }
 
-void GeoGenVisualization::addCommunity(QString csvLine) {
-    QStringList list = Util::parseCSVLine(csvLine);
-
-    // Read data from CSV and find corresponding circle
-    float latitude = list[1].toFloat();
-    float longitude = list[2].toFloat();
+void GeoGenVisualization::addCommunity(std::shared_ptr<Community> &community) {
+    // Read data and find corresponding circle
+    float latitude = community->coordinate.get<0>();
+    float longitude = community->coordinate.get<1>();
     VisualizationCircle* circle = findCircle(longitude, latitude);
 
     // Nullcheck
@@ -178,12 +192,10 @@ void GeoGenVisualization::addCommunity(QString csvLine) {
     circle->geoGridLocation->communities++;
 }
 
-void GeoGenVisualization::addSchool(QString csvLine) {
-    QStringList list = Util::parseCSVLine(csvLine);
-
-    // Read data from CSV and find corresponding circle
-    float latitude = list[1].toFloat();
-    float longitude = list[2].toFloat();
+void GeoGenVisualization::addSchool(std::shared_ptr<School> &school) {
+    // Read data and find corresponding circle
+    float latitude = school->coordinate.get<0>();
+    float longitude = school->coordinate.get<1>();
     VisualizationCircle* circle = findCircle(longitude, latitude);
 
     // Nullcheck
@@ -195,12 +207,10 @@ void GeoGenVisualization::addSchool(QString csvLine) {
     circle->geoGridLocation->schools++;
 }
 
-void GeoGenVisualization::addUniversity(QString csvLine) {
-    QStringList list = Util::parseCSVLine(csvLine);
-
-    // Read data from CSV and find corresponding circle
-    float latitude = list[2].toFloat();
-    float longitude = list[3].toFloat();
+void GeoGenVisualization::addUniversity(std::shared_ptr<University> &university) {
+    // Read data and find corresponding circle
+    float latitude = university->coordinate.get<0>();
+    float longitude = university->coordinate.get<1>();
     VisualizationCircle* circle = findCircle(longitude, latitude);
 
     // Nullcheck
@@ -212,12 +222,10 @@ void GeoGenVisualization::addUniversity(QString csvLine) {
     circle->geoGridLocation->universities++;
 }
 
-void GeoGenVisualization::addWorkplace(QString csvLine) {
-    QStringList list = Util::parseCSVLine(csvLine);
-
-    // Read data from CSV and find corresponding circle
-    float latitude = list[1].toFloat();
-    float longitude = list[2].toFloat();
+void GeoGenVisualization::addWorkplace(std::shared_ptr<WorkPlace> &workplace) {
+    // Read data and find corresponding circle
+    float latitude = workplace->coordinate.get<0>();
+    float longitude = workplace->coordinate.get<1>();
     VisualizationCircle* circle = findCircle(longitude, latitude);
 
     // Nullcheck
@@ -229,108 +237,87 @@ void GeoGenVisualization::addWorkplace(QString csvLine) {
     circle->geoGridLocation->workplaces++;
 }
 
-void GeoGenVisualization::parseGeoGrid(GeoGenData *data) {
-    QFile geogridFile(data->geogridFile);
+void GeoGenVisualization::parseGeoGrid(std::map<unsigned int,GeoGridFilePtr> &geo_file, int amountOfRegions) {
+    for (int region = 0; region < amountOfRegions; region++) {
+        GeoGrid grid = geo_file[region]->ReadGrid();
 
-    if (!geogridFile.open(QIODevice::ReadOnly)) {
-        qDebug() << geogridFile.errorString();
-        return;
+        for (auto center = 0U; center < grid.size(); center++) {
+            std::shared_ptr<UrbanCenter> c = grid[center];
+
+            if (c->is_fragmented) {
+                for (auto fragment = 0U; fragment < c->fragmented_populations.size(); fragment++) {
+                    GeoGridLocation *loc = new GeoGridLocation(c->fragmented_coords[fragment], c->fragmented_populations[fragment], c->name);
+                    addCircle(new VisualizationCircle(loc));
+                }
+            } else {
+                GeoGridLocation *loc = new GeoGridLocation(c->coordinate, c->population, c->name);
+                addCircle(new VisualizationCircle(loc));
+            }
+        }
     }
-
-    while (!geogridFile.atEnd()) {
-        QString line = geogridFile.readLine();
-
-        // Ignore header lines
-        if (line.startsWith("id")) { continue; }
-
-        addCircle(new VisualizationCircle(new GeoGridLocation(line)));
-    }
-
-    geogridFile.close();
 }
 
-void GeoGenVisualization::parseCommunities(GeoGenData *data) {
-    QFile communitiesFile(data->communitiesFile);
+void GeoGenVisualization::parseCommunities(std::map<unsigned int,CommunityFilePtr> &community_file, int amountOfRegions) {
+    for (int region = 0; region < amountOfRegions; region++) {
+        auto communities = community_file[region]->Read();
 
-    if (!communitiesFile.open(QIODevice::ReadOnly)) {
-        qDebug() << communitiesFile.errorString();
-        return;
+        for (auto &band : communities) {
+            for (auto &g_struct : band) {
+                auto community = std::static_pointer_cast<Community>(g_struct);
+                addCommunity(community);
+            }
+        }
     }
-
-    while (!communitiesFile.atEnd()) {
-        QString line = communitiesFile.readLine();
-
-        // Ignore header lines
-        if (line.startsWith("id")) { continue; }
-
-        addCommunity(line);
-    }
-
-    communitiesFile.close();
 }
 
-void GeoGenVisualization::parseSchools(GeoGenData *data) {
-    QFile schoolsFile(data->schoolsFile);
+void GeoGenVisualization::parseSchools(std::map<unsigned int,SchoolFilePtr> &school_file, int amountOfRegions) {
+    for (int region = 0; region < amountOfRegions; region++) {
+        auto schools = school_file[region]->Read();
 
-    if (!schoolsFile.open(QIODevice::ReadOnly)) {
-        qDebug() << schoolsFile.errorString();
-        return;
+        for (auto &band : schools) {
+            for (auto &g_struct : band) {
+                auto school = std::static_pointer_cast<School>(g_struct);
+                addSchool(school);
+            }
+        }
     }
-
-    while (!schoolsFile.atEnd()) {
-        QString line = schoolsFile.readLine();
-
-        // Ignore header lines
-        if (line.startsWith("id")) { continue; }
-
-        addSchool(line);
-    }
-
-    schoolsFile.close();
 }
 
-void GeoGenVisualization::parseUniversities(GeoGenData *data) {
-    QFile universitiesFile(data->universitiesFile);
+void GeoGenVisualization::parseUniversities(std::map<unsigned int,UniversityFilePtr> &university_file, int amountOfRegions) {
+    for (int region = 0; region < amountOfRegions; region++) {
+        auto universities = university_file[region]->Read();
 
-    if (!universitiesFile.open(QIODevice::ReadOnly)) {
-        qDebug() << universitiesFile.errorString();
-        return;
+        for (auto &band : universities) {
+            for (auto &g_struct : band) {
+                auto university = std::static_pointer_cast<University>(g_struct);
+                addUniversity(university);
+            }
+        }
     }
-
-    while (!universitiesFile.atEnd()) {
-        QString line = universitiesFile.readLine();
-
-        // Ignore header lines
-        if (line.startsWith("id")) { continue; }
-
-        addUniversity(line);
-    }
-
-    universitiesFile.close();
 }
 
-void GeoGenVisualization::parseWorkplaces(GeoGenData *data) {
-    QFile workplacesFile(data->workplacesFile);
+void GeoGenVisualization::parseWorkplaces(std::map<unsigned int,WorkplaceFilePtr> &workplace_file, int amountOfRegions) {
+    for (int region = 0; region < amountOfRegions; region++) {
+        auto workplaces = workplace_file[region]->Read();
 
-    if (!workplacesFile.open(QIODevice::ReadOnly)) {
-        qDebug() << workplacesFile.errorString();
-        return;
+        for (auto &band : workplaces) {
+            for (auto &g_struct : band) {
+                auto workplace = std::static_pointer_cast<WorkPlace>(g_struct);
+                addWorkplace(workplace);
+            }
+        }
     }
-
-    while (!workplacesFile.atEnd()) {
-        QString line = workplacesFile.readLine();
-
-        // Ignore header lines
-        if (line.startsWith("id")) { continue; }
-
-        addWorkplace(line);
-    }
-
-    workplacesFile.close();
 }
 
 
 void GeoGenVisualization::loadIcon()
 {
     setWindowIcon(QIcon("./ui/logo.png"));
+}
+
+void GeoGenVisualization::focusFlanders()
+{
+    // Set scrollbars starting value to focus on flanders
+    ui->FlandersMap->horizontalScrollBar()->setSliderPosition(781);
+    ui->FlandersMap->verticalScrollBar()->setSliderPosition(809);
 }

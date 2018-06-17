@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1013</width>
-    <height>360</height>
+    <height>328</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,6 +43,10 @@ QPushButton {
 	border-radius: 4px;
 }
 
+QPushButton:disabled {
+	background-color: #aaaaaa;
+}
+
 QPushButton:hover {
 	background-color: #3c6382;
 }
@@ -70,7 +74,7 @@ QToolTip {
     <property name="geometry">
      <rect>
       <x>16</x>
-      <y>248</y>
+      <y>216</y>
       <width>317</width>
       <height>101</height>
      </rect>
@@ -117,7 +121,7 @@ QToolTip {
       <x>16</x>
       <y>132</y>
       <width>981</width>
-      <height>101</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="title">
@@ -129,38 +133,6 @@ QToolTip {
     <property name="checkable">
      <bool>false</bool>
     </property>
-    <widget class="QLabel" name="General_outputFolderLabel">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>64</y>
-       <width>771</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Box</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
-     </property>
-     <property name="text">
-      <string>No file selected</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="General_outputFolderSelect">
-     <property name="geometry">
-      <rect>
-       <x>16</x>
-       <y>64</y>
-       <width>160</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Select Output Folder</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="General_configFileSelect">
      <property name="geometry">
       <rect>
@@ -198,7 +170,7 @@ QToolTip {
     <property name="geometry">
      <rect>
       <x>349</x>
-      <y>248</y>
+      <y>216</y>
       <width>317</width>
       <height>101</height>
      </rect>
@@ -243,7 +215,7 @@ QToolTip {
     <property name="geometry">
      <rect>
       <x>682</x>
-      <y>248</y>
+      <y>216</y>
       <width>316</width>
       <height>101</height>
      </rect>

@@ -90,6 +90,5 @@ void EditConfigForm::on_saveButton_clicked() {
         pt->put(labels[i]->text().toStdString(), lineEdits[i]->text().toStdString());
     }
 
-    write_xml(std::cout, *pt);
     close();
 }

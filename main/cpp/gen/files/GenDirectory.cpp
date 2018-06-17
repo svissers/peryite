@@ -12,8 +12,8 @@ GenDirectory::GenDirectory(const boost::property_tree::ptree& config_pt)
 {
     // Initialize the random number generator
     auto rn_manager        = make_shared<util::RNManager>();
-    const auto rng_type = config_pt.get<string>("run.rng.engine");
-    const auto rng_seed = config_pt.get<unsigned long>("run.rng.seed");
+    const auto rng_type = config_pt.get<string>("run.pop_config.rng.engine");
+    const auto rng_seed = config_pt.get<unsigned long>("run.pop_config.rng.seed");
     auto thread_count   = config_pt.get<unsigned int>("run.num_threads");
     m_num_days = config_pt.get<unsigned int>("run.num_days");
     const util::RNManager::Info info{rng_type, rng_seed, "", thread_count};

@@ -20,6 +20,7 @@
  */
 
 #include "util/Stopwatch.h"
+#include "gen/files/GenDirectory.h"
 
 #include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -33,6 +34,14 @@
 namespace stride {
 
 class SimRunner;
+
+// User has to follow these steps
+enum GuiState {
+        Empty,                          // Nothing has been done yet
+        ConfigFileSelected,             // Config file has been selected
+        GeoGenerated,                   // Geo has been generated
+        PopGenerated                    // Pop has been generated
+};
 
 class GuiController
 {
@@ -61,7 +70,28 @@ public:
         /// Returns true if simulation is over.
         bool simulationDone();
 
+        /// Setup gendirectory
+        bool setupGenDirectory(boost::property_tree::ptree &pt);
+
+        /// GeoGen and PopGen functions
+        void GeoGen();
+        void PopGen();
+
+        /// GenDirectory file getters
+        std::map<unsigned int, stride::gen::files::GeoGridFilePtr>& GetGeoGridFile();
+        std::map<unsigned int, stride::gen::files::SchoolFilePtr>& GetSchoolFile();
+        std::map<unsigned int, stride::gen::files::UniversityFilePtr>& GetUniversityFile();
+        std::map<unsigned int, stride::gen::files::WorkplaceFilePtr>& GetWorkplaceFile();
+        std::map<unsigned int, stride::gen::files::CommunityFilePtr>& GetCommunityFile();
+
+        /// Region count
+        int GetAmountOfRegions();
+
         std::shared_ptr<SimRunner> GetRunner() { return m_runner; }
+
+public:
+        GuiState state;
+
 private:
         /// Check install environment.
         void CheckEnv();
@@ -95,6 +125,9 @@ private:
         std::shared_ptr<spdlog::logger> m_stride_logger; ///< General logger.
 
         std::shared_ptr<SimRunner> m_runner;
+        gen::files::GenDirectory *m_gendir;
+        std::shared_ptr<Population> m_pop;
+
 };
 
 } // namespace stride

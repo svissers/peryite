@@ -1,10 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
 #include "peryiteuidata.h"
 #include "geogenvisualization.h"
 #include "sim/GuiController.h"
+
+#include <QMainWindow>
+#include <boost/property_tree/ptree.hpp>
 
 namespace Ui {
 class MainWindow;
@@ -19,8 +21,6 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_General_outputFolderSelect_clicked();
-
     void on_General_configFileSelect_clicked();
 
     void on_Geo_generateGeoGen_clicked();
@@ -43,6 +43,7 @@ private:
     void loadLogo();
     void loadIcon();
     void setTooltips();
+    void updateButtons();
 };
 
 #endif // MAINWINDOW_H

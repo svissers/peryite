@@ -4,6 +4,7 @@
 #include "popgenvisualization.h"
 #include "stridewindow.h"
 #include "util.h"
+#include "util/FileSys.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -13,8 +14,12 @@
 #include <QProgressDialog>
 #include <QThread>
 #include <QRegularExpression>
+#include <iostream>
 
+using namespace std;
 using namespace stride;
+using namespace stride::util;
+using namespace boost::property_tree;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -27,8 +32,9 @@ MainWindow::MainWindow(QWidget *parent) :
     loadLogo();
     loadIcon();
     setTooltips();
+    updateButtons();
 
-    this->setFixedSize(QSize(1013, 360));
+    this->setFixedSize(QSize(1013, 328));
 }
 
 MainWindow::~MainWindow()
@@ -40,17 +46,14 @@ MainWindow::~MainWindow()
  * Main functions (non-slots)
  */
 
-void MainWindow::setOutputFolder(QString path)
-{
-    // Now that we're sure the files exist, we can set them.
-    ui->General_outputFolderLabel->setText(path);
-    data->outputFolder = path;
-}
-
 void MainWindow::setConfigFile(QString path)
 {
     ui->General_configFileLabel->setText(path);
     data->configFile = path;
+
+    ptree config_pt = FileSys::ReadPtreeFile(path.toStdString());
+    guiController->setupGenDirectory(config_pt);
+    updateButtons();
 }
 
 void MainWindow::loadLogo()
@@ -83,8 +86,6 @@ void MainWindow::setTooltips()
 {
     ui->General_configFileLabel->setToolTip("The generator file that will be used by geopop.");
     ui->General_configFileSelect->setToolTip("Click to select the file that will be used by geopop.");
-    ui->General_outputFolderLabel->setToolTip("The output folder that will be used by geopop.");
-    ui->General_outputFolderSelect->setToolTip("Click to select the output folder that will be used by geopop.");
     ui->Geo_generateGeoGen->setToolTip("Run GeoGen.");
     ui->Geo_visualizeGeoGen->setToolTip("Visualize GeoGen (after running).");
     ui->Pop_generatePopGen->setToolTip("Run PopGen.");
@@ -96,22 +97,6 @@ void MainWindow::setTooltips()
 /*
  * Slot functions
  */
-
-void MainWindow::on_General_outputFolderSelect_clicked()
-{
-    QString filename = QFileDialog::getExistingDirectory(
-                this,
-                tr("Select the output folder."),
-                "./output",
-                QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-
-    if (filename == "") {
-        QMessageBox::warning(this, tr("No folder selected"), "You have not selected an output folder.");
-        return;
-    }
-
-    setOutputFolder(filename);
-}
 
 void MainWindow::on_General_configFileSelect_clicked()
 {
@@ -131,68 +116,30 @@ void MainWindow::on_General_configFileSelect_clicked()
 
 void MainWindow::on_Geo_generateGeoGen_clicked()
 {
-    if (data->configFile == "") {
-        QMessageBox::warning(this, tr("No file selected"), "You have not selected a config file.");
-        return;
-    }
-
-    // Process name and arguments
-    QStringList path = data->configFile.split(QRegularExpression("/"));
-    QString configFile = path.last();
-    QStringList arguments;
-    arguments << "../GeoGen.sh" << configFile;
-
-    // Starting the process and waiting for it to finish
-    QProcess *process = new QProcess(this);
-    process->start("/bin/bash", arguments);
-    process->waitForFinished(); // Default waits max 30s, TODO: see if that's enough.
-
-    // Construct the path of the output folder
-    QString installedFolder = "";
-
-    path.pop_front(); // First is an empty string because string starts with "/"
-
-    while (path.length() > 2) {
-        QString folder = path.first();
-        installedFolder += "/" + folder;
-        path.pop_front();
-    }
-
-    // Set folder data and update geogendata
-    setOutputFolder(installedFolder + "/output/" + configFile.split(QRegularExpression("\\.")).first());
+    guiController->GeoGen();
+    updateButtons();
 
     // Message when done
     QMessageBox::information(this, tr("Done"), "GeoGen completed!");
+    cout << "GeoGen Completed!" << endl;
 }
 
 void MainWindow::on_Geo_visualizeGeoGen_clicked()
 {
-    // Check if we selected a folder
-    if (data->outputFolder == "") {
-        QMessageBox::warning(this, tr("No folder selected"), "You have not selected an output folder to visualize.");
-        return;
-    }
-
-    // Try setting the files in geogendata.
-    // This will return false if unsuccesful (if required files are missing), and missing files will be in missingFiles.
-    QStringList missingFiles;
-
-    if (!data->setGeoGenData(data->outputFolder, missingFiles)) {
-        QString s = missingFiles.join("\n");
-        QMessageBox::warning(this, QObject::tr("File(s) not found."), "The following files are missing from the output folder:\n\n" + s);
-        return;
-    }
-
-    GeoGenVisualization *wdg = new GeoGenVisualization;
-    wdg->parseData(data->geogenData);
+    GeoGenVisualization *wdg = new GeoGenVisualization(guiController);
+    wdg->parseData();
     wdg->show();
 }
 
 
 void MainWindow::on_Pop_generatePopGen_clicked()
 {
-    // TODO INSERT POPGEN EXECUTION HERE
-    // JUST LIKE on_Geo_generateGeoGen_clicked()
+    guiController->PopGen();
+    updateButtons();
+
+    // Message when done
+    QMessageBox::information(this, tr("Done"), "PopGen completed!");
+    cout << "PopGen Completed!" << endl;
 }
 
 
@@ -232,4 +179,42 @@ void MainWindow::on_openStrideWindow_clicked()
 {
     StrideWindow *wdg = new StrideWindow(guiController);
     wdg->show();
+}
+
+void MainWindow::updateButtons()
+{
+    // Disable all
+    ui->General_configFileSelect->setEnabled(false);
+    ui->Geo_generateGeoGen->setEnabled(false);
+    ui->Geo_visualizeGeoGen->setEnabled(false);
+    ui->Pop_generatePopGen->setEnabled(false);
+    ui->Pop_visualizePopGen->setEnabled(false);
+    ui->openStrideWindow->setEnabled(false);
+
+    // Enable depending on gui state
+    // Empty
+    if (guiController->state >= GuiState::Empty) {
+        ui->General_configFileSelect->setEnabled(true);
+    }
+
+    // Config file selected
+    if (guiController->state >= GuiState::ConfigFileSelected) {
+        ui->Geo_generateGeoGen->setEnabled(true);
+    }
+
+    // Geo generated
+    if (guiController->state >= GuiState::GeoGenerated) {
+        ui->Geo_generateGeoGen->setEnabled(false);
+
+        ui->Geo_visualizeGeoGen->setEnabled(true);
+        ui->Pop_generatePopGen->setEnabled(true);
+    }
+
+    // Pop generated
+    if (guiController->state >= GuiState::PopGenerated) {
+        ui->Pop_generatePopGen->setEnabled(false);
+
+        ui->Pop_visualizePopGen->setEnabled(true);
+        ui->openStrideWindow->setEnabled(true);
+    }
 }

@@ -61,7 +61,13 @@ QColor VisualizationCircle::getColor(bool selected) {
     } else {
         // Hue from green to red tints
         float t = (float)geoGridLocation->infected / geoGridLocation->population;
+        
+        if (geoGridLocation->population == 0) {
+            t = 0;
+        }
+        
         float hue = Util::lerp(94, 0, t);
+
 
         return QColor::fromHsv(hue, 117, 224);
     }

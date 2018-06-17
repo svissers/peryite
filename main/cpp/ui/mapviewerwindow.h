@@ -26,6 +26,7 @@ public:
     void createPopView(const std::shared_ptr<Population> population);
     void updateInfected(const std::shared_ptr<Population> population);
     void updateDaysLabel(int day);
+    void focusFlanders();
 
 private:
     Ui::MapViewerWindow *ui;

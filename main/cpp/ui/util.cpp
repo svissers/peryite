@@ -17,8 +17,8 @@ QString Util::formatInt(int n) {
 QPointF Util::GCSToQPointF(float longitude, float latitude) {
     // These conversions are specific to our png image, calculated by hand.
     // Not sure if there is a better way to go about this.
-    float x = 263 * longitude - 606.7;
-    float y = -475 * latitude + 24465;
+    float x = 0.47 * (263 * longitude - 606.7) + 1050;
+    float y = 0.47 * (-475 * latitude + 24465) + 905;
 
     return QPointF(x, y);
 }

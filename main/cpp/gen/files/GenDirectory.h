@@ -59,22 +59,27 @@ public:
     /// Returns the file containing the geogrid.
     /// @return The file containing the geogrid.
     GeoGridFilePtr GetGeoGridFile(unsigned int region_id);
+    std::map<unsigned int,GeoGridFilePtr>& GetGeoGridFile() { return m_geo_file; }
 
     /// Returns the file containing schools.
     /// @return The file containing schools.
     SchoolFilePtr GetSchoolFile(unsigned int region_id);
+    std::map<unsigned int,SchoolFilePtr>& GetSchoolFile() { return m_school_file; }
 
     /// Returns the file containing universities.
     /// @return The file containing universities.
     UniversityFilePtr GetUniversityFile(unsigned int region_id);
+    std::map<unsigned int,UniversityFilePtr>& GetUniversityFile() { return m_university_file; }
 
     /// Returns the file containing workplaces.
     /// @return The file containing workplaces.
     WorkplaceFilePtr GetWorkplaceFile(unsigned int region_id);
+    std::map<unsigned int,WorkplaceFilePtr>& GetWorkplaceFile() { return m_workplace_file; }
 
     /// Returns the file containing communities.
     /// @return The file containing communities.
     CommunityFilePtr GetCommunityFile(unsigned int region_id);
+    std::map<unsigned int,CommunityFilePtr>& GetCommunityFile() { return m_community_file; }
 
     /// Returns the regions used in this directory.
     /// @return The regions.

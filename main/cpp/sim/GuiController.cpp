@@ -19,6 +19,8 @@
  */
 
 #include "calendar/Calendar.h"
+#include "gen/geogen/GeoGenerator.h"
+#include "gen/popgen/PopGenerator.h"
 #include "pop/Population.h"
 #include "sim/GuiController.h"
 #include "sim/SimRunner.h"
@@ -40,6 +42,8 @@
 
 using namespace std;
 using namespace stride::util;
+using namespace stride::gen;
+using namespace stride::gen::files;
 using namespace boost::filesystem;
 using namespace boost::property_tree;
 using namespace boost::property_tree::xml_parser;
@@ -51,6 +55,7 @@ GuiController::GuiController()
       m_output_prefix(""), m_run_clock("run_clock", true), m_config_path(),
       m_stride_logger(nullptr)
 {
+    state = GuiState::Empty;
 };
 
 
@@ -218,6 +223,57 @@ int GuiController::getTotalDays()
 bool GuiController::simulationDone()
 {
     return getCurrentDay() >= getTotalDays();
+}
+
+bool GuiController::setupGenDirectory(ptree &pt)
+{
+    try {
+        m_gendir = new GenDirectory(pt);
+        m_pop = Population::CreateEmpty(pt);
+        state = GuiState::ConfigFileSelected;
+        return true;
+    }
+    catch (...) {
+        state = GuiState::Empty;
+        return false;
+    }
+}
+
+void GuiController::GeoGen()
+{
+    geogen::Generate(*m_gendir, m_pop);
+    state = GuiState::GeoGenerated;
+}
+
+void GuiController::PopGen()
+{
+    popgen::Generate(*m_gendir, m_pop);
+    state = GuiState::PopGenerated;
+}
+
+std::map<unsigned int, GeoGridFilePtr>& GuiController::GetGeoGridFile() {
+    return m_gendir->GetGeoGridFile();
+}
+
+std::map<unsigned int, SchoolFilePtr>& GuiController::GetSchoolFile() {
+    return m_gendir->GetSchoolFile();
+}
+
+std::map<unsigned int, UniversityFilePtr>& GuiController::GetUniversityFile() {
+    return m_gendir->GetUniversityFile();
+}
+
+std::map<unsigned int, WorkplaceFilePtr>& GuiController::GetWorkplaceFile() {
+    return m_gendir->GetWorkplaceFile();
+}
+
+std::map<unsigned int, CommunityFilePtr>& GuiController::GetCommunityFile() {
+    return m_gendir->GetCommunityFile();
+}
+
+int GuiController::GetAmountOfRegions()
+{
+    return m_gendir->GetRegions().size();
 }
 
 } // namespace stride
