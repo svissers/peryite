@@ -26,7 +26,7 @@ public:
     /// @param suffix           The suffix to use for the file name.
     GenFile(GenConfiguration& config, std::vector<std::shared_ptr<GenStruct>> structs, GeoGrid& geo, std::string suffix);
 
-    // Virtual destructor
+    /// Virtual destructor
     virtual ~GenFile() = 0;
 
     /// Writes the genstruct data that the file contains to a file.

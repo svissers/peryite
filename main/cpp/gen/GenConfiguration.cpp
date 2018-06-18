@@ -15,7 +15,7 @@ using namespace std;
 using namespace boost::property_tree;
 
 GenConfiguration::GenConfiguration(boost::property_tree::ptree config_pt, unsigned int thread_count, string output_prefix, std::shared_ptr<util::RNManager> rn_manager)
-        : m_config(config_pt), m_output_prefix(output_prefix), m_num_threads(thread_count), m_rn_manager(rn_manager)
+        : m_config(config_pt), m_output_prefix(std::move(output_prefix)), m_num_threads(thread_count), m_rn_manager(std::move(rn_manager))
 {
     CheckValidConfig();
 }

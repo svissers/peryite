@@ -80,7 +80,7 @@ vector<shared_ptr<WorkPlace>> BuildWorkplaces(GenConfiguration& config, GeoGrid&
 
     // Create and map the workplaces to their samples.
     for (unsigned int i = 0; i < workplace_count; i++) {
-        auto workplace = make_shared<WorkPlace>(WorkPlace(i, grid.at(generator())->coordinate));
+        auto workplace = make_shared<WorkPlace>(WorkPlace(i, grid.at(uint(generator()))->coordinate));
         workplaces.push_back(workplace);
     }
 

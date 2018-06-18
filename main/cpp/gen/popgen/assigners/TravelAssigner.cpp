@@ -1,7 +1,5 @@
 #include "TravelAssigner.h"
-#include "../../structs/School.h"
 #include "../PopGenerator.h"
-#include "pool/ContactPoolType.h"
 #include "trng/fast_discrete_dist.hpp"
 
 namespace stride {
@@ -59,7 +57,7 @@ void AssignTravellers(
         travelCities.push_back(big_cities);
     }
 
-    auto region_dist = rn_manager->GetGenerator(trng::fast_discrete_dist(travelCities.size()));
+    auto region_dist = rn_manager->GetGenerator(trng::fast_discrete_dist(uint(travelCities.size())));
     auto city_dist = rn_manager->GetGenerator(trng::fast_discrete_dist(20));
     auto day_dist = rn_manager->GetGenerator(trng::fast_discrete_dist(num_days));
 
@@ -73,24 +71,23 @@ void AssignTravellers(
     unsigned int travel_sec_com_id = 0;
     unsigned int tourist_regionNr;
     unsigned int tourist_cityNr;
-    unsigned int tourist_dayNr;
-    unsigned int tourist_endDay;
+    unsigned int tourist_dayNr = 0;
+    unsigned int tourist_endDay = 0;
     vector<shared_ptr<GenStruct>> closest_communities;
 
-    util::spherical_point travel_coord;
+    util::spherical_point travel_coord(0,0);
     for (size_t i = 0; i < population->size(); ++i) {
         Person person = population->at(i);
 
-        if(previousHHid != person.GetPoolId(ContactPoolType::Id::Household)){
+        if(previousHHid != int(person.GetPoolId(ContactPoolType::Id::Household))){
             previousHHid = person.GetPoolId(ContactPoolType::Id::Household);
             vacationGoers = false;
 
             if(tourist_dist() == 1){
                 vacationGoers = true;
 
-                //assign travel_com_id's            // TODO
-                tourist_regionNr = region_dist();  //travel can be in same region
-                tourist_cityNr = city_dist();
+                tourist_regionNr = uint(region_dist());  //travel can be in same region
+                tourist_cityNr = uint(city_dist());
 
                 travel_coord = travelCities[tourist_regionNr][tourist_cityNr]->coordinate;
                 auto communities    = travelComs[tourist_regionNr];
@@ -99,13 +96,13 @@ void AssignTravellers(
                 //assigning secondary communities
 
                 auto community_generator = rn_manager->GetGenerator(
-                        trng::fast_discrete_dist(closest_communities.size() - 1));
+                        trng::fast_discrete_dist(uint(closest_communities.size() - 1)));
 
                 shared_ptr<Community> community = nullptr;
                 unsigned int community_index = 0;
                 unsigned int p_counter = 0;
                 while (p_counter < (closest_communities.size() * 2)) {
-                    community_index = community_generator();
+                    community_index = uint(community_generator());
                     community = static_pointer_cast<Community>(closest_communities.at(community_index));
                     if (!community->is_primary)
                         break;
@@ -114,19 +111,19 @@ void AssignTravellers(
                 if (!community)
                     break;
                 // Create a uniform distribution to select a contactpool in the selected community
-                auto cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(community->pools.size()));
+                auto cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(uint(community->pools.size())));
                 auto cp_index = cp_generator();
                 auto pool = community->pools[cp_index];
                 auto poolID =  pool->GetId();
-                travel_sec_com_id = poolID;
+                travel_sec_com_id = uint(poolID);
 
                 //assigning primary communities
 
                 community = nullptr;
-                community_index = 0;
+                //community_index = 0;
                 p_counter = 0;
                 while (p_counter < (closest_communities.size() * 2)) {
-                    community_index = community_generator();
+                    community_index = uint(community_generator());
                     community = static_pointer_cast<Community>(closest_communities.at(community_index));
                     if (community->is_primary)
                         break;
@@ -135,14 +132,14 @@ void AssignTravellers(
                 if (!community)
                     break;
                 // Create a uniform distribution to select a contactpool in the selected community
-                cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(community->pools.size()));
+                cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(uint(community->pools.size())));
                 cp_index = cp_generator();
                 pool = community->pools[cp_index];
                 poolID =  pool->GetId();
-                unsigned int travel_prim_com_id = poolID;
+                auto travel_prim_com_id = uint(poolID);
 
 
-                tourist_dayNr = day_dist();
+                tourist_dayNr = uint(day_dist());
                 tourist_endDay = tourist_dayNr + endDayTravel_dist() +7;
 
                 population->at(i).setTravelComIds(travel_prim_com_id, travel_sec_com_id);
@@ -156,12 +153,12 @@ void AssignTravellers(
             //assigning primary communities
 
             auto community_generator = rn_manager->GetGenerator(
-                    trng::fast_discrete_dist(closest_communities.size() - 1));
+                    trng::fast_discrete_dist(uint(closest_communities.size() - 1)));
             shared_ptr<Community> community = nullptr;
             unsigned int community_index = 0;
             unsigned int p_counter = 0;
             while (p_counter < (closest_communities.size() * 2)) {
-                community_index = community_generator();
+                community_index = uint(community_generator());
                 community = static_pointer_cast<Community>(closest_communities.at(community_index));
                 if (community->is_primary)
                     break;
@@ -170,10 +167,10 @@ void AssignTravellers(
             if (!community)
                 break;
             // Create a uniform distribution to select a contactpool in the selected community
-            auto cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(community->pools.size()));
-            unsigned int cp_index = cp_generator();
+            auto cp_generator = rn_manager->GetGenerator(trng::fast_discrete_dist(uint(community->pools.size())));
+            auto cp_index = uint(cp_generator());
             auto pool = community->pools[cp_index];
-            unsigned int poolID =  pool->GetId();
+            auto poolID =  uint(pool->GetId());
             unsigned int travel_prim_com_id = poolID;
             population->at(i).setTravelComIds(travel_prim_com_id, travel_sec_com_id);
             population->at(i).setTravelDates(tourist_dayNr, tourist_endDay);
@@ -185,8 +182,8 @@ void AssignTravellers(
             if (work_travel_dist() == 1) {
 
                 //assign secondary workplace
-                unsigned int regionNr = region_dist();
-                unsigned int cityNr = city_dist();
+                auto regionNr = uint(region_dist());
+                auto cityNr = uint(city_dist());
 
                 //GetClosestStructs
                 // : get workplaces of chosen region
@@ -197,14 +194,14 @@ void AssignTravellers(
 
                 // Create a uniform distribution to select a workplace
                 std::function<int()> wp_generator = rn_manager->GetGenerator(
-                        trng::fast_discrete_dist(closest_workplaces.size()));
-                auto workplace = static_pointer_cast<WorkPlace>(closest_workplaces.at(wp_generator()));
+                        trng::fast_discrete_dist(uint(closest_workplaces.size())));
+                auto workplace = static_pointer_cast<WorkPlace>(closest_workplaces.at(uint(wp_generator())));
                 auto cp_generator = rn_manager->GetGenerator(
-                        trng::fast_discrete_dist(workplace->pools.size()));
-                unsigned int sec_work_id = workplace->pools.at(cp_generator())->GetId();
+                        trng::fast_discrete_dist(uint(workplace->pools.size())));
+                auto sec_work_id = uint(workplace->pools.at(uint(cp_generator()))->GetId());
 
 
-                unsigned int dayNr = day_dist();
+                auto dayNr = uint(day_dist());
                 unsigned int endDay = dayNr + endDayWork_dist()+1;
                 population->at(i).setTravelWorkId(sec_work_id);
                 population->at(i).setTravelDates(dayNr, endDay);

@@ -53,7 +53,7 @@ vector<shared_ptr<University>> BuildUniversities(GenConfiguration& config, GeoGr
     // Create and map the universities to their samples.
     for (unsigned int i = 0; i < uni_count; i++) {
             auto index      = generator();
-            auto center     = grid.at(index);
+            auto center     = grid.at(uint(index));
             auto university = make_shared<University>(University(i, center->id, center->coordinate));
             universities.push_back(university);
     }

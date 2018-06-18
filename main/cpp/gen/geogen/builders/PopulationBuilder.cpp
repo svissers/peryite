@@ -20,14 +20,14 @@ void BuildPopulation(shared_ptr<Region> region, shared_ptr<Population>& populati
 
     // Create a uniform distribution for the household reference set.
     auto rn_manager = config.GetRNManager();
-    auto generator  = rn_manager->GetGenerator(trng::fast_discrete_dist(hh_reference.size()));
+    auto generator  = rn_manager->GetGenerator(trng::fast_discrete_dist(uint(hh_reference.size())));
 
     // Build the households
     auto current_hh_id  = region->first_cps[ContactPoolType::Id::Household];
     while (current_p_id < end_of_while) {
             // Select a household from the reference set
             int index           = generator();
-            auto household_ref  = hh_reference.at(index);
+            auto household_ref  = hh_reference.at(uint(index));
 
             // Build the selected household
             vector<shared_ptr<Person>> hh_persons;
