@@ -208,8 +208,7 @@ void GuiController::Setup()
         // -----------------------------------------------------------------------------------------
         // Create the runner, population and register the viewers
         // -----------------------------------------------------------------------------------------
-        auto pop    = Population::Create(m_config_pt);
-        m_runner = make_shared<SimRunner>(m_config_pt, pop);
+        m_runner = make_shared<SimRunner>(m_config_pt, m_pop);
         RegisterViewers(m_runner);
 }
 
