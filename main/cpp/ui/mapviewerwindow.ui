@@ -7,11 +7,58 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>600</height>
+    <height>664</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>PeryiteUI - Map Viewer</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+	font: 10pt &quot;FreeSans&quot;;
+ 	background-color: #f7f7f7;
+}
+
+QLabel {
+ 	background-color: #f7f7f7;
+ 	color: black;
+  	border: 1px solid #dddddd;
+	border-radius: 4px;
+}
+
+QPushButton {
+	background-color: #78e08f;
+	color: white;
+	border: none;
+	border-radius: 4px;
+}
+
+QPushButton:disabled {
+	background-color: #aaaaaa;
+}
+
+QPushButton:hover {
+	background-color: #3c6382;
+}
+
+QGroupBox {
+	border: none;
+	background-color: #eaeaea;
+	font-size: 16px;
+	text-align: center;
+	border-radius: 4px;
+}
+
+QGroupBox:title {
+	left: 16;
+	top: 8;
+}
+
+QToolTip {
+	font: 10pt &quot;FreeSans&quot;;
+ 	background-color: #f7f7f7;
+	border-radius: 4px;
+}</string>
   </property>
   <widget class="QLabel" name="CircleInfoTitle">
    <property name="geometry">
@@ -25,10 +72,21 @@
    <property name="font">
     <font>
      <family>FreeSans</family>
-     <pointsize>12</pointsize>
+     <pointsize>-1</pointsize>
      <weight>75</weight>
+     <italic>false</italic>
      <bold>true</bold>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+	background-color: #78e08f;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	font-size: 16px;
+	font-weight: bold;
+}</string>
    </property>
    <property name="text">
     <string/>
@@ -68,7 +126,7 @@
      <x>0</x>
      <y>440</y>
      <width>1000</width>
-     <height>161</height>
+     <height>100</height>
     </rect>
    </property>
    <property name="font">
@@ -98,6 +156,87 @@
    <property name="text">
     <string/>
    </property>
+  </widget>
+  <widget class="QGroupBox" name="LocationFilters">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>539</y>
+     <width>371</width>
+     <height>125</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Location Filters</string>
+   </property>
+   <widget class="QCheckBox" name="displayLocation">
+    <property name="geometry">
+     <rect>
+      <x>16</x>
+      <y>32</y>
+      <width>200</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Display Locations</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="minPop">
+    <property name="geometry">
+     <rect>
+      <x>224</x>
+      <y>64</y>
+      <width>128</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <number>999999999</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="minPopLabel">
+    <property name="geometry">
+     <rect>
+      <x>16</x>
+      <y>64</y>
+      <width>200</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Minimum Display Population</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="minSickLabel">
+    <property name="geometry">
+     <rect>
+      <x>16</x>
+      <y>96</y>
+      <width>200</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Minimum Sick Percentage</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="minSick">
+    <property name="geometry">
+     <rect>
+      <x>224</x>
+      <y>96</y>
+      <width>128</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <number>100</number>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

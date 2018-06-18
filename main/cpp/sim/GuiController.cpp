@@ -257,12 +257,14 @@ bool GuiController::GeoGen()
 
 bool GuiController::PopGen()
 {
-    try {
+    try 
+    {
         popgen::Generate(*m_gendir, m_pop);
         state = GuiState::PopGenerated;
         return true;
     }
-    catch (...) {
+    catch (...)
+    {
         state = GuiState::Empty;
         return false;
     }

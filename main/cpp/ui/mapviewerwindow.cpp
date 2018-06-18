@@ -23,7 +23,7 @@ MapViewerWindow::MapViewerWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->setFixedSize(QSize(1000, 600));
+    this->setFixedSize(QSize(1000, 664));
     loadIcon();
 
     // Background color
@@ -114,7 +114,9 @@ void MapViewerWindow::update() {
 void MapViewerWindow::updateSelection(QPointF mousePos) {
     VisualizationCircle *closest = getClosestCircle(mousePos);
 
-    if (closest->containsPoint(mousePos, 3)) {
+    if (closest == nullptr) {
+        noHover();
+    } else if (closest->containsPoint(mousePos, 3)) {
         hoverCircle(closest);
     } else {
         noHover();
@@ -126,9 +128,16 @@ void MapViewerWindow::draw() {
     QPixmap pixmap = QPixmap::fromImage(*image);
 
     // Draw circles on the pixmap
-    for (int i = 0; i < circles->size(); i++) {
-        VisualizationCircle *c = circles->at(i);
-        drawCircle(&pixmap, c);
+    if (ui->displayLocation->isChecked()) {
+        for (int i = 0; i < circles->size(); i++) {
+            VisualizationCircle *c = circles->at(i);
+
+            // Filters
+            if (c->getPopulation() < ui->minPop->value()) { continue; }
+            if (c->getInfectedPercent() < ui->minSick->value()) { continue; }
+
+            drawCircle(&pixmap, c);
+        }
     }
 
     // Set pixmap pixmap
@@ -230,11 +239,18 @@ int MapViewerWindow::getMaximumPop() {
 }
 
 VisualizationCircle* MapViewerWindow::getClosestCircle(QPointF mousePos) {
-    float closestDist = circles->at(0)->sqrDistanceToPoint(mousePos);
-    VisualizationCircle *closest = circles->at(0);
+    if (!ui->displayLocation->isChecked()) {
+        return nullptr;
+    }
+
+    float closestDist = INT_MAX;
+    VisualizationCircle *closest = nullptr;
 
     for (int i = 0; i < circles->size(); i++) {
         VisualizationCircle *c = circles->at(i);
+
+        if (c->getPopulation() < ui->minPop->value()) { continue; }
+        if (c->getInfectedPercent() < ui->minSick->value()) { continue; }
 
         float dist = circles->at(i)->sqrDistanceToPoint(mousePos);
 

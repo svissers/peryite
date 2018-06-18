@@ -21,6 +21,7 @@
 
 #include "util/Stopwatch.h"
 #include "gen/files/GenDirectory.h"
+#include "util/GeometryGeoCoord.h"
 
 #include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -80,6 +81,9 @@ public:
         bool GeoGen();
         bool PopGen();
 
+        /// Get a location name from the geogrid map
+        std::string GetLocationName(stride::util::spherical_point point);
+
         /// GenDirectory file getters
         std::map<unsigned int, stride::gen::files::GeoGridFilePtr>& GetGeoGridFile();
         std::map<unsigned int, stride::gen::files::SchoolFilePtr>& GetSchoolFile();
@@ -136,7 +140,6 @@ private:
         std::shared_ptr<SimRunner> m_runner; /// The runner we'll be using for the simulation
         gen::files::GenDirectory *m_gendir; /// GenDirectory we'll be using
         std::shared_ptr<Population> m_pop; /// The population used for GeoGen and PopGen
-
 };
 
 } // namespace stride
