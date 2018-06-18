@@ -39,6 +39,7 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
+#include <iostream>
 
 using namespace std;
 using namespace stride::util;
@@ -108,6 +109,8 @@ void GuiController::AssignPTree(boost::property_tree::ptree pt) {
     m_config_pt.sort();
 
     m_output_prefix = m_config_pt.get<string>("run.output_prefix");
+
+    state = GuiState::ConfigFileSelected;
 }
 
 void GuiController::MakeLogger()
@@ -225,11 +228,12 @@ bool GuiController::simulationDone()
     return getCurrentDay() >= getTotalDays();
 }
 
-bool GuiController::setupGenDirectory(ptree &pt)
+bool GuiController::setupGenDirectory()
 {
     try {
-        m_gendir = new GenDirectory(pt);
-        m_pop = Population::CreateEmpty(pt);
+        CheckOutputPrefix();
+        m_gendir = new GenDirectory(m_config_pt);
+        m_pop = Population::CreateEmpty(m_config_pt);
         state = GuiState::ConfigFileSelected;
         return true;
     }
@@ -239,36 +243,60 @@ bool GuiController::setupGenDirectory(ptree &pt)
     }
 }
 
-void GuiController::GeoGen()
+bool GuiController::GeoGen()
 {
-    geogen::Generate(*m_gendir, m_pop);
-    state = GuiState::GeoGenerated;
+    try {
+        geogen::Generate(*m_gendir, m_pop);
+        state = GuiState::GeoGenerated;
+        return true;
+    }
+    catch (...) {
+        state = GuiState::Empty;
+        return false;
+    }
 }
 
-void GuiController::PopGen()
+bool GuiController::PopGen()
 {
-    popgen::Generate(*m_gendir, m_pop);
-    state = GuiState::PopGenerated;
+    try {
+        popgen::Generate(*m_gendir, m_pop);
+        state = GuiState::PopGenerated;
+        return true;
+    }
+    catch (...) {
+        state = GuiState::Empty;
+        return false;
+    }
 }
 
-std::map<unsigned int, GeoGridFilePtr>& GuiController::GetGeoGridFile() {
+std::map<unsigned int, GeoGridFilePtr>& GuiController::GetGeoGridFile()
+{
     return m_gendir->GetGeoGridFile();
 }
 
-std::map<unsigned int, SchoolFilePtr>& GuiController::GetSchoolFile() {
+std::map<unsigned int, SchoolFilePtr>& GuiController::GetSchoolFile()
+{
     return m_gendir->GetSchoolFile();
 }
 
-std::map<unsigned int, UniversityFilePtr>& GuiController::GetUniversityFile() {
+std::map<unsigned int, UniversityFilePtr>& GuiController::GetUniversityFile()
+{
     return m_gendir->GetUniversityFile();
 }
 
-std::map<unsigned int, WorkplaceFilePtr>& GuiController::GetWorkplaceFile() {
+std::map<unsigned int, WorkplaceFilePtr>& GuiController::GetWorkplaceFile()
+{
     return m_gendir->GetWorkplaceFile();
 }
 
-std::map<unsigned int, CommunityFilePtr>& GuiController::GetCommunityFile() {
+std::map<unsigned int, CommunityFilePtr>& GuiController::GetCommunityFile()
+{
     return m_gendir->GetCommunityFile();
+}
+
+PopulationFilePtr GuiController::GetPopulationFile()
+{
+    return m_gendir->GetPopulationFile();
 }
 
 int GuiController::GetAmountOfRegions()

@@ -32,6 +32,7 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <utility>
+#include <iostream>
 
 using namespace boost::property_tree;
 using namespace std;

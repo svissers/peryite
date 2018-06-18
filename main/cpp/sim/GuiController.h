@@ -54,6 +54,9 @@ public:
         // way before a ptree is available, since it is created in the MainWindow.
         void AssignPTree(boost::property_tree::ptree pt);
 
+        /// Get Ptree
+        boost::property_tree::ptree* GetPTree() { return &m_config_pt; } 
+
         /// Actual run of the simulator.
         void RunStride();
         void RunStride(int steps);
@@ -71,11 +74,11 @@ public:
         bool simulationDone();
 
         /// Setup gendirectory
-        bool setupGenDirectory(boost::property_tree::ptree &pt);
+        bool setupGenDirectory();
 
         /// GeoGen and PopGen functions
-        void GeoGen();
-        void PopGen();
+        bool GeoGen();
+        bool PopGen();
 
         /// GenDirectory file getters
         std::map<unsigned int, stride::gen::files::GeoGridFilePtr>& GetGeoGridFile();
@@ -83,6 +86,12 @@ public:
         std::map<unsigned int, stride::gen::files::UniversityFilePtr>& GetUniversityFile();
         std::map<unsigned int, stride::gen::files::WorkplaceFilePtr>& GetWorkplaceFile();
         std::map<unsigned int, stride::gen::files::CommunityFilePtr>& GetCommunityFile();
+
+        /// Pop file getter
+        stride::gen::files::PopulationFilePtr GetPopulationFile();
+
+        /// Population getter
+        std::shared_ptr<Population> GetPopulation() { return m_pop; }
 
         /// Region count
         int GetAmountOfRegions();
@@ -124,9 +133,9 @@ private:
         boost::property_tree::ptree     m_config_pt;     ///< Main configuration for run and sim.
         std::shared_ptr<spdlog::logger> m_stride_logger; ///< General logger.
 
-        std::shared_ptr<SimRunner> m_runner;
-        gen::files::GenDirectory *m_gendir;
-        std::shared_ptr<Population> m_pop;
+        std::shared_ptr<SimRunner> m_runner; /// The runner we'll be using for the simulation
+        gen::files::GenDirectory *m_gendir; /// GenDirectory we'll be using
+        std::shared_ptr<Population> m_pop; /// The population used for GeoGen and PopGen
 
 };
 

@@ -173,20 +173,13 @@ void StrideWindow::on_runButton_multi_clicked() {
     run(ui->runMultiInput->value());
 }
 
-void StrideWindow::on_editConfigButton_clicked() {
-    EditConfigForm *wdg = new EditConfigForm(guiController, this);
-    wdg->show();
-}
-
 void StrideWindow::on_configInput_editingFinished() {
     try {
         m_run_configFile = ui->configInput->text();
         config_pt = createConfigPTree(m_run_configFile);
-        ui->editConfigButton->setEnabled(true);
         filenameCorrect = true;
     }
     catch (...) {
-        ui->editConfigButton->setEnabled(false);
         filenameCorrect = false;
     }
 }
@@ -383,7 +376,6 @@ void StrideWindow::setTooltips() {
     // Main Config
     ui->configInput->setToolTip("The Config file that will be used by Stride.");
     ui->configLabel->setToolTip("The Config file that will be used by Stride.");
-    ui->editConfigButton->setToolTip("Edit the current config file.");
     ui->runsInput->setToolTip("The amount of runs in this batch. >1 runs is used for testing, mainly.");
     ui->runsLabel->setToolTip("The amount of runs in this batch. >1 runs is used for testing, mainly.");
 

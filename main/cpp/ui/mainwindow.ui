@@ -151,7 +151,7 @@ QToolTip {
       <rect>
        <x>190</x>
        <y>32</y>
-       <width>771</width>
+       <width>661</width>
        <height>25</height>
       </rect>
      </property>
@@ -163,6 +163,19 @@ QToolTip {
      </property>
      <property name="text">
       <string>No file selected</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="General_editConfigFile">
+     <property name="geometry">
+      <rect>
+       <x>865</x>
+       <y>32</y>
+       <width>102</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Edit</string>
      </property>
     </widget>
    </widget>

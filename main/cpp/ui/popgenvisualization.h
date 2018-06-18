@@ -3,6 +3,9 @@
 
 #include "visualizationgraphbar.h"
 #include "popgendata.h"
+#include "sim/GuiController.h"
+#include "gen/files/GenDirectory.h"
+
 #include <QWidget>
 #include <QGraphicsPixmapItem>
 
@@ -15,10 +18,10 @@ class PopGenVisualization : public QWidget
     Q_OBJECT
 
 public:
-    explicit PopGenVisualization(QWidget *parent = 0);
+    explicit PopGenVisualization(stride::GuiController *guiCtrl, QWidget *parent = 0);
     ~PopGenVisualization();
 
-    void parseData(PopGenData *data);
+    void parseData();
 
 private:
     static const int maxAge = 99;
@@ -31,6 +34,7 @@ private:
     VisualizationGraphBar *selected;
     QGraphicsScene *gfxScene;
     QGraphicsPixmapItem *gfxItem;
+    stride::GuiController* guiController;
 
     void closeEvent(QCloseEvent *event);
     void loadIcon();
