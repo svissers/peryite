@@ -28,7 +28,7 @@ vector<shared_ptr<Community>> BuildCommunities(const GenConfiguration& config, G
 
     // Create and map the communities to their samples.
     for (unsigned int i = 0; i < community_count; i++) {
-        auto center = grid.at(ulong(generator()));
+        auto center = grid.at(uint(generator()));
         auto coords = center->coordinate;
         if (center->is_fragmented) {
             // Select one of the fragments
@@ -36,7 +36,7 @@ vector<shared_ptr<Community>> BuildCommunities(const GenConfiguration& config, G
             for(const auto& center_population : center->fragmented_populations)
                 f_fractions.push_back(double(center_population) / double(center->population));
             auto frag_gen = rn_manager->GetGenerator(trng::fast_discrete_dist(f_fractions.begin(), f_fractions.end()));
-            coords = center->fragmented_coords.at(ulong(frag_gen()));
+            coords = center->fragmented_coords.at(uint(frag_gen()));
         }
         auto community           = make_shared<Community>(Community(i, true, coords));
         auto community_secondary = make_shared<Community>(Community(i+community_count, false, coords));
