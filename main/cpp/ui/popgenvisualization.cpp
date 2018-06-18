@@ -66,6 +66,12 @@ void PopGenVisualization::parseData() {
     bars = new QList<VisualizationGraphBar*>();
     selected = NULL;
 
+    auto population = guiController->GetPopulation();
+
+    for (auto person : *population) {
+        addAge(person.GetAge());
+    }
+
     // Parse the popgen file
     // while (!popgenFile.atEnd()) {
     //     QString line = popgenFile.readLine();
@@ -83,7 +89,7 @@ void PopGenVisualization::parseData() {
     //     }
     // }
 
-    // createAgeDistributionGraph();
+    createAgeDistributionGraph();
 }
 
 void PopGenVisualization::addAge(int age) {
