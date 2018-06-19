@@ -124,7 +124,7 @@ void GeoGenVisualization::hoverCircle(VisualizationCircle *c) {
     selected = c;
 
     // Title
-    QString title = c->geoGridLocation->name;
+    QString title = c->geoGridLocation->name + " (" + QString::number(c->geoGridLocation->latitude) + ", " + QString::number(c->geoGridLocation->longitude) + ")";
     ui->CircleInfoTitle->setText(title);
 
     // Info text

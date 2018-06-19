@@ -176,7 +176,7 @@ void MapViewerWindow::hoverCircle(VisualizationCircle *c) {
     selected = c;
 
     // Title
-    QString title = "Location Info";
+    QString title = "Location (" + QString::number(c->geoGridLocation->latitude) + ", " + QString::number(c->geoGridLocation->longitude) + ")";
     ui->CircleInfoTitle->setText(title);
 
     // Info text
