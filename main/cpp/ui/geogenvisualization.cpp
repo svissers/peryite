@@ -26,20 +26,28 @@ GeoGenVisualization::GeoGenVisualization(GuiController *guiCtrl, QWidget *parent
 
     this->setFixedSize(QSize(1000, 600));
     loadIcon();
-
+    
+    // -----------------------------------------------------------------------------------------
     // Background color
+    // -----------------------------------------------------------------------------------------
     setStyleSheet("QWidget { background-color: #eaeaea; }");
 
+    // -----------------------------------------------------------------------------------------
     // Load background image into image
+    // -----------------------------------------------------------------------------------------
     QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("./ui/map.png");
     image = new QImage(filename);
 
+    // -----------------------------------------------------------------------------------------
     // Setup GraphicsScene
+    // -----------------------------------------------------------------------------------------
     gfxScene = new QGraphicsScene();
     gfxItem = new QGraphicsPixmapItem();
     gfxScene->addItem(gfxItem);
 
+    // -----------------------------------------------------------------------------------------
     // Set timer interval for draw update
+    // -----------------------------------------------------------------------------------------
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &GeoGenVisualization::update);
     timer->start(1000 / 30); // 30 fps
@@ -55,14 +63,20 @@ GeoGenVisualization::~GeoGenVisualization()
 }
 
 void GeoGenVisualization::update() {
+    // -----------------------------------------------------------------------------------------
     // Get cursor position and add scrolling offset to it
+    // -----------------------------------------------------------------------------------------
     QPoint mousePos = mapFromGlobal(QCursor::pos());
     QPoint offset = QPoint(ui->FlandersMap->horizontalScrollBar()->value(), ui->FlandersMap->verticalScrollBar()->value());
 
+    // -----------------------------------------------------------------------------------------
     // Check hover selection for circles
+    // -----------------------------------------------------------------------------------------
     updateSelection(mousePos + offset);
 
+    // -----------------------------------------------------------------------------------------
     // Draw
+    // -----------------------------------------------------------------------------------------
     draw();
 }
 
@@ -79,19 +93,27 @@ void GeoGenVisualization::updateSelection(QPointF mousePos) {
 }
 
 void GeoGenVisualization::draw() {
+    // -----------------------------------------------------------------------------------------
     // Load pixmap from image
+    // -----------------------------------------------------------------------------------------
     QPixmap pixmap = QPixmap::fromImage(*image);
 
+    // -----------------------------------------------------------------------------------------
     // Draw circles on the pixmap
+    // -----------------------------------------------------------------------------------------
     for (int i = 0; i < circles->size(); i++) {
         VisualizationCircle *c = circles->at(i);
         drawCircle(&pixmap, c);
     }
 
-    // Set pixmap pixmap
+    // -----------------------------------------------------------------------------------------
+    // Set gfxitem pixmap
+    // -----------------------------------------------------------------------------------------
     gfxItem->setPixmap(pixmap);
 
+    // -----------------------------------------------------------------------------------------
     // Display the scene
+    // -----------------------------------------------------------------------------------------
     ui->FlandersMap->setScene(gfxScene);
 }
 
@@ -100,20 +122,26 @@ void GeoGenVisualization::addCircle(VisualizationCircle *c) {
 }
 
 void GeoGenVisualization::drawCircle(QPixmap *pm, VisualizationCircle *circle) {
-        // Get params
-        qreal radius = circle->getRadius();
-        QPointF point = circle->position;
+    // -----------------------------------------------------------------------------------------
+    // Get params
+    // -----------------------------------------------------------------------------------------
+    qreal radius = circle->getRadius();
+    QPointF point = circle->position;
 
-        // QPainter
-        QPainter painter(pm);
-        painter.scale(1, 1);
-        painter.setRenderHint(QPainter::Antialiasing);
-        painter.setBrush(circle->getColor(circle == selected));
-        painter.setPen(QColor(0, 0, 0, 0));
+    // -----------------------------------------------------------------------------------------
+    // QPainter
+    // -----------------------------------------------------------------------------------------
+    QPainter painter(pm);
+    painter.scale(1, 1);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setBrush(circle->getColor(circle == selected));
+    painter.setPen(QColor(0, 0, 0, 0));
 
-        // Draw
-        painter.drawEllipse(point, radius, radius);
-    }
+    // -----------------------------------------------------------------------------------------
+    // Draw
+    // -----------------------------------------------------------------------------------------
+    painter.drawEllipse(point, radius, radius);
+}
 
 void GeoGenVisualization::closeEvent(QCloseEvent *event) {
     timer->stop();
@@ -123,11 +151,15 @@ void GeoGenVisualization::closeEvent(QCloseEvent *event) {
 void GeoGenVisualization::hoverCircle(VisualizationCircle *c) {
     selected = c;
 
+    // -----------------------------------------------------------------------------------------
     // Title
+    // -----------------------------------------------------------------------------------------
     QString title = c->geoGridLocation->name + " (" + QString::number(c->geoGridLocation->latitude) + ", " + QString::number(c->geoGridLocation->longitude) + ")";
     ui->CircleInfoTitle->setText(title);
 
+    // -----------------------------------------------------------------------------------------
     // Info text
+    // -----------------------------------------------------------------------------------------
     QString text = "Population: " + Util::formatInt(c->geoGridLocation->population);
     text += "\nCommunities: " + Util::formatInt(c->geoGridLocation->communities);
     text += "\nSchools: " + Util::formatInt(c->geoGridLocation->schools);
@@ -143,6 +175,9 @@ void GeoGenVisualization::noHover() {
 }
 
 void GeoGenVisualization::parseData() {
+    // -----------------------------------------------------------------------------------------
+    // Get the files to parse
+    // -----------------------------------------------------------------------------------------
     auto geo_file = guiController->GetGeoGridFile();
     auto community_file = guiController->GetCommunityFile();
     auto school_file = guiController->GetSchoolFile();
@@ -151,11 +186,15 @@ void GeoGenVisualization::parseData() {
 
     int amountOfRegions = guiController->GetAmountOfRegions();
 
+    // -----------------------------------------------------------------------------------------
     // Create list of circles
+    // -----------------------------------------------------------------------------------------
     circles = new QList<VisualizationCircle *>();
     selected = NULL;
 
+    // -----------------------------------------------------------------------------------------
     // Parse data
+    // -----------------------------------------------------------------------------------------
     parseGeoGrid(geo_file, amountOfRegions);
     parseCommunities(community_file, amountOfRegions);
     parseSchools(school_file, amountOfRegions);
@@ -178,12 +217,16 @@ VisualizationCircle* GeoGenVisualization::findCircle(float longitude, float lati
 }
 
 void GeoGenVisualization::addCommunity(std::shared_ptr<Community> &community) {
+    // -----------------------------------------------------------------------------------------
     // Read data and find corresponding circle
+    // -----------------------------------------------------------------------------------------
     float latitude = community->coordinate.get<0>();
     float longitude = community->coordinate.get<1>();
     VisualizationCircle* circle = findCircle(longitude, latitude);
 
+    // -----------------------------------------------------------------------------------------
     // Nullcheck
+    // -----------------------------------------------------------------------------------------
     if (circle == NULL) {
         qDebug() << "addCommunity did not find circle. Did not add community.";
         return;
@@ -193,12 +236,16 @@ void GeoGenVisualization::addCommunity(std::shared_ptr<Community> &community) {
 }
 
 void GeoGenVisualization::addSchool(std::shared_ptr<School> &school) {
+    // -----------------------------------------------------------------------------------------
     // Read data and find corresponding circle
+    // -----------------------------------------------------------------------------------------
     float latitude = school->coordinate.get<0>();
     float longitude = school->coordinate.get<1>();
     VisualizationCircle* circle = findCircle(longitude, latitude);
 
+    // -----------------------------------------------------------------------------------------
     // Nullcheck
+    // -----------------------------------------------------------------------------------------
     if (circle == NULL) {
         qDebug() << "addSchool did not find circle. Did not add school.";
         return;
@@ -208,12 +255,16 @@ void GeoGenVisualization::addSchool(std::shared_ptr<School> &school) {
 }
 
 void GeoGenVisualization::addUniversity(std::shared_ptr<University> &university) {
+    // -----------------------------------------------------------------------------------------
     // Read data and find corresponding circle
+    // -----------------------------------------------------------------------------------------
     float latitude = university->coordinate.get<0>();
     float longitude = university->coordinate.get<1>();
     VisualizationCircle* circle = findCircle(longitude, latitude);
 
+    // -----------------------------------------------------------------------------------------
     // Nullcheck
+    // -----------------------------------------------------------------------------------------
     if (circle == NULL) {
         qDebug() << "addUniversity did not find circle. Did not add university.";
         return;
@@ -223,12 +274,16 @@ void GeoGenVisualization::addUniversity(std::shared_ptr<University> &university)
 }
 
 void GeoGenVisualization::addWorkplace(std::shared_ptr<WorkPlace> &workplace) {
+    // -----------------------------------------------------------------------------------------
     // Read data and find corresponding circle
+    // -----------------------------------------------------------------------------------------
     float latitude = workplace->coordinate.get<0>();
     float longitude = workplace->coordinate.get<1>();
     VisualizationCircle* circle = findCircle(longitude, latitude);
 
+    // -----------------------------------------------------------------------------------------
     // Nullcheck
+    // -----------------------------------------------------------------------------------------
     if (circle == NULL) {
         qDebug() << "addWorkplace did not find circle. Did not add workplace.";
         return;
@@ -321,7 +376,9 @@ void GeoGenVisualization::loadIcon()
 
 void GeoGenVisualization::focusFlanders()
 {
+    // -----------------------------------------------------------------------------------------
     // Set scrollbars starting value to focus on flanders
+    // -----------------------------------------------------------------------------------------
     ui->FlandersMap->horizontalScrollBar()->setSliderPosition(781);
     ui->FlandersMap->verticalScrollBar()->setSliderPosition(809);
 }
