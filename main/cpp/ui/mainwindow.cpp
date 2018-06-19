@@ -59,22 +59,32 @@ void MainWindow::setConfigFile(QString path)
 
 void MainWindow::loadLogo()
 {
+    // -----------------------------------------------------------------------------------------
     // Load background image into image
+    // -----------------------------------------------------------------------------------------
     QString filename = QDir(QCoreApplication::applicationDirPath()).cleanPath("./ui/logo.png");
     QImage *image = new QImage(filename);
 
+    // -----------------------------------------------------------------------------------------
     // Setup GraphicsScene
+    // -----------------------------------------------------------------------------------------
     QGraphicsScene *gfxScene = new QGraphicsScene();
     QGraphicsPixmapItem *gfxItem = new QGraphicsPixmapItem();
     gfxScene->addItem(gfxItem);
 
+    // -----------------------------------------------------------------------------------------
     // Load pixmap from image
+    // -----------------------------------------------------------------------------------------
     QPixmap pixmap = QPixmap::fromImage(*image);
 
+    // -----------------------------------------------------------------------------------------
     // Set pixmap pixmap
+    // -----------------------------------------------------------------------------------------
     gfxItem->setPixmap(pixmap.scaledToWidth(300, Qt::SmoothTransformation));
 
+    // -----------------------------------------------------------------------------------------
     // Display the scene
+    // -----------------------------------------------------------------------------------------
     ui->logo->setScene(gfxScene);
 }
 
@@ -123,12 +133,19 @@ void MainWindow::on_General_editConfigFile_clicked()
 
 void MainWindow::on_Geo_generateGeoGen_clicked()
 {
+    // -----------------------------------------------------------------------------------------
+    // On top of doing GeoGen, this is where we also setup the gendirectory.
+    // We can't do it before this point, because the user could still edit the config file.
+    // -----------------------------------------------------------------------------------------
     if (!guiController->SetupGenDirectory()) {
         QMessageBox::warning(this, tr("Incorrect Config File"), "There seems to be something wrong with your config file. Are you sure it's up to date?");
         updateButtons();
         return;
     }
 
+    // -----------------------------------------------------------------------------------------
+    // GeoGen
+    // -----------------------------------------------------------------------------------------
     if (!guiController->GeoGen()) {
         QMessageBox::warning(this, tr("GeoGen Failed"), "GeoGen failed. This is probably because there is something wrong with the config file.");
         updateButtons();
@@ -137,7 +154,9 @@ void MainWindow::on_Geo_generateGeoGen_clicked()
 
     updateButtons();
 
+    // -----------------------------------------------------------------------------------------
     // Message when done
+    // -----------------------------------------------------------------------------------------
     QMessageBox::information(this, tr("Done"), "GeoGen completed!");
     cout << "GeoGen Completed!" << endl;
 }
@@ -152,6 +171,9 @@ void MainWindow::on_Geo_visualizeGeoGen_clicked()
 
 void MainWindow::on_Pop_generatePopGen_clicked()
 {
+    // -----------------------------------------------------------------------------------------
+    // PopGen
+    // -----------------------------------------------------------------------------------------
     if (!guiController->PopGen()) {
         QMessageBox::warning(this, tr("PopGen Failed"), "PopGen failed. This is probably because there is something wrong with the config file.");
         updateButtons();
@@ -160,7 +182,9 @@ void MainWindow::on_Pop_generatePopGen_clicked()
 
     updateButtons();
 
+    // -----------------------------------------------------------------------------------------
     // Message when done
+    // -----------------------------------------------------------------------------------------
     QMessageBox::information(this, tr("Done"), "PopGen completed!");
     cout << "PopGen Completed!" << endl;
 }
@@ -168,17 +192,26 @@ void MainWindow::on_Pop_generatePopGen_clicked()
 
 void MainWindow::on_Pop_visualizePopGen_clicked()
 {
+    // -----------------------------------------------------------------------------------------
     // Set button text to show user that we're parsing
+    // -----------------------------------------------------------------------------------------
     ui->Pop_visualizePopGen->setText("Parsing...");
+
+    // -----------------------------------------------------------------------------------------
     // Force repaint because otherwise it would happen after this function, rendering the "parsing..." message useless.
+    // -----------------------------------------------------------------------------------------
     ui->Pop_visualizePopGen->repaint();
 
+    // -----------------------------------------------------------------------------------------
     // Create new window and parse pop file
+    // -----------------------------------------------------------------------------------------
     PopGenVisualization *wdg = new PopGenVisualization(guiController);
     wdg->parseData();
     wdg->show();
 
+    // -----------------------------------------------------------------------------------------
     // Reset the button text when we're done
+    // -----------------------------------------------------------------------------------------
     ui->Pop_visualizePopGen->setText("Visualize");
 }
 
@@ -190,7 +223,9 @@ void MainWindow::on_openStrideWindow_clicked()
 
 void MainWindow::updateButtons()
 {
+    // -----------------------------------------------------------------------------------------
     // Disable all
+    // -----------------------------------------------------------------------------------------
     ui->General_configFileSelect->setEnabled(false);
     ui->General_editConfigFile->setEnabled(false);
     ui->Geo_generateGeoGen->setEnabled(false);
@@ -199,7 +234,9 @@ void MainWindow::updateButtons()
     ui->Pop_visualizePopGen->setEnabled(false);
     ui->openStrideWindow->setEnabled(false);
 
+    // -----------------------------------------------------------------------------------------
     // Enable depending on gui state
+    // -----------------------------------------------------------------------------------------
     // Empty
     if (guiController->state >= GuiState::Empty) {
         ui->General_configFileSelect->setEnabled(true);
