@@ -124,40 +124,52 @@ void GuiController::MakeLogger()
 
 void GuiController::RegisterViewers(shared_ptr<SimRunner> runner)
 {
+    // -----------------------------------------------------------------------------------------
     // Command line viewer
+    // -----------------------------------------------------------------------------------------
     m_stride_logger->info("Registering CliViewer");
     const auto cli_v = make_shared<viewers::CliViewer>(runner, m_stride_logger);
     runner->Register(cli_v, bind(&viewers::CliViewer::Update, cli_v, placeholders::_1));
 
+    // -----------------------------------------------------------------------------------------
     // Adopted viewer
+    // -----------------------------------------------------------------------------------------
     if (m_config_pt.get<bool>("run.output_adopted", false)) {
             m_stride_logger->info("registering AdoptedViewer,");
             const auto v = make_shared<viewers::AdoptedViewer>(runner, m_output_prefix);
             runner->Register(v, bind(&viewers::AdoptedViewer::Update, v, placeholders::_1));
     }
 
+    // -----------------------------------------------------------------------------------------
     // Infection counts viewer
+    // -----------------------------------------------------------------------------------------
     if (m_config_pt.get<bool>("run.output_cases", false)) {
             m_stride_logger->info("Registering InfectedViewer");
             const auto v = make_shared<viewers::InfectedViewer>(runner, m_output_prefix);
             runner->Register(v, bind(&viewers::InfectedViewer::Update, v, placeholders::_1));
     }
 
+    // -----------------------------------------------------------------------------------------
     // Persons viewer
+    // -----------------------------------------------------------------------------------------
     if (m_config_pt.get<bool>("run.output_persons", false)) {
             m_stride_logger->info("registering PersonsViewer.");
             const auto v = make_shared<viewers::PersonsViewer>(runner, m_output_prefix);
             runner->Register(v, bind(&viewers::PersonsViewer::Update, v, placeholders::_1));
     }
 
+    // -----------------------------------------------------------------------------------------
     // Summary viewer
+    // -----------------------------------------------------------------------------------------
     if (m_config_pt.get<bool>("run.output_summary", false)) {
             m_stride_logger->info("Registering SummaryViewer");
             const auto v = make_shared<viewers::SummaryViewer>(runner, m_output_prefix);
             runner->Register(v, bind(&viewers::SummaryViewer::Update, v, placeholders::_1));
     }
 
+    // -----------------------------------------------------------------------------------------
     // Map viewer
+    // -----------------------------------------------------------------------------------------
     if (m_config_pt.get<bool>("run.output_map", false)) {
             m_stride_logger->info("Registering MapViewer");
             const auto v = make_shared<viewers::MapViewer>(runner);
@@ -208,27 +220,45 @@ void GuiController::Setup()
         // -----------------------------------------------------------------------------------------
         // Create the runner, population and register the viewers
         // -----------------------------------------------------------------------------------------
-        m_runner = make_shared<SimRunner>(m_config_pt, m_pop);
+        try {
+            m_runner = make_shared<SimRunner>(m_config_pt, m_pop);
+        }
+        // -----------------------------------------------------------------------------------------
+        // Stride doesn't let us use the same population twice (makes sense because they are already sick!),
+        // so if we can't do the above, we rerun geogen and popgen to make stride happy again.
+        // -----------------------------------------------------------------------------------------
+        
+        catch (...) {
+            m_pop = Population::CreateEmpty(m_config_pt);
+            geogen::Generate(*m_gendir, m_pop);
+            popgen::Generate(*m_gendir, m_pop);
+            m_runner = make_shared<SimRunner>(m_config_pt, m_pop); 
+        }
+        
         RegisterViewers(m_runner);
 }
 
-int GuiController::getCurrentDay()
+int GuiController::GetCurrentDay()
 {
     return m_runner->GetSim()->GetCalendar()->GetSimulationDay();
 }
 
-int GuiController::getTotalDays()
+int GuiController::GetTotalDays()
 {
     return m_config_pt.get<unsigned int>("run.num_days");
 }
 
-bool GuiController::simulationDone()
+bool GuiController::SimulationDone()
 {
-    return getCurrentDay() >= getTotalDays();
+    return GetCurrentDay() >= GetTotalDays();
 }
 
-bool GuiController::setupGenDirectory()
+bool GuiController::SetupGenDirectory()
 {
+    // -----------------------------------------------------------------------------------------
+    // Try setting up the gendirectory by giving it the config ptree,
+    // Also create an empty population that will be used by geogen and filled by popgen.
+    // -----------------------------------------------------------------------------------------
     try {
         CheckOutputPrefix();
         m_gendir = new GenDirectory(m_config_pt);
@@ -244,6 +274,9 @@ bool GuiController::setupGenDirectory()
 
 bool GuiController::GeoGen()
 {
+    // -----------------------------------------------------------------------------------------
+    // Simply executes the geogen function and lets us know if something went wrong
+    // -----------------------------------------------------------------------------------------
     try {
         geogen::Generate(*m_gendir, m_pop);
         state = GuiState::GeoGenerated;
@@ -256,7 +289,10 @@ bool GuiController::GeoGen()
 }
 
 bool GuiController::PopGen()
-{
+{   
+    // -----------------------------------------------------------------------------------------
+    // Simply executes the popgen function and lets us know if something went wrong
+    // -----------------------------------------------------------------------------------------
     try 
     {
         popgen::Generate(*m_gendir, m_pop);
@@ -268,6 +304,26 @@ bool GuiController::PopGen()
         state = GuiState::Empty;
         return false;
     }
+}
+
+void GuiController::SetRngSeed(int seed)
+{
+    m_config_pt.put("run.rng_seed", seed);
+}
+
+void GuiController::SetRngType(std::string type)
+{
+    m_config_pt.put("run.rng_type", type);
+}
+
+void GuiController::SetOutputMap(int outputMap)
+{
+    m_config_pt.put("run.output_map", outputMap);
+}
+
+void GuiController::SetLogLevel(std::string level)
+{
+    m_config_pt.put("run.stride_log_level", level);
 }
 
 std::map<unsigned int, GeoGridFilePtr>& GuiController::GetGeoGridFile()

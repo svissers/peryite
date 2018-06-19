@@ -66,20 +66,26 @@ public:
         void Setup();
 
         /// Get the current day (used by Qt windows)
-        int getCurrentDay();
+        int GetCurrentDay();
 
         /// Get the total days (used by Qt windows)
-        int getTotalDays();
+        int GetTotalDays();
 
         /// Returns true if simulation is over.
-        bool simulationDone();
+        bool SimulationDone();
 
         /// Setup gendirectory
-        bool setupGenDirectory();
+        bool SetupGenDirectory();
 
         /// GeoGen and PopGen functions
         bool GeoGen();
         bool PopGen();
+
+        /// Config tree setters for stride window overrides
+        void SetRngSeed(int seed);
+        void SetRngType(std::string type);
+        void SetOutputMap(int outputMap);
+        void SetLogLevel(std::string level);
 
         /// Get a location name from the geogrid map
         std::string GetLocationName(stride::util::spherical_point point);

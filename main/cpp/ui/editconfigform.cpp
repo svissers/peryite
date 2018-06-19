@@ -16,11 +16,16 @@ EditConfigForm::EditConfigForm(GuiController *guiCtrl, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // -----------------------------------------------------------------------------------------
+    // Set the ptree and create the fields
+    // -----------------------------------------------------------------------------------------
     pt = guiController->GetPTree();
     createPTreeFields(*pt, "");
 
+    // -----------------------------------------------------------------------------------------
+    // Set ui parameters
+    // -----------------------------------------------------------------------------------------
     ui->verticalScrollBar->setMaximum(lineEdits.length() - 8);
-
     ui->saveButton->setText("Save and close");
 }
 

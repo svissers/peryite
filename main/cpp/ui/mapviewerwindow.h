@@ -4,6 +4,7 @@
 #include "pop/Population.h"
 #include "ui/visualizationcircle.h"
 #include "util/StatisticsRetriever.h"
+#include "pool/ContactPoolSys.h"
 
 #include <QWidget>
 #include <QImage>
@@ -52,6 +53,7 @@ private:
     void updateSelection(QPointF mousePos);
     void draw();
     void drawCircle(QPixmap *pm, VisualizationCircle *circle);
+    void drawLines(QPixmap *pm, VisualizationCircle *circle);
     void hoverCircle(VisualizationCircle *c);
     void noHover();
     VisualizationCircle* getClosestCircle(QPointF mousePos);
@@ -59,6 +61,7 @@ private:
     // Parsing
     void addCircle(VisualizationCircle *c);
     VisualizationCircle* findCircle(util::spherical_point coord);
+    util::spherical_point findCommutingCoordinate(ContactPoolSys &cps, Person &person);
     int getMinimumPop();
     int getMaximumPop();
 };

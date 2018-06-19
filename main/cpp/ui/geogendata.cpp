@@ -14,10 +14,14 @@ bool GeoGenData::setFilenames(QString path, QStringList &missingFiles) {
     requiredFiles << "Communities.csv" << "Geogrid.csv" << "Schools.csv" << "Universities.csv" << "Workplaces.csv";
     missingFiles = Util::getMissingFiles(path, requiredFiles);
 
-    // Stop if data is missing
+    // -----------------------------------------------------------------------------------------
+    // Set ui parameters
+    // -----------------------------------------------------------------------------------------
     if (!missingFiles.isEmpty()) { return false; }
 
+    // -----------------------------------------------------------------------------------------
     // Set the data
+    // -----------------------------------------------------------------------------------------
     communitiesFile = path + "/" + requiredFiles[0];
     geogridFile = path + "/" + requiredFiles[1];
     schoolsFile = path + "/" + requiredFiles[2];

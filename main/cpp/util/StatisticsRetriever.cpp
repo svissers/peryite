@@ -1,5 +1,6 @@
 #include "StatisticsRetriever.h"
 
+#include <iostream>
 
 namespace stride {
 namespace util {
@@ -51,6 +52,10 @@ StatisticsRetriever::StatisticsRetriever(std::shared_ptr<Population>& pop) {
 std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int>
     StatisticsRetriever::GetStatisticsOfArea(std::shared_ptr<Population>& pop, util::spherical_point center, double radius) {
 
+    std::cout << "input latitude: " << center.get<0>() << std::endl;
+    std::cout << "input longitude: " << center.get<1>() << std::endl;
+    std::cout << "input radius: " << radius << std::endl;
+
     //the statistics this funditon will return
     std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int> returnVal;
 
@@ -62,6 +67,10 @@ std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int,
     unsigned int beginband = std::max(uint(0), band_of_center-radiusofBands);
     auto endband = std::min(uint(AMOUNTOFBANDSPOP-1), band_of_center+radiusofBands);
 
+    std::cout << "radius: " << radiusofBands << std::endl;
+    std::cout << "begin: " << beginband << std::endl;
+    std::cout << "end: " << endband << std::endl;
+    std::cout << "m_bandlength: " << m_bandLength << std::endl;
 
     unsigned int popInRadius = 0;
     unsigned int sickPeople = 0;
@@ -71,14 +80,14 @@ std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int,
     unsigned int sickWorkPeople = 0;
     unsigned int unemployedPeople = 0;
     unsigned int sickUnemployedPeople = 0;
-    //going over the chosen parts of the population,
 
+    //going over the chosen parts of the population,
     for(unsigned int i = beginband; i <= endband; i++){
         unsigned int misses = 0;
+        std::cout << m_sortedPopByIndex[i].size() << std::endl;
         for (unsigned int j : m_sortedPopByIndex[i]) {
             auto person = pop->at(j);
             auto personCoord = person.GetCoordinate();
-
             if(calculateDistance(personCoord, center) <= radius){
                 misses = 0;
                 //Fill in statistics
@@ -127,6 +136,10 @@ std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int,
         }
 
     }
+
+    std::cout << "popInRadius: " << popInRadius << std::endl;
+    std::cout << "sickPeople: " << sickPeople << std::endl;
+
     std::get<0>(returnVal) = popInRadius;
     std::get<1>(returnVal) = sickPeople;
     std::get<2>(returnVal) = schoolPeople;
