@@ -205,11 +205,28 @@ void GuiController::Setup()
         const auto path     = FileSys::BuildPath(m_output_prefix, "config.xml");
         boost::property_tree::write_xml(path.string(), m_config_pt, std::locale(), xml_writer_make_settings<std::string>('\t', 1));
 
+        cout << "4" << endl;
+
         // -----------------------------------------------------------------------------------------
         // Create the runner, population and register the viewers
         // -----------------------------------------------------------------------------------------
-        m_runner = make_shared<SimRunner>(m_config_pt, m_pop);
+        try {
+            m_runner = make_shared<SimRunner>(m_config_pt, m_pop);
+        }
+        // -----------------------------------------------------------------------------------------
+        // Stride doesn't let us use the same population twice (makes sense because they are already sick!),
+        // so if we can't do the above, we rerun geogen and popgen to make stride happy again.
+        // -----------------------------------------------------------------------------------------
+        
+        catch (...) {
+            m_pop = Population::CreateEmpty(m_config_pt);
+            geogen::Generate(*m_gendir, m_pop);
+            popgen::Generate(*m_gendir, m_pop);
+            m_runner = make_shared<SimRunner>(m_config_pt, m_pop); 
+        }
         RegisterViewers(m_runner);
+
+        cout << "5" << endl;
 }
 
 int GuiController::getCurrentDay()
