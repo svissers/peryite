@@ -44,6 +44,11 @@ void MapViewer::Update(sim_event::Id id)
                 // Also, normally QApplication.exec() is used, but since that is blocking, we will use
                 // processEvents() manually, so we can use it on every notification.
                 // When we're done, we call exec() because the simulator no longer needs to do anything.
+                // -----------------------------------------------------------------------------------------
+                // If we are using the GUI and not the CLI,
+                // this will give us a warning that the loop is already running.
+                // It seems like the best option to just let this warning slide,
+                // because everything and everyone advises to stay away from manually overriding these loops.
 
                 int argc = 1;
                 char *argv[1] = { (char *)"" };
@@ -52,12 +57,13 @@ void MapViewer::Update(sim_event::Id id)
                 mvw->show();
 
                 m_qapp->processEvents();
-
+                
                 const auto pop = m_runner->GetSim()->GetPopulation();
+
                 mvw->createPopView(pop);
                 mvw->updateDaysLabel(0);
                 mvw->focusFlanders();
-
+                mvw->setupStatisticsRetriever(pop);
                 m_qapp->processEvents();
 
                 break;

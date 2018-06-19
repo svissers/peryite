@@ -3,6 +3,7 @@
 
 #include "pop/Population.h"
 #include "ui/visualizationcircle.h"
+#include "util/StatisticsRetriever.h"
 
 #include <QWidget>
 #include <QImage>
@@ -27,6 +28,10 @@ public:
     void updateInfected(const std::shared_ptr<Population> population);
     void updateDaysLabel(int day);
     void focusFlanders();
+    void setupStatisticsRetriever(std::shared_ptr<Population> population);
+
+private slots:
+    void on_getExtraStats_clicked();
 
 private:
     Ui::MapViewerWindow *ui;
@@ -36,6 +41,8 @@ private:
     VisualizationCircle *selected;
     QGraphicsScene *gfxScene;
     QGraphicsPixmapItem *gfxItem;
+    util::StatisticsRetriever *statsRetriever;
+    std::shared_ptr<Population> m_pop;
 
     void closeEvent(QCloseEvent *event);
     void loadIcon();

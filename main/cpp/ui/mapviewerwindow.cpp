@@ -12,10 +12,12 @@
 #include <QCloseEvent>
 #include <QIcon>
 #include <QScrollBar>
+#include <QMessageBox>
 #include <iostream>
 
-using namespace stride;
 using namespace std;
+using namespace stride;
+using namespace stride::util;
 
 MapViewerWindow::MapViewerWindow(QWidget *parent) :
     QWidget(parent),
@@ -23,7 +25,8 @@ MapViewerWindow::MapViewerWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->setFixedSize(QSize(1000, 664));
+    this->setFixedSize(QSize(1000, 696));
+    statsRetriever = nullptr;
     loadIcon();
 
     // Background color
@@ -49,11 +52,50 @@ MapViewerWindow::~MapViewerWindow()
     delete ui;
 }
 
+void MapViewerWindow::on_getExtraStats_clicked() {
+    // -----------------------------------------------------------------------------------------
+    // Retrieve the stats
+    // ----------------------------------------------------------------------------------------- 
+    util::spherical_point center = spherical_point(ui->latitude->value(), ui->longitude->value());
+    auto stats = statsRetriever->GetStatisticsOfArea(m_pop, center, ui->radius->value());
+
+    // -----------------------------------------------------------------------------------------
+    // Construct the string we will be displaying
+    // -----------------------------------------------------------------------------------------
+    QString statsStr = "";
+    QString titleStr = "";
+    
+    titleStr += "Statistics for (" + QString::number(ui->latitude->value()) + ", " + QString::number(ui->longitude->value()) + "), ";
+    titleStr += "radius " + QString::number(ui->radius->value()) + "km";
+
+    statsStr += "Population in radius: " + QString::number(std::get<0>(stats)) + "\n";
+    statsStr += "Infected in radius: " + QString::number(std::get<1>(stats)) + "\n";
+    statsStr += "Schoolgoing in radius: " + QString::number(std::get<2>(stats)) + "\n";
+    statsStr += "Sick and schoolgoing in radius: " + QString::number(std::get<3>(stats)) + "\n";
+    statsStr += "Working in radius: " + QString::number(std::get<4>(stats)) + "\n";
+    statsStr += "Sick and working in radius: " + QString::number(std::get<5>(stats)) + "\n";
+    statsStr += "Unemployed in radius: " + QString::number(std::get<6>(stats)) + "\n";
+    statsStr += "Sick and enemployed in radius: " + QString::number(std::get<7>(stats)) + "\n";
+
+    /// Display the information
+    QMessageBox::information(this, titleStr, statsStr);
+}
+
 void MapViewerWindow::createPopView(const std::shared_ptr<Population> population) {
-    circles = new QList<VisualizationCircle *>();
-
     cout << "MapViewer enabled." << endl;
+    
+    // -----------------------------------------------------------------------------------------
+    // Use the population to create a list of visualization circles.
+    // Since we are in the mapviewer here, we also assign commuting connections.
+    // -----------------------------------------------------------------------------------------
+    circles = new QList<VisualizationCircle *>();
+    m_pop = population;
 
+    // -----------------------------------------------------------------------------------------
+    // Start by creating our list of visualizationcircles
+    // This ensures that, when we start adding commuting connections,
+    // All the circles already exist.
+    // -----------------------------------------------------------------------------------------
     for (auto i = 0U; i < population->size(); i++) {
         util::spherical_point coord = population->at(i).GetCoordinate();
         VisualizationCircle *circle = findCircle(coord);
@@ -69,9 +111,16 @@ void MapViewerWindow::createPopView(const std::shared_ptr<Population> population
         }
     }
 
+    // -----------------------------------------------------------------------------------------
     // Set the minimum and maximum population so the circles can resize themselves accordingly
+    // -----------------------------------------------------------------------------------------
     VisualizationCircle::minimumRadiusPopulation = getMinimumPop();
     VisualizationCircle::maximumRadiusPopulation = getMaximumPop();
+
+    // -----------------------------------------------------------------------------------------
+    // Now we can add the commuting connections
+    // -----------------------------------------------------------------------------------------
+    ContactPoolSys contactPoolSys = population->GetContactPoolSys();
 
     update();
 }
@@ -274,4 +323,13 @@ void MapViewerWindow::focusFlanders()
     // Set scrollbars starting value to focus on flanders
     ui->FlandersMap->horizontalScrollBar()->setSliderPosition(781);
     ui->FlandersMap->verticalScrollBar()->setSliderPosition(809);
+}
+
+void MapViewerWindow::setupStatisticsRetriever(std::shared_ptr<Population> population) 
+{
+    if (statsRetriever != nullptr) {
+        delete statsRetriever;
+    }
+    
+    statsRetriever = new StatisticsRetriever(population);
 }

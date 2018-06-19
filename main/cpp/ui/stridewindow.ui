@@ -140,7 +140,7 @@ QToolTip {
      <rect>
       <x>120</x>
       <y>32</y>
-      <width>242</width>
+      <width>312</width>
       <height>26</height>
      </rect>
     </property>

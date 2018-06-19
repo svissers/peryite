@@ -7,7 +7,7 @@ using namespace stride;
 
 int VisualizationCircle::minimumRadiusPopulation = 0;
 int VisualizationCircle::maximumRadiusPopulation = 2500;
-qreal VisualizationCircle::minimumRadius = 3.0f;
+qreal VisualizationCircle::minimumRadius = 2.0f;
 qreal VisualizationCircle::maximumRadius = 15.0f;
 
 VisualizationCircle::VisualizationCircle()
@@ -87,4 +87,33 @@ qreal VisualizationCircle::getInfectedPercent() {
 
 int VisualizationCircle::getPopulation() {
     return geoGridLocation->population;
+}
+
+void VisualizationCircle::addCommuter(VisualizationCircle *destination)
+{
+    std::map<VisualizationCircle *, unsigned int>::iterator it = commutingConnections.find(destination);
+
+    // Entry already existed
+    if (it != commutingConnections.end()) {
+        // Add one to the value
+        it->second++;
+    }
+    // Entry didn't exist yet
+    else {
+        commutingConnections.insert(std::pair<VisualizationCircle *, unsigned int>(destination, 1U));
+    }
+}
+
+unsigned int VisualizationCircle::getCommuters(VisualizationCircle *destination)
+{
+    std::map<VisualizationCircle *, unsigned int>::iterator it = commutingConnections.find(destination);
+
+    // Entry exists
+    if (it != commutingConnections.end()) {
+        return it->second;
+    }
+    // Entry didn't exist
+    else {
+        return 0U;
+    }
 }

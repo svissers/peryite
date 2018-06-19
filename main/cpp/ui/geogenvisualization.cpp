@@ -238,6 +238,10 @@ void GeoGenVisualization::addWorkplace(std::shared_ptr<WorkPlace> &workplace) {
 }
 
 void GeoGenVisualization::parseGeoGrid(std::map<unsigned int,GeoGridFilePtr> &geo_file, int amountOfRegions) {
+    // -----------------------------------------------------------------------------------------
+    // Use the geo file to create a list of visualization circles.
+    // -----------------------------------------------------------------------------------------
+
     for (int region = 0; region < amountOfRegions; region++) {
         GeoGrid grid = geo_file[region]->ReadGrid();
 
