@@ -123,7 +123,7 @@ void MainWindow::on_General_editConfigFile_clicked()
 
 void MainWindow::on_Geo_generateGeoGen_clicked()
 {
-    if (!guiController->setupGenDirectory()) {
+    if (!guiController->SetupGenDirectory()) {
         QMessageBox::warning(this, tr("Incorrect Config File"), "There seems to be something wrong with your config file. Are you sure it's up to date?");
         updateButtons();
         return;

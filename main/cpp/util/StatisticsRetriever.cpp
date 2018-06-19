@@ -53,7 +53,9 @@ StatisticsRetriever::StatisticsRetriever(std::shared_ptr<Population>& pop) {
 std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int>
     StatisticsRetriever::GetStatisticsOfArea(std::shared_ptr<Population>& pop, util::spherical_point center, double radius) {
 
-    std::cout << "radius: " << radius << std::endl;
+    std::cout << "input latitude: " << center.get<0>() << std::endl;
+    std::cout << "input longitude: " << center.get<1>() << std::endl;
+    std::cout << "input radius: " << radius << std::endl;
 
     //the statistics this funditon will return
     std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int> returnVal;
@@ -62,8 +64,8 @@ std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int,
     //calculating which parts of the sorted pop are possibly in range of the chosen area
     auto radiusofBands = uint(ceil(radius/m_bandLengthInKm));
 
-    auto band_of_center = uint( (center.get<1>() - m_min_long) / m_bandLengthInKm );
-    unsigned int beginband = std::max(uint(0), band_of_center+radiusofBands);
+    auto band_of_center = uint( (center.get<1>() - m_min_long) / m_bandLength );
+    unsigned int beginband = std::max(uint(0), band_of_center-radiusofBands);
     auto endband = std::min(uint(AMOUNTOFBANDSPOP-1), band_of_center+radiusofBands);
 
     std::cout << "radius: " << radiusofBands << std::endl;
@@ -122,6 +124,10 @@ std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int,
         }
 
     }
+
+    std::cout << "popInRadius: " << popInRadius << std::endl;
+    std::cout << "sickPeople: " << sickPeople << std::endl;
+
     std::get<0>(returnVal) = popInRadius;
     std::get<1>(returnVal) = sickPeople;
     std::get<2>(returnVal) = schoolPeople;

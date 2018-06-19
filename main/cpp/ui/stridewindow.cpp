@@ -223,10 +223,10 @@ void StrideWindow::run(int steps) {
     // -----------------------------------------------------------------------------------------
     guiController->RunStride(steps);
 
-    if (guiController->simulationDone()) {
+    if (guiController->SimulationDone()) {
         endOfRun(false);
     } else {
-        setStatus("Paused. Day " + Util::formatInt(guiController->getCurrentDay()) + "/" + Util::formatInt(guiController->getTotalDays()));
+        setStatus("Paused. Day " + Util::formatInt(guiController->GetCurrentDay()) + "/" + Util::formatInt(guiController->GetTotalDays()));
         setRunButtonsEnabled(true);
     }
 }

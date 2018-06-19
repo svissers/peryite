@@ -66,16 +66,16 @@ public:
         void Setup();
 
         /// Get the current day (used by Qt windows)
-        int getCurrentDay();
+        int GetCurrentDay();
 
         /// Get the total days (used by Qt windows)
-        int getTotalDays();
+        int GetTotalDays();
 
         /// Returns true if simulation is over.
-        bool simulationDone();
+        bool SimulationDone();
 
         /// Setup gendirectory
-        bool setupGenDirectory();
+        bool SetupGenDirectory();
 
         /// GeoGen and PopGen functions
         bool GeoGen();
