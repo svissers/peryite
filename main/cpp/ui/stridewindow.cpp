@@ -113,15 +113,14 @@ bool StrideWindow::setupRun() {
     // -----------------------------------------------------------------------------------------
     // Override parameters in the config ptree
     // -----------------------------------------------------------------------------------------
-    config_pt.put("run.rng_seed", m_run_rngSeed);
-    config_pt.put("run.rng_type", m_run_rngType.toStdString());
-    config_pt.put("run.output_map", m_run_mapViewer ? 1 : 0);
-    config_pt.put("run.stride_log_level", m_run_log ? "info" : "None");
+    guiController->SetRngSeed(m_run_rngSeed);
+    guiController->SetRngType(m_run_rngType.toStdString());
+    guiController->SetOutputMap(m_run_mapViewer ? 1 : 0);
+    guiController->SetLogLevel(m_run_log ? "info" : "None");
 
     // -----------------------------------------------------------------------------------------
     // Assign the ptree and setup the simulation
     // -----------------------------------------------------------------------------------------
-    guiController->AssignPTree(config_pt);
     guiController->Setup();
 
     // -----------------------------------------------------------------------------------------

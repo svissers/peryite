@@ -270,6 +270,26 @@ bool GuiController::PopGen()
     }
 }
 
+void GuiController::SetRngSeed(int seed)
+{
+    m_config_pt.put("run.rng_seed", seed);
+}
+
+void GuiController::SetRngType(std::string type)
+{
+    m_config_pt.put("run.rng_type", type);
+}
+
+void GuiController::SetOutputMap(int outputMap)
+{
+    m_config_pt.put("run.output_map", outputMap);
+}
+
+void GuiController::SetLogLevel(std::string level)
+{
+    m_config_pt.put("run.stride_log_level", level);
+}
+
 std::map<unsigned int, GeoGridFilePtr>& GuiController::GetGeoGridFile()
 {
     return m_gendir->GetGeoGridFile();

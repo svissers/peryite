@@ -81,6 +81,12 @@ public:
         bool GeoGen();
         bool PopGen();
 
+        /// Config tree setters for stride window overrides
+        void SetRngSeed(int seed);
+        void SetRngType(std::string type);
+        void SetOutputMap(int outputMap);
+        void SetLogLevel(std::string level);
+
         /// Get a location name from the geogrid map
         std::string GetLocationName(stride::util::spherical_point point);
 
