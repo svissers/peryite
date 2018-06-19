@@ -58,9 +58,11 @@ std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int,
     //the statistics this funditon will return
     std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int> returnVal;
 
+    double m_bandLengthInKm = m_bandLength * 111.320 * cos(center.get<0>());
     //calculating which parts of the sorted pop are possibly in range of the chosen area
-    auto radiusofBands = uint(ceil(radius/m_bandLength));
-    auto band_of_center = uint(round( (center.get<1>() - m_min_long) / m_bandLength ));
+    auto radiusofBands = uint(ceil(radius/m_bandLengthInKm));
+
+    auto band_of_center = uint( (center.get<1>() - m_min_long) / m_bandLengthInKm );
     unsigned int beginband = std::max(uint(0), band_of_center+radiusofBands);
     auto endband = std::min(uint(AMOUNTOFBANDSPOP-1), band_of_center+radiusofBands);
 
