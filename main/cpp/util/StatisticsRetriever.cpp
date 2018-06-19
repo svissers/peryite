@@ -47,10 +47,6 @@ StatisticsRetriever::StatisticsRetriever(std::shared_ptr<Population>& pop) {
             }
         }
     }
-
-    for(auto band : m_sortedPopByIndex){
-       std::cout << "band size: " << band.size() << std::endl;
-    }
 }
 
 std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int>
@@ -96,15 +92,23 @@ std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int,
                 misses = 0;
                 //Fill in statistics
                 popInRadius++;
-                if(person.IsInPool(ContactPoolType::Id::School)){
+                if(person.GetPoolId(ContactPoolType::Id::School) != 0){
                     if(person.GetHealth().IsInfected()){
+                        sickPeople++;
+                        sickSchoolPeople++;
+                    }
+                    else if(person.GetHealth().IsRecovered()){
                         sickPeople++;
                         sickSchoolPeople++;
                     }
                     schoolPeople++;
                 }
-                else if(person.IsInPool(ContactPoolType::Id::Work)){
+                else if(person.GetPoolId(ContactPoolType::Id::Work) != 0){
                     if(person.GetHealth().IsInfected()){
+                        sickPeople++;
+                        sickWorkPeople++;
+                    }
+                    else if(person.GetHealth().IsRecovered()){
                         sickPeople++;
                         sickWorkPeople++;
                     }
@@ -112,6 +116,10 @@ std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int,
                 }
                 else{
                     if(person.GetHealth().IsInfected()) {
+                        sickPeople++;
+                        sickUnemployedPeople++;
+                    }
+                    else if(person.GetHealth().IsRecovered()){
                         sickPeople++;
                         sickUnemployedPeople++;
                     }
