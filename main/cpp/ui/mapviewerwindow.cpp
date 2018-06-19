@@ -122,6 +122,20 @@ void MapViewerWindow::createPopView(const std::shared_ptr<Population> population
     // -----------------------------------------------------------------------------------------
     ContactPoolSys contactPoolSys = population->GetContactPoolSys();
 
+    for (auto i = 0U; i < population->size(); i++) {
+        Person p = population->at(i);
+        spherical_point commutingCoord = findCommutingCoordinate(contactPoolSys, p);
+
+        spherical_point homeCoord = population->at(i).GetCoordinate();
+        VisualizationCircle *homeCircle = findCircle(homeCoord);
+
+        if (p.GetAge() >= 18) {
+            VisualizationCircle *commutingCircle = findCircle(commutingCoord);
+
+            homeCircle->addCommuter(commutingCircle);
+        }
+    }
+
     update();
 }
 
@@ -173,10 +187,14 @@ void MapViewerWindow::updateSelection(QPointF mousePos) {
 }
 
 void MapViewerWindow::draw() {
+    // -----------------------------------------------------------------------------------------
     // Load pixmap from image
+    // -----------------------------------------------------------------------------------------
     QPixmap pixmap = QPixmap::fromImage(*image);
 
+    // -----------------------------------------------------------------------------------------
     // Draw circles on the pixmap
+    // -----------------------------------------------------------------------------------------
     if (ui->displayLocation->isChecked()) {
         for (int i = 0; i < circles->size(); i++) {
             VisualizationCircle *c = circles->at(i);
@@ -189,10 +207,30 @@ void MapViewerWindow::draw() {
         }
     }
 
-    // Set pixmap pixmap
+    // -----------------------------------------------------------------------------------------
+    // Draw commuting lines on the pixmap
+    // -----------------------------------------------------------------------------------------
+    if (ui->displayCommuting->isChecked()) {
+        for (int i = 0; i < circles->size(); i++) {
+            VisualizationCircle *c = circles->at(i);
+
+            // Only draw for the selected circle,
+            // Drawing all lines for all circles would be...
+            // ...intense
+            if (c != selected) { continue; }
+
+            drawLines(&pixmap, c);
+        }
+    }
+
+    // -----------------------------------------------------------------------------------------
+    // Set gfxitem pixmap to pixmap
+    // -----------------------------------------------------------------------------------------
     gfxItem->setPixmap(pixmap);
 
+    // -----------------------------------------------------------------------------------------
     // Display the scene
+    // -----------------------------------------------------------------------------------------
     ui->FlandersMap->setScene(gfxScene);
 }
 
@@ -214,6 +252,43 @@ void MapViewerWindow::drawCircle(QPixmap *pm, VisualizationCircle *circle) {
 
     // Draw
     painter.drawEllipse(point, radius, radius);
+}
+
+void MapViewerWindow::drawLines(QPixmap *pm, VisualizationCircle *circle) {
+    cout << "d1" << endl;
+
+    // QPainter
+    QPainter painter(pm);
+    painter.scale(1, 1);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(circle->getColor(true));
+
+    cout << "d2" << endl;
+
+    // Iterate over all lines
+    std::map<VisualizationCircle *, unsigned int>::iterator it;
+
+    cout << "d3" << endl;
+
+    if (circle->commutingConnections.empty()) {return;}
+
+    for (it = circle->commutingConnections.begin(); it != circle->commutingConnections.end(); it++) {
+        cout << "d3.1" << endl;
+
+        // Parameters
+        QPointF p1 = circle->position;
+        
+        cout << "d3.1.1" << endl;
+
+        QPointF p2 = it->first->position;
+
+        cout << "d3.2" << endl;
+        
+        // Draw the line
+        painter.drawLine(p1, p2);
+
+        cout << "d3.3" << endl;
+    }
 }
 
 void MapViewerWindow::closeEvent(QCloseEvent *event) {
@@ -332,4 +407,22 @@ void MapViewerWindow::setupStatisticsRetriever(std::shared_ptr<Population> popul
     }
     
     statsRetriever = new StatisticsRetriever(population);
+}
+
+spherical_point MapViewerWindow::findCommutingCoordinate(ContactPoolSys &cps, Person &person)
+{
+    double age = person.GetAge();
+    ContactPoolType::Id type;
+    int id;
+
+    if (age <= 25) {
+        type = ContactPoolType::Id::School;
+    }
+    else {
+        type = ContactPoolType::Id::Work;
+    }
+
+    id = person.GetPoolId(type);
+
+    return cps[type][id].GetCoordinate();
 }

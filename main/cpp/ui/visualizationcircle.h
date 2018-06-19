@@ -36,13 +36,13 @@ public:
     void addCommuter(VisualizationCircle* destination);
     unsigned int getCommuters(VisualizationCircle* destination);
 
-private:
-    static qreal minimumRadius;
-    static qreal maximumRadius;
-
     /// Stores pointers to all other circles (key), where >0 persons commute from this circle to the other circle.
     /// value is the amount of people commuting over this connection.
     std::map<VisualizationCircle *, unsigned int> commutingConnections;
+
+private:
+    static qreal minimumRadius;
+    static qreal maximumRadius;
 };
 
 #endif // VISUALIZATIONCIRCLE_H
