@@ -25,7 +25,7 @@ StatisticsRetriever::StatisticsRetriever(std::shared_ptr<Population>& pop) {
         auto person = pop->at(index);
         for(unsigned int i = 0; i < AMOUNTOFBANDSPOP; i++) {
             double offset = (i+1) * m_bandLength;
-            if(person.GetCoordinate().get<1>() < m_bandLength+offset) {
+            if(person.GetCoordinate().get<1>() < m_min_long + offset) {
                 if (m_sortedPopByIndex.at(i).empty()) {
                     // The band is empty, simply insert.
                     m_sortedPopByIndex.at(i).push_back(index);
@@ -48,6 +48,9 @@ StatisticsRetriever::StatisticsRetriever(std::shared_ptr<Population>& pop) {
         }
     }
 
+    for(auto band : m_sortedPopByIndex){
+       std::cout << "band size: " << band.size() << std::endl;
+    }
 }
 
 std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int>
