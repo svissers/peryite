@@ -297,31 +297,45 @@ ptree StrideWindow::createConfigPTree(QString configFile) {
 }
 
 QScatterSeries* StrideWindow::createResultsScatterSeries(QList<int> resultsList, int totalRuns, QString file, int seed, QString rngEngineType) {
+    // -----------------------------------------------------------------------------------------
     // Create scatter series
+    // -----------------------------------------------------------------------------------------
     QScatterSeries *series = new QScatterSeries();
 
+    // -----------------------------------------------------------------------------------------
     // Sort our results list
+    // -----------------------------------------------------------------------------------------
     sort(resultsList.begin(), resultsList.end());
 
+    // -----------------------------------------------------------------------------------------
     // Constructing the name
+    // -----------------------------------------------------------------------------------------
     QString name = "Total infected count, " + QString::number(totalRuns) + " sorted runs";
+
     // Add Config name
     name += " (config: " + file + ")";
+
     // Mention random seed
     name += (ui->varySeedInput->isChecked()) ? " (random seed)" : (" (seed: " + QString::number(seed));
+
     // Mention random seed
     name += (ui->varyEngineInput->isChecked()) ? " (random rng engine)" : (" (rng engine: " + rngEngineType + ")");
+
     // Mention spread (+percentage)
     int spread = resultsList.last() - resultsList.first();
     float spreadPercentage = 100 * (float)(spread) / resultsList.last();
     name += " - " + QString::number(spread) + "(" +  QString::number(spreadPercentage) + "\%) spread";
 
+    // -----------------------------------------------------------------------------------------
     // Set the series name, marker
+    // -----------------------------------------------------------------------------------------
     series->setName(name);
     series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
     series->setMarkerSize(10);
 
+    // -----------------------------------------------------------------------------------------
     // Add our items from the sorted list to the scatterseries
+    // -----------------------------------------------------------------------------------------
     for (int i = 0; i < resultsList.size(); i++) {
         series->append(i, resultsList[i]);
     }
@@ -372,13 +386,17 @@ void StrideWindow::setInitialParameters() {
 }
 
 void StrideWindow::setTooltips() {
+    // -----------------------------------------------------------------------------------------
     // Main Config
+    // -----------------------------------------------------------------------------------------
     ui->configInput->setToolTip("The Config file that will be used by Stride.");
     ui->configLabel->setToolTip("The Config file that will be used by Stride.");
     ui->runsInput->setToolTip("The amount of runs in this batch. >1 runs is used for testing, mainly.");
     ui->runsLabel->setToolTip("The amount of runs in this batch. >1 runs is used for testing, mainly.");
 
+    // -----------------------------------------------------------------------------------------
     // Options
+    // -----------------------------------------------------------------------------------------
     ui->logInput->setToolTip("Should Stride log to the command line?");
     ui->logLabel->setToolTip("Should Stride log to the command line?");
     ui->mapViewerInput->setToolTip("Enable to show a live map with epidemiologic info during the simulation.");
@@ -386,7 +404,9 @@ void StrideWindow::setTooltips() {
     ui->scatterGraphInput->setToolTip("Enable to show a scatter graph with results for all runs after completion of the batch.\nMainly used for testing.");
     ui->scatterGraphLabel->setToolTip("Enable to show a scatter graph with results for all runs after completion of the batch.\nMainly used for testing.");
 
+    // -----------------------------------------------------------------------------------------
     // RNG
+    // -----------------------------------------------------------------------------------------
     ui->engineInput->setToolTip("The RNG engine that will be used by Stride.");
     ui->engineLabel->setToolTip("The RNG engine that will be used by Stride.");
     ui->seedInput->setToolTip("The RNG seed that will be used by Stride.");
@@ -396,7 +416,9 @@ void StrideWindow::setTooltips() {
     ui->varySeedInput->setToolTip("If enabled, a random RNG seed will be used every run.");
     ui->varySeedLabel->setToolTip("If enabled, a random RNG seed will be used every run.");
 
+    // -----------------------------------------------------------------------------------------
     // Running
+    // -----------------------------------------------------------------------------------------
     ui->runButton_all->setToolTip("Run all (remaining) steps of the current simulation run.");
     ui->runButton_batch->setToolTip("Run all (remaining) runs in this batch.");
     ui->runButton_multi->setToolTip("Run X steps of the current simulation run. (Input X to the right)");
