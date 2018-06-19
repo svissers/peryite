@@ -120,7 +120,7 @@ void AssignWorkplaces(
                 auto destination = grid[city_gen()];
                 auto dest_coord = destination->coordinate;
                 vector<shared_ptr<WorkPlace>> dest_workplaces;
-
+                // if the city is not fragmented, use its coordinate
                 if(!destination->is_fragmented){
                     auto band_of_interest = uint(round( (dest_coord.get<1>() - grid.m_min_long) / grid.m_longitude_band_width ));
 
@@ -134,6 +134,7 @@ void AssignWorkplaces(
                     }
                 }
                 else{
+                    // if it is fragmente check the coordinates of its  fragments
                     for(auto fragment : destination->fragmented_coords){
                         auto band_of_interest = uint(round( (fragment.get<1>() - grid.m_min_long) / grid.m_longitude_band_width ));
 
@@ -149,6 +150,7 @@ void AssignWorkplaces(
 
                 }
 
+                //if no workplaces are found in the city that the person would commute to or the city does not exist
                 if (dest_workplaces.empty()) {
                     std::cout << "error: the requested city to commute to was not found." << std::endl;
                     continue;
