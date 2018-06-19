@@ -24,7 +24,7 @@ StatisticsRetriever::StatisticsRetriever(std::shared_ptr<Population>& pop) {
         auto person = pop->at(index);
         for(unsigned int i = 0; i < AMOUNTOFBANDSPOP; i++) {
             double offset = (i+1) * m_bandLength;
-            if(person.GetCoordinate().get<1>() < m_bandLength+offset) {
+            if(person.GetCoordinate().get<1>() < m_min_long + offset) {
                 if (m_sortedPopByIndex.at(i).empty()) {
                     // The band is empty, simply insert.
                     m_sortedPopByIndex.at(i).push_back(index);
@@ -46,7 +46,6 @@ StatisticsRetriever::StatisticsRetriever(std::shared_ptr<Population>& pop) {
             }
         }
     }
-
 }
 
 std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int>
@@ -59,8 +58,8 @@ std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int,
     //calculating which parts of the sorted pop are possibly in range of the chosen area
     auto radiusofBands = uint(ceil(radius/m_bandLengthInKm));
 
-    auto band_of_center = uint( (center.get<1>() - m_min_long) / m_bandLengthInKm );
-    unsigned int beginband = std::max(uint(0), band_of_center+radiusofBands);
+    auto band_of_center = uint( (center.get<1>() - m_min_long) / m_bandLength );
+    unsigned int beginband = std::max(uint(0), band_of_center-radiusofBands);
     auto endband = std::min(uint(AMOUNTOFBANDSPOP-1), band_of_center+radiusofBands);
 
 
@@ -72,26 +71,35 @@ std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int,
     unsigned int sickWorkPeople = 0;
     unsigned int unemployedPeople = 0;
     unsigned int sickUnemployedPeople = 0;
-
     //going over the chosen parts of the population,
+
     for(unsigned int i = beginband; i <= endband; i++){
         unsigned int misses = 0;
         for (unsigned int j : m_sortedPopByIndex[i]) {
             auto person = pop->at(j);
             auto personCoord = person.GetCoordinate();
+
             if(calculateDistance(personCoord, center) <= radius){
                 misses = 0;
                 //Fill in statistics
                 popInRadius++;
-                if(person.IsInPool(ContactPoolType::Id::School)){
+                if(person.GetPoolId(ContactPoolType::Id::School) != 0){
                     if(person.GetHealth().IsInfected()){
+                        sickPeople++;
+                        sickSchoolPeople++;
+                    }
+                    else if(person.GetHealth().IsRecovered()){
                         sickPeople++;
                         sickSchoolPeople++;
                     }
                     schoolPeople++;
                 }
-                else if(person.IsInPool(ContactPoolType::Id::Work)){
+                else if(person.GetPoolId(ContactPoolType::Id::Work) != 0){
                     if(person.GetHealth().IsInfected()){
+                        sickPeople++;
+                        sickWorkPeople++;
+                    }
+                    else if(person.GetHealth().IsRecovered()){
                         sickPeople++;
                         sickWorkPeople++;
                     }
@@ -99,6 +107,10 @@ std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int,
                 }
                 else{
                     if(person.GetHealth().IsInfected()) {
+                        sickPeople++;
+                        sickUnemployedPeople++;
+                    }
+                    else if(person.GetHealth().IsRecovered()){
                         sickPeople++;
                         sickUnemployedPeople++;
                     }
