@@ -255,39 +255,23 @@ void MapViewerWindow::drawCircle(QPixmap *pm, VisualizationCircle *circle) {
 }
 
 void MapViewerWindow::drawLines(QPixmap *pm, VisualizationCircle *circle) {
-    cout << "d1" << endl;
-
     // QPainter
     QPainter painter(pm);
     painter.scale(1, 1);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(circle->getColor(true));
 
-    cout << "d2" << endl;
-
     // Iterate over all lines
-    std::map<VisualizationCircle *, unsigned int>::iterator it;
+    for (int i = 0; i < circles->size(); i++) {
+        VisualizationCircle *c = circles->at(i);
 
-    cout << "d3" << endl;
+        unsigned int commuters = circle->getCommuters(c);
 
-    if (circle->commutingConnections.empty()) {return;}
-
-    for (it = circle->commutingConnections.begin(); it != circle->commutingConnections.end(); it++) {
-        cout << "d3.1" << endl;
-
-        // Parameters
-        QPointF p1 = circle->position;
-        
-        cout << "d3.1.1" << endl;
-
-        QPointF p2 = it->first->position;
-
-        cout << "d3.2" << endl;
-        
-        // Draw the line
-        painter.drawLine(p1, p2);
-
-        cout << "d3.3" << endl;
+        if (commuters > 0) {
+            QPointF p1 = circle->position;
+            QPointF p2 = c->position;
+            painter.drawLine(p1, p2);
+        }
     }
 }
 
