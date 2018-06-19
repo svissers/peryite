@@ -120,9 +120,10 @@ void AssignWorkplaces(
                 auto destination = grid[city_gen()];
                 auto dest_coord = destination->coordinate;
                 vector<shared_ptr<WorkPlace>> dest_workplaces;
+                auto band_of_interest = uint( (dest_coord.get<1>() - grid.m_min_long) / grid.m_longitude_band_width );
+
                 // if the city is not fragmented, use its coordinate
                 if(!destination->is_fragmented){
-                    auto band_of_interest = uint(round( (dest_coord.get<1>() - grid.m_min_long) / grid.m_longitude_band_width ));
 
 
                     for (const auto& gstruct : workplaces[band_of_interest]) {
@@ -136,7 +137,7 @@ void AssignWorkplaces(
                 else{
                     // if it is fragmente check the coordinates of its  fragments
                     for(auto fragment : destination->fragmented_coords){
-                        auto band_of_interest = uint(round( (fragment.get<1>() - grid.m_min_long) / grid.m_longitude_band_width ));
+                        band_of_interest = uint( (fragment.get<1>() - grid.m_min_long) / grid.m_longitude_band_width );
 
 
                         for (const auto& gstruct : workplaces[band_of_interest]) {
