@@ -85,6 +85,7 @@ std::tuple<unsigned int, unsigned int, unsigned int, unsigned int, unsigned int,
     //going over the chosen parts of the population,
     for(unsigned int i = beginband; i <= endband; i++){
         unsigned int misses = 0;
+        std::cout << m_sortedPopByIndex[i].size() << std::endl;
         for (unsigned int j : m_sortedPopByIndex[i]) {
             auto person = pop->at(j);
             auto personCoord = person.GetCoordinate();
