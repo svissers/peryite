@@ -70,9 +70,13 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
             auto coord      = person.GetCoordinate();
             auto pool       = ContactPool(hh_id, ContactPoolType::Id::Household, coord);
             pool_sys[ContactPoolType::Id::Household].emplace_back(pool);
-            while (population->at(i).GetPoolId(ContactPoolType::Id::Household) == hh_id) {
-                if (++i > region->last_person_id)
+            while (true) {
+                auto j = i + 1;
+                if (j > region->last_person_id)
                     break;
+                if (population->at(j).GetPoolId(ContactPoolType::Id::Household) != hh_id)
+                    break;
+                i = j;
             }
         }
         region->last_cps[ContactPoolType::Id::Household] = hh_id;
