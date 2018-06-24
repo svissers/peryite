@@ -61,9 +61,9 @@ public:
         // Set the coordinate of this contactpool
         void SetCoordinate(util::spherical_point coord) { m_coord = coord; }
 
-        void UpdateTravel(unsigned int simDay); /// Checks if an end travel date is reached and removes every person from that date out of the contactpool, it also calls person->ReturnHome()
+        void UpdateTravel(const Person* person); /// Checks if an end travel date is reached and removes every person from that date out of the contactpool, it also calls person->ReturnHome()
 
-        void AddTraveller(Person* person, unsigned int EndDate); /// adds a traveller from a different region to the contactpool
+        void AddTraveller(const Person* person); /// adds a traveller from a different region to the contactpool
 
 private:
         /// Sort w.r.t. health status: order: exposed/infected/recovered, susceptible, immune.

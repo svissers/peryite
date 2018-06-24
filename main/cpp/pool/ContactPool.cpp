@@ -73,27 +73,20 @@ std::tuple<bool, size_t> ContactPool::SortMembers()
         return std::make_tuple(infectious_cases, num_cases);
 }
 
-void ContactPool::AddTraveller(Person* person, unsigned int EndDate) {
-        std::vector<unsigned int> ids;
-        ids.push_back(person->GetId());
-        std::pair<map<unsigned long, std::vector<unsigned int>>::iterator, bool> inMap = m_end_travel_dates.emplace(EndDate, ids);
-        if(!std::get<1>(inMap)){
-            m_end_travel_dates.at(EndDate).push_back(person->GetId());
-        }
-        m_members.push_back(person);
+void ContactPool::AddTraveller(const Person* person) {
+        m_members.emplace_back(const_cast<Person*> (person));
+        //m_index_immune++;
 }
 
-void ContactPool::UpdateTravel(unsigned int simDay) {
-        std::vector<unsigned int> travel_enders = m_end_travel_dates.at(simDay);
-        for(unsigned int id : travel_enders) {
-                for (auto it = m_members.begin(); it < m_members.end(); it ++) {
-                        Person* p = *it;
-                        if (p->GetId() == id){
-                                m_members.erase(it);
+void ContactPool::UpdateTravel(const Person* person) {
+            for (auto it = m_members.begin(); it < m_members.end(); it ++) {
+                    Person* p = *it;
+                    if (person->GetId() == p->GetId()){
+                            m_members.erase(it);
+                            break;
 
-                        }
-                }
-        }
+                    }
+            }
 }
 
 } // namespace stride

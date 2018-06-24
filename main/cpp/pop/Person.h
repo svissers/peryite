@@ -121,13 +121,13 @@ public:
         void setPoolId(const ContactPoolType::Id& pool_type, unsigned int id) { m_pool_ids[pool_type] = id; }
 
         /// Changes work_id and sets m_in_pools to false for all other contactpools
-        void TravelBusiness();
+        std::tuple<unsigned int, unsigned int> TravelBusiness();
 
         /// Changes prim and sec ids and sets m_in_pools to false for all other contactpools
-        void TravelTourism();
+        std::tuple<unsigned int, unsigned int, unsigned int, unsigned int> TravelTourism();
 
         /// Replaces m_pools with m_backup_pool_ids and sets m_in_pools to true for all contactpools
-        void ReturnHome();
+        std::tuple<bool, unsigned int, unsigned int, unsigned int, unsigned int> ReturnHome();
 
         void setTravelWorkId(unsigned int travel_work_id){m_travel_work_id = travel_work_id;}
 

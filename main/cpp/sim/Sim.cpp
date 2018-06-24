@@ -79,14 +79,35 @@ void Sim::TimeStep()
                 for (size_t i = 0; i < population.size(); ++i) {
                         if(get<0>(population[i].getTravelDates()) == simDay){
                             if(population[i].getTravelWorkId() != 0){
-                                population[i].TravelBusiness();
+                                std::tuple<unsigned int, unsigned int> workIds = population[i].TravelBusiness();
+                                poolSys[ContactPoolType::Id::Work][get<0>(workIds)].AddTraveller(&population[i]);
+                                poolSys[ContactPoolType::Id::Work][get<1>(workIds)].UpdateTravel(&population[i]);
                             }
                             else{
-                                population[i].TravelTourism();
+                                std::tuple<unsigned int, unsigned int, unsigned int, unsigned int> comIds = population[i].TravelTourism();
+
+
+                                poolSys[ContactPoolType::Id::PrimaryCommunity][get<0>(comIds)].AddTraveller(&population[i]);
+                                poolSys[ContactPoolType::Id::SecondaryCommunity][get<1>(comIds)].AddTraveller(&population[i]);
+                                poolSys[ContactPoolType::Id::PrimaryCommunity][get<2>(comIds)].UpdateTravel(&population[i]);
+                                poolSys[ContactPoolType::Id::SecondaryCommunity][get<3>(comIds)].UpdateTravel(&population[i]);
+
                             }
                         }
                         else if(get<1>(population[i].getTravelDates()) == simDay){
-                            population[i].ReturnHome();
+                            std::tuple<bool, unsigned int, unsigned int, unsigned int, unsigned int> homeIds = population[i].ReturnHome();
+                            if(get<0>(homeIds)){
+                                poolSys[ContactPoolType::Id::PrimaryCommunity][get<1>(homeIds)].AddTraveller(&population[i]);
+                                poolSys[ContactPoolType::Id::SecondaryCommunity][get<2>(homeIds)].AddTraveller(&population[i]);
+                                poolSys[ContactPoolType::Id::PrimaryCommunity][get<3>(homeIds)].UpdateTravel(&population[i]);
+                                poolSys[ContactPoolType::Id::SecondaryCommunity][get<4>(homeIds)].UpdateTravel(&population[i]);
+                            }
+                            else{
+
+                                poolSys[ContactPoolType::Id::Work][get<1>(homeIds)].AddTraveller(&population[i]);
+                                poolSys[ContactPoolType::Id::Work][get<2>(homeIds)].UpdateTravel(&population[i]);
+                            }
+
                         }
                         population[i].Update(isWorkOff, isSchoolOff);
                 }
