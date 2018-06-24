@@ -1,0 +1,384 @@
+[==========] BenchmarkRunner running.
+[ RUN      ] Sim.No_fragment - 100000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.No_fragment - 100000  (total: 00:00:09 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:04
+       Slowest time: 00:00:05
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:05
+[ RUN      ] Sim.No_fragment - 1e+06  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.No_fragment - 1e+06  (total: 00:02:33 ) 
+[   RUNS   ]        Median time: 00:01:17
+       Fastest time: 00:01:15
+       Slowest time: 00:01:17
+       1st quartile: 00:01:15
+       3rd quartile: 00:01:17
+[ RUN      ] Sim.No_fragment - 200000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.No_fragment - 200000  (total: 00:00:17 ) 
+[   RUNS   ]        Median time: 00:00:09
+       Fastest time: 00:00:08
+       Slowest time: 00:00:09
+       1st quartile: 00:00:08
+       3rd quartile: 00:00:09
+[ RUN      ] Sim.No_fragment - 300000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.No_fragment - 300000  (total: 00:00:29 ) 
+[   RUNS   ]        Median time: 00:00:14
+       Fastest time: 00:00:14
+       Slowest time: 00:00:14
+       1st quartile: 00:00:14
+       3rd quartile: 00:00:14
+[ RUN      ] Sim.No_fragment - 400000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.No_fragment - 400000  (total: 00:00:40 ) 
+[   RUNS   ]        Median time: 00:00:20
+       Fastest time: 00:00:19
+       Slowest time: 00:00:20
+       1st quartile: 00:00:19
+       3rd quartile: 00:00:20
+[ RUN      ] Sim.No_fragment - 500000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.No_fragment - 500000  (total: 00:00:54 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.No_fragment - 600000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.No_fragment - 600000  (total: 00:01:10 ) 
+[   RUNS   ]        Median time: 00:00:35
+       Fastest time: 00:00:35
+       Slowest time: 00:00:35
+       1st quartile: 00:00:35
+       3rd quartile: 00:00:35
+[ RUN      ] Sim.No_fragment - 700000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.No_fragment - 700000  (total: 00:01:27 ) 
+[   RUNS   ]        Median time: 00:00:43
+       Fastest time: 00:00:43
+       Slowest time: 00:00:43
+       1st quartile: 00:00:43
+       3rd quartile: 00:00:43
+[ RUN      ] Sim.No_fragment - 800000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.No_fragment - 800000  (total: 00:01:54 ) 
+[   RUNS   ]        Median time: 00:00:57
+       Fastest time: 00:00:57
+       Slowest time: 00:00:57
+       1st quartile: 00:00:57
+       3rd quartile: 00:00:57
+[ RUN      ] Sim.No_fragment - 900000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.No_fragment - 900000  (total: 00:02:21 ) 
+[   RUNS   ]        Median time: 00:01:14
+       Fastest time: 00:01:07
+       Slowest time: 00:01:14
+       1st quartile: 00:01:07
+       3rd quartile: 00:01:14
+[ RUN      ] Sim.fragment - 100000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.fragment - 100000  (total: 00:00:09 ) 
+[   RUNS   ]        Median time: 00:00:04
+       Fastest time: 00:00:04
+       Slowest time: 00:00:04
+       1st quartile: 00:00:04
+       3rd quartile: 00:00:04
+[ RUN      ] Sim.fragment - 1e+06  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.fragment - 1e+06  (total: 00:03:13 ) 
+[   RUNS   ]        Median time: 00:01:38
+       Fastest time: 00:01:35
+       Slowest time: 00:01:38
+       1st quartile: 00:01:35
+       3rd quartile: 00:01:38
+[ RUN      ] Sim.fragment - 200000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.fragment - 200000  (total: 00:00:20 ) 
+[   RUNS   ]        Median time: 00:00:11
+       Fastest time: 00:00:09
+       Slowest time: 00:00:11
+       1st quartile: 00:00:09
+       3rd quartile: 00:00:11
+[ RUN      ] Sim.fragment - 300000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.fragment - 300000  (total: 00:00:29 ) 
+[   RUNS   ]        Median time: 00:00:14
+       Fastest time: 00:00:14
+       Slowest time: 00:00:14
+       1st quartile: 00:00:14
+       3rd quartile: 00:00:14
+[ RUN      ] Sim.fragment - 400000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.fragment - 400000  (total: 00:00:41 ) 
+[   RUNS   ]        Median time: 00:00:21
+       Fastest time: 00:00:19
+       Slowest time: 00:00:21
+       1st quartile: 00:00:19
+       3rd quartile: 00:00:21
+[ RUN      ] Sim.fragment - 500000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.fragment - 500000  (total: 00:00:57 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:28
+       Slowest time: 00:00:28
+       1st quartile: 00:00:28
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.fragment - 600000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.fragment - 600000  (total: 00:01:16 ) 
+[   RUNS   ]        Median time: 00:00:38
+       Fastest time: 00:00:37
+       Slowest time: 00:00:38
+       1st quartile: 00:00:37
+       3rd quartile: 00:00:38
+[ RUN      ] Sim.fragment - 700000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.fragment - 700000  (total: 00:01:34 ) 
+[   RUNS   ]        Median time: 00:00:47
+       Fastest time: 00:00:46
+       Slowest time: 00:00:47
+       1st quartile: 00:00:46
+       3rd quartile: 00:00:47
+[ RUN      ] Sim.fragment - 800000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.fragment - 800000  (total: 00:02:09 ) 
+[   RUNS   ]        Median time: 00:01:05
+       Fastest time: 00:01:04
+       Slowest time: 00:01:05
+       1st quartile: 00:01:04
+       3rd quartile: 00:01:05
+[ RUN      ] Sim.fragment - 900000  (2 runs)
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+building region: Flanders
+------ finished.
+writing population file... finished.
+assigning population in region: Flanders
+----- finished.
+writing population... finished.
+[     DONE ] Sim.fragment - 900000  (total: 00:02:20 ) 
+[   RUNS   ]        Median time: 00:01:10
+       Fastest time: 00:01:10
+       Slowest time: 00:01:10
+       1st quartile: 00:01:10
+       3rd quartile: 00:01:10
+[==========] BenchmarkRunner done: executed: 20, aborted: 0, disabled: 0
+[==========] Tests registered but excluded by regex filter: 0
+[==========] Total elapsed time for these benchmark tests: 00:25:10

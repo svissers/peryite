@@ -1,0 +1,3177 @@
+[==========] BenchmarkRunner running.
+[ RUN      ] Sim.Fragment centers (5 runs)
+[     DONE ] Sim.Fragment centers (total: 00:02:37 ) 
+[   RUNS   ]        Median time: 00:00:30
+       Fastest time: 00:00:29
+       Slowest time: 00:00:34
+       1st quartile: 00:00:29
+       3rd quartile: 00:00:32
+[ RUN      ] Sim.No fragment centers (5 runs)
+[     DONE ] Sim.No fragment centers (total: 00:02:23 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:32
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.Population_size - 10000  (5 runs)
+[     DONE ] Sim.Population_size - 10000  (total: 00:00:12 ) 
+[   RUNS   ]        Median time: 00:00:02
+       Fastest time: 00:00:02
+       Slowest time: 00:00:02
+       1st quartile: 00:00:02
+       3rd quartile: 00:00:02
+[ RUN      ] Sim.Population_size - 110000  (5 runs)
+[     DONE ] Sim.Population_size - 110000  (total: 00:00:28 ) 
+[   RUNS   ]        Median time: 00:00:05
+       Fastest time: 00:00:05
+       Slowest time: 00:00:05
+       1st quartile: 00:00:05
+       3rd quartile: 00:00:05
+[ RUN      ] Sim.Population_size - 160000  (5 runs)
+[     DONE ] Sim.Population_size - 160000  (total: 00:00:40 ) 
+[   RUNS   ]        Median time: 00:00:07
+       Fastest time: 00:00:07
+       Slowest time: 00:00:09
+       1st quartile: 00:00:07
+       3rd quartile: 00:00:08
+[ RUN      ] Sim.Population_size - 210000  (5 runs)
+[     DONE ] Sim.Population_size - 210000  (total: 00:00:48 ) 
+[   RUNS   ]        Median time: 00:00:09
+       Fastest time: 00:00:09
+       Slowest time: 00:00:10
+       1st quartile: 00:00:09
+       3rd quartile: 00:00:09
+[ RUN      ] Sim.Population_size - 260000  (5 runs)
+[     DONE ] Sim.Population_size - 260000  (total: 00:01:03 ) 
+[   RUNS   ]        Median time: 00:00:12
+       Fastest time: 00:00:11
+       Slowest time: 00:00:14
+       1st quartile: 00:00:12
+       3rd quartile: 00:00:12
+[ RUN      ] Sim.Population_size - 310000  (5 runs)
+[     DONE ] Sim.Population_size - 310000  (total: 00:01:23 ) 
+[   RUNS   ]        Median time: 00:00:16
+       Fastest time: 00:00:15
+       Slowest time: 00:00:18
+       1st quartile: 00:00:15
+       3rd quartile: 00:00:17
+[ RUN      ] Sim.Population_size - 360000  (5 runs)
+[     DONE ] Sim.Population_size - 360000  (total: 00:01:38 ) 
+[   RUNS   ]        Median time: 00:00:19
+       Fastest time: 00:00:18
+       Slowest time: 00:00:22
+       1st quartile: 00:00:18
+       3rd quartile: 00:00:19
+[ RUN      ] Sim.Population_size - 410000  (5 runs)
+[     DONE ] Sim.Population_size - 410000  (total: 00:01:47 ) 
+[   RUNS   ]        Median time: 00:00:21
+       Fastest time: 00:00:21
+       Slowest time: 00:00:21
+       1st quartile: 00:00:21
+       3rd quartile: 00:00:21
+[ RUN      ] Sim.Population_size - 460000  (5 runs)
+[     DONE ] Sim.Population_size - 460000  (total: 00:02:06 ) 
+[   RUNS   ]        Median time: 00:00:24
+       Fastest time: 00:00:24
+       Slowest time: 00:00:27
+       1st quartile: 00:00:24
+       3rd quartile: 00:00:25
+[ RUN      ] Sim.Population_size - 510000  (5 runs)
+[     DONE ] Sim.Population_size - 510000  (total: 00:02:31 ) 
+[   RUNS   ]        Median time: 00:00:30
+       Fastest time: 00:00:29
+       Slowest time: 00:00:31
+       1st quartile: 00:00:29
+       3rd quartile: 00:00:30
+[ RUN      ] Sim.Population_size - 560000  (5 runs)
+[     DONE ] Sim.Population_size - 560000  (total: 00:03:00 ) 
+[   RUNS   ]        Median time: 00:00:35
+       Fastest time: 00:00:33
+       Slowest time: 00:00:39
+       1st quartile: 00:00:34
+       3rd quartile: 00:00:36
+[ RUN      ] Sim.Population_size - 60000  (5 runs)
+[     DONE ] Sim.Population_size - 60000  (total: 00:00:19 ) 
+[   RUNS   ]        Median time: 00:00:03
+       Fastest time: 00:00:03
+       Slowest time: 00:00:04
+       1st quartile: 00:00:03
+       3rd quartile: 00:00:03
+[ RUN      ] Sim.School_cp_size - 1  (3 runs)
+[     DONE ] Sim.School_cp_size - 1  (total: 00:01:25 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.School_cp_size - 101  (3 runs)
+[     DONE ] Sim.School_cp_size - 101  (total: 00:01:23 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.School_cp_size - 121  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.School_cp_size - 121  (total: 00:01:34 ) 
+[   RUNS   ]        Median time: 00:00:30
+       Fastest time: 00:00:28
+       Slowest time: 00:00:35
+       1st quartile: 00:00:28
+       3rd quartile: 00:00:35
+[ RUN      ] Sim.School_cp_size - 141  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.School_cp_size - 141  (total: 00:01:24 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.School_cp_size - 161  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.School_cp_size - 161  (total: 00:01:29 ) 
+[   RUNS   ]        Median time: 00:00:30
+       Fastest time: 00:00:27
+       Slowest time: 00:00:31
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:31
+[ RUN      ] Sim.School_cp_size - 181  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.School_cp_size - 181  (total: 00:01:30 ) 
+[   RUNS   ]        Median time: 00:00:29
+       Fastest time: 00:00:27
+       Slowest time: 00:00:32
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:32
+[ RUN      ] Sim.School_cp_size - 21  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.School_cp_size - 21  (total: 00:01:27 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:27
+       Slowest time: 00:00:31
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:31
+[ RUN      ] Sim.School_cp_size - 41  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.School_cp_size - 41  (total: 00:01:27 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:26
+       Slowest time: 00:00:31
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:31
+[ RUN      ] Sim.School_cp_size - 61  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.School_cp_size - 61  (total: 00:01:28 ) 
+[   RUNS   ]        Median time: 00:00:29
+       Fastest time: 00:00:27
+       Slowest time: 00:00:30
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:30
+[ RUN      ] Sim.School_cp_size - 81  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.School_cp_size - 81  (total: 00:01:28 ) 
+[   RUNS   ]        Median time: 00:00:29
+       Fastest time: 00:00:29
+       Slowest time: 00:00:29
+       1st quartile: 00:00:29
+       3rd quartile: 00:00:29
+[ RUN      ] Sim.Seeding rate - 0.002  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Seeding rate - 0.002  (total: 00:01:29 ) 
+[   RUNS   ]        Median time: 00:00:29
+       Fastest time: 00:00:29
+       Slowest time: 00:00:29
+       1st quartile: 00:00:29
+       3rd quartile: 00:00:29
+[ RUN      ] Sim.Seeding rate - 0.003  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Seeding rate - 0.003  (total: 00:01:29 ) 
+[   RUNS   ]        Median time: 00:00:29
+       Fastest time: 00:00:29
+       Slowest time: 00:00:30
+       1st quartile: 00:00:29
+       3rd quartile: 00:00:30
+[ RUN      ] Sim.Seeding rate - 0.004  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Seeding rate - 0.004  (total: 00:01:30 ) 
+[   RUNS   ]        Median time: 00:00:30
+       Fastest time: 00:00:30
+       Slowest time: 00:00:30
+       1st quartile: 00:00:30
+       3rd quartile: 00:00:30
+[ RUN      ] Sim.Seeding rate - 0.005  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Seeding rate - 0.005  (total: 00:01:23 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:26
+       Slowest time: 00:00:29
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:29
+[ RUN      ] Sim.Student_commute_fraction - 0.05  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Student_commute_fraction - 0.05  (total: 00:01:22 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:27
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.Student_commute_fraction - 0.15  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Student_commute_fraction - 0.15  (total: 00:01:24 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.Student_commute_fraction - 0.25  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Student_commute_fraction - 0.25  (total: 00:01:24 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.Student_commute_fraction - 0.35  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Student_commute_fraction - 0.35  (total: 00:01:24 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.Student_commute_fraction - 0.45  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Student_commute_fraction - 0.45  (total: 00:01:26 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:31
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:31
+[ RUN      ] Sim.Student_commute_fraction - 0.55  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Student_commute_fraction - 0.55  (total: 00:01:23 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:27
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.Student_commute_fraction - 0.65  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Student_commute_fraction - 0.65  (total: 00:01:23 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.Student_commute_fraction - 0.75  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Student_commute_fraction - 0.75  (total: 00:01:24 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.Student_commute_fraction - 0.85  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Student_commute_fraction - 0.85  (total: 00:01:34 ) 
+[   RUNS   ]        Median time: 00:00:31
+       Fastest time: 00:00:27
+       Slowest time: 00:00:36
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:36
+[ RUN      ] Sim.Student_commute_fraction - 0.95  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Student_commute_fraction - 0.95  (total: 00:01:32 ) 
+[   RUNS   ]        Median time: 00:00:31
+       Fastest time: 00:00:28
+       Slowest time: 00:00:32
+       1st quartile: 00:00:28
+       3rd quartile: 00:00:32
+[ RUN      ] Sim.Student_fraction - 0.05  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Student_fraction - 0.05  (total: 00:01:30 ) 
+[   RUNS   ]        Median time: 00:00:29
+       Fastest time: 00:00:29
+       Slowest time: 00:00:31
+       1st quartile: 00:00:29
+       3rd quartile: 00:00:31
+[ RUN      ] Sim.Student_fraction - 0.15  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Student_fraction - 0.15  (total: 00:01:27 ) 
+[   RUNS   ]        Median time: 00:00:29
+       Fastest time: 00:00:27
+       Slowest time: 00:00:30
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:30
+[ RUN      ] Sim.Student_fraction - 0.25  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Student_fraction - 0.25  (total: 00:01:25 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:27
+       Slowest time: 00:00:29
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:29
+[ RUN      ] Sim.Student_fraction - 0.35  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Student_fraction - 0.35  (total: 00:01:24 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.Student_fraction - 0.45  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Student_fraction - 0.45  (total: 00:01:25 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:27
+       Slowest time: 00:00:30
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:30
+[ RUN      ] Sim.Student_fraction - 0.55  (3 runs)
+[     DONE ] Sim.Student_fraction - 0.55  (total: 00:01:23 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:27
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.Student_fraction - 0.65  (3 runs)
+[     DONE ] Sim.Student_fraction - 0.65  (total: 00:01:25 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:28
+       Slowest time: 00:00:28
+       1st quartile: 00:00:28
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.Student_fraction - 0.75  (3 runs)
+[     DONE ] Sim.Student_fraction - 0.75  (total: 00:01:27 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:32
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:32
+[ RUN      ] Sim.Student_fraction - 0.85  (3 runs)
+[     DONE ] Sim.Student_fraction - 0.85  (total: 00:01:21 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.Student_fraction - 0.95  (3 runs)
+[     DONE ] Sim.Student_fraction - 0.95  (total: 00:01:21 ) 
+[   RUNS   ]        Median time: 00:00:26
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.University_cp_size - 1  (3 runs)
+[     DONE ] Sim.University_cp_size - 1  (total: 00:01:34 ) 
+[   RUNS   ]        Median time: 00:00:31
+       Fastest time: 00:00:30
+       Slowest time: 00:00:32
+       1st quartile: 00:00:30
+       3rd quartile: 00:00:32
+[ RUN      ] Sim.University_cp_size - 101  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.University_cp_size - 101  (total: 00:01:27 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:27
+       Slowest time: 00:00:30
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:30
+[ RUN      ] Sim.University_cp_size - 121  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.University_cp_size - 121  (total: 00:01:25 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:28
+       Slowest time: 00:00:28
+       1st quartile: 00:00:28
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.University_cp_size - 141  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.University_cp_size - 141  (total: 00:01:26 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:28
+       Slowest time: 00:00:29
+       1st quartile: 00:00:28
+       3rd quartile: 00:00:29
+[ RUN      ] Sim.University_cp_size - 161  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.University_cp_size - 161  (total: 00:01:27 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:28
+       Slowest time: 00:00:30
+       1st quartile: 00:00:28
+       3rd quartile: 00:00:30
+[ RUN      ] Sim.University_cp_size - 181  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.University_cp_size - 181  (total: 00:01:26 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:28
+       Slowest time: 00:00:29
+       1st quartile: 00:00:28
+       3rd quartile: 00:00:29
+[ RUN      ] Sim.University_cp_size - 21  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.University_cp_size - 21  (total: 00:01:24 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:28
+       Slowest time: 00:00:28
+       1st quartile: 00:00:28
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.University_cp_size - 41  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.University_cp_size - 41  (total: 00:01:30 ) 
+[   RUNS   ]        Median time: 00:00:30
+       Fastest time: 00:00:29
+       Slowest time: 00:00:30
+       1st quartile: 00:00:29
+       3rd quartile: 00:00:30
+[ RUN      ] Sim.University_cp_size - 61  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.University_cp_size - 61  (total: 00:01:30 ) 
+[   RUNS   ]        Median time: 00:00:30
+       Fastest time: 00:00:29
+       Slowest time: 00:00:30
+       1st quartile: 00:00:29
+       3rd quartile: 00:00:30
+[ RUN      ] Sim.University_cp_size - 81  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.University_cp_size - 81  (total: 00:01:32 ) 
+[   RUNS   ]        Median time: 00:00:30
+       Fastest time: 00:00:30
+       Slowest time: 00:00:31
+       1st quartile: 00:00:30
+       3rd quartile: 00:00:31
+[ RUN      ] Sim.Workplace_size - 105  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Workplace_size - 105  (total: 00:01:07 ) 
+[   RUNS   ]        Median time: 00:00:20
+       Fastest time: 00:00:19
+       Slowest time: 00:00:27
+       1st quartile: 00:00:19
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.Workplace_size - 205  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Workplace_size - 205  (total: 00:00:52 ) 
+[   RUNS   ]        Median time: 00:00:17
+       Fastest time: 00:00:17
+       Slowest time: 00:00:17
+       1st quartile: 00:00:17
+       3rd quartile: 00:00:17
+[ RUN      ] Sim.Workplace_size - 305  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Workplace_size - 305  (total: 00:01:05 ) 
+[   RUNS   ]        Median time: 00:00:21
+       Fastest time: 00:00:21
+       Slowest time: 00:00:22
+       1st quartile: 00:00:21
+       3rd quartile: 00:00:22
+[ RUN      ] Sim.Workplace_size - 405  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Workplace_size - 405  (total: 00:00:59 ) 
+[   RUNS   ]        Median time: 00:00:19
+       Fastest time: 00:00:19
+       Slowest time: 00:00:20
+       1st quartile: 00:00:19
+       3rd quartile: 00:00:20
+[ RUN      ] Sim.Workplace_size - 5  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Workplace_size - 5  (total: 00:03:09 ) 
+[   RUNS   ]        Median time: 00:01:03
+       Fastest time: 00:01:02
+       Slowest time: 00:01:03
+       1st quartile: 00:01:02
+       3rd quartile: 00:01:03
+[ RUN      ] Sim.Workplace_size - 505  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Workplace_size - 505  (total: 00:00:56 ) 
+[   RUNS   ]        Median time: 00:00:18
+       Fastest time: 00:00:18
+       Slowest time: 00:00:19
+       1st quartile: 00:00:18
+       3rd quartile: 00:00:19
+[ RUN      ] Sim.Workplace_size - 605  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Workplace_size - 605  (total: 00:00:52 ) 
+[   RUNS   ]        Median time: 00:00:17
+       Fastest time: 00:00:17
+       Slowest time: 00:00:18
+       1st quartile: 00:00:17
+       3rd quartile: 00:00:18
+[ RUN      ] Sim.Workplace_size - 705  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Workplace_size - 705  (total: 00:00:53 ) 
+[   RUNS   ]        Median time: 00:00:17
+       Fastest time: 00:00:17
+       Slowest time: 00:00:18
+       1st quartile: 00:00:17
+       3rd quartile: 00:00:18
+[ RUN      ] Sim.Workplace_size - 805  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Workplace_size - 805  (total: 00:00:51 ) 
+[   RUNS   ]        Median time: 00:00:17
+       Fastest time: 00:00:16
+       Slowest time: 00:00:17
+       1st quartile: 00:00:16
+       3rd quartile: 00:00:17
+[ RUN      ] Sim.Workplace_size - 905  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.Workplace_size - 905  (total: 00:00:50 ) 
+[   RUNS   ]        Median time: 00:00:16
+       Fastest time: 00:00:16
+       Slowest time: 00:00:17
+       1st quartile: 00:00:16
+       3rd quartile: 00:00:17
+[==========] BenchmarkRunner running.
+[ RUN      ] Sim.school_size - 100  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.school_size - 100  (total: 00:01:19 ) 
+[   RUNS   ]        Median time: 00:00:26
+       Fastest time: 00:00:26
+       Slowest time: 00:00:26
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:26
+[ RUN      ] Sim.school_size - 1100  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.school_size - 1100  (total: 00:01:19 ) 
+[   RUNS   ]        Median time: 00:00:26
+       Fastest time: 00:00:25
+       Slowest time: 00:00:27
+       1st quartile: 00:00:25
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.school_size - 1600  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.school_size - 1600  (total: 00:01:21 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.school_size - 2100  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.school_size - 2100  (total: 00:01:21 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:27
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.school_size - 2600  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.school_size - 2600  (total: 00:01:31 ) 
+[   RUNS   ]        Median time: 00:00:30
+       Fastest time: 00:00:27
+       Slowest time: 00:00:34
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:34
+[ RUN      ] Sim.school_size - 3100  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.school_size - 3100  (total: 00:01:22 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:27
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.school_size - 3600  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.school_size - 3600  (total: 00:01:21 ) 
+[   RUNS   ]        Median time: 00:00:26
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.school_size - 4100  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.school_size - 4100  (total: 00:01:21 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.school_size - 4600  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.school_size - 4600  (total: 00:01:21 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.school_size - 600  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.school_size - 600  (total: 00:01:20 ) 
+[   RUNS   ]        Median time: 00:00:26
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.university_size - 100  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.university_size - 100  (total: 00:01:27 ) 
+[   RUNS   ]        Median time: 00:00:29
+       Fastest time: 00:00:28
+       Slowest time: 00:00:29
+       1st quartile: 00:00:28
+       3rd quartile: 00:00:29
+[ RUN      ] Sim.university_size - 1100  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.university_size - 1100  (total: 00:01:21 ) 
+[   RUNS   ]        Median time: 00:00:26
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.university_size - 2100  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.university_size - 2100  (total: 00:01:22 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:27
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.university_size - 3100  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.university_size - 3100  (total: 00:01:20 ) 
+[   RUNS   ]        Median time: 00:00:26
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.university_size - 4100  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.university_size - 4100  (total: 00:01:22 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:27
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.university_size - 5100  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.university_size - 5100  (total: 00:01:20 ) 
+[   RUNS   ]        Median time: 00:00:26
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.university_size - 6100  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.university_size - 6100  (total: 00:01:22 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:27
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.university_size - 7100  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.university_size - 7100  (total: 00:01:21 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:27
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.university_size - 8100  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.university_size - 8100  (total: 00:01:21 ) 
+[   RUNS   ]        Median time: 00:00:26
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.university_size - 9100  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.university_size - 9100  (total: 00:01:22 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:27
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.work_commute_fraction - 0.05  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_commute_fraction - 0.05  (total: 00:00:50 ) 
+[   RUNS   ]        Median time: 00:00:16
+       Fastest time: 00:00:16
+       Slowest time: 00:00:16
+       1st quartile: 00:00:16
+       3rd quartile: 00:00:16
+[ RUN      ] Sim.work_commute_fraction - 0.15  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_commute_fraction - 0.15  (total: 00:00:57 ) 
+[   RUNS   ]        Median time: 00:00:19
+       Fastest time: 00:00:18
+       Slowest time: 00:00:19
+       1st quartile: 00:00:18
+       3rd quartile: 00:00:19
+[ RUN      ] Sim.work_commute_fraction - 0.25  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_commute_fraction - 0.25  (total: 00:01:08 ) 
+[   RUNS   ]        Median time: 00:00:22
+       Fastest time: 00:00:21
+       Slowest time: 00:00:24
+       1st quartile: 00:00:21
+       3rd quartile: 00:00:24
+[ RUN      ] Sim.work_commute_fraction - 0.35  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_commute_fraction - 0.35  (total: 00:01:13 ) 
+[   RUNS   ]        Median time: 00:00:24
+       Fastest time: 00:00:24
+       Slowest time: 00:00:24
+       1st quartile: 00:00:24
+       3rd quartile: 00:00:24
+[ RUN      ] Sim.work_commute_fraction - 0.45  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_commute_fraction - 0.45  (total: 00:01:19 ) 
+[   RUNS   ]        Median time: 00:00:26
+       Fastest time: 00:00:26
+       Slowest time: 00:00:26
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:26
+[ RUN      ] Sim.work_commute_fraction - 0.55  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_commute_fraction - 0.55  (total: 00:01:25 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:28
+       Slowest time: 00:00:28
+       1st quartile: 00:00:28
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.work_commute_fraction - 0.65  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_commute_fraction - 0.65  (total: 00:01:28 ) 
+[   RUNS   ]        Median time: 00:00:29
+       Fastest time: 00:00:29
+       Slowest time: 00:00:29
+       1st quartile: 00:00:29
+       3rd quartile: 00:00:29
+[ RUN      ] Sim.work_commute_fraction - 0.75  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_commute_fraction - 0.75  (total: 00:01:31 ) 
+[   RUNS   ]        Median time: 00:00:30
+       Fastest time: 00:00:30
+       Slowest time: 00:00:30
+       1st quartile: 00:00:30
+       3rd quartile: 00:00:30
+[ RUN      ] Sim.work_commute_fraction - 0.85  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_commute_fraction - 0.85  (total: 00:01:30 ) 
+[   RUNS   ]        Median time: 00:00:30
+       Fastest time: 00:00:29
+       Slowest time: 00:00:30
+       1st quartile: 00:00:29
+       3rd quartile: 00:00:30
+[ RUN      ] Sim.work_commute_fraction - 0.95  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_commute_fraction - 0.95  (total: 00:01:31 ) 
+[   RUNS   ]        Median time: 00:00:30
+       Fastest time: 00:00:29
+       Slowest time: 00:00:30
+       1st quartile: 00:00:29
+       3rd quartile: 00:00:30
+[ RUN      ] Sim.work_fraction - 0.05  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_fraction - 0.05  (total: 00:00:40 ) 
+[   RUNS   ]        Median time: 00:00:13
+       Fastest time: 00:00:13
+       Slowest time: 00:00:13
+       1st quartile: 00:00:13
+       3rd quartile: 00:00:13
+[ RUN      ] Sim.work_fraction - 0.15  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_fraction - 0.15  (total: 00:00:43 ) 
+[   RUNS   ]        Median time: 00:00:14
+       Fastest time: 00:00:14
+       Slowest time: 00:00:14
+       1st quartile: 00:00:14
+       3rd quartile: 00:00:14
+[ RUN      ] Sim.work_fraction - 0.25  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_fraction - 0.25  (total: 00:00:48 ) 
+[   RUNS   ]        Median time: 00:00:16
+       Fastest time: 00:00:16
+       Slowest time: 00:00:16
+       1st quartile: 00:00:16
+       3rd quartile: 00:00:16
+[ RUN      ] Sim.work_fraction - 0.35  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_fraction - 0.35  (total: 00:00:53 ) 
+[   RUNS   ]        Median time: 00:00:17
+       Fastest time: 00:00:17
+       Slowest time: 00:00:17
+       1st quartile: 00:00:17
+       3rd quartile: 00:00:17
+[ RUN      ] Sim.work_fraction - 0.45  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_fraction - 0.45  (total: 00:00:58 ) 
+[   RUNS   ]        Median time: 00:00:19
+       Fastest time: 00:00:19
+       Slowest time: 00:00:19
+       1st quartile: 00:00:19
+       3rd quartile: 00:00:19
+[ RUN      ] Sim.work_fraction - 0.55  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_fraction - 0.55  (total: 00:01:08 ) 
+[   RUNS   ]        Median time: 00:00:22
+       Fastest time: 00:00:22
+       Slowest time: 00:00:22
+       1st quartile: 00:00:22
+       3rd quartile: 00:00:22
+[ RUN      ] Sim.work_fraction - 0.65  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_fraction - 0.65  (total: 00:01:26 ) 
+[   RUNS   ]        Median time: 00:00:26
+       Fastest time: 00:00:25
+       Slowest time: 00:00:33
+       1st quartile: 00:00:25
+       3rd quartile: 00:00:33
+[ RUN      ] Sim.work_fraction - 0.75  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_fraction - 0.75  (total: 00:01:29 ) 
+[   RUNS   ]        Median time: 00:00:30
+       Fastest time: 00:00:29
+       Slowest time: 00:00:30
+       1st quartile: 00:00:29
+       3rd quartile: 00:00:30
+[ RUN      ] Sim.work_fraction - 0.85  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_fraction - 0.85  (total: 00:01:45 ) 
+[   RUNS   ]        Median time: 00:00:35
+       Fastest time: 00:00:33
+       Slowest time: 00:00:36
+       1st quartile: 00:00:33
+       3rd quartile: 00:00:36
+[ RUN      ] Sim.work_fraction - 0.95  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_fraction - 0.95  (total: 00:02:10 ) 
+[   RUNS   ]        Median time: 00:00:43
+       Fastest time: 00:00:41
+       Slowest time: 00:00:44
+       1st quartile: 00:00:41
+       3rd quartile: 00:00:44
+[==========] BenchmarkRunner done: executed: 40, aborted: 0, disabled: 0
+[==========] Tests registered but excluded by regex filter: 0
+[==========] Total elapsed time for these benchmark tests: 00:52:27
+[==========] BenchmarkRunner running.
+[ RUN      ] Sim.r0 - 10  (3 runs)
+[     DONE ] Sim.r0 - 10  (total: 00:01:26 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:28
+       Slowest time: 00:00:28
+       1st quartile: 00:00:28
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.r0 - 11  (3 runs)
+[     DONE ] Sim.r0 - 11  (total: 00:01:26 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:28
+       Slowest time: 00:00:28
+       1st quartile: 00:00:28
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.r0 - 12  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.r0 - 12  (total: 00:01:15 ) 
+[   RUNS   ]        Median time: 00:00:25
+       Fastest time: 00:00:25
+       Slowest time: 00:00:25
+       1st quartile: 00:00:25
+       3rd quartile: 00:00:25
+[ RUN      ] Sim.r0 - 13  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.r0 - 13  (total: 00:01:18 ) 
+[   RUNS   ]        Median time: 00:00:26
+       Fastest time: 00:00:25
+       Slowest time: 00:00:26
+       1st quartile: 00:00:25
+       3rd quartile: 00:00:26
+[ RUN      ] Sim.r0 - 14  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.r0 - 14  (total: 00:01:18 ) 
+[   RUNS   ]        Median time: 00:00:26
+       Fastest time: 00:00:26
+       Slowest time: 00:00:26
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:26
+[ RUN      ] Sim.r0 - 5  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.r0 - 5  (total: 00:01:32 ) 
+[   RUNS   ]        Median time: 00:00:30
+       Fastest time: 00:00:30
+       Slowest time: 00:00:31
+       1st quartile: 00:00:30
+       3rd quartile: 00:00:31
+[ RUN      ] Sim.r0 - 6  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.r0 - 6  (total: 00:01:28 ) 
+[   RUNS   ]        Median time: 00:00:29
+       Fastest time: 00:00:29
+       Slowest time: 00:00:29
+       1st quartile: 00:00:29
+       3rd quartile: 00:00:29
+[ RUN      ] Sim.r0 - 7  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.r0 - 7  (total: 00:01:26 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:28
+       Slowest time: 00:00:29
+       1st quartile: 00:00:28
+       3rd quartile: 00:00:29
+[ RUN      ] Sim.r0 - 8  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.r0 - 8  (total: 00:01:24 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:28
+       Slowest time: 00:00:28
+       1st quartile: 00:00:28
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.r0 - 9  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.r0 - 9  (total: 00:01:23 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.tourist_fraction - 0.1  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.tourist_fraction - 0.1  (total: 00:01:20 ) 
+[   RUNS   ]        Median time: 00:00:26
+       Fastest time: 00:00:26
+       Slowest time: 00:00:26
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:26
+[ RUN      ] Sim.tourist_fraction - 0.2  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.tourist_fraction - 0.2  (total: 00:01:23 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:26
+       Slowest time: 00:00:29
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:29
+[ RUN      ] Sim.tourist_fraction - 0.3  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.tourist_fraction - 0.3  (total: 00:01:20 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.tourist_fraction - 0.4  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.tourist_fraction - 0.4  (total: 00:01:21 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.tourist_fraction - 0.5  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.tourist_fraction - 0.5  (total: 00:01:21 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.tourist_fraction - 0.6  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.tourist_fraction - 0.6  (total: 00:01:20 ) 
+[   RUNS   ]        Median time: 00:00:26
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.tourist_fraction - 0.7  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.tourist_fraction - 0.7  (total: 00:01:21 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:27
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.tourist_fraction - 0.8  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.tourist_fraction - 0.8  (total: 00:01:22 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.tourist_fraction - 0.9  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.tourist_fraction - 0.9  (total: 00:01:21 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.vaccine_link_probability - 0  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.vaccine_link_probability - 0  (total: 00:01:30 ) 
+[   RUNS   ]        Median time: 00:00:29
+       Fastest time: 00:00:27
+       Slowest time: 00:00:33
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:33
+[ RUN      ] Sim.vaccine_link_probability - 0.001  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.vaccine_link_probability - 0.001  (total: 00:01:21 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.vaccine_link_probability - 0.002  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.vaccine_link_probability - 0.002  (total: 00:01:21 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.vaccine_link_probability - 0.003  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.vaccine_link_probability - 0.003  (total: 00:01:30 ) 
+[   RUNS   ]        Median time: 00:00:30
+       Fastest time: 00:00:27
+       Slowest time: 00:00:33
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:33
+[ RUN      ] Sim.vaccine_link_probability - 0.004  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.vaccine_link_probability - 0.004  (total: 00:01:21 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:26
+       Slowest time: 00:00:27
+       1st quartile: 00:00:26
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.vaccine_rate - 0.4  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.vaccine_rate - 0.4  (total: 00:01:22 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:27
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.vaccine_rate - 0.5  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.vaccine_rate - 0.5  (total: 00:01:23 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.vaccine_rate - 0.6  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.vaccine_rate - 0.6  (total: 00:01:23 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.vaccine_rate - 0.7  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.vaccine_rate - 0.7  (total: 00:01:23 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:27
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:27
+[ RUN      ] Sim.vaccine_rate - 0.8  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.vaccine_rate - 0.8  (total: 00:01:23 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.vaccine_rate - 0.9  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.vaccine_rate - 0.9  (total: 00:01:23 ) 
+[   RUNS   ]        Median time: 00:00:27
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.work_travel_fraction - 0.1  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_travel_fraction - 0.1  (total: 00:01:23 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.work_travel_fraction - 0.2  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_travel_fraction - 0.2  (total: 00:01:24 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:28
+       Slowest time: 00:00:28
+       1st quartile: 00:00:28
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.work_travel_fraction - 0.3  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_travel_fraction - 0.3  (total: 00:01:24 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.work_travel_fraction - 0.4  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_travel_fraction - 0.4  (total: 00:01:24 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.work_travel_fraction - 0.5  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_travel_fraction - 0.5  (total: 00:01:24 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:27
+       Slowest time: 00:00:28
+       1st quartile: 00:00:27
+       3rd quartile: 00:00:28
+[ RUN      ] Sim.work_travel_fraction - 0.6  (3 runs)
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+building region: Flanders
+  working: ----------- finished.
+writing population file... finished.
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+[     DONE ] Sim.work_travel_fraction - 0.6  (total: 00:01:25 ) 
+[   RUNS   ]        Median time: 00:00:28
+       Fastest time: 00:00:28
+       Slowest time: 00:00:28
+       1st quartile: 00:00:28
+       3rd quartile: 00:00:28
+[==========] BenchmarkRunner done: executed: 34, aborted: 0, disabled: 0
+[==========] Tests registered but excluded by regex filter: 0
+[==========] Total elapsed time for these benchmark tests: 00:47:17

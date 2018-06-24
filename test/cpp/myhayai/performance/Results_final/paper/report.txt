@@ -1,0 +1,22 @@
+1. Introduction
+All performance tests were run using the run_performance.xml configuration, which can be found on our website 'https://stijnvissers.be/'. You can also find a copy in the main/resources/config folder on the performance_tests branch of our git repository 'https://github.com/svissers/peryite'. The execution time measurements were performed using the myhayai tool. Both the tool and the test code that was run can be found in the test/cpp/myhayai folder on the git repository. The hardware measurements were performed using the PAPI tool: http://icl.utk.edu/papi/. The code that was run and analyzed can also be found on the performance_tests branch of our git repository. All test results and their graphs for both the execution time and hardware measurements can be found on our website.
+
+2. Execution time measurements
+The majority of all configurable parameters were tested to measure their impact on the total execution time. This includes both the time taken to generate a population and the total simulation time. The two obvious parameters with the largest impact on execution time are population size and the number of simulation days. Both appear to cause an exponential increase.
+[num_days.png] [population_size.png] 
+Parameters such as the size of a school/university/workplace/community, the size of a contact pool in a school/university/workplace/community and the fraction of students that commutes do not appear to have a very large impact on the total execution time relative to other parameters. 
+[university_cp_size.png] [university_size.png]
+The most noteworthy parameters are the fraction of the employable population that is active (work_fraction) and the fraction of workers that commutes (work_commute_fraction). The work fraction appears to have a large exponential impact. Lowering the fraction at a population size of 500.000 from 70% to 20% has about the same impact as lowering the population size at a fraction of 70% from 500.000 to 250.000. The work_commute_fraction has slightly less of an impact and appears to reach a ceiling at around 70%. The impact of these two parameters is most likely caused by the WorkplacesBuilder and WorkplaceAssigner sections of the code and less so during the actual simulation. We will further investigate these two sections using the hardware performance counters from the PAPI tool.
+[work_fraction.png] [work_commute_fraction.png]
+When fragmenting the centers, the difference in execution time appears to be small. When comparing both fragmented and non-fragmented versions in function of the population size we can see that for small population sizes they stay about the same. When the population size increases beyond 1 million people however, the fragmented version requires increasingly more execution time compared to the non fragmented version.
+[Population_size_fragments.png]
+
+3. Hardware measurements
+We investigate the number of instructions performed per section of code. From the chart it is clear that both building workplaces and assigning employees to them takes the majority of the work in the GeoPop component.
+
+Assigning persons to their primary and secondary communities also requires a large number of instructions. This is because the entire population needs to be assigned to both a primary and a secondary community. Each assignment requires a separate search for a list of the closest communities.
+
+The Geogen and Popgen rest sections summarize the writing of files for each section. We can see that this also has a large effect on the performance.
+
+The difference in instruction count regarding the fragmentation of centers for all code sections is minimal with low population counts (<500.000). With a population size above 1 million people however, there is a clear difference for the assignWorkplace and assignCommunity sections. This coincides with the measurements found in the previous section. 
+[instructions_1m_no_fragments.png] [instructions_1m_fragments.png]

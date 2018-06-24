@@ -25,6 +25,7 @@
 #include "pop/Population.h"
 #include "sim/SimBuilder.h"
 #include "util/RunConfigManager.h"
+#include <papi.h>
 
 #include <omp.h>
 
@@ -58,6 +59,11 @@ std::shared_ptr<Sim> Sim::Create(const string& configString, shared_ptr<Populati
 
 void Sim::TimeStep()
 {
+        //long_long values[5];
+
+        //if (PAPI_read_counters(values, 5) != PAPI_OK)
+         //   throw runtime_error(string(__func__) + "> Papi error occured while reading counters after building population.");
+
         // Logic where you compute (on the basis of input/config for initial day or on the basis of
         // number of sick persons, duration of epidemic etc) what kind of DaysOff scheme you apply.
         const auto daysOff     = std::make_shared<DaysOffStandard>(m_calendar);
@@ -106,7 +112,16 @@ void Sim::TimeStep()
                         }
                 }
         }
-
+        /*
+        if (PAPI_read_counters(values, 5) != PAPI_OK)
+            throw runtime_error(string(__func__) + "> Papi error occured while simulating.");
+        std::cout << "Timestep " << m_calendar->GetSimulationDay() << " Counters: " << std::endl;
+        std::cout << "Total instructions: " << values[0] << std::endl;
+        std::cout << "Load instructions: " << values[1] << std::endl;
+        std::cout << "Store Instructions: " << values[2] << std::endl;
+        std::cout << "Branch Instructions: " << values[3] << std::endl;
+        std::cout << "Total cycles: " << values[4] << std::endl;
+        */
         m_population->GetContactLogger()->flush();
         m_calendar->AdvanceDay();
 }

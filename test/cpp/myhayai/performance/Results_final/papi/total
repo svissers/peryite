@@ -1,0 +1,15 @@
+Geogen Counters: 
+Total instructions: 6559762734
+Load instructions: 1897238542
+Store Instructions: 1130651716
+Branch Instructions: 1648901562
+Total cycles: 5069798943
+
+
+Popgen Counters: 
+Total instructions: 9227370502
+Load instructions: 2259434193
+Store Instructions: 1443621950
+Branch Instructions: 2042249969
+Total cycles: 5981159216
+

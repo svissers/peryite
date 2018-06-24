@@ -11,14 +11,6 @@
  *  along with the software. If not, see <http://www.gnu.org/licenses/>.
  *
  *  Copyright 2018, Kuylen E, Willem L, Broeckhove J
- *
- *  This software has been (completely) rewritten starting from
- *  the hayai code by Nick Bruun. The original copyright, to be
- *  found in this directory still aplies.
- */
-/**
- * @file
- * Impleme.
  */
 
 #include "myhayai/BenchmarkRunner.hpp"
@@ -46,366 +38,38 @@ int main(int argc, char** argv)
 {
         int exit_status = EXIT_SUCCESS;
 
-        auto geopop_factory_builder = [](
-            double student_fraction, double student_commute_fraction,
-            double work_fraction, double work_commute_fraction,
-            unsigned int school_size, unsigned int university_size,
-            unsigned int workplace_size, unsigned int school_cp_size,
-            unsigned int university_cp_size, unsigned int population_size,
-            bool fragment_centers, string postfix)
-            {
-                return [
-                        student_fraction, student_commute_fraction,
-                        work_fraction, work_commute_fraction,
-                        school_size, university_size,
-                        workplace_size, school_cp_size,
-                        university_cp_size, population_size,
-                        fragment_centers, postfix]() 
-                    {
-                    // Get configuration
-                    auto  config = "run_geopop.xml";
-                    ptree configPt;
-
-                    const boost::filesystem::path configPath =
-                        FileSys::GetConfigDir() /= config;
-                    configPt = FileSys::ReadPtreeFile(configPath);
-
-                    // Turn off contact output file
-                    configPt.put(
-                        "run.contact_output_file",
-                        false
-                    );
-
-                    // Student fraction
-                    configPt.put(
-                        "run.pop_config1.university.student_fraction",
-                        student_fraction
-                    );
-
-                    // Student commute 
-                    configPt.put(
-                        "run.pop_config1.university.commute_fraction",
-                        student_commute_fraction
-                    );
-
-                    // Work fraction
-                    configPt.put(
-                        "run.pop_config1.work.work_fraction",
-                        work_fraction
-                    );
-
-                    // Work commute
-                    configPt.put(
-                        "run.pop_config1.work.commute_fraction",
-                        work_commute_fraction
-                    );
-
-                    // School size
-                    configPt.put(
-                        "run.pop_config1.school_size",
-                        school_size
-                    );
-
-                    // University size
-                    configPt.put(
-                        "run.pop_config1.university_size",
-                        university_size
-                    );
-
-                    // Workplace size
-                    configPt.put(
-                        "run.pop_config1.workplace_size",
-                        workplace_size
-                    );
-
-                    // School cp size
-                    configPt.put(
-                        "run.pop_config1.school_cp_size",
-                        school_cp_size
-                    );
-
-                    // University cp size
-                    configPt.put(
-                        "run.pop_config1.university_cp_size",
-                        university_cp_size
-                    );
-
-                    // Population_size
-                    configPt.put(
-                        "run.pop_config1.population_size",
-                        population_size
-                    );
-
-                    // Fragment centers
-                    configPt.put(
-                        "run.pop_config1.fragment_centers",
-                        fragment_centers
-                    );
-
-                    configPt.put(
-                        "run.pop_config1.geoprofile.cities",
-                        "data/flanders_cities_TEST_" + postfix + ".csv"
-                    );
-                    configPt.put(
-                        "run.pop_config1.geoprofile.commuters",
-                        "data/flanders_commuting_TEST_" + postfix + ".csv"
-                    );
-
-                    // Check output
-                    if (configPt.get<string>("run.output_prefix", "").empty()) {
-                        configPt.put(
-                            "run.output_prefix",
-                            "Perf" + TimeStamp().ToTag().append("/"));
-                    }
-                    configPt.sort();                
-
-                    return Test(
-                        [configPt]() {
-                            Population::Create(configPt);
-                        });
-                };
-        };
-
-        // FRACTION
-        /*
-        for (double i = 0.1; i < 0.5; i += 0.1) {
-            for (double j = 0.1; j < 0.5; j += 0.1) {
-                for (double k = 0.1; k < 0.7; k += 0.1) {
-                    for (double l = 0.1; l < 0.5; l += 0.1) {
-                        BenchmarkRunner::RegisterTest(
-                            "Geopop", "Student_fraction - " + ToString(i) + " "
-                            "Student_commute_fraction - " + ToString(j) + " "
-                            "Work_fraction - " + ToString(k) + " "
-                            "Work_commute_fraction - " + ToString(l),
-                             10,
-                            geopop_factory_builder(i, j, k, l, 500, 3000, 20));
-                    }                
-                }            
-            }
-        }
-        */
-        /*
-        // Student fraction
-        for (double i = 0.05; i < 1; i += 0.1) {
-            BenchmarkRunner::RegisterTest(
-                "Geopop", "Student_fraction - 500000 - " + ToString(i) + " ",
-                3,
-                geopop_factory_builder(i, 0.5, 0.7, 0.5, 500, 3000, 20, 20, 20, 500000));
-        }
-        // Student commute fraction
-        for (double i = 0.05; i < 1; i += 0.1) {
-            BenchmarkRunner::RegisterTest(
-                "Geopop", "Student_commute_fraction - 500000 - " + ToString(i) + " ",
-                3,
-                geopop_factory_builder(0.5, i, 0.7, 0.5, 500, 3000, 20, 20, 20, 500000));
-        }
-        // Work fraction
-        for (double i = 0.05; i < 1; i += 0.1) {
-            BenchmarkRunner::RegisterTest(
-                "Geopop", "work_fraction - 500000 - " + ToString(i) + " ",
-                3,
-                geopop_factory_builder(0.5, 0.5, i, 0.5, 500, 3000, 20, 20, 20, 500000));
-        }
-        // Work commute fraction
-        for (double i = 0.05; i < 1; i += 0.1) {
-            BenchmarkRunner::RegisterTest(
-                "Geopop", "work_commute_fraction - 500000 - " + ToString(i) + " ",
-                3,
-                geopop_factory_builder(0.5, 0.5, 0.7, i, 500, 3000, 20, 20, 20, 500000));
-        }
-        */
-        // SIZES
-        /*
-        for (double i = 200; i < 800; i += 100) {
-            for (double j = 2500; j < 3500; j += 250) {
-                for (double k = 1; k < 100; k += 10) {
-                    BenchmarkRunner::RegisterTest(
-                        "Geopop", "school_size - " + ToString(i) + " "
-                        "university_size - " + ToString(j) + " "
-                        "Workplace_size - " + ToString(k) + " ",
-                        5,
-                        geopop_factory_builder(0.5, 0.5, 0.7, 0.5, i, j, k));          
-                }            
-            }
-        }
-        */
-        /*
-        // School size
-        for (double i = 100; i < 5000; i += 500) {
-            BenchmarkRunner::RegisterTest(
-                "Geopop",
-                "school_size - 500000 - " + ToString(i) + " ",
-                3,
-                geopop_factory_builder(0.5, 0.5, 0.7, 0.5, i, 3500, 20, 20, 20, 500000));    
-        } 
-        // University size
-        for (double i = 100; i < 10000; i += 1000) {
-            BenchmarkRunner::RegisterTest(
-                "Geopop",
-                "university_size - 500000 - " + ToString(i) + " ",
-                3,
-                geopop_factory_builder(0.5, 0.5, 0.7, 0.5, 500, i, 20, 20, 20, 500000));    
-        }  
-        // Workplace size
-        for (double i = 5; i < 1000; i += 100) {
-            BenchmarkRunner::RegisterTest(
-                "Geopop",
-                "Workplace_size - 500000 - " + ToString(i) + " ",
-                3,
-                geopop_factory_builder(0.5, 0.5, 0.7, 0.5, 500, 3500, i, 20, 20, 500000));    
-        } 
-
-        // School cp
-        for (double i = 1; i < 200; i += 20) {
-            BenchmarkRunner::RegisterTest(
-                "Geopop",
-                "School_cp_size - 500000 - " + ToString(i) + " ",
-                3,
-                geopop_factory_builder(0.5, 0.5, 0.7, 0.5, 500, 3500, 20, i, 20, 20, 20, 500000));    
-        } 
-        // University cp  
-       for (double i = 1; i < 200; i += 20) {
-            BenchmarkRunner::RegisterTest(
-                "Geopop",
-                "University_cp_size - 500000 - " + ToString(i) + " ",
-                3,
-                geopop_factory_builder(0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, i, 20, 20, 500000));    
-        }  
-        */
-        /*
-        // Population size
-       for (double i = 10000; i < 1000000; i += 50000) {
-            BenchmarkRunner::RegisterTest(
-                "Geopop",
-                "Population_size - " + ToString(i) + " ",
-                5,
-                geopop_factory_builder(0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, i));    
-        } 
-        */
-        /*
-        // Fragment centers
-        BenchmarkRunner::RegisterTest(
-            "Geopop",
-            "No fragment centers",
-            5,
-            geopop_factory_builder(0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 500000, false)); 
-        BenchmarkRunner::RegisterTest(
-            "Geopop",
-            "Fragment centers",
-            5,
-            geopop_factory_builder(0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 500000, true));    
-        */
-
-        for (double i = 10000; i <= 310000; i += 100000) {
-            for (double j = 0.1; j < 0.8; j += 0.1) {
-                for (auto postfix : {"40", "75", "150"}) {
-                    BenchmarkRunner::RegisterTest(
-                        "Geopop",
-                        ToString(i) + ", " + ToString(j) + ", " + postfix,
-                        1,
-                        geopop_factory_builder(
-                            0.5, 0.5, 0.7, j, 500, 3500, 20, 20, 20, i, true, postfix)); 
-                }
-            }
-        } 
-        
-        // GEOGRID
-        auto geopop_geogrid_builder = [](string postfix)
-            {
-                return [postfix]() 
-                    {
-                    // Get configuration
-                    auto  config = "run_geopop.xml";
-                    ptree configPt;
-
-                    const boost::filesystem::path configPath =
-                        FileSys::GetConfigDir() /= config;
-                    configPt = FileSys::ReadPtreeFile(configPath);
-
-                    // Turn off contact output file
-                    configPt.put(
-                        "run.contact_output_file",
-                        false
-                    );
-
-                    // Population_size
-                    configPt.put(
-                        "run.pop_config1.population_size",
-                        500000
-                    );
-
-                    configPt.put(
-                        "run.pop_config1.geoprofile.cities",
-                        "data/flanders_cities_TEST_" + postfix + ".csv"
-                    );
-                    configPt.put(
-                        "run.pop_config1.geoprofile.commuters",
-                        "data/flanders_commuting_TEST_" + postfix + ".csv"
-                    );
-
-                    // Check output
-                    if (configPt.get<string>("run.output_prefix", "").empty()) {
-                        configPt.put(
-                            "run.output_prefix",
-                            "Perf" + TimeStamp().ToTag().append("/"));
-                    }
-                    configPt.sort();                
-
-                    return Test(
-                        [configPt]() {
-                            Population::Create(configPt);
-                        });
-                };
-        };  
-        // 150
-        BenchmarkRunner::RegisterTest(
-        "Geopop",
-        "Geogrid_file - 500000 pop - flanders_cities_TEST_150",
-        5,
-        geopop_geogrid_builder("150"));   
-
-        /*
-        // 75
-        BenchmarkRunner::RegisterTest(
-        "Geopop",
-        "Geogrid_file - 500000 pop -  flanders_cities_TEST_75",
-        5,
-        geopop_geogrid_builder("75"));   
-
-        // 40
-        BenchmarkRunner::RegisterTest(
-        "Geopop",
-        "Geogrid_file - 500000 pop -  flanders_cities_TEST_40",
-        5,
-        geopop_geogrid_builder("40"));   
-        */
         auto sim_factory_builder = [](
             double student_fraction, double student_commute_fraction,
             double work_fraction, double work_commute_fraction,
             unsigned int school_size, unsigned int university_size,
             unsigned int workplace_size, unsigned int school_cp_size,
             unsigned int university_cp_size, unsigned int population_size,
-            unsigned int num_threads, unsigned int num_days, double seeding_rate, 
-            double vaccine_link_probability, double vaccine_rate,
-            double r0)
+            bool fragment_centers=true,
+            unsigned int num_threads=1, unsigned int num_days=50, double seeding_rate=0.002, 
+            double vaccine_link_probability=0, double vaccine_rate=0.8,
+            double r0=11,
+            double tourist_fraction = 0.10, double work_travel_fraction = 0.05)
             {
                 return [
                         student_fraction, student_commute_fraction,
                         work_fraction, work_commute_fraction,
                         school_size, university_size,
                         workplace_size, school_cp_size, university_cp_size, population_size,
+                        fragment_centers,
                         num_threads, num_days,
                         seeding_rate, vaccine_link_probability,
-                        vaccine_rate, r0]() 
+                        vaccine_rate, r0, tourist_fraction, work_travel_fraction]() 
                     {
                     
                     // Get configuration
-                    auto  config = "run_geopop.xml";
+                    auto  config = "run_performance.xml";
                     ptree configPt;
 
                     const boost::filesystem::path configPath =
                         FileSys::GetConfigDir() /= config;
                     configPt = FileSys::ReadPtreeFile(configPath);
+
+
 
                     // Turn off contact output file
                     configPt.put(
@@ -421,62 +85,68 @@ int main(int argc, char** argv)
 
                     // Student fraction
                     configPt.put(
-                        "run.pop_config1.university.student_fraction",
+                        "run.pop_config.region.university.student_fraction",
                         student_fraction
                     );
 
                     // Student commute 
                     configPt.put(
-                        "run.pop_config1.university.commute_fraction",
+                        "run.pop_config.region.university.commute_fraction",
                         student_commute_fraction
                     );
 
                     // Work fraction
                     configPt.put(
-                        "run.pop_config1.work.work_fraction",
+                        "run.pop_config.region.work.work_fraction",
                         work_fraction
                     );
 
                     // Work commute
                     configPt.put(
-                        "run.pop_config1.work.commute_fraction",
+                        "run.pop_config.region.work.commute_fraction",
                         work_commute_fraction
                     );
 
                     // School size
                     configPt.put(
-                        "run.pop_config1.school_size",
+                        "run.pop_config.region.school_size",
                         school_size
                     );
 
                     // University size
                     configPt.put(
-                        "run.pop_config1.university_size",
+                        "run.pop_config.region.university_size",
                         university_size
                     );
 
                     // Workplace size
                     configPt.put(
-                        "run.pop_config1.workplace_size",
+                        "run.pop_config.region.workplace_size",
                         workplace_size
                     );
 
                     // School cp size
                     configPt.put(
-                        "run.pop_config1.school_cp_size",
+                        "run.pop_config.region.school_cp_size",
                         school_cp_size
                     );
 
                     // University cp size
                     configPt.put(
-                        "run.pop_config1.university_cp_size",
+                        "run.pop_config.region.university_cp_size",
                         university_cp_size
                     );
 
                     // Population_size
                     configPt.put(
-                        "run.pop_config1.population_size",
+                        "run.pop_config.region.population_size",
                         population_size
+                    );
+
+                    // Fragment centers
+                    configPt.put(
+                        "run.pop_config.region.fragment_centers",
+                        fragment_centers
                     );
 
                     // Num_threads
@@ -515,6 +185,18 @@ int main(int argc, char** argv)
                         r0
                     );
 
+                    // tourist_fraction
+                    configPt.put(
+                        "run.pop_config.region.tourist_fraction",
+                        tourist_fraction
+                    );
+
+                    // work_travel_fraction
+                    configPt.put(
+                        "run.pop_config.region.work_travel_fraction",
+                        work_travel_fraction
+                    );
+
                     // Check output
                     if (configPt.get<string>("run.output_prefix", "").empty()) {
                         configPt.put(
@@ -529,20 +211,119 @@ int main(int argc, char** argv)
                         });
                 };
         };
-        /*
-        // Num threads
-        for (unsigned int i = 1; i < 8; i += 1) {
+       // Population size
+       for (double i = 100000; i < 1100000; i += 100000) {
             BenchmarkRunner::RegisterTest(
                 "Sim",
-                "Num_threads - " + ToString(i) + " ",
+                "No_fragment - " + ToString(i) + " ",
+                2,
+                sim_factory_builder(0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, i, false));    
+        } 
+       // Population size
+       for (double i = 100000; i < 1100000; i += 100000) {
+            BenchmarkRunner::RegisterTest(
+                "Sim",
+                "fragment - " + ToString(i) + " ",
+                2,
+                sim_factory_builder(0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, i, true));    
+        } 
+/*
+        // Student fraction
+        for (double i = 0.05; i < 1; i += 0.1) {
+            BenchmarkRunner::RegisterTest(
+                "Sim", "Student_fraction - " + ToString(i) + " ",
                 3,
-                sim_factory_builder(
-                    0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 100000,
-                    i, 50,
-                    0.002, 0, 0.8,
-                    11));    
+                sim_factory_builder(i, 0.5, 0.7, 0.5, 500, 3000, 20, 20, 20, 500000));
+        }
+
+        // Student commute fraction
+        for (double i = 0.05; i < 1; i += 0.1) {
+            BenchmarkRunner::RegisterTest(
+                "Sim", "Student_commute_fraction - " + ToString(i) + " ",
+                3,
+                sim_factory_builder(0.5, i, 0.7, 0.5, 500, 3000, 20, 20, 20, 500000));
+        }
+
+        // Work fraction
+        for (double i = 0.05; i < 1; i += 0.1) {
+            BenchmarkRunner::RegisterTest(
+                "Sim", "work_fraction - " + ToString(i) + " ",
+                3,
+                sim_factory_builder(0.5, 0.5, i, 0.5, 500, 3000, 20, 20, 20, 500000));
+        }
+
+        // Work commute fraction
+        for (double i = 0.05; i < 1; i += 0.1) {
+            BenchmarkRunner::RegisterTest(
+                "Sim", "work_commute_fraction - " + ToString(i) + " ",
+                3,
+                sim_factory_builder(0.5, 0.5, 0.7, i, 500, 3000, 20, 20, 20, 500000));
+        }
+
+        // School size
+        for (double i = 100; i < 5000; i += 500) {
+            BenchmarkRunner::RegisterTest(
+                "Sim",
+                "school_size - " + ToString(i) + " ",
+                3,
+                sim_factory_builder(0.5, 0.5, 0.7, 0.5, i, 3500, 20, 20, 20, 500000));    
+        } 
+        // University size
+        for (double i = 100; i < 10000; i += 1000) {
+            BenchmarkRunner::RegisterTest(
+                "Sim",
+                "university_size - " + ToString(i) + " ",
+                3,
+                sim_factory_builder(0.5, 0.5, 0.7, 0.5, 500, i, 20, 20, 20, 500000));    
+        }  
+        
+        // Workplace size
+        for (double i = 5; i < 1000; i += 100) {
+            BenchmarkRunner::RegisterTest(
+                "Sim",
+                "Workplace_size - " + ToString(i) + " ",
+                3,
+                sim_factory_builder(0.5, 0.5, 0.7, 0.5, 500, 3500, i, 20, 20, 500000));    
         } 
 
+        // School cp
+        for (double i = 1; i < 200; i += 20) {
+            BenchmarkRunner::RegisterTest(
+                "Sim",
+                "School_cp_size - " + ToString(i) + " ",
+                3,
+                sim_factory_builder(0.5, 0.5, 0.7, 0.5, 500, 3500, 20, i, 20, 500000));    
+        } 
+
+       // University cp  
+       for (double i = 1; i < 200; i += 20) {
+            BenchmarkRunner::RegisterTest(
+                "Sim",
+                "University_cp_size - " + ToString(i) + " ",
+                3,
+                sim_factory_builder(0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, i, 500000));    
+        }  
+        
+       // Population size
+       for (double i = 10000; i < 600000; i += 50000) {
+            BenchmarkRunner::RegisterTest(
+                "Sim",
+                "Population_size - " + ToString(i) + " ",
+                5,
+                sim_factory_builder(0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, i));    
+        } 
+        // Fragment centers
+        BenchmarkRunner::RegisterTest(
+            "Sim",
+            "No fragment centers",
+            5,
+            sim_factory_builder(0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 500000, false)); 
+        BenchmarkRunner::RegisterTest(
+            "Sim",
+            "Fragment centers",
+            5,
+            sim_factory_builder(0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 500000, true)); 
+   
         // Num days
         for (unsigned int i = 200; i <= 700; i += 100) {
             BenchmarkRunner::RegisterTest(
@@ -550,12 +331,12 @@ int main(int argc, char** argv)
                 "Num_days - " + ToString(i) + " ",
                 3,
                 sim_factory_builder(
-                    0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 100000,
+                    0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 500000, true,
                     1, i,
                     0.002, 0, 0.8,
                     11));    
         } 
-        
+
         // Seeding rate
         for (double i = 0.002; i < 0.006; i += 0.001) {
             BenchmarkRunner::RegisterTest(
@@ -563,7 +344,7 @@ int main(int argc, char** argv)
                 "Seeding rate - " + ToString(i) + " ",
                 3,
                 sim_factory_builder(
-                    0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 100000,
+                    0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 500000, true,
                     1, 50,
                     i, 0, 0.8,
                     11));    
@@ -576,7 +357,7 @@ int main(int argc, char** argv)
                 "vaccine_link_probability - " + ToString(i) + " ",
                 3,
                 sim_factory_builder(
-                    0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 100000,
+                    0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 500000, true,
                     1, 50,
                     0.002, i, 0.8,
                     11));    
@@ -589,7 +370,7 @@ int main(int argc, char** argv)
                 "vaccine_rate - " + ToString(i) + " ",
                 3,
                 sim_factory_builder(
-                    0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 100000,
+                    0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 500000, true,
                     1, 50,
                     0.002, 0, i,
                     11));    
@@ -602,29 +383,38 @@ int main(int argc, char** argv)
                 "r0 - " + ToString(i) + " ",
                 3,
                 sim_factory_builder(
-                    0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 100000,
+                    0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 500000, true,
                     1, 50,
                     0.002, 0, 0.8,
                     i));    
         } 
-        */
-        
-        for (double i = 200; i <= 700; i += 100) {
-            for (double j = 1; j < 8; j += 1) {
-                for (double k = 100000; k <= 400000; k += 100000) {
-                    BenchmarkRunner::RegisterTest(
-                        "Sim",
-                        ToString(i) + ", " + ToString(j) + ", " + ToString(k),
-                        1,
-                        sim_factory_builder(
-                            0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, k,
-                            j, i,
-                            0.002, 0, 0.8,
-                            11));   
-                }
-            }
+
+        // tourist_fraction
+        for (double i = 0.1; i < 0.9; i += 0.1) {
+            BenchmarkRunner::RegisterTest(
+                "Sim",
+                "tourist_fraction - " + ToString(i) + " ",
+                3,
+                sim_factory_builder(
+                    0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 500000, true,
+                    1, 50,
+                    0.002, 0, 0.8,
+                    11, i));    
         } 
 
+        // work_travel_fraction
+        for (double i = 0.1; i < 0.7; i += 0.1) {
+            BenchmarkRunner::RegisterTest(
+                "Sim",
+                "work_travel_fraction - " + ToString(i) + " ",
+                3,
+                sim_factory_builder(
+                    0.5, 0.5, 0.7, 0.5, 500, 3500, 20, 20, 20, 500000, true,
+                    1, 50,
+                    0.002, 0, 0.8,
+                    11, 0.10, i));    
+        } 
+*/
         // Run tests
         try {
                 myhayai::CliController controller;

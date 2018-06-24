@@ -20,6 +20,6 @@
 #============================================================================
 #add_subdirectory(btester)
 add_subdirectory(gtester)
-#add_subdirectory(myhayai)
+add_subdirectory(myhayai)
 
 #############################################################################

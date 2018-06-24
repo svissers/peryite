@@ -5,6 +5,7 @@
 #include "assigners/WorkplaceAssigner.h"
 #include "assigners/CommunityAssigner.h"
 #include "assigners/TravelAssigner.h"
+#include <papi.h>
 
 namespace stride {
 namespace gen {
@@ -16,6 +17,13 @@ using namespace util;
 
 void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
 {
+    // Reset the counters
+    /*
+    long_long temp_values[5];
+    long_long values[5];
+    if (PAPI_read_counters(temp_values, 5) != PAPI_OK)
+        throw runtime_error(string(__func__) + "> Papi error occured while reading counters after building population.");
+    */
     auto& pool_sys = population->GetContactPoolSys();
     dir.GetPopulationFile()->Read(population);
     population->SetRegions(dir.GetRegions());
@@ -37,27 +45,86 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
         auto universities   = dir.GetUniversityFile(region->id)->Read();
         auto workplaces     = dir.GetWorkplaceFile(region->id)->Read();
         auto communities    = dir.GetCommunityFile(region->id)->Read();
-
+        /*
+        if (PAPI_read_counters(values, 5) != PAPI_OK)
+            throw runtime_error(string(__func__) + "> Papi error occured while reading counters after building population.");
+        std::cout << "PopgenRead: " << std::endl;
+        std::cout << "Total instructions: " << values[0] << std::endl;
+        std::cout << "Load instructions: " << values[1] << std::endl;
+        std::cout << "Store Instructions: " << values[2] << std::endl;
+        std::cout << "Branch Instructions: " << values[3] << std::endl;
+        std::cout << "Total cycles: " << values[4] << std::endl;
+        */
         // -------------------
         // Assign ContactPools
         // -------------------
         std::cout << "assigning population in region: " << region->name << std::endl;
-        std::cout << "  working: " <<std::flush;
+        //std::cout << "  working: " <<std::flush;
 
         assigner::AssignHouseholds(population, grid, region);
-        std::cout << "-"<< std::flush;
+        /*
+        if (PAPI_read_counters(values, 5) != PAPI_OK)
+            throw runtime_error(string(__func__) + "> Papi error occured while reading counters after building population.");
+        std::cout << "AssignHouseholds Counters: " << std::endl;
+        std::cout << "Total instructions: " << values[0] << std::endl;
+        std::cout << "Load instructions: " << values[1] << std::endl;
+        std::cout << "Store Instructions: " << values[2] << std::endl;
+        std::cout << "Branch Instructions: " << values[3] << std::endl;
+        std::cout << "Total cycles: " << values[4] << std::endl;
+        */
+        //std::cout << "-"<< std::flush;
 
         assigner::AssignSchools(schools, population, region, grid);
-        std::cout << "-"<< std::flush;
+        /*
+        if (PAPI_read_counters(values, 5) != PAPI_OK)
+            throw runtime_error(string(__func__) + "> Papi error occured while reading counters after building population.");
+        std::cout << "AssignSchools Counters: " << std::endl;
+        std::cout << "Total instructions: " << values[0] << std::endl;
+        std::cout << "Load instructions: " << values[1] << std::endl;
+        std::cout << "Store Instructions: " << values[2] << std::endl;
+        std::cout << "Branch Instructions: " << values[3] << std::endl;
+        std::cout << "Total cycles: " << values[4] << std::endl;
+        */
+        //std::cout << "-"<< std::flush;
 
         auto total_commuting_students = assigner::AssignUniversities(universities, population, region, grid);
-        std::cout << "-"<< std::flush;
+        /*
+        if (PAPI_read_counters(values, 5) != PAPI_OK)
+            throw runtime_error(string(__func__) + "> Papi error occured while reading counters after building population.");
+        std::cout << "AssignUniversities Counters: " << std::endl;
+        std::cout << "Total instructions: " << values[0] << std::endl;
+        std::cout << "Load instructions: " << values[1] << std::endl;
+        std::cout << "Store Instructions: " << values[2] << std::endl;
+        std::cout << "Branch Instructions: " << values[3] << std::endl;
+        std::cout << "Total cycles: " << values[4] << std::endl;
+        */
+        //std::cout << "-"<< std::flush;
 
         assigner::AssignWorkplaces(workplaces, population, region, grid, total_commuting_students);
-        std::cout << "--"<< std::flush;
+        /*
+        if (PAPI_read_counters(values, 5) != PAPI_OK)
+            throw runtime_error(string(__func__) + "> Papi error occured while reading counters after building population.");
+        std::cout << "AssignWorkplaces Counters: " << std::endl;
+        std::cout << "Total instructions: " << values[0] << std::endl;
+        std::cout << "Load instructions: " << values[1] << std::endl;
+        std::cout << "Store Instructions: " << values[2] << std::endl;
+        std::cout << "Branch Instructions: " << values[3] << std::endl;
+        std::cout << "Total cycles: " << values[4] << std::endl;
+        */
+        //std::cout << "--"<< std::flush;
 
         assigner::AssignCommunities(communities, population, region, grid);
-        std::cout << "-"<< std::flush;
+        /*
+        if (PAPI_read_counters(values, 5) != PAPI_OK)
+            throw runtime_error(string(__func__) + "> Papi error occured while reading counters after building population.");
+        std::cout << "AssignCommunities Counters: " << std::endl;
+        std::cout << "Total instructions: " << values[0] << std::endl;
+        std::cout << "Load instructions: " << values[1] << std::endl;
+        std::cout << "Store Instructions: " << values[2] << std::endl;
+        std::cout << "Branch Instructions: " << values[3] << std::endl;
+        std::cout << "Total cycles: " << values[4] << std::endl;
+        */
+        //std::cout << "-"<< std::flush;
 
         // -------------------
         // Fill ContactPoolSys
@@ -158,6 +225,16 @@ void Generate(files::GenDirectory& dir, shared_ptr<Population>& population)
         output_file.WritePoolSys(dir.GetConfig().GetOutputPrefix(), pool_sys);
         std::cout << "finished." << std::endl;
     }
+    /*
+    if (PAPI_read_counters(values, 5) != PAPI_OK)
+        throw runtime_error(string(__func__) + "> Papi error occured while reading counters after building population.");
+    std::cout << "Popgen rest Counters: " << std::endl;
+    std::cout << "Total instructions: " << values[0] << std::endl;
+    std::cout << "Load instructions: " << values[1] << std::endl;
+    std::cout << "Store Instructions: " << values[2] << std::endl;
+    std::cout << "Branch Instructions: " << values[3] << std::endl;
+    std::cout << "Total cycles: " << values[4] << std::endl;
+    */
 }
 
 vector<shared_ptr<GenStruct>> GetClosestStructs(const util::spherical_point& home_coord, const vector<vector<shared_ptr<GenStruct>>>& structs, const GeoGrid& grid)

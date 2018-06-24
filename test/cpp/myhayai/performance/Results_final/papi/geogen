@@ -1,0 +1,59 @@
+builder::BuildPopulation Counters: 
+Total instructions: 255131492
+Load instructions: 64761417
+Store Instructions: 42646330
+Branch Instructions: 58731309
+Total cycles: 153865463
+
+
+builder::BuildGeoGrid Counters:
+ Total instructions: 17549601
+Load instructions: 4758545
+Store Instructions: 2977219
+Branch Instructions: 4222700
+Total cycles: 9574185
+
+
+-builder::BuildSchools Counters: 
+Total instructions: 2066170
+Load instructions: 277609
+Store Instructions: 49839
+Branch Instructions: 359293
+Total cycles: 4438738
+
+
+-builder::BuildUniversities Counters: 
+Total instructions: 248226
+Load instructions: 79459
+Store Instructions: 44304
+Branch Instructions: 63047
+Total cycles: 438935
+
+
+-builder::BuildWorkplaces Counters: 
+Total instructions: 4157418449
+Load instructions: 1312188233
+Store Instructions: 682488942
+Branch Instructions: 1138337494
+Total cycles: 3804561564
+
+
+-builder::BuildCommunities Counters: 
+Total instructions: 5115658
+Load instructions: 1532736
+Store Instructions: 1042990
+Branch Instructions: 1095049
+Total cycles: 3584167
+
+
+
+Geogen rest Counters: 
+Total instructions: 2123011195
+Load instructions: 513865953
+Store Instructions: 401377170
+Branch Instructions: 446346908
+Total cycles: 970038512
+assigning population in region: Flanders
+  working: ----------- finished.
+writing population... finished.
+

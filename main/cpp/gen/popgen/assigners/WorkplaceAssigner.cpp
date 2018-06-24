@@ -124,8 +124,6 @@ void AssignWorkplaces(
 
                 // if the city is not fragmented, use its coordinate
                 if(!destination->is_fragmented){
-
-
                     for (const auto& gstruct : workplaces[band_of_interest]) {
                         auto workplace = std::static_pointer_cast<WorkPlace>(gstruct);
 
@@ -135,11 +133,9 @@ void AssignWorkplaces(
                     }
                 }
                 else{
-                    // if it is fragmente check the coordinates of its  fragments
+                    // if it is fragmented check the coordinates of its fragments
                     for(auto fragment : destination->fragmented_coords){
                         band_of_interest = uint( (fragment.get<1>() - grid.m_min_long) / grid.m_longitude_band_width );
-
-
                         for (const auto& gstruct : workplaces[band_of_interest]) {
                             auto workplace = std::static_pointer_cast<WorkPlace>(gstruct);
 

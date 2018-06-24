@@ -161,7 +161,7 @@ set_target_properties(libstride PROPERTIES PREFIX "")
 # Build and install the stride executable.
 #============================================================================
 add_executable(stride sim/main.cpp)
-target_link_libraries(stride ${LIBS} libstride Qt5::Core Qt5::Widgets Qt5::Charts)
+target_link_libraries(stride ${LIBS} libstride Qt5::Core Qt5::Widgets Qt5::Charts papi)
 install(TARGETS stride  DESTINATION   ${BIN_INSTALL_LOCATION})
 
 #============================================================================
