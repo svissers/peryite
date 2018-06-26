@@ -103,7 +103,6 @@ Regions PopulationFile::ReadRegions(const boost::property_tree::ptree& config_pt
     const auto file_name        = config_pt.get<string>("run.region_file");
     const auto use_install_dirs = config_pt.get<bool>("run.use_install_dirs");
     const auto file_path        = (use_install_dirs) ? FileSys::GetDataDir() /= file_name : file_name;
-    std::cout << "REGIONSFILE FILE PATH: " << file_path.string() << std::endl;
     if (!is_regular_file(file_path)) {
             throw runtime_error(string(__func__) + "> Region file " + file_path.string() + " not present.");
     }
