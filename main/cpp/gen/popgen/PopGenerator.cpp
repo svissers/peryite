@@ -170,7 +170,7 @@ vector<shared_ptr<GenStruct>> GetClosestStructs(const util::spherical_point& hom
 
     auto band_of_hh = uint( (home_coord.get<1>() - grid.m_min_long) / grid.m_longitude_band_width );
     if (band_of_hh >= structs.size()) {
-        return closest_structs;
+        band_of_hh = structs.size()-1;
     }
 
     // Keep doubling search space until a struct is found
@@ -182,8 +182,6 @@ vector<shared_ptr<GenStruct>> GetClosestStructs(const util::spherical_point& hom
             firstband = band_of_hh - band_range;
         if (lastband >= structs.size()) {
             lastband = uint(structs.size() - 1);
-            if (firstband == 0)
-                break;
         }
         // Go over the search space
         for (unsigned int index = firstband; index <= lastband; index++) {
@@ -192,9 +190,19 @@ vector<shared_ptr<GenStruct>> GetClosestStructs(const util::spherical_point& hom
                     closest_structs.push_back(gstruct);
             }
         }
+        /*if (lastband == structs.size()-1) {
+            if (firstband == 0) {
+                if (closest_structs.empty()) {
+                    //std::cout << "sumtingwong2" << std::endl;
+                    std::cout << home_coord << ", " << search_range << ", " << band_of_hh << std::endl;
+                    //break;
+                }
+            }
+        }*/
         search_range = search_range*2;
         band_range = band_range*2;
     }
+
     return closest_structs;
 }
 

@@ -28,7 +28,7 @@
     <r0>11</r0>
     <seeding_age_max>99</seeding_age_max>
     <seeding_age_min>1</seeding_age_min>
-    <seeding_rate>0.0001</seeding_rate>
+    <seeding_rate>0.002</seeding_rate>
     <start_date>2017-01-01</start_date>
     <stride_log_level>info</stride_log_level>
     <track_index_case>false</track_index_case>
@@ -72,19 +72,19 @@
 		        <!-- Among the active population, a fraction commutes -->
 		        <commute_fraction>0.50</commute_fraction>
 	        </work>
-            <tourist_fraction> 0.005 </tourist_fraction>
+            <tourist_fraction> 0.001 </tourist_fraction>
             <work_travel_fraction>0.005</work_travel_fraction>
         </region>
         <region>
-            <region_name>Flanders2</region_name>
+            <region_name>Germany</region_name>
             <fragment_centers>true</fragment_centers>
             <!-- The amount of persons to generate -->
-            <population_size>600000</population_size>
+            <population_size>800000</population_size>
             <!-- The household reference set to sample from -->
             <household_profile>households_flanders.xml</household_profile>
             <geoprofile>
-                <cities>data/flanders_cities2.csv</cities>
-                <commuters>data/flanders_commuting.csv</commuters>
+                <cities>data/germany_cities.csv</cities>
+                <commuters>data/germany_commuting.csv</commuters>
             </geoprofile>
             <school_size>500</school_size>
             <school_cp_size>20</school_cp_size>

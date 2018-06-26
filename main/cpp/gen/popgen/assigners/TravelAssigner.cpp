@@ -85,7 +85,6 @@ void AssignTravellers(
 
             if(tourist_dist() == 1){
                 vacationGoers = true;
-
                 tourist_regionNr = uint(region_dist());  //travel can be in same region
                 tourist_cityNr = uint(city_dist());
 
@@ -195,11 +194,12 @@ void AssignTravellers(
                 // Create a uniform distribution to select a workplace
                 std::function<int()> wp_generator = rn_manager->GetGenerator(
                         trng::fast_discrete_dist(uint(closest_workplaces.size())));
+
+
                 auto workplace = static_pointer_cast<WorkPlace>(closest_workplaces.at(uint(wp_generator())));
                 auto cp_generator = rn_manager->GetGenerator(
                         trng::fast_discrete_dist(uint(workplace->pools.size())));
                 auto sec_work_id = uint(workplace->pools.at(uint(cp_generator()))->GetId());
-
 
                 auto dayNr = uint(day_dist());
                 unsigned int endDay = dayNr + endDayWork_dist()+1;

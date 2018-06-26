@@ -87,10 +87,10 @@ for i in range (0, len(citiesData)):
 ###########################
 commutingfile = open(sys.argv[2], 'w')
 
-commutingfile.write("\"id_"+ citiesData[0][0] + "\"")
+commutingfile.write('"id_'+ citiesData[0][0] + '"')
 
 for i in range (1,len(citiesData)):
-    commutingfile.write(",\"id_"+ citiesData[i][0] + "\"")
+    commutingfile.write(',"id_'+ citiesData[i][0] + '"')
 
 commutingfile.write("\n")
 
