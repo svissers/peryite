@@ -152,8 +152,12 @@ void AssignWorkplaces(
                 }
 
                 //if no workplaces are found in the city that the person would commute to or the city does not exist
+                //find workplaces close to that city instead
                 if (dest_workplaces.empty()) {
-                    std::cout << "error: the requested city to commute to was not found." << std::endl;
+                    std::vector<shared_ptr<GenStruct>> dest_workplaces = GetClosestStructs(dest_coord,
+                                                                                              workplaces,
+                                                                                              grid);
+                    //std::cout << "closest instead." << std::endl;
                     continue;
                 }
                 // Create a uniform distribution to select a workplace
