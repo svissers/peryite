@@ -34,7 +34,7 @@ try:
             lineData = line.split(",");
 
             # Remove newline from city name
-            lineData[4] = lineData[4][:-1]
+            #lineData[7] = lineData[7][:-1]
 
             citiesData.append(lineData)
 
@@ -51,7 +51,7 @@ for city1 in citiesData:
     totalscore = 0
     for city2 in citiesData:
         weight = 0.5;
-        distance = calculateDistance(float(city1[2]), float(city1[3]), float(city2[2]), float(city2[3]))
+        distance = calculateDistance(float(city1[5]), float(city1[6]), float(city2[5]), float(city2[6]))
         if(distance == 0):
             weight = 3
         elif(distance <= 25):
@@ -67,7 +67,7 @@ for city1 in citiesData:
         elif(distance <= 150):
             weight = 2
 
-        score = weight* (float(city2[1])/(float(city1[1])))/100
+        score = weight* (float(city2[2])/(float(city1[2])))/100
         commutingScoresCity.append(score)
         totalscore += score
 
@@ -79,7 +79,7 @@ commutingnumbers = []
 for i in range (0, len(citiesData)):
     citycommutingNumbers = []
     for j in range (0, len(citiesData)):
-        citycommutingNumbers.append(int(round(((commutingScores[i][j]/totalcommutingScores[i]) * float(citiesData[i][1]))/10)))
+        citycommutingNumbers.append(int(round(((commutingScores[i][j]/totalcommutingScores[i]) * float(citiesData[i][2]))/10)))
     commutingnumbers.append(citycommutingNumbers)
 
 ###########################
